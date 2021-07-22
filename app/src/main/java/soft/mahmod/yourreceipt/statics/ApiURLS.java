@@ -2,7 +2,7 @@ package soft.mahmod.yourreceipt.statics;
 
 public interface ApiURLS {
     //    TODO STATIC URLS
-    String STATIC_URL = "http://192.168.1.14/back%20end/api/";
+    String STATIC_URL = "http://192.168.1.100/back%20end/api/";
     //    TODO REGISTRATION
     String SIGN_IN = "query_registration/sign_in.php";
     String SIGN_UP = "query_registration/sign_up.php.php";

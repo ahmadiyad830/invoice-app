@@ -5,6 +5,9 @@ public class Cash {
     private Boolean error;
     private Integer code;
 
+    public Cash() {
+    }
+
     public Cash(String message, Boolean error, Integer code) {
         this.message = message;
         this.error = error;

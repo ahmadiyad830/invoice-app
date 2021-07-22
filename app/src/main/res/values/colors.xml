@@ -7,4 +7,17 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+
+    <color name="main_color">#FFFFFF</color>
+    <color name="top_and_bottom_color">#3448B9</color>
+    <color name="text_color">#000000</color>
+    <color name="line_color">#000000</color>
+    <color name="hint_color">#999999</color>
+    <color name="text_btn_color">#FFFFFF</color>
+    <color name="icon_color">@android:color/holo_blue_dark</color>
+    <color name="selector_color">#000000</color>
+    <color name="item_background">#E5E5E5</color>
+    <color name="mony_color">#FF174C44</color>
+
 </resources>

@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -14,6 +16,7 @@ import soft.mahmod.yourreceipt.network.ApiClient;
 import soft.mahmod.yourreceipt.network.ApiServes;
 
 public class RepoSignIn {
+    private static final String TAG = "RepoSignIn";
     private ApiServes serves;
 
     public RepoSignIn() {
@@ -25,11 +28,14 @@ public class RepoSignIn {
         serves.signIn(email, password).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     User user = response.body();
-                    if (!user.getError()){
-                        data.setValue(user);
+                    if (user != null){
+                        if (!user.getError()) {
+                            data.setValue(user);
+                        }
                     }
+
                 }
             }
 
