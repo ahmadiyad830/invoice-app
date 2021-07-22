@@ -18,11 +18,11 @@ public interface ApiServes extends ApiURLS {
 
     @FormUrlEncoded
     @POST(SIGN_UP)
-    Call<Void> signUp(@Field("email") String email,
+    Call<User> signUp(@Field("email") String email,
                       @Field("password") String password,
-                      @Field("store_name") String username,
-                      @Field("phone_num") String userType,
-                      @Field("store_address") String pharmacyName);
+                      @Field("store_name") String storeName,
+                      @Field("phone_num") String phoneNumber,
+                      @Field("store_address") String storeAddress);
     @FormUrlEncoded
     @POST(ALL_RECEIPT_BY_EMAIL)
     Call<List<Receipt>> getReceiptByEmail(@Field("email") String email);

@@ -28,14 +28,9 @@ public class RepoSignIn {
         serves.signIn(email, password).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
-                if (response.isSuccessful()) {
-                    User user = response.body();
-                    if (user != null){
-                        if (!user.getError()) {
-                            data.setValue(user);
-                        }
-                    }
-
+                Log.d(TAG, "onResponse: "+response.code());
+                if (response.isSuccessful()){
+                    data.setValue(response.body());
                 }
             }
 

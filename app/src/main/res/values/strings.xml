@@ -38,4 +38,7 @@
     <string name="quantity">quantity</string>
     <string name="scientific">scientific</string>
     <string name="concentration">concentration</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="sotre_name">Sotre Name</string>
+    <string name="store_address">Store Address</string>
 </resources>

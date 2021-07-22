@@ -3,7 +3,9 @@ package soft.mahmod.yourreceipt.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public  class User extends Cash {
+import java.io.Serializable;
+
+public  class User extends Cash implements Serializable {
     @SerializedName("email")
     private String email;
     @SerializedName("password")
@@ -30,6 +32,19 @@ public  class User extends Cash {
         this.phoneNum = phoneNum;
         this.storeAddress = storeAddress;
         this.userId = userId;
+    }
+    // the constractor use in sign up
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public User(String email, String password, String storeName, String phoneNum, String storeAddress ) {
+        this.email = email;
+        this.password = password;
+        this.storeName = storeName;
+        this.phoneNum = phoneNum;
+        this.storeAddress = storeAddress;
     }
 
     public void setUserId(String userId) {

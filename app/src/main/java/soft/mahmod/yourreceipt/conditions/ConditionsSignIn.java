@@ -5,36 +5,35 @@ import android.util.Patterns;
 import java.util.regex.Pattern;
 
 public class ConditionsSignIn {
-    private String email,password;
+    private String email, password,error;
+
 
     public ConditionsSignIn(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    private boolean isEmail(){
-        if (getEmail().isEmpty())
+    public boolean isEmail() {
+        if (email.isEmpty()){
+            error = "empty email feild";
             return true;
-        else return getEmail() == null;
+        }
+        return false;
     }
-    private boolean isPassword(){
-        if (getEmail().isEmpty())
+
+    public boolean isPassword() {
+        if (password.isEmpty()){
+            error = "empty password feild";
             return true;
-        else return getEmail() == null;
+        }
+        return false;
+    }
+
+    public boolean isSignIn() {
+
+        return !isEmail() && !isPassword();
+    }
+    public String error (){
+        return error;
     }
 }
