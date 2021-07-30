@@ -4,12 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="error"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            android:text="@{error}"
+            app:layout_constraintBottom_toTopOf="@+id/btn_signup"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout2"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -127,10 +141,10 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
             android:layout_marginHorizontal="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_30sdp"
             android:backgroundTint="@color/main_color"
             android:text="@string/sign_up"
             android:textColor="@color/text_color"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.516"
             app:layout_constraintStart_toStartOf="parent"

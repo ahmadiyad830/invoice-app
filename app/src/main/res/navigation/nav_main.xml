@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/menu_home">
+
+    <fragment
+        android:id="@+id/menu_add"
+        tools:layout="@layout/fragment_create_receipt"
+        android:name="soft.mahmod.yourreceipt.view_fragment.main.FragmentCreateReceipt"
+        android:label="FragmentCreateReceipt" />
+    <fragment
+        android:id="@+id/menu_setting"
+        android:name="soft.mahmod.yourreceipt.view_fragment.main.FragmentSetting"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/menu_search"
+        android:name="soft.mahmod.yourreceipt.view_fragment.main.FragmentSearch"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/menu_profile"
+        android:name="soft.mahmod.yourreceipt.view_fragment.main.FragmentProfile"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/menu_home"
+        tools:layout="@layout/fragment_home"
+        android:name="soft.mahmod.yourreceipt.view_fragment.main.FragmentHome"
+        android:label="FragmentHome" >
+        <action
+            android:id="@+id/action_menu_home_to_fragmentDetails"
+            app:destination="@id/fragmentDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentDetails"
+        tools:layout="@layout/fragment_details"
+        android:name="soft.mahmod.yourreceipt.view_fragment.main.FragmentDetails"
+        android:label="FragmentDetails" >
+        <argument
+            android:name="args_details"
+            app:argType="soft.mahmod.yourreceipt.model.Receipt"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+</navigation>

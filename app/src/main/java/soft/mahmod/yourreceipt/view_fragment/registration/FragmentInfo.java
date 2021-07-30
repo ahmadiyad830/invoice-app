@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.conditions.ConditionsSignIn;
 import soft.mahmod.yourreceipt.conditions.ConditionsSignUp;
+import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.FragmentInfoBinding;
 import soft.mahmod.yourreceipt.model.User;
 import soft.mahmod.yourreceipt.view_model.VMSignUp;
@@ -60,16 +61,21 @@ public class FragmentInfo extends Fragment {
                             (userArgs.getEmail(), userArgs.getPassword(), phoneNum, storeName, storeAddress);
                     if (conditionsSignUp.isMore()) {
                         viewModel.signUp(user).observe(getViewLifecycleOwner(), user1 -> {
-                            Log.d(TAG, "onViewCreated: "+"is succe");
+                            SessionManager manager = SessionManager.getInstance(requireContext());
+                            manager.setUser(user);
+                            manager.userSignIn(user);
+                            requireActivity().finish();
                         });
                     } else {
 //                         TODO Handle error if error user input
+                        binding.setError(user.getMessage());
                     }
                 } else {
 //                    TODO Handle error if user args null
                 }
             } else {
 //                TODO handle if getArguments() null
+
             }
 
         });

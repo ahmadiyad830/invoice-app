@@ -41,4 +41,7 @@
     <string name="phone_number">Phone Number</string>
     <string name="sotre_name">Sotre Name</string>
     <string name="store_address">Store Address</string>
+    <string name="error">error</string>
+    <string name="search">Search</string>
+    <string name="subject">subject</string>
 </resources>

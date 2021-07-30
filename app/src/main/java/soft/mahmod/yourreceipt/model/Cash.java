@@ -1,8 +1,15 @@
 package soft.mahmod.yourreceipt.model;
 
-public class Cash {
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
+public class Cash implements Serializable {
+    @SerializedName("message")
     private String message;
+    @SerializedName("error")
     private Boolean error;
+    @SerializedName("code")
     private Integer code;
 
     public Cash() {
@@ -24,5 +31,14 @@ public class Cash {
 
     public Integer getCode() {
         return code;
+    }
+
+    @Override
+    public String toString() {
+        return "Cash{" +
+                "message='" + message + '\'' +
+                ", error=" + error +
+                ", code=" + code +
+                '}';
     }
 }

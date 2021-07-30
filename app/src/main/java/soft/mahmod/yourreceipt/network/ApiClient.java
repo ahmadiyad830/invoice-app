@@ -1,5 +1,8 @@
 package soft.mahmod.yourreceipt.network;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import soft.mahmod.yourreceipt.statics.ApiURLS;
@@ -9,9 +12,12 @@ public class ApiClient implements ApiURLS{
     private Retrofit retrofit;
 
     private ApiClient() {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         retrofit = new Retrofit.Builder()
                 .baseUrl(STATIC_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
     }
     public synchronized static ApiClient getInstance(){

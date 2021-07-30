@@ -10,16 +10,14 @@ import soft.mahmod.yourreceipt.view_activity.ActivityRegistration;
 import soft.mahmod.yourreceipt.view_activity.MainActivity;
 
 public class SessionManager {
-    public static final String SHARED_PREF_NAME = "user_token";
-
-
-    public static final String KEY_USER_NAME = "username";
-    public static final String KEY_USER_ID = "id";
-    public static final String KEY_EMAIL = "email";
-    public static final String KEY_PASSWORD = "password";
-    public static final String KEY_STORE_NAME = "store name";
-    public static final String KEY_STORE_ADDRESS = "store address";
-    public static final String KEY_STORE_PHONE = "store phone";
+    private static final String SHARED_PREF_NAME = "user_token";
+    private static final String KEY_USER_NAME = "username";
+    private static final String KEY_USER_ID = "id";
+    private static final String KEY_EMAIL = "email";
+    private static final String KEY_PASSWORD = "password";
+    private static final String KEY_STORE_NAME = "store name";
+    private static final String KEY_STORE_ADDRESS = "store address";
+    private static final String KEY_STORE_PHONE = "store phone";
     private static final String TAG = "SessionManager";
 
     private static Context mCtx;
@@ -56,8 +54,8 @@ public class SessionManager {
         return sharedPreferences.getString(KEY_USER_ID, null) != null;
     }
 
-    public User getUserId(String message, boolean error, int code) {
-        return new User(message, error, code,
+    public User getUserId() {
+        return new User(
                 sharedPreferences.getString(KEY_USER_ID, null)
         );
     }
@@ -79,16 +77,15 @@ public class SessionManager {
         editor.putString(KEY_STORE_ADDRESS, model.getStoreAddress());
         editor.apply();
     }
-    public User getUser(String message, boolean error, int code) {
-        if (!error){
-            return new User(message, error, code,
-                    sharedPreferences.getString(KEY_EMAIL, ""),
-                    sharedPreferences.getString(KEY_PASSWORD, ""),
-                    sharedPreferences.getString(KEY_STORE_NAME, ""),
-                    sharedPreferences.getString(KEY_STORE_PHONE, ""),
-                    sharedPreferences.getString(KEY_STORE_ADDRESS, ""),
-                    sharedPreferences.getString(KEY_USER_ID, "")
-            );
-        }else return new User(message,error,code);
+
+    public User getUser() {
+        return new User(
+                sharedPreferences.getString(KEY_EMAIL, ""),
+                sharedPreferences.getString(KEY_PASSWORD, ""),
+                sharedPreferences.getString(KEY_STORE_NAME, ""),
+                sharedPreferences.getString(KEY_STORE_PHONE, ""),
+                sharedPreferences.getString(KEY_STORE_ADDRESS, ""),
+                sharedPreferences.getString(KEY_USER_ID, "")
+        );
     }
 }

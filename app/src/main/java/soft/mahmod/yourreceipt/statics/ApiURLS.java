@@ -1,5 +1,9 @@
 package soft.mahmod.yourreceipt.statics;
 
+import android.net.Network;
+
+import java.net.InetAddress;
+
 public interface ApiURLS {
     //    TODO STATIC URLS
     String STATIC_URL = "http://192.168.1.14/back%20end/api/";
@@ -10,6 +14,8 @@ public interface ApiURLS {
     String ALL_RECEIPT_BY_EMAIL = "query_receipt/all_receipt_user.php";
     String ALL_RECEIPT_BY_CLIENT_NAME = "query_receipt/receipt_by_client.php";
     String CREATE_RECEIPT = "query_receipt/create_receipt.php";
-
-
+// query by email
+//http://192.168.1.14/back%20end/api/query_receipt/all_receipt_user.php
+//    create receipt
+//    http://192.168.1.100/back%20end/api/query_receipt/create_receipt.php
 }

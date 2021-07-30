@@ -64,6 +64,7 @@ public class FragmentSignIn extends Fragment {
                     SessionManager manager = SessionManager.getInstance(requireContext());
                     manager.setUser(user);
                     manager.userSignIn(user);
+                    requireActivity().finish();
                 } else {
                     binding.setError(user.getMessage());
                 }
