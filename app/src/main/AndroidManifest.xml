@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="soft.mahmod.yourreceipt">
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -10,9 +11,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.YourReceipt">
-        <activity android:name=".view_activity.MainActivity"/>
+        android:theme="@style/Theme.YourReceipt"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".view_activity.ActivityDetails"></activity>
+        <activity android:name=".view_activity.MainActivity" />
         <activity android:name=".view_activity.ActivityRegistration">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

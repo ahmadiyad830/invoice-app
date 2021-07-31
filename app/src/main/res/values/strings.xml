@@ -44,4 +44,12 @@
     <string name="error">error</string>
     <string name="search">Search</string>
     <string name="subject">subject</string>
+    <string name="type_receipt">Type Receipt</string>
+    <string name="receipt_details">Receipt Details</string>
+    <string name="products_receipt">Products Receipt</string>
+    <string name="receipt">Receipt</string>
+    <string name="details">Details</string>
+    <string name="name">Name</string>
+    <string name="price">Price</string>
+    <string name="total">Total</string>
 </resources>

@@ -59,7 +59,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text='@{"Phone Number: "+model.phoneNum}'
+                    android:text='@{"Phone Number: "+model.clientPhone}'
                     android:textColor="@color/text_color"
                     android:textIsSelectable="true"
                     android:textSize="@dimen/_14ssp"

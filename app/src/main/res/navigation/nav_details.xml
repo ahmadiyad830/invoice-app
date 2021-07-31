@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_details"
+    app:startDestination="@id/fragmentReceipt">
+
+    <fragment
+        android:id="@+id/fragmentReceipt"
+        tools:layout="@layout/fragment_products"
+        android:name="soft.mahmod.yourreceipt.view_fragment.details.FragmentReceipt"
+        android:label="FragmentReceipt" />
+    <fragment
+        android:id="@+id/fragmentProducts"
+        tools:layout="@layout/fragment_receipt"
+        android:name="soft.mahmod.yourreceipt.view_fragment.details.FragmentProducts"
+        android:label="FragmentProducts" />
+</navigation>

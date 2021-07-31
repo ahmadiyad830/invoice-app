@@ -24,6 +24,7 @@ import soft.mahmod.yourreceipt.databinding.ActivityMainBinding;
 import soft.mahmod.yourreceipt.databinding.FragmentHomeBinding;
 import soft.mahmod.yourreceipt.listeners.OnReceiptItemClick;
 import soft.mahmod.yourreceipt.model.Receipt;
+import soft.mahmod.yourreceipt.view_activity.ActivityDetails;
 import soft.mahmod.yourreceipt.view_model.VMCreateReceipt;
 import soft.mahmod.yourreceipt.view_model.VMReceiptByEmail;
 
@@ -74,9 +75,8 @@ public class FragmentHome extends Fragment implements OnReceiptItemClick {
 
     @Override
     public void itemClick(Receipt model) {
-        NavController controller = Navigation.findNavController(binding.getRoot());
-        FragmentHomeDirections.ActionMenuHomeToFragmentDetails argsDetails = FragmentHomeDirections.actionMenuHomeToFragmentDetails();
-        argsDetails.setArgsDetails(model);
-        controller.navigate(argsDetails);
+        Intent intent = new Intent(requireContext(), ActivityDetails.class);
+        intent.putExtra("model",model);
+        startActivity(intent);
     }
 }

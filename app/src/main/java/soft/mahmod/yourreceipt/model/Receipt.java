@@ -21,6 +21,18 @@ public class Receipt extends User implements Serializable {
     @SerializedName("client_phone")
     private String clientPhone;
 
+    public Receipt(String userId, String receiptId, String subject,
+                   String receiptDate, String clientName, String totalAll,
+                   String clientPhone) {
+        super(userId);
+        this.receiptId = receiptId;
+        this.subject = subject;
+        this.receiptDate = receiptDate;
+        this.clientName = clientName;
+        this.totalAll = totalAll;
+        this.clientPhone = clientPhone;
+    }
+
     public Receipt(String subject, String receiptDate, String clientName, List<Receipt> receiptList) {
         this.subject = subject;
         this.receiptDate = receiptDate;

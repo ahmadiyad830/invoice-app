@@ -8,9 +8,9 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import soft.mahmod.yourreceipt.model.Cash;
+import soft.mahmod.yourreceipt.model.Products;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.model.User;
-import soft.mahmod.yourreceipt.response.ResponseReceipt;
 import soft.mahmod.yourreceipt.statics.ApiURLS;
 
 public interface ApiServes extends ApiURLS {
@@ -44,5 +44,10 @@ public interface ApiServes extends ApiURLS {
                              @Field("client_name") String clientName,
                              @Field("total_all") String totalAll,
                              @Field("client_phone") String clientPhone);
+    @FormUrlEncoded
+    @POST(PRODUCTS_BY_RECEIPT_ID)
+    Call<List<Products>> productsByReceiptId(
+            @Field("receipt_id") String receiptId
+    );
 
 }

@@ -29,20 +29,5 @@
         android:id="@+id/menu_home"
         tools:layout="@layout/fragment_home"
         android:name="soft.mahmod.yourreceipt.view_fragment.main.FragmentHome"
-        android:label="FragmentHome" >
-        <action
-            android:id="@+id/action_menu_home_to_fragmentDetails"
-            app:destination="@id/fragmentDetails" />
-    </fragment>
-    <fragment
-        android:id="@+id/fragmentDetails"
-        tools:layout="@layout/fragment_details"
-        android:name="soft.mahmod.yourreceipt.view_fragment.main.FragmentDetails"
-        android:label="FragmentDetails" >
-        <argument
-            android:name="args_details"
-            app:argType="soft.mahmod.yourreceipt.model.Receipt"
-            app:nullable="true"
-            android:defaultValue="@null" />
-    </fragment>
+        android:label="FragmentHome" />
 </navigation>

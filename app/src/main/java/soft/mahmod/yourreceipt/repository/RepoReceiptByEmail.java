@@ -16,7 +16,6 @@ import retrofit2.Response;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.network.ApiClient;
 import soft.mahmod.yourreceipt.network.ApiServes;
-import soft.mahmod.yourreceipt.response.ResponseReceipt;
 
 public class RepoReceiptByEmail {
 
@@ -31,7 +30,7 @@ public class RepoReceiptByEmail {
         MutableLiveData<List<Receipt>> data = new MutableLiveData<>();
         serves.getReceiptByEmail(email).enqueue(new Callback<List<Receipt>>() {
             @Override
-            public void onResponse(Call<List<Receipt>> call, Response<List<Receipt>> response) {
+            public void onResponse(@NonNull Call<List<Receipt>> call,@NonNull  Response<List<Receipt>> response) {
                 if (response.isSuccessful()){
                     data.setValue(response.body());
                 }
@@ -39,7 +38,7 @@ public class RepoReceiptByEmail {
             }
 
             @Override
-            public void onFailure(Call<List<Receipt>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Receipt>> call,@NonNull  Throwable t) {
                 t.printStackTrace();
             }
         });
