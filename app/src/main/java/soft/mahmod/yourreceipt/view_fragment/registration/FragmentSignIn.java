@@ -65,6 +65,7 @@ public class FragmentSignIn extends Fragment {
                     manager.setUser(user);
                     manager.userSignIn(user);
                     requireActivity().finish();
+                    Log.d(TAG, "signInerror: "+user.getError());
                 } else {
                     binding.setError(user.getMessage());
                 }

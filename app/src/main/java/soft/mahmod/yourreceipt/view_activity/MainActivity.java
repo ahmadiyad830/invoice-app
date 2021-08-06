@@ -8,6 +8,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,7 @@ import soft.mahmod.yourreceipt.adapter.ARReceipt;
 import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.ActivityMainBinding;
 import soft.mahmod.yourreceipt.model.Receipt;
+import soft.mahmod.yourreceipt.utils.IntentActivity;
 import soft.mahmod.yourreceipt.view_model.VMCreateReceipt;
 import soft.mahmod.yourreceipt.view_model.VMReceiptByEmail;
 
@@ -43,7 +45,16 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.mainBottom, controller);
     }
 
-//    private void createReceipt() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        binding.fab.setOnClickListener(v -> {
+            Intent intent = new Intent(this,ActivityAddReceipt.class);
+            startActivity(intent);
+        });
+
+    }
+    //    private void createReceipt() {
 //        Receipt model = new Receipt(manager.getUser().getUserId(), "android", "asdfasdf",
 //                "ahmad iyad", "12341234", "1234");
 //        vmCreateReceipt.createReceipt(model).observe(this, receipt -> {

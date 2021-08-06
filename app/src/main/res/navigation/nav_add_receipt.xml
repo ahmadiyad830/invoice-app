@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_add_receipt"
+    app:startDestination="@id/fragmentAddReceipt">
+
+    <fragment
+        android:id="@+id/fragmentAddClient"
+        android:name="soft.mahmod.yourreceipt.view_fragment.add_receipt.FragmentAddClient"
+        android:label="fragment_add_client"
+        tools:layout="@layout/fragment_add_client" >
+        <action
+            android:id="@+id/action_fragmentAddClient_to_fragmentCreateClient"
+            app:destination="@id/fragmentCreateClient" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentAddItem"
+        android:name="soft.mahmod.yourreceipt.view_fragment.add_receipt.FragmentAddItem"
+        android:label="fragment_add_item"
+        tools:layout="@layout/fragment_add_item" >
+        <action
+            android:id="@+id/action_fragmentAddItem_to_fragmentCreateItem"
+            app:destination="@id/fragmentCreateItem" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentAddReceipt"
+        android:name="soft.mahmod.yourreceipt.view_fragment.add_receipt.FragmentAddReceipt"
+        android:label="fragment_add_receipt"
+        tools:layout="@layout/fragment_add_receipt" >
+        <action
+            android:id="@+id/action_fragmentAddReceipt_to_fragmentAddClient"
+            app:destination="@id/fragmentAddClient" />
+        <action
+            android:id="@+id/action_fragmentAddReceipt_to_fragmentAddItem"
+            app:destination="@id/fragmentAddItem" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentCreateItem"
+        tools:layout="@layout/fragment_create_item"
+        android:name="soft.mahmod.yourreceipt.view_fragment.add_receipt.FragmentCreateItem"
+        android:label="FragmentCreateItem" />
+    <fragment
+        android:id="@+id/fragmentCreateClient"
+        android:name="soft.mahmod.yourreceipt.view_fragment.add_receipt.FragmentCreateClient"
+        android:label="fragment_create_client"
+        tools:layout="@layout/fragment_create_client" />
+</navigation>

@@ -19,6 +19,10 @@ public  class User extends Cash implements Serializable {
     @SerializedName("user_id")
     private String userId;
 
+    public User(String message, boolean error, Integer code) {
+        super(message, error, code);
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -58,10 +62,17 @@ public  class User extends Cash implements Serializable {
 
     }
 
-    public User(String message, Boolean error, Integer code) {
+    public User(String message, Boolean error, Integer code,
+                String email, String password, String storeName,
+                String phoneNum, String storeAddress, String userId) {
         super(message, error, code);
+        this.email = email;
+        this.password = password;
+        this.storeName = storeName;
+        this.phoneNum = phoneNum;
+        this.storeAddress = storeAddress;
+        this.userId = userId;
     }
-
 
     public String getEmail() {
         return email;

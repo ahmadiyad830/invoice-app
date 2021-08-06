@@ -5,10 +5,13 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import soft.mahmod.yourreceipt.R;
@@ -16,6 +19,7 @@ import soft.mahmod.yourreceipt.adapter.ViewPager2Adapter;
 import soft.mahmod.yourreceipt.databinding.ActivityDetailsBinding;
 import soft.mahmod.yourreceipt.listeners.OnSendData;
 import soft.mahmod.yourreceipt.model.Receipt;
+import soft.mahmod.yourreceipt.utils.IntentActivity;
 import soft.mahmod.yourreceipt.view_fragment.details.FragmentProducts;
 import soft.mahmod.yourreceipt.view_fragment.details.FragmentReceipt;
 import soft.mahmod.yourreceipt.view_model.ui.VMSendReceipt;
@@ -33,6 +37,11 @@ public class ActivityDetails extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_details);
         sendData();
         loadTabLayout();
+        binding.btnBack.setOnClickListener(v -> {
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
 
 
     }
@@ -50,6 +59,7 @@ public class ActivityDetails extends AppCompatActivity {
         viewPager2Adapter.addFragment(new FragmentReceipt());
         viewPager2Adapter.addFragment(new FragmentProducts());
         binding.viewPager2.setAdapter(viewPager2Adapter);
+        asd(binding.tableLayout, binding.viewPager2);
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(binding.tableLayout,
                 binding.viewPager2, (tab, position) -> {
             switch (position) {
@@ -64,6 +74,9 @@ public class ActivityDetails extends AppCompatActivity {
             }
         });
         tabLayoutMediator.attach();
+    }
+
+    private void asd(TabLayout tableLayout, ViewPager2 viewPager2) {
     }
 
 

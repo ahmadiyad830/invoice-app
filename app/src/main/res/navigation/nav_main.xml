@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/menu_add"
-        tools:layout="@layout/fragment_create_receipt"
-        android:name="soft.mahmod.yourreceipt.view_fragment.main.FragmentCreateReceipt"
+        tools:layout="@layout/fragment_add"
+        android:name="soft.mahmod.yourreceipt.view_fragment.main.add.FragmentAdd"
         android:label="FragmentCreateReceipt" />
     <fragment
         android:id="@+id/menu_setting"

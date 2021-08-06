@@ -1,5 +1,6 @@
 package soft.mahmod.yourreceipt.view_fragment.main;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -37,6 +38,7 @@ public class FragmentHome extends Fragment implements OnReceiptItemClick {
     private List<Receipt> listModel = new ArrayList<>();
     private ARReceipt adapter;
     private SessionManager manager;
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,18 +52,23 @@ public class FragmentHome extends Fragment implements OnReceiptItemClick {
         loadReceipt();
 
 
-        binding.swipeList.setOnRefreshListener(()->{
+        binding.swipeList.setOnRefreshListener(() -> {
+            listModel.clear();
             adapter.notifyDataSetChanged();
-            binding.swipeList.setRefreshing(false);
+            loadReceipt();
         });
         return binding.getRoot();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void loadReceipt() {
         vmReceiptByEmail.receiptByEmail(manager.getUser().getEmail())
                 .observe(getViewLifecycleOwner(), receipts -> {
-                    listModel.addAll(receipts);
-                    adapter.notifyDataSetChanged();
+                    if (receipts!=null){
+                        listModel.addAll(receipts);
+                        adapter.notifyDataSetChanged();
+                        binding.swipeList.setRefreshing(false);
+                    }
                 });
     }
 

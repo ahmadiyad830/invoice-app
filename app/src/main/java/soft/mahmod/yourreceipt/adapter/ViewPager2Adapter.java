@@ -1,20 +1,14 @@
 package soft.mahmod.yourreceipt.adapter;
 
 
-import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.adapter.FragmentViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import soft.mahmod.yourreceipt.listeners.OnSendData;
-import soft.mahmod.yourreceipt.model.Receipt;
-
 
 public class ViewPager2Adapter extends FragmentStateAdapter {
     private List<Fragment> listFragment = new ArrayList<>();
@@ -24,6 +18,7 @@ public class ViewPager2Adapter extends FragmentStateAdapter {
         super(fragmentActivity);
 
     }
+
 
 
     @NonNull

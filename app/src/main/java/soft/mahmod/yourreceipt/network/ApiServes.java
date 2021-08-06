@@ -35,7 +35,7 @@ public interface ApiServes extends ApiURLS {
     @POST(ALL_RECEIPT_BY_CLIENT_NAME)
     Call<List<Receipt>> getReceiptByClient(@Field("client_name") String clientName);
 
-//    @Headers("Content-Type: application/json")
+    //    @Headers("Content-Type: application/json")
     @FormUrlEncoded
     @POST(CREATE_RECEIPT)
     Call<Cash> createReceipt(@Field("user_id") String userId,
@@ -44,10 +44,19 @@ public interface ApiServes extends ApiURLS {
                              @Field("client_name") String clientName,
                              @Field("total_all") String totalAll,
                              @Field("client_phone") String clientPhone);
+
     @FormUrlEncoded
     @POST(PRODUCTS_BY_RECEIPT_ID)
     Call<List<Products>> productsByReceiptId(
             @Field("receipt_id") String receiptId
     );
+
+    @FormUrlEncoded
+    @POST(ADD_LOGO)
+    Call<Cash> addLogo(@Field("path") String path, @Field("email") String email);
+
+    @FormUrlEncoded
+    @POST(CHANGE_PASSWORD)
+    Call<Cash> changePassword(@Field("email") String email, @Field("password") String password);
 
 }

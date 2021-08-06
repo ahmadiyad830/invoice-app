@@ -13,7 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YourReceipt"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view_activity.ActivityDetails"></activity>
+        <activity
+            android:name=".view_activity.ActivityAddReceipt"
+            android:exported="true" />
+        <activity android:name=".view_activity.ActivityDetails" />
         <activity android:name=".view_activity.MainActivity" />
         <activity android:name=".view_activity.ActivityRegistration">
             <intent-filter>

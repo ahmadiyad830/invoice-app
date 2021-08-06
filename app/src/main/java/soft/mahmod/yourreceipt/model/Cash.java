@@ -8,14 +8,14 @@ public class Cash implements Serializable {
     @SerializedName("message")
     private String message;
     @SerializedName("error")
-    private Boolean error;
+    private boolean error;
     @SerializedName("code")
-    private Integer code;
+    private int code;
 
     public Cash() {
     }
 
-    public Cash(String message, Boolean error, Integer code) {
+    public Cash(String message, boolean error, Integer code) {
         this.message = message;
         this.error = error;
         this.code = code;
@@ -25,7 +25,7 @@ public class Cash implements Serializable {
         return message;
     }
 
-    public Boolean getError() {
+    public boolean getError() {
         return error;
     }
 

@@ -1,14 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view_fragment.main.FragmentSetting">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        tools:context=".view_fragment.main.FragmentSetting">
 
-</FrameLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginVertical="@dimen/_8sdp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_marginVertical="@dimen/_12sdp"
+                    android:orientation="vertical">
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_outline_account_circle_24"
+                        android:drawablePadding="@dimen/_6sdp"
+                        android:drawableTint="@color/black"
+                        android:text="@string/account"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/_18sdp"
+                        android:textStyle="normal"
+                        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+                    <View
+                        android:id="@+id/view2"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.1dp"
+                        android:layout_marginHorizontal="@dimen/_12sdp"
+                        android:layout_marginVertical="@dimen/_6sdp"
+                        android:background="@color/line_color"
+                        app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+                        tools:layout_editor_absoluteX="16dp" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/edt_account"
+                        android:background="?selectableItemBackground"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_24"
+                        android:drawableTint="@color/hint_color"
+                        android:text="@string/edit_profile"
+                        android:textColor="@color/hint_color"
+                        android:textSize="@dimen/_16ssp"
+                        android:textStyle="italic"
+                        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_marginVertical="@dimen/_12sdp"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_outline_notifications_24"
+                        android:drawablePadding="@dimen/_6sdp"
+                        android:drawableTint="@color/black"
+                        android:text="@string/notification"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/_18sdp"
+                        android:textStyle="normal"
+                        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+                    <View
+                        android:id="@+id/view222"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.1dp"
+                        android:layout_marginHorizontal="@dimen/_12sdp"
+                        android:layout_marginVertical="@dimen/_6sdp"
+                        android:background="@color/line_color"
+                        app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+                        tools:layout_editor_absoluteX="16dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/notification"
+                            android:textColor="@color/hint_color"
+                            android:textSize="@dimen/_16ssp"
+                            android:textStyle="italic"
+                            app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/app_notification"
+                            android:textColor="@color/hint_color"
+                            android:textSize="@dimen/_16ssp"
+                            android:textStyle="italic"
+                            app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout43"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_marginVertical="@dimen/_12sdp"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_outline_more_24"
+                        android:drawablePadding="@dimen/_6sdp"
+                        android:drawableTint="@color/black"
+                        android:text="@string/more"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/_18sdp"
+                        android:textStyle="normal"
+                        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+                    <View
+                        android:id="@+id/view2222"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.1dp"
+                        android:layout_marginHorizontal="@dimen/_12sdp"
+                        android:layout_marginVertical="@dimen/_6sdp"
+                        android:background="@color/line_color"
+                        app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+                        tools:layout_editor_absoluteX="16dp" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_24"
+                        android:drawableTint="@color/hint_color"
+                        android:text="@string/language"
+                        android:textColor="@color/hint_color"
+                        android:textSize="@dimen/_16ssp"
+                        android:textStyle="italic"
+                        app:layout_constraintTop_toBottomOf="@+id/view2" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_24"
+                        android:drawableTint="@color/hint_color"
+                        android:text="@string/privicy"
+                        android:textColor="@color/hint_color"
+                        android:textSize="@dimen/_16ssp"
+                        android:textStyle="italic"
+                        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_signout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="?actionBarSize"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/white"
+                    android:text="@string/sign_out"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    app:icon="@drawable/ic_outline_login_24"
+                    app:iconTint="@android:color/holo_red_dark" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

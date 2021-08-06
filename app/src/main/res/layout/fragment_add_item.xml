@@ -6,14 +6,16 @@
     <data>
 
         <variable
-            name="model"
-            type="soft.mahmod.yourreceipt.model.Receipt" />
+            name="isSearch"
+            type="Boolean" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view_fragment.main.FragmentCreateReceipt">
+        tools:context=".view_fragment.add_receipt.FragmentAddItem">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_toolbar"
@@ -33,66 +35,72 @@
                 android:layout_height="?actionBarSize"
                 android:gravity="left">
 
-                <ImageView
-                    android:id="@+id/scan_barcode"
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:layout_marginHorizontal="@dimen/_12sdp"
-                    android:src="@drawable/ic_baseline_print_24"
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/items"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/_14ssp"
+                    android:visibility='@{isSearch?View.GONE:View.VISIBLE,default = visible}'
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/text_search"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:hint="text some things"
+                    android:paddingHorizontal="@dimen/_8sdp"
+                    android:visibility='@{isSearch?View.VISIBLE:View.GONE,default = gone}'
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_search"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/btnBack"
+                    android:id="@+id/btn_search"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
-                    android:layout_marginHorizontal="@dimen/_12sdp"
-                    android:src="@drawable/ic_baseline_arrow_back_24"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:src="@drawable/ic_twotone_search_24"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/textView2"
                     app:layout_constraintTop_toTopOf="parent"
                     app:tint="@color/icon_color" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.cardview.widget.CardView>
 
-        <TextView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rec_item"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{model.receiptDate}"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/_14ssp"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/card_toolbar" />
 
-        <TextView
-            android:layout_width="match_parent"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_to_create_item"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{model.clientName}"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/_14ssp"
+            android:src="@drawable/ic_baseline_add_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.90"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.536" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{model.clientPhone}"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/_14ssp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.572" />
+            app:layout_constraintVertical_bias="0.8" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

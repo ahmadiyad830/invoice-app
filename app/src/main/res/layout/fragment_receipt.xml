@@ -7,6 +7,9 @@
         <variable
             name="model"
             type="soft.mahmod.yourreceipt.model.Receipt" />
+        <variable
+            name="imageUrl"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,9 +33,10 @@
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/roundedImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_120sdp"
             android:layout_marginTop="28dp"
+            android:imageURL="@{imageUrl}"
             android:src="@mipmap/ic_launcher"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"

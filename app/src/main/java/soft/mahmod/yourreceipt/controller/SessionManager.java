@@ -22,7 +22,7 @@ public class SessionManager {
 
     private static Context mCtx;
     private static SessionManager instance;
-    private SharedPreferences sharedPreferences;
+    private final SharedPreferences sharedPreferences;
 
     protected SessionManager(Context context) {
         mCtx = context;
@@ -87,5 +87,17 @@ public class SessionManager {
                 sharedPreferences.getString(KEY_STORE_ADDRESS, ""),
                 sharedPreferences.getString(KEY_USER_ID, "")
         );
+    }
+    public boolean hasNewPass(String password){
+        User user = new User();
+        user.setPassword(password);
+        String newPass = user.getPassword();
+        String oldPass = getUser().getPassword();
+        return !oldPass.equals(newPass);
+    }
+    public void setPassword(String pass){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(KEY_PASSWORD,pass);
+        editor.apply();
     }
 }
