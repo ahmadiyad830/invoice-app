@@ -45,9 +45,9 @@ public class FragmentHome extends Fragment implements OnReceiptItemClick {
         // Inflate the layout for this fragment.
         binding  = DataBindingUtil.inflate(inflater,R.layout.fragment_home, container, false);
         init();
+        adapter = new ARReceipt(listModel,this);
         binding.mainRecycler.setHasFixedSize(true);
         binding.mainRecycler.setLayoutManager(new LinearLayoutManager(requireContext()));
-        adapter = new ARReceipt(listModel,this);
         binding.mainRecycler.setAdapter(adapter);
         loadReceipt();
 

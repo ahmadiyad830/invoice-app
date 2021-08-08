@@ -8,6 +8,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import soft.mahmod.yourreceipt.model.Cash;
+import soft.mahmod.yourreceipt.model.Items;
 import soft.mahmod.yourreceipt.model.Products;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.model.User;
@@ -58,5 +59,20 @@ public interface ApiServes extends ApiURLS {
     @FormUrlEncoded
     @POST(CHANGE_PASSWORD)
     Call<Cash> changePassword(@Field("email") String email, @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST(ITEM_BY_EMAIL)
+    Call<List<Items>> itemsByEmail(@Field("email") String email);
+
+    @FormUrlEncoded
+    @POST(ITEM_CREATE)
+    Call<Cash> createItem(
+            @Field("user_id") String userId,
+            @Field("item_name") String itemName,
+            @Field("item_price") String itemPrice,
+            @Field("discount") String discount,
+            @Field("item_tax") String itemTax,
+            @Field("item_note") String itemNote
+    );
 
 }

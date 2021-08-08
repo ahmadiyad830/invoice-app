@@ -6,15 +6,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import soft.mahmod.yourreceipt.R;
+import soft.mahmod.yourreceipt.adapter.ARItems;
+import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.FragmentAddItemBinding;
+import soft.mahmod.yourreceipt.model.Items;
+import soft.mahmod.yourreceipt.view_model.VMItemByEmail;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,22 +32,66 @@ import soft.mahmod.yourreceipt.databinding.FragmentAddItemBinding;
  */
 public class FragmentAddItem extends Fragment {
     private FragmentAddItemBinding binding;
+    private VMItemByEmail vmItemByEmail;
+    private ARItems adapter;
+    private SessionManager manager;
+    private List<Items> modelList = new ArrayList<>();
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        manager = SessionManager.getInstance(requireContext());
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_add_item, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_item, container, false);
+        init();
+        adapter = new ARItems(modelList);
+        binding.recItem.setHasFixedSize(true);
+        binding.recItem.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.recItem.setAdapter(adapter);
+        loadItems();
         return binding.getRoot();
+    }
+
+    private void init() {
+        vmItemByEmail = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(
+                requireActivity().getApplication()
+        )).get(VMItemByEmail.class);
+    }
+
+    private void loadItems() {
+        vmItemByEmail.itemByEmail(manager.getUser().getEmail())
+                .observe(getViewLifecycleOwner(), items -> {
+                    if (items != null) {
+                        int oldSize = modelList.size();
+                        modelList.addAll(items);
+                        adapter.notifyItemRangeInserted(oldSize,modelList.size());
+                    }
+
+                });
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         binding.fabToCreateItem.setOnClickListener(v -> {
             NavController controller = Navigation.findNavController(view);
             controller.navigate(R.id.action_fragmentAddItem_to_fragmentCreateItem);
         });
+        binding.btnSearch.setOnClickListener(v -> {
+            binding.setIsSearch(true);
+        });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        int size = modelList.size();
+        modelList.clear();
+        adapter.notifyItemRangeRemoved(size, modelList.size());
     }
 }

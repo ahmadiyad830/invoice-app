@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Your Receipt</string>
-    <string name="email">email</string>
+    <string name="email">Email</string>
     <string name="password">password</string>
     <string name="config_password">config password</string>
     <string name="home">Home</string>
@@ -34,7 +34,7 @@
     <string name="no_result_found">No Result Found</string>
     <string name="edit_your_pharmacy">Edit Your Pharmacy</string>
     <string name="dosage_form">Dosage form</string>
-    <string name="quantity">quantity</string>
+    <string name="quantity">Quantity</string>
     <string name="scientific">scientific</string>
     <string name="concentration">concentration</string>
     <string name="phone_number">Phone Number</string>
@@ -62,8 +62,8 @@
     <string name="discount">Discount</string>
     <string name="take">take</string>
     <string name="dues">dues</string>
-    <string name="add_new_client">Add New Client</string>
-    <string name="add_new_item">Add New Item</string>
+    <string name="add_new_client">Add Client</string>
+    <string name="add_new_item">Add Item</string>
     <string name="more">More</string>
     <string name="note">Note</string>
     <string name="add_logo">Add Logo</string>
@@ -72,4 +72,11 @@
     <string name="discount_total_all">Discount Total All</string>
     <string name="items">Items</string>
     <string name="client">Client</string>
+    <string name="tax">Tax</string>
+    <string name="add_info">Additional Information</string>
+    <string name="tax_reg_no">Tax Reg No</string>
+    <string name="address_1">Address 1</string>
+    <string name="address_2">Address 2</string>
+    <string name="store_address_1">Store Address 1</string>
+    <string name="store_address_2">Store Address 2</string>
 </resources>
