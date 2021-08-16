@@ -72,7 +72,6 @@
         <action
             android:id="@+id/action_fragmentCreateClient_to_fragmentAddClient"
             app:destination="@id/fragmentAddClient"
-            app:popUpTo=""
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right"/>
     </fragment>

@@ -1,15 +1,10 @@
 package soft.mahmod.yourreceipt.repository;
 
-import android.util.JsonReader;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
-import com.google.gson.internal.JsonReaderInternalAccess;
-
-import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;

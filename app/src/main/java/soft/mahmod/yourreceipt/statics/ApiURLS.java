@@ -3,7 +3,7 @@ package soft.mahmod.yourreceipt.statics;
 
 public interface ApiURLS {
     //    TODO STATIC URLS
-    String STATIC_URL = "http://192.168.1.60/back%20end/api/";
+    String STATIC_URL = "http://192.168.1.73/back%20end/api/";
     //    TODO USER ACCOUNT
     String SIGN_IN = "query_registration/sign_in.php";
     String SIGN_UP = "query_registration/sign_up.php";
@@ -24,6 +24,8 @@ public interface ApiURLS {
     //    create client
     String CREATE_CLIENT = "query_client/client_create.php";
     String ALL_CLIENT_BY_EMAIL = "query_client/client_by_email.php";
+
+
 //query by email
 //http://192.168.1.14/back%20end/api/query_receipt/all_receipt_user.php
 //create receipt

@@ -76,4 +76,6 @@
     <string name="add_info">Additional Information</string>
     <string name="tax_reg_no">Tax Reg No</string>
     <string name="address">Address</string>
+    <string name="hide">hide</string>
+    <string name="total_all">Total All</string>
 </resources>

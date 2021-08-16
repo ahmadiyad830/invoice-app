@@ -4,16 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-<!--model save state create receipt-->
+        <!--model save state create receipt-->
         <variable
             name="model"
             type="soft.mahmod.yourreceipt.model.CreateReceipt" />
+
         <variable
             name="hasItem"
             type="Boolean" />
+
         <variable
             name="time"
             type="String" />
+
         <variable
             name="date"
             type="String" />
@@ -124,6 +127,7 @@
                         android:textStyle="italic" />
 
                     <TextView
+                        android:id="@+id/txt_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -234,17 +238,40 @@
 
                 </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/items_rec"
+                <LinearLayout
+                    android:id="@+id/liner_rec"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/_12sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:visibility='@{hasItem?View.VISIBLE:View.GONE ,default = gone}'
+                    android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linear_add_itcl" />
+                    app:layout_constraintTop_toBottomOf="@+id/linear_add_itcl">
+
+                    <TextView
+                        android:id="@+id/txt_visible_rec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_margin="@dimen/_12sdp"
+                        android:text="@string/hide"
+                        android:textColor="@color/top_and_bottom_color"
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintBottom_toTopOf="@id/liner_rec"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linear_add_itcl" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/items_rec"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_8sdp"
+                        android:layout_marginVertical="@dimen/_12sdp"
+                        android:visibility='@{hasItem?View.VISIBLE:View.GONE ,default = gone}' />
+                </LinearLayout>
+
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView"
@@ -256,7 +283,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/items_rec">
+                    app:layout_constraintTop_toBottomOf="@+id/liner_rec">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -376,12 +403,12 @@
                     app:layout_constraintTop_toBottomOf="@+id/cardView2313">
 
                     <EditText
-                        android:id="@+id/edt_client_discount"
+                        android:id="@+id/edt_total_all"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_8sdp"
                         android:background="@drawable/custom_stork"
-                        android:hint="@string/discount_total_all"
+                        android:hint="@string/total_all"
                         android:inputType="numberDecimal"
                         android:padding="@dimen/_12sdp"
                         app:layout_constraintTop_toBottomOf="@+id/cardView2313" />

@@ -1,13 +1,18 @@
 package soft.mahmod.yourreceipt.model;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.List;
-
+@Entity(tableName = "products")
 public class Products extends Cash implements Serializable {
+    @PrimaryKey(autoGenerate = true)
     @SerializedName("products_id")
-    private String productId;
+    private int productId;
     @SerializedName("products_price")
     private String productsPrice;
     @SerializedName("product_quantity")
@@ -21,8 +26,10 @@ public class Products extends Cash implements Serializable {
     @SerializedName("item_name")
     private String itemName;
 
+
+    @Ignore
     public Products(String message, Boolean error, Integer code,
-                    String productId, String productsPrice, String productsQuantity,
+                    int productId, String productsPrice, String productsQuantity,
                     String total, String notes, String receiptId,String itemName) {
         super(message, error, code);
         this.itemName = itemName;
@@ -34,7 +41,7 @@ public class Products extends Cash implements Serializable {
         this.receiptId = receiptId;
     }
 
-    public Products(String productId, String productsPrice, String productsQuantity,
+    public Products(int productId, String productsPrice, String productsQuantity,
                     String total, String notes, String receiptId,String itemName) {
         this.productId = productId;
         this.productsPrice = productsPrice;
@@ -49,11 +56,11 @@ public class Products extends Cash implements Serializable {
 
     }
 
-    public String getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(String productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 

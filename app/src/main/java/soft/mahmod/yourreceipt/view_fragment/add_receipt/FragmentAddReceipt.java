@@ -1,5 +1,6 @@
 package soft.mahmod.yourreceipt.view_fragment.add_receipt;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,20 +10,31 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import soft.mahmod.yourreceipt.R;
+import soft.mahmod.yourreceipt.adapter.ARProducts;
+import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.FragmentAddReceiptBinding;
 import soft.mahmod.yourreceipt.model.CreateReceipt;
+import soft.mahmod.yourreceipt.model.Products;
+import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.utils.HandleTimeCount;
 import soft.mahmod.yourreceipt.view_activity.MainActivity;
+import soft.mahmod.yourreceipt.view_model.VMCreateReceipt;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,8 +42,11 @@ import soft.mahmod.yourreceipt.view_activity.MainActivity;
  * create an instance of this fragment.
  */
 public class FragmentAddReceipt extends Fragment implements View.OnClickListener {
+    private static final String TAG = "FragmentAddReceipt";
     private FragmentAddReceiptBinding binding;
     private HandleTimeCount handleTimeCount;
+    private ARProducts adapter;
+    private List<Products> listModel = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,7 +54,7 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_receipt, container, false);
         CreateReceipt model = new CreateReceipt();
-        handleTimeCount = new HandleTimeCount();
+        init();
         handleTimeCount.getDate();
         handleTimeCount.setTv_time(binding.txtTime);
         handleTimeCount.countDownStart();
@@ -48,7 +63,68 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
         binding.switchPrint.setOnCheckedChangeListener((buttonView, isChecked) -> {
             model.setChecked(isChecked);
         });
+        binding.txtVisibleRec.setOnClickListener(v -> {
+            binding.setHasItem(!binding.getHasItem());
+        });
+        binding.btnDown.setOnClickListener(v -> {
+            testReceipt();
+        });
+
         return binding.getRoot();
+    }
+
+    private void testReceipt() {
+        Receipt model = new Receipt(SessionManager.getInstance(requireContext()).getUser().getUserId());
+        model.setSubject(binding.edtSubject.getText().toString().trim());
+        model.setReceiptDate("time: " + binding.txtTime.getText().toString().trim() + "\n"
+                + "date: " + handleTimeCount.getDate());
+        model.setTotalAll(binding.edtTotalAll.getText().toString().trim());
+        model.setClientName(binding.edtClientName.getText().toString().trim());
+        model.setClientPhone(binding.edtClientPhone.getText().toString().trim());
+
+        VMCreateReceipt vmCreateReceipt = new ViewModelProvider(requireActivity()
+                , new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
+                .get(VMCreateReceipt.class);
+        vmCreateReceipt.createReceipt(model).observe(getViewLifecycleOwner(), cash -> {
+            Log.d(TAG, "testReceipt: " + cash);
+        });
+    }
+
+    private void init() {
+        handleTimeCount = new HandleTimeCount();
+        adapter = new ARProducts(listModel);
+        binding.itemsRec.setHasFixedSize(true);
+        binding.itemsRec.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.itemsRec.setAdapter(adapter);
+        loadProducts();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void loadProducts() {
+        Products model = new Products(1, "123123", "123123",
+                "adfadf", "asdfaf", "1", "asdf");
+        Products model2 = new Products(1, "123123", "123123",
+                "adfadf", "asdfaf", "1", "asdf");
+        Products model3 = new Products(1, "123123", "123123",
+                "adfadf", "asdfaf", "1", "asdf");
+        Products model4 = new Products(1, "123123", "123123",
+                "adfadf", "asdfaf", "1", "asdf");
+        Products model5 = new Products(1, "123123", "123123",
+                "adfadf", "asdfaf", "1", "asdf");
+        Products model6 = new Products(1, "123123", "123123",
+                "adfadf", "asdfaf", "1", "asdf");
+        Products model7 = new Products(1, "123123", "123123",
+                "adfadf", "asdfaf", "1", "asdf");
+
+        listModel.add(model);
+        listModel.add(model2);
+        listModel.add(model3);
+        listModel.add(model4);
+        listModel.add(model5);
+        listModel.add(model6);
+        listModel.add(model7);
+        adapter.notifyDataSetChanged();
+        binding.setHasItem(true);
     }
 
     @Override
