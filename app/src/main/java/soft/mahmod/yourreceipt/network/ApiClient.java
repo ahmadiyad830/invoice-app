@@ -17,7 +17,7 @@ public class ApiClient implements ApiURLS{
                 .create();
         retrofit = new Retrofit.Builder()
                 .baseUrl(STATIC_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
     }
     public synchronized static ApiClient getInstance(){

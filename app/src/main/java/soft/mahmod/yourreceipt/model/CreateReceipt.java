@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class CreateReceipt implements Serializable {
-    private List<Cleint> listClient;
+    private List<Client> listClient;
     private List<Products> listProducts;
     private String subject;
     private boolean typeReceipt;
@@ -33,11 +33,11 @@ public class CreateReceipt implements Serializable {
         this.checked = checked;
     }
 
-    public List<Cleint> getListClient() {
+    public List<Client> getListClient() {
         return listClient;
     }
 
-    public void setListClient(List<Cleint> listClient) {
+    public void setListClient(List<Client> listClient) {
         this.listClient = listClient;
     }
 

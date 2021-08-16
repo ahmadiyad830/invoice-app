@@ -6,54 +6,69 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import soft.mahmod.yourreceipt.R;
-import soft.mahmod.yourreceipt.adapter.ARReceipt;
 import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.ActivityMainBinding;
-import soft.mahmod.yourreceipt.model.Receipt;
-import soft.mahmod.yourreceipt.utils.IntentActivity;
-import soft.mahmod.yourreceipt.view_model.VMCreateReceipt;
-import soft.mahmod.yourreceipt.view_model.VMReceiptByEmail;
+import soft.mahmod.yourreceipt.view_model.VMUserConnection;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private VMUserConnection connection;
+    private SessionManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-
+        connection = new ViewModelProvider
+                (this, new ViewModelProvider.AndroidViewModelFactory(getApplication()))
+                .get(VMUserConnection.class);
+        manager = SessionManager.getInstance(this);
+        if (manager == null) {
+            finish();
+        }else {
+            onStart();
+        }
     }
 
 
     @Override
     protected void onStart() {
         super.onStart();
-        NavController controller = Navigation.findNavController(this, R.id.main_container);
-        NavigationUI.setupWithNavController(binding.mainBottom, controller);
+
+        connection.userConnection(manager.getUser().getEmail()).observe(this, cash -> {
+            if (cash != null) {
+                if (cash.getError()) {
+                    manager.userSignOut(this);
+                    Toast.makeText(this, cash.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    onResume();
+                }
+            }
+
+        });
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        NavController controller = Navigation.findNavController(this, R.id.main_container);
+        NavigationUI.setupWithNavController(binding.mainBottom, controller);
         binding.fab.setOnClickListener(v -> {
-            Intent intent = new Intent(this,ActivityAddReceipt.class);
+            Intent intent = new Intent(this, ActivityAddReceipt.class);
             startActivity(intent);
         });
 
     }
+
     //    private void createReceipt() {
 //        Receipt model = new Receipt(manager.getUser().getUserId(), "android", "asdfasdf",
 //                "ahmad iyad", "12341234", "1234");

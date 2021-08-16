@@ -61,10 +61,13 @@ public class SessionManager {
     }
 
     public void userSignOut(Activity activity) {
-        sharedPreferences.edit().clear().apply();
+        clearUser();
         Intent intent = new Intent(mCtx, ActivityRegistration.class);
         mCtx.startActivity(intent);
         activity.finish();
+    }
+    public void clearUser(){
+        sharedPreferences.edit().clear().apply();
     }
 
     public void setUser(User model) {

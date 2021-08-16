@@ -6,6 +6,8 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +30,7 @@ public class FragmentCreateItem extends Fragment {
     private FragmentCreateItemBinding binding;
     private VMCreateItem vmCreateItem;
     private SessionManager manager ;
+    private NavController controller;
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,9 +46,13 @@ public class FragmentCreateItem extends Fragment {
         vmCreateItem = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(
                 requireActivity().getApplication()
         )).get(VMCreateItem.class);
+        controller = Navigation.findNavController(binding.getRoot());
         binding.btnDown.setOnClickListener(v -> {
             createItem();
             Log.d(TAG, "onCreateView: click");
+        });
+        binding.btnBack.setOnClickListener(v -> {
+            controller.navigate(R.id.action_fragmentCreateItem_to_fragmentAddItem);
         });
         return binding.getRoot();
     }

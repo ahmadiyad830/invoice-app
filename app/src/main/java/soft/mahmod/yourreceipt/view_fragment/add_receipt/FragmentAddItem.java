@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,15 +50,22 @@ public class FragmentAddItem extends Fragment {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_item, container, false);
         init();
-        adapter = new ARItems(modelList);
-        binding.recItem.setHasFixedSize(true);
-        binding.recItem.setLayoutManager(new LinearLayoutManager(requireContext()));
-        binding.recItem.setAdapter(adapter);
+        
+        binding.swipeList.setOnRefreshListener(() -> {
+            modelList.clear();
+            adapter.notifyDataSetChanged();
+            loadItems();
+
+        });
         loadItems();
         return binding.getRoot();
     }
 
     private void init() {
+        adapter = new ARItems(modelList);
+        binding.recItem.setHasFixedSize(true);
+        binding.recItem.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.recItem.setAdapter(adapter);
         vmItemByEmail = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(
                 requireActivity().getApplication()
         )).get(VMItemByEmail.class);
@@ -71,6 +79,7 @@ public class FragmentAddItem extends Fragment {
                         modelList.addAll(items);
                         adapter.notifyItemRangeInserted(oldSize,modelList.size());
                     }
+                    binding.swipeList.setRefreshing(false);
 
                 });
     }

@@ -5,9 +5,9 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import soft.mahmod.yourreceipt.model.Cash;
+import soft.mahmod.yourreceipt.model.Client;
 import soft.mahmod.yourreceipt.model.Items;
 import soft.mahmod.yourreceipt.model.Products;
 import soft.mahmod.yourreceipt.model.Receipt;
@@ -65,7 +65,7 @@ public interface ApiServes extends ApiURLS {
     Call<List<Items>> itemsByEmail(@Field("email") String email);
 
     @FormUrlEncoded
-    @POST(ITEM_CREATE)
+    @POST(CREATE_ITEM)
     Call<Cash> createItem(
             @Field("user_id") String userId,
             @Field("item_name") String itemName,
@@ -74,5 +74,27 @@ public interface ApiServes extends ApiURLS {
             @Field("item_tax") String itemTax,
             @Field("item_note") String itemNote
     );
+
+    @FormUrlEncoded
+    @POST(USER_CONN)
+    Call<Cash> userConnection(@Field("email") String email);
+
+
+    @FormUrlEncoded
+    @POST(CREATE_CLIENT)
+    Call<Cash> createClient(
+            @Field("client_email") String email,
+            @Field("phone_number") String phone,
+            @Field("additional_information") String addInfo,
+            @Field("tax_reg_no") String taxRegNo,
+            @Field("address") String address,
+            @Field("store_address") String storeAddress,
+            @Field("note") String note,
+            @Field("client_name") String name,
+            @Field("client_user_id") String userId
+    );
+    @FormUrlEncoded
+    @POST(ALL_CLIENT_BY_EMAIL)
+    Call<List<Client>> clientByEmail(@Field("email")String email);
 
 }

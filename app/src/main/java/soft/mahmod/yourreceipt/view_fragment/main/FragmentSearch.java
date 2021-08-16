@@ -49,7 +49,7 @@ public class FragmentSearch extends Fragment implements OnReceiptItemClick {
             String client = binding.textSearch.getText().toString().trim();
             listModel.clear();
             adapter.notifyDataSetChanged();
-            if (!client.isEmpty()){
+            if (!client.isEmpty()) {
                 loadReceipt();
             }
         });
@@ -63,6 +63,7 @@ public class FragmentSearch extends Fragment implements OnReceiptItemClick {
                         int oldSize = listModel.size();
                         listModel.addAll(receipts);
                         adapter.notifyItemRangeInserted(oldSize, listModel.size());
+                        binding.setHasValue(receipts.size() > 0);
                     }
                 });
     }
@@ -77,7 +78,7 @@ public class FragmentSearch extends Fragment implements OnReceiptItemClick {
     @Override
     public void itemClick(Receipt model) {
         Intent intent = new Intent(requireContext(), ActivityDetails.class);
-        intent.putExtra("model",model);
+        intent.putExtra("model", model);
         startActivity(intent);
     }
 }

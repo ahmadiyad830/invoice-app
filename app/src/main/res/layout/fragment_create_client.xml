@@ -132,7 +132,7 @@
                         android:textSize="@dimen/_12ssp" />
 
                     <EditText
-                        android:id="@+id/edt_price"
+                        android:id="@+id/edt_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
@@ -156,7 +156,7 @@
                         android:textSize="@dimen/_12ssp" />
 
                     <EditText
-                        android:id="@+id/edt_quantity"
+                        android:id="@+id/edt_client_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
@@ -180,7 +180,7 @@
                         android:textSize="@dimen/_12ssp" />
 
                     <EditText
-                        android:id="@+id/edt_discount"
+                        android:id="@+id/edt_add_info"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
@@ -217,29 +217,6 @@
                         app:layout_constraintTop_toBottomOf="@+id/cardView" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/linearLayout9"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_8sdp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/address_1"
-                        android:textColor="@color/text_color"
-                        android:textSize="@dimen/_12ssp" />
-
-                    <EditText
-                        android:id="@+id/edt_tax"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/custom_stork"
-                        android:hint="@string/address_1"
-                        android:inputType="text"
-                        android:padding="@dimen/_12sdp" />
-                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/linearLayodut9"
@@ -251,43 +228,20 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@string/address_2"
+                        android:text="@string/address"
                         android:textColor="@color/text_color"
                         android:textSize="@dimen/_12ssp" />
 
                     <EditText
-                        android:id="@+id/edt_taxd"
+                        android:id="@+id/edt_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
-                        android:hint="@string/address_2"
+                        android:hint="@string/address"
                         android:inputType="text"
                         android:padding="@dimen/_12sdp" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/linearLayoddut9"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_8sdp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/store_address_1"
-                        android:textColor="@color/text_color"
-                        android:textSize="@dimen/_12ssp" />
-
-                    <EditText
-                        android:id="@+id/eddt_tax"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/custom_stork"
-                        android:hint="@string/store_address_1"
-                        android:inputType="text"
-                        android:padding="@dimen/_12sdp" />
-                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/linearLasadyodut9"
@@ -299,16 +253,16 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@string/store_address_2"
+                        android:text="@string/store_address"
                         android:textColor="@color/text_color"
                         android:textSize="@dimen/_12ssp" />
 
                     <EditText
-                        android:id="@+id/edt_taxasdd"
+                        android:id="@+id/edt_store_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
-                        android:hint="@string/store_address_2"
+                        android:hint="@string/store_address"
                         android:inputType="text"
                         android:padding="@dimen/_12sdp" />
                 </LinearLayout>
@@ -327,7 +281,7 @@
                         android:textSize="@dimen/_12ssp" />
 
                     <EditText
-                        android:id="@+id/edt_subject"
+                        android:id="@+id/edt_note"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
