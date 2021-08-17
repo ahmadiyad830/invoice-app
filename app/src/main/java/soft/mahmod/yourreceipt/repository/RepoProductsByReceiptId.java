@@ -1,6 +1,5 @@
 package soft.mahmod.yourreceipt.repository;
 
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -29,7 +28,6 @@ public class RepoProductsByReceiptId {
         serves.productsByReceiptId(receiptId).enqueue(new Callback<List<Products>>() {
             @Override
             public void onResponse(@NonNull Call<List<Products>> call, @NonNull Response<List<Products>> response) {
-                Log.d(TAG, "productsByReceiptId: "+response.body().get(0).toString());
                 if (response.isSuccessful()) {
                     data.setValue(response.body());
                 }

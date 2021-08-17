@@ -2,6 +2,8 @@ package soft.mahmod.yourreceipt.view_fragment.details;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,6 +21,7 @@ import soft.mahmod.yourreceipt.adapter.ARProducts;
 import soft.mahmod.yourreceipt.databinding.FragmentProductsBinding;
 import soft.mahmod.yourreceipt.model.Products;
 import soft.mahmod.yourreceipt.view_model.VMProductsByReceiptId;
+import soft.mahmod.yourreceipt.view_model.ui.VMSendReceipt;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,26 +33,41 @@ public class FragmentProducts extends Fragment {
     private VMProductsByReceiptId vmProductsByReceiptId;
     private ARProducts adapter;
     private List<Products> listModel = new ArrayList<>();
+    private VMSendReceipt vmSendReceipt;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_products, container, false);
-        vmProductsByReceiptId = new ViewModelProvider(getViewModelStore(),new ViewModelProvider.AndroidViewModelFactory
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_products, container, false);
+        vmProductsByReceiptId = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
                 (requireActivity().getApplication()))
                 .get(VMProductsByReceiptId.class);
-        loadProducts();
+
         return binding.getRoot();
     }
-    private void loadProducts() {
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        vmSendReceipt = new ViewModelProvider(requireActivity()).get(VMSendReceipt.class);
+        vmSendReceipt.getModel().observe(getViewLifecycleOwner(), receipt -> {
+            if (receipt != null) {
+                loadProducts(receipt.getReceiptId());
+            }
+        });
+    }
+
+    private void loadProducts(String id) {
         binding.productsRecycler.setHasFixedSize(true);
         binding.productsRecycler.setLayoutManager(new LinearLayoutManager(requireContext()));
         adapter = new ARProducts(listModel);
         binding.productsRecycler.setAdapter(adapter);
-        vmProductsByReceiptId.productsByReceiptId("59").observe(getViewLifecycleOwner(),products -> {
-            if (products!=null){
+        vmProductsByReceiptId.productsByReceiptId(id).observe(getViewLifecycleOwner(), products -> {
+            int old = listModel.size();
+            if (products != null) {
                 listModel.addAll(products);
-                adapter.notifyDataSetChanged();
+                adapter.notifyItemRangeInserted(old, products.size());
             }
         });
     }

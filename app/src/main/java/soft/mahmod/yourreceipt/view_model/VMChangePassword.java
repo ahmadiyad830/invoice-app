@@ -12,7 +12,7 @@ public class VMChangePassword extends ViewModel {
     public VMChangePassword() {
         changePassword = new RepoChangePassword();
     }
-    public LiveData<Cash> changePassword(String email,String password){
-        return changePassword.changePassword(email, password);
+    public LiveData<Cash> changePassword(String email,String oldPass,String password ,String passwordC){
+        return changePassword.changePassword(email,oldPass, password,passwordC);
     }
 }

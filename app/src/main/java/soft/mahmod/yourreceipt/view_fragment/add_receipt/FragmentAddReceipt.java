@@ -61,7 +61,7 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
         binding.setDate(handleTimeCount.getDate());
 
         binding.switchPrint.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            model.setChecked(isChecked);
+            binding.setChecked(isChecked);
         });
         binding.txtVisibleRec.setOnClickListener(v -> {
             binding.setHasItem(!binding.getHasItem());
@@ -69,7 +69,7 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
         binding.btnDown.setOnClickListener(v -> {
             testReceipt();
         });
-
+        binding.setModel(model);
         return binding.getRoot();
     }
 
@@ -99,7 +99,6 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
         loadProducts();
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     public void loadProducts() {
         Products model = new Products(1, "123123", "123123",
                 "adfadf", "asdfaf", "1", "asdf");
@@ -115,7 +114,7 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
                 "adfadf", "asdfaf", "1", "asdf");
         Products model7 = new Products(1, "123123", "123123",
                 "adfadf", "asdfaf", "1", "asdf");
-
+        int old = listModel.size();
         listModel.add(model);
         listModel.add(model2);
         listModel.add(model3);
@@ -123,8 +122,8 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
         listModel.add(model5);
         listModel.add(model6);
         listModel.add(model7);
-        adapter.notifyDataSetChanged();
-        binding.setHasItem(true);
+        adapter.notifyItemRangeInserted(old, listModel.size());
+        binding.setHasItem(false);
     }
 
     @Override

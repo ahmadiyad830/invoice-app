@@ -1,7 +1,5 @@
 package soft.mahmod.yourreceipt.repository;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -30,7 +28,6 @@ public class RepoUserConnection {
                     data.setValue(response.body());
                 }
             }
-
             @Override
             public void onFailure(@NonNull Call<Cash> call, @NonNull Throwable t) {
                 t.printStackTrace();

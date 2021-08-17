@@ -6,15 +6,16 @@
     app:startDestination="@id/menu_home">
 
     <fragment
-        android:id="@+id/menu_add"
-        tools:layout="@layout/fragment_add"
-        android:name="soft.mahmod.yourreceipt.view_fragment.main.add.FragmentAdd"
-        android:label="FragmentCreateReceipt" />
-    <fragment
         android:id="@+id/menu_setting"
         android:name="soft.mahmod.yourreceipt.view_fragment.main.FragmentSetting"
         android:label="fragment_setting"
-        tools:layout="@layout/fragment_setting" />
+        tools:layout="@layout/fragment_setting">
+        <action
+            android:id="@+id/action_menu_setting_to_fragmentEditAccount"
+            app:destination="@id/fragmentEditAccount"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/menu_search"
         android:name="soft.mahmod.yourreceipt.view_fragment.main.FragmentSearch"
@@ -27,7 +28,16 @@
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/menu_home"
-        tools:layout="@layout/fragment_home"
         android:name="soft.mahmod.yourreceipt.view_fragment.main.FragmentHome"
-        android:label="FragmentHome" />
+        android:label="FragmentHome"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/fragmentEditAccount"
+        android:name="soft.mahmod.yourreceipt.view_fragment.edit_account.FragmentEditAccount"
+        android:label="fragment_edit_account"
+        tools:layout="@layout/fragment_edit_account" >
+        <action
+            android:id="@+id/action_fragmentEditAccount_to_menu_setting"
+            app:destination="@id/menu_setting" />
+    </fragment>
 </navigation>

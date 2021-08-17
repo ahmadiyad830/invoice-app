@@ -7,6 +7,8 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -56,16 +58,8 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
         if (binding.btnSignout.getId() == id) {
             manager.userSignOut(requireActivity());
         } else if (binding.edtAccount.getId() == id) {
-
-//            Log.d(TAG, "onClick: click");
-//            String newPass = "1234";
-//            if (manager.hasNewPass(newPass)) {
-//                vmChangePassword.changePassword(manager.getUser().getEmail(), newPass)
-//                        .observe(getViewLifecycleOwner(), cash -> {
-//                            Log.d(TAG, "onClick: "+cash.toString());
-//                        });
-//            }
-
+            NavController controller = Navigation.findNavController(binding.getRoot());
+            controller.navigate(R.id.action_menu_setting_to_fragmentEditAccount);
         }
     }
 }

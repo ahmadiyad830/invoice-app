@@ -26,25 +26,27 @@ public class RepoChangePassword {
         serves = ApiClient.getInstance().getServes();
     }
 
-    public LiveData<Cash> changePassword(String email, String password) {
+    public LiveData<Cash> changePassword(String email,String oldPass, String password, String passwordC) {
         MutableLiveData<Cash> data = new MutableLiveData<>();
-        serves.changePassword(email, password).enqueue(new Callback<Cash>() {
+        serves.changePassword( email,oldPass, password,passwordC).enqueue(new Callback<Cash>() {
             @Override
             public void onResponse(@NonNull Call<Cash> call, @NonNull Response<Cash> response) {
-                if (response.isSuccessful()){
-                    Log.d(TAG, "onResponse: "+response.body());
-                }else {
-                    JSONObject json = null;
-                    try {
-                        json = new JSONObject(response.errorBody().string());
-                        Log.d(TAG, "onResponse: "+json.toString());
-                        Cash cash = new Cash(json.getString("message")
-                                ,json.getBoolean("error"),json.getInt("code"));
-                        data.setValue(cash);
-                    } catch (JSONException | IOException e) {
-                        e.printStackTrace();
-                    }
+                if (response.isSuccessful()) {
+                    Log.d(TAG, "onResponse: " + response.body());
+                    data.setValue(response.body());
                 }
+//                else {
+//                    JSONObject json = null;
+//                    try {
+//                        json = new JSONObject(response.errorBody().string());
+//                        Log.d(TAG, "onResponse: "+json.toString());
+//                        Cash cash = new Cash(json.getString("message")
+//                                ,json.getBoolean("error"),json.getInt("code"));
+//                        data.setValue(cash);
+//                    } catch (JSONException | IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
             }
 
             @Override

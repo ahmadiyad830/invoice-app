@@ -39,12 +39,12 @@ public interface ApiServes extends ApiURLS {
     //    @Headers("Content-Type: application/json")
     @FormUrlEncoded
     @POST(CREATE_RECEIPT)
-    Call<Cash> createReceipt(@Field("user_id") String userId,
-                             @Field("subject") String subject,
+    Call<Cash> createReceipt(@Field("subject") String subject,
                              @Field("receipt_date") String receiptDate,
-                             @Field("client_name") String clientName,
+                             @Field("client_id") String clientId,
                              @Field("total_all") String totalAll,
-                             @Field("client_phone") String clientPhone);
+                             @Field("client_phone") String clientPhone,
+                             @Field("receipt_user_id") String userId);
 
     @FormUrlEncoded
     @POST(PRODUCTS_BY_RECEIPT_ID)
@@ -58,7 +58,10 @@ public interface ApiServes extends ApiURLS {
 
     @FormUrlEncoded
     @POST(CHANGE_PASSWORD)
-    Call<Cash> changePassword(@Field("email") String email, @Field("password") String password);
+    Call<Cash> changePassword(@Field("email") String email,
+                              @Field("old_password")String oldPass,
+                              @Field("password") String password,
+                              @Field("passwordConfirm") String passwordC);
 
     @FormUrlEncoded
     @POST(ITEM_BY_EMAIL)
@@ -93,8 +96,9 @@ public interface ApiServes extends ApiURLS {
             @Field("client_name") String name,
             @Field("client_user_id") String userId
     );
+
     @FormUrlEncoded
     @POST(ALL_CLIENT_BY_EMAIL)
-    Call<List<Client>> clientByEmail(@Field("email")String email);
+    Call<List<Client>> clientByEmail(@Field("email") String email);
 
 }
