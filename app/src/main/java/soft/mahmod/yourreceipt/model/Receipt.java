@@ -1,11 +1,13 @@
 package soft.mahmod.yourreceipt.model;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class Receipt extends User implements Serializable {
+public class Receipt extends User  {
     @SerializedName("receipt_id")
     private String receiptId;
     @SerializedName("subject")
@@ -107,6 +109,7 @@ public class Receipt extends User implements Serializable {
         this.clientName = clientName;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Receipt{" +

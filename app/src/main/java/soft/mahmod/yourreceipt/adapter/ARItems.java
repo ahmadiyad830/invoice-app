@@ -13,16 +13,19 @@ import java.util.List;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.ItemItemsBinding;
+import soft.mahmod.yourreceipt.listeners.OnClickItemListener;
 import soft.mahmod.yourreceipt.model.Items;
 import soft.mahmod.yourreceipt.model.Receipt;
 
 public class ARItems extends RecyclerView.Adapter<ARItems.ViewHolder> {
     private LayoutInflater inflater;
     private List<Items> modelList;
-
-    public ARItems(List<Items> modelList) {
+    private OnClickItemListener listener;
+    public ARItems(List<Items> modelList,OnClickItemListener listener) {
         this.modelList = modelList;
+        this.listener = listener;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -52,6 +55,9 @@ public class ARItems extends RecyclerView.Adapter<ARItems.ViewHolder> {
         }
         public void bind(Items model){
             binding.setModel(model);
+            binding.goDetails.setOnClickListener(v -> {
+                listener.onClickItem(model);
+            });
         }
     }
 }

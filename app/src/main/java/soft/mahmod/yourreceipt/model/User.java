@@ -1,11 +1,13 @@
 package soft.mahmod.yourreceipt.model;
 
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public  class User extends Cash implements Serializable {
+public  class User extends Cash {
     @SerializedName("email")
     private String email;
     @SerializedName("password")
@@ -102,6 +104,7 @@ public  class User extends Cash implements Serializable {
         return phoneNum;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "User{" +
@@ -111,7 +114,7 @@ public  class User extends Cash implements Serializable {
                 ", phoneNum='" + phoneNum + '\'' +
                 ", storeAddress='" + storeAddress + '\'' +
                 ", userId='" + userId + '\'' +
-                '}';
+                '}'+super.toString();
     }
 
     public void setPhoneNum(String phoneNum) {
@@ -124,5 +127,12 @@ public  class User extends Cash implements Serializable {
 
     public void setStoreAddress(String storeAddress) {
         this.storeAddress = storeAddress;
+    }
+
+    @Override
+    public void cleanUser() {
+        super.cleanUser();
+        this.email = null;
+        this.password = null;
     }
 }

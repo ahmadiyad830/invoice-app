@@ -1,5 +1,6 @@
 package soft.mahmod.yourreceipt.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.Ignore;
 
 import com.google.gson.annotations.SerializedName;
@@ -54,6 +55,7 @@ public class Cash implements Serializable {
         this.code = code;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Cash{" +
@@ -62,4 +64,10 @@ public class Cash implements Serializable {
                 ", code=" + code +
                 '}';
     }
+
+    public void cleanUser() {
+        this.message = null;
+        this.code = 0;
+    }
+
 }

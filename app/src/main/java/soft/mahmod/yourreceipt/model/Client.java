@@ -1,5 +1,7 @@
 package soft.mahmod.yourreceipt.model;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 import retrofit2.http.Field;
@@ -116,6 +118,7 @@ public class Client extends Cash{
         this.userId = userId;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Client{" +

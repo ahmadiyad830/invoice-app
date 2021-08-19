@@ -9,16 +9,19 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.ActivityMainBinding;
+import soft.mahmod.yourreceipt.model.User;
 import soft.mahmod.yourreceipt.view_model.VMUserConnection;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
     private ActivityMainBinding binding;
     private VMUserConnection connection;
     private SessionManager manager;

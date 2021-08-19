@@ -12,6 +12,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ARItems;
 import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.FragmentAddItemBinding;
+import soft.mahmod.yourreceipt.listeners.OnClickItemListener;
 import soft.mahmod.yourreceipt.model.Items;
 import soft.mahmod.yourreceipt.view_model.VMItemByEmail;
 
@@ -31,12 +33,14 @@ import soft.mahmod.yourreceipt.view_model.VMItemByEmail;
  * Use the {@link FragmentAddItem#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentAddItem extends Fragment {
+public class FragmentAddItem extends Fragment implements OnClickItemListener {
+    private static final String TAG = "FragmentAddItem";
     private FragmentAddItemBinding binding;
     private VMItemByEmail vmItemByEmail;
     private ARItems adapter;
     private SessionManager manager;
     private List<Items> modelList = new ArrayList<>();
+    private NavController controller;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -50,7 +54,7 @@ public class FragmentAddItem extends Fragment {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_item, container, false);
         init();
-        
+
         binding.swipeList.setOnRefreshListener(() -> {
             modelList.clear();
             adapter.notifyDataSetChanged();
@@ -62,7 +66,7 @@ public class FragmentAddItem extends Fragment {
     }
 
     private void init() {
-        adapter = new ARItems(modelList);
+        adapter = new ARItems(modelList, this);
         binding.recItem.setHasFixedSize(true);
         binding.recItem.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.recItem.setAdapter(adapter);
@@ -77,7 +81,7 @@ public class FragmentAddItem extends Fragment {
                     if (items != null) {
                         int oldSize = modelList.size();
                         modelList.addAll(items);
-                        adapter.notifyItemRangeInserted(oldSize,modelList.size());
+                        adapter.notifyItemRangeInserted(oldSize, modelList.size());
                     }
                     binding.swipeList.setRefreshing(false);
 
@@ -87,8 +91,9 @@ public class FragmentAddItem extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        controller = Navigation.findNavController(view);
         binding.fabToCreateItem.setOnClickListener(v -> {
-            NavController controller = Navigation.findNavController(view);
+
             controller.navigate(R.id.action_fragmentAddItem_to_fragmentCreateItem);
         });
         binding.btnSearch.setOnClickListener(v -> {
@@ -102,5 +107,13 @@ public class FragmentAddItem extends Fragment {
         int size = modelList.size();
         modelList.clear();
         adapter.notifyItemRangeRemoved(size, modelList.size());
+    }
+
+    @Override
+    public <T extends Items> void onClickItem(T model) {
+        FragmentAddItemDirections.ActionFragmentAddItemToFragmentCreateProducts
+                argsCreateProducts = FragmentAddItemDirections.actionFragmentAddItemToFragmentCreateProducts();
+        argsCreateProducts.setItemArgs(model);
+        controller.navigate(argsCreateProducts);
     }
 }

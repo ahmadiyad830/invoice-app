@@ -1,36 +1,58 @@
 package soft.mahmod.yourreceipt.model;
 
+import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-import java.util.List;
-@Entity(tableName = "products")
-public class Products extends Cash implements Serializable {
-    @PrimaryKey(autoGenerate = true)
+import org.jetbrains.annotations.Nullable;
+
+public class Products extends Cash {
+    @Ignore
     @SerializedName("products_id")
     private int productId;
+
+    @Nullable("1")
     @SerializedName("products_price")
     private String productsPrice;
+
+    @Nullable("1")
     @SerializedName("product_quantity")
     private String productsQuantity;
+
+    @Nullable
     @SerializedName("total")
     private String total;
+
+    @Nullable("N/A")
+    @ColumnInfo(defaultValue = "N/A")
     @SerializedName("notes")
     private String notes;
+
+    @Nullable
+    @Ignore
     @SerializedName("receipt_id")
     private String receiptId;
+
+    @Nullable
+    @ColumnInfo(defaultValue = "N/A")
     @SerializedName("item_name")
     private String itemName;
+    @SerializedName("discount")
+    private String discount;
+    @SerializedName("item_tax")
+    private String tax;
 
-
+    //constructor retrofit
     @Ignore
     public Products(String message, Boolean error, Integer code,
-                    int productId, String productsPrice, String productsQuantity,
-                    String total, String notes, String receiptId,String itemName) {
+                    int productId, @Nullable String productsPrice, @Nullable String productsQuantity,
+                    @Nullable String total, @Nullable String notes, @Nullable String receiptId, @Nullable String itemName) {
         super(message, error, code);
         this.itemName = itemName;
         this.productId = productId;
@@ -41,8 +63,9 @@ public class Products extends Cash implements Serializable {
         this.receiptId = receiptId;
     }
 
-    public Products(int productId, String productsPrice, String productsQuantity,
-                    String total, String notes, String receiptId,String itemName) {
+    //constructor room database
+    public Products(int productId, @Nullable String productsPrice, @Nullable String productsQuantity,
+                    @Nullable String total, @Nullable String notes, @Nullable String receiptId, @Nullable String itemName) {
         this.productId = productId;
         this.productsPrice = productsPrice;
         this.productsQuantity = productsQuantity;
@@ -50,10 +73,28 @@ public class Products extends Cash implements Serializable {
         this.itemName = itemName;
         this.notes = notes;
         this.receiptId = receiptId;
+
     }
 
+    // default constructor
     public Products() {
 
+    }
+
+    public String getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(String discount) {
+        this.discount = discount;
+    }
+
+    public String getTax() {
+        return tax;
+    }
+
+    public void setTax(String tax) {
+        this.tax = tax;
     }
 
     public int getProductId() {
@@ -64,54 +105,57 @@ public class Products extends Cash implements Serializable {
         this.productId = productId;
     }
 
-    public String getProductsPrice() {
+    public @Nullable String getProductsPrice() {
         return productsPrice;
     }
 
-    public void setProductsPrice(String productsPrice) {
+    public void setProductsPrice(@Nullable String productsPrice) {
         this.productsPrice = productsPrice;
     }
 
-    public String getProductsQuantity() {
+    public @Nullable String getProductsQuantity() {
         return productsQuantity;
     }
 
-    public void setProductsQuantity(String productsQuantity) {
+    public void setProductsQuantity(@Nullable String productsQuantity) {
         this.productsQuantity = productsQuantity;
     }
 
-    public String getTotal() {
+    public @Nullable String getTotal() {
         return total;
     }
 
-    public void setTotal(String total) {
+    public void setTotal(@Nullable String total) {
         this.total = total;
     }
 
-    public String getItemName() {
-        return itemName;
-    }
-
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
-    }
-
-    public String getNotes() {
+    public @Nullable String getNotes() {
         return notes;
     }
 
-    public void setNotes(String notes) {
+    public void setNotes(@Nullable String notes) {
         this.notes = notes;
     }
 
-    public String getReceiptId() {
+    public @Nullable String getReceiptId() {
         return receiptId;
     }
 
-    public void setReceiptId(String receiptId) {
+    public void setReceiptId(@Nullable String receiptId) {
         this.receiptId = receiptId;
     }
 
+    public @Nullable String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(@Nullable String itemName) {
+        this.itemName = itemName;
+    }
+
+
+
+    @NonNull
     @Override
     public String toString() {
         return "Products{" +

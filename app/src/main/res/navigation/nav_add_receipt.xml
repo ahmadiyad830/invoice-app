@@ -36,6 +36,9 @@
             app:destination="@id/fragmentAddReceipt"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_fragmentAddItem_to_fragmentCreateProducts"
+            app:destination="@id/fragmentCreateProducts" />
     </fragment>
     <fragment
         android:id="@+id/fragmentAddReceipt"
@@ -74,5 +77,19 @@
             app:destination="@id/fragmentAddClient"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentCreateProducts"
+        tools:layout="@layout/fragment_create_products"
+        android:name="soft.mahmod.yourreceipt.view_fragment.add_receipt.FragmentCreateProducts"
+        android:label="FragmentCreateProducts" >
+        <action
+            android:id="@+id/action_fragmentCreateProducts_to_fragmentAddItem"
+            app:destination="@id/fragmentAddItem" />
+        <argument
+            android:name="item_args"
+            app:argType="soft.mahmod.yourreceipt.model.Items"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 </navigation>

@@ -1,9 +1,6 @@
 package soft.mahmod.yourreceipt.view_fragment.add_receipt;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,11 +17,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ARProducts;
 import soft.mahmod.yourreceipt.controller.SessionManager;
@@ -35,6 +34,7 @@ import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.utils.HandleTimeCount;
 import soft.mahmod.yourreceipt.view_activity.MainActivity;
 import soft.mahmod.yourreceipt.view_model.VMCreateReceipt;
+import soft.mahmod.yourreceipt.view_model.room_products.VMProducts;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,6 +47,7 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
     private HandleTimeCount handleTimeCount;
     private ARProducts adapter;
     private List<Products> listModel = new ArrayList<>();
+    private VMProducts vmProducts;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,6 +66,7 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
         });
         binding.txtVisibleRec.setOnClickListener(v -> {
             binding.setHasItem(!binding.getHasItem());
+//            !binding.getHasItem()
         });
         binding.btnDown.setOnClickListener(v -> {
             testReceipt();
@@ -91,39 +93,31 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
     }
 
     private void init() {
+        binding.setHasItem(true);
+        vmProducts = new ViewModelProvider(
+                getViewModelStore(),
+                new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())
+        ).get(VMProducts.class);
         handleTimeCount = new HandleTimeCount();
         adapter = new ARProducts(listModel);
         binding.itemsRec.setHasFixedSize(true);
         binding.itemsRec.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.itemsRec.setAdapter(adapter);
+        binding.itemsRec.setVisibility(View.VISIBLE);
         loadProducts();
     }
 
     public void loadProducts() {
-        Products model = new Products(1, "123123", "123123",
-                "adfadf", "asdfaf", "1", "asdf");
-        Products model2 = new Products(1, "123123", "123123",
-                "adfadf", "asdfaf", "1", "asdf");
-        Products model3 = new Products(1, "123123", "123123",
-                "adfadf", "asdfaf", "1", "asdf");
-        Products model4 = new Products(1, "123123", "123123",
-                "adfadf", "asdfaf", "1", "asdf");
-        Products model5 = new Products(1, "123123", "123123",
-                "adfadf", "asdfaf", "1", "asdf");
-        Products model6 = new Products(1, "123123", "123123",
-                "adfadf", "asdfaf", "1", "asdf");
-        Products model7 = new Products(1, "123123", "123123",
-                "adfadf", "asdfaf", "1", "asdf");
-        int old = listModel.size();
-        listModel.add(model);
-        listModel.add(model2);
-        listModel.add(model3);
-        listModel.add(model4);
-        listModel.add(model5);
-        listModel.add(model6);
-        listModel.add(model7);
-        adapter.notifyItemRangeInserted(old, listModel.size());
-        binding.setHasItem(false);
+        CompositeDisposable disposable = new CompositeDisposable();
+        disposable.add(vmProducts.getProducts()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(products -> {
+                    int old = listModel.size();
+                    listModel.addAll(products);
+                    adapter.notifyDataSetChanged();
+                    binding.setHasItem(true);
+                }));
     }
 
     @Override

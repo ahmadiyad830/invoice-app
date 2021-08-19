@@ -75,10 +75,10 @@ public class FragmentCreateItem extends Fragment {
         String userId = manager.getUser().getUserId();
         String itemName = binding.edtName.getText().toString().trim();
         String itemPrice= binding.edtPrice.getText().toString().trim();
-        String discount= binding.edtDiscount.getText().toString().trim();
+        String quantity= binding.edtQuantity.getText().toString().trim();
         String itemTax= binding.edtTax.getText().toString().trim();
         String itemNote= binding.edtSubject.getText().toString().trim();
-        return new Items(userId,itemName,itemPrice,discount,itemTax,itemNote);
+        return new Items(userId,itemName,itemPrice,itemTax,itemNote,quantity);
     }
 
 }
