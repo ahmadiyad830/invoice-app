@@ -21,16 +21,22 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.schedulers.Schedulers;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ARProducts;
 import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.FragmentAddReceiptBinding;
+import soft.mahmod.yourreceipt.listeners.OnClickDeleteItemListener;
 import soft.mahmod.yourreceipt.model.CreateReceipt;
 import soft.mahmod.yourreceipt.model.Products;
 import soft.mahmod.yourreceipt.model.Receipt;
+import soft.mahmod.yourreceipt.model.entity.EntityProducts;
 import soft.mahmod.yourreceipt.utils.HandleTimeCount;
 import soft.mahmod.yourreceipt.view_activity.MainActivity;
 import soft.mahmod.yourreceipt.view_model.VMCreateReceipt;
@@ -41,7 +47,7 @@ import soft.mahmod.yourreceipt.view_model.room_products.VMProducts;
  * Use the {@link FragmentAddReceipt#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentAddReceipt extends Fragment implements View.OnClickListener {
+public class FragmentAddReceipt extends Fragment implements View.OnClickListener, OnClickDeleteItemListener<Products> {
     private static final String TAG = "FragmentAddReceipt";
     private FragmentAddReceiptBinding binding;
     private HandleTimeCount handleTimeCount;
@@ -71,9 +77,13 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
         binding.btnDown.setOnClickListener(v -> {
             testReceipt();
         });
+        binding.txtDeleteRec.setOnClickListener(v -> {
+            deleteAllItem();
+        });
         binding.setModel(model);
         return binding.getRoot();
     }
+
 
     private void testReceipt() {
         Receipt model = new Receipt(SessionManager.getInstance(requireContext()).getUser().getUserId());
@@ -99,7 +109,7 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
                 new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())
         ).get(VMProducts.class);
         handleTimeCount = new HandleTimeCount();
-        adapter = new ARProducts(listModel);
+        adapter = new ARProducts(listModel, this);
         binding.itemsRec.setHasFixedSize(true);
         binding.itemsRec.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.itemsRec.setAdapter(adapter);
@@ -113,10 +123,13 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(products -> {
-                    int old = listModel.size();
-                    listModel.addAll(products);
-                    adapter.notifyDataSetChanged();
-                    binding.setHasItem(true);
+                    if (products.size() > 0) {
+                        totalAll();
+                        int old = listModel.size();
+                        listModel.addAll(products);
+                        adapter.notifyDataSetChanged();
+                        binding.setHasItem(true);
+                    }
                 }));
     }
 
@@ -137,7 +150,6 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
     @Override
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
 //        get
 //        Gson gson = new Gson();
 //        String json = mPrefs.getString("SerializableObject", "");
@@ -171,5 +183,91 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
             startActivity(intent);
             requireActivity().finish();
         }
+    }
+
+    @Override
+    public void onClickDeleteItem(Products model, int position) {
+        vmProducts.deleteById((EntityProducts) model)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableCompletableObserver() {
+                    @Override
+                    public void onComplete() {
+                        listModel.remove(position);
+                        adapter.notifyItemRemoved(position);
+                        adapter.notifyItemRangeChanged(position, listModel.size());
+                        Log.d(TAG, "onComplete: delete" + model.getItemName());
+                        double total = Double.parseDouble(binding.getTotalAll());
+                        double price = Double.parseDouble(model.getProductsPrice());
+                        binding.setTotalAll(String.valueOf(total - price));
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        e.printStackTrace();
+                    }
+                });
+    }
+
+    @Override
+    public void onClickItem(Products model) {
+
+    }
+
+    private void deleteAllItem() {
+        vmProducts.deleteAll()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableCompletableObserver() {
+                    @Override
+                    public void onComplete() {
+                        binding.setTotalAll("0");
+                        listModel.clear();
+                        adapter.notifyDataSetChanged();
+//                        adapter.notifyItemRangeRemoved(listModel.inde);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        e.printStackTrace();
+                    }
+                });
+    }
+
+    private void totalAll() {
+        vmProducts.totalAll()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<List<String>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull List<String> strings) {
+                        double sum = 0;
+                        for (String value : strings) {
+                            try {
+                                sum = sum + Double.parseDouble(value);
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        binding.setTotalAll(String.valueOf(sum));
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        e.printStackTrace();
+                    }
+                });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        vmProducts.clear();
     }
 }

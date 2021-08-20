@@ -33,7 +33,7 @@ import soft.mahmod.yourreceipt.view_model.VMItemByEmail;
  * Use the {@link FragmentAddItem#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentAddItem extends Fragment implements OnClickItemListener {
+public class FragmentAddItem extends Fragment implements OnClickItemListener<Items>  {
     private static final String TAG = "FragmentAddItem";
     private FragmentAddItemBinding binding;
     private VMItemByEmail vmItemByEmail;
@@ -110,7 +110,7 @@ public class FragmentAddItem extends Fragment implements OnClickItemListener {
     }
 
     @Override
-    public <T extends Items> void onClickItem(T model) {
+    public void onClickItem(Items model) {
         FragmentAddItemDirections.ActionFragmentAddItemToFragmentCreateProducts
                 argsCreateProducts = FragmentAddItemDirections.actionFragmentAddItemToFragmentCreateProducts();
         argsCreateProducts.setItemArgs(model);

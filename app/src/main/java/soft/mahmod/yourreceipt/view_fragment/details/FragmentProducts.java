@@ -19,6 +19,7 @@ import java.util.List;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ARProducts;
 import soft.mahmod.yourreceipt.databinding.FragmentProductsBinding;
+import soft.mahmod.yourreceipt.listeners.OnClickDeleteItemListener;
 import soft.mahmod.yourreceipt.model.Products;
 import soft.mahmod.yourreceipt.view_model.VMProductsByReceiptId;
 import soft.mahmod.yourreceipt.view_model.ui.VMSendReceipt;
@@ -28,7 +29,7 @@ import soft.mahmod.yourreceipt.view_model.ui.VMSendReceipt;
  * Use the {@link FragmentProducts#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentProducts extends Fragment {
+public class FragmentProducts extends Fragment implements OnClickDeleteItemListener<Products> {
     private FragmentProductsBinding binding;
     private VMProductsByReceiptId vmProductsByReceiptId;
     private ARProducts adapter;
@@ -61,7 +62,7 @@ public class FragmentProducts extends Fragment {
     private void loadProducts(String id) {
         binding.productsRecycler.setHasFixedSize(true);
         binding.productsRecycler.setLayoutManager(new LinearLayoutManager(requireContext()));
-        adapter = new ARProducts(listModel);
+        adapter = new ARProducts(listModel,this);
         binding.productsRecycler.setAdapter(adapter);
         vmProductsByReceiptId.productsByReceiptId(id).observe(getViewLifecycleOwner(), products -> {
             int old = listModel.size();
@@ -70,5 +71,15 @@ public class FragmentProducts extends Fragment {
                 adapter.notifyItemRangeInserted(old, products.size());
             }
         });
+    }
+
+    @Override
+    public void onClickDeleteItem(Products model,int position) {
+
+    }
+
+    @Override
+    public void onClickItem(Products model) {
+
     }
 }

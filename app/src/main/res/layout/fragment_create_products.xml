@@ -141,7 +141,7 @@
                         android:hint="@string/price"
                         android:inputType="numberDecimal"
                         android:padding="@dimen/_12sdp"
-                        android:text="@{model.itemPrice}" />
+                        android:text='@{model.itemPrice,default = "1"}' />
                 </LinearLayout>
 
                 <LinearLayout
@@ -162,10 +162,11 @@
                         android:id="@+id/edt_quantity"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/quantity"
                         android:background="@drawable/custom_stork"
+                        android:hint="@string/quantity"
                         android:inputType="numberDecimal"
-                        android:padding="@dimen/_12sdp" />
+                        android:padding="@dimen/_12sdp"
+                        android:text='@{model.quantity,default = "1"}' />
                 </LinearLayout>
 
                 <LinearLayout
@@ -189,9 +190,9 @@
                         android:background="@drawable/custom_stork"
                         android:hint="@string/discount"
                         android:inputType="numberDecimal"
-                        android:padding="@dimen/_12sdp" />
+                        android:padding="@dimen/_12sdp"
+                        android:text='@{model.discount,default = "0"}' />
                 </LinearLayout>
-
                 <LinearLayout
                     android:id="@+id/linearLayout9"
                     android:layout_width="match_parent"
@@ -213,7 +214,8 @@
                         android:background="@drawable/custom_stork"
                         android:hint="@string/tax"
                         android:inputType="numberDecimal"
-                        android:padding="@dimen/_12sdp" />
+                        android:padding="@dimen/_12sdp"
+                        android:text='@{model.itemTax ,default = "0"}' />
                 </LinearLayout>
 
                 <LinearLayout
@@ -229,7 +231,7 @@
                         android:textColor="@color/text_color"
                         android:textSize="@dimen/_12ssp" />
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edt_note"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

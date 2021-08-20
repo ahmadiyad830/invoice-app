@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import io.reactivex.CompletableObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -69,30 +70,45 @@ public class FragmentCreateProducts extends Fragment {
                 getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())
         ).get(VMInsertProducts.class);
 
-        vmInsertProducts.insertProduct(getProducts())
-                .subscribeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(new CompletableObserver() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
+        if (getProducts() != null) {
+            vmInsertProducts.insertProduct(getProducts())
+                    .subscribeOn(Schedulers.io())
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new CompletableObserver() {
+                        @Override
+                        public void onSubscribe(@NonNull Disposable d) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onComplete() {
-                        Log.d(TAG, "onComplete: save");
-                    }
+                        @Override
+                        public void onComplete() {
+                            Log.d(TAG, "onComplete: save");
+                        }
 
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        e.printStackTrace();
-                    }
-                });
-        Log.d(TAG, "insert: " + getProducts().toString());
+                        @Override
+                        public void onError(@NonNull Throwable e) {
+                            e.printStackTrace();
+                        }
+                    });
+        } else {
+            if (binding.edtDiscount.length() == 0) {
+                binding.edtDiscount.setText("0");
+            }
+            if (binding.edtQuantity.length() == 0) {
+                binding.edtQuantity.setText("1");
+            }
+            if (binding.edtPrice.length() == 0) {
+                binding.edtQuantity.setError("input price");
+            }
+            if (binding.edtTax.length() == 0) {
+                binding.edtTax.setText("1");
+            }
+        }
+
     }
 
 
-    private EntityProducts getProducts() {
+    private EntityProducts getProducts() throws NumberFormatException {
         String price = binding.edtPrice.getText().toString().trim();
         String quantity = binding.edtQuantity.getText().toString().trim();
         String name = binding.edtName.getText().toString().trim();
@@ -100,31 +116,24 @@ public class FragmentCreateProducts extends Fragment {
         String discount = binding.edtDiscount.getText().toString().trim();
         String tax = binding.edtTax.getText().toString().trim();
         EntityProducts modelProduct = new EntityProducts();
-
         modelProduct.setNotes(note);
         modelProduct.setItemName(name);
-        if (modelProduct.isEmpty(price)){
-            binding.edtPrice.setError("Input price");
-        }else if (modelProduct.isEmpty(quantity)){
-            binding.edtQuantity.setError("Input quantity");
-        }else if (modelProduct.isEmpty(discount)){
-            modelProduct.setDiscount("0");
-        }else if (modelProduct.isEmpty(tax)){
-            modelProduct.setTax("1");
+        modelProduct.setProductsPrice(price);
+        modelProduct.setProductsQuantity(quantity);
+        try {
+            modelProduct.setTotalProducts(
+                    Double.parseDouble(price)
+                    , Double.parseDouble(quantity)
+                    , Double.parseDouble(discount)
+                    , Double.parseDouble(tax));
+            return modelProduct;
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
-        else {
 
-            modelProduct.setProductsPrice(price);
-            modelProduct.setProductsQuantity(quantity);
-            modelProduct.setDiscount(Double.parseDouble(price),Double.parseDouble(discount));
-            if (Double.parseDouble(modelProduct.getDiscount())>0){
-                modelProduct.setTotalProducts(Double.parseDouble(price), Double.parseDouble(quantity));
-            }
-
-
-        }
-        return modelProduct;
+        return null;
     }
+
 
 //        String price = binding.edtPrice.getText().toString().trim().equals("")
 //                ? binding.getModel().getItemPrice() : binding.edtPrice.getText().toString().trim();

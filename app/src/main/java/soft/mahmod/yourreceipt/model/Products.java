@@ -43,10 +43,13 @@ public class Products extends Cash {
     @ColumnInfo(defaultValue = "N/A")
     @SerializedName("item_name")
     private String itemName;
+    @Nullable("0")
     @SerializedName("discount")
-    private String discount;
+    private String discount = "0";
+    //    TODO insert default value
+    @Nullable("0")
     @SerializedName("item_tax")
-    private String tax;
+    private String tax = "0";
 
     //constructor retrofit
     @Ignore
@@ -152,7 +155,6 @@ public class Products extends Cash {
     public void setItemName(@Nullable String itemName) {
         this.itemName = itemName;
     }
-
 
 
     @NonNull

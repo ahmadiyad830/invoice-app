@@ -1,6 +1,7 @@
 package soft.mahmod.yourreceipt.dao;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -22,6 +23,9 @@ public interface DaoProducts {
     @Query("DELETE FROM EntityProducts")
     Completable deleteAll();
 
-    @Query("DELETE FROM EntityProducts WHERE id = :id")
-    Completable deleteById(String id);
+    @Delete
+    Completable deleteById(EntityProducts model);
+
+    @Query("select total from EntityProducts")
+    Single<List<String>> totalAll();
 }

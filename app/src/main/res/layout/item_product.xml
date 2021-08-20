@@ -12,25 +12,26 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_8sdp"
-        android:layout_marginVertical="@dimen/_8sdp"
-        android:layout_height="wrap_content">
+        android:layout_marginVertical="@dimen/_8sdp">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/linearLayout11"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_delete"
+            app:layout_constraintEnd_toStartOf="@+id/btn_delete"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="@+id/btn_delete">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:singleLine="true"
                 android:maxLength="10"
+                android:singleLine="true"
                 android:text="@{model.itemName}"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/_14ssp"
@@ -42,8 +43,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:singleLine="true"
                 android:maxLength="10"
+                android:singleLine="true"
                 android:text="@{model.productsQuantity}"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/_14ssp"
@@ -55,11 +56,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:maxLength="10"
+                android:singleLine="true"
                 android:text="@{model.productsPrice}"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/_14ssp"
-                android:singleLine="true"
-                android:maxLength="10"
                 android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -77,6 +78,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/btn_delete"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:src="@drawable/ic_baseline_delete_outline_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@android:color/holo_red_dark" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

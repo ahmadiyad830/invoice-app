@@ -20,8 +20,8 @@ import soft.mahmod.yourreceipt.model.Receipt;
 public class ARItems extends RecyclerView.Adapter<ARItems.ViewHolder> {
     private LayoutInflater inflater;
     private List<Items> modelList;
-    private OnClickItemListener listener;
-    public ARItems(List<Items> modelList,OnClickItemListener listener) {
+    private OnClickItemListener<Items> listener;
+    public ARItems(List<Items> modelList,OnClickItemListener<Items>  listener) {
         this.modelList = modelList;
         this.listener = listener;
     }

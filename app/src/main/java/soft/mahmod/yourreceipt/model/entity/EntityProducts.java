@@ -33,18 +33,13 @@ public class EntityProducts extends Products {
         return true;
     }
 
-    public void setTotalProducts(double price, double quantity) {
-        double discount = Double.parseDouble(getDiscount());
-        double tax = Double.parseDouble(getTax());
-        if (discount > 0) {
-            super.setTotal(String.valueOf((price - discount) * quantity));
-        } else if (tax > 1) {
-            super.setTotal(String.valueOf((price - tax) * quantity));
-        } else if (tax > 0 && discount > 0) {
-            super.setTotal(String.valueOf((price - tax - discount) * quantity));
-        } else {
-            super.setTotal(String.valueOf(price * quantity));
-        }
+    public void setTotalProducts(double price, double quantity, double discount, double tax) {
+        super.setTotal(String.valueOf(getPriceProduct(price,discount,tax)*quantity));
+    }
+
+    public double getPriceProduct(double price, double discount, double tax) {
+        double prd = price - discount;
+        return prd - tax;
     }
 
     public void setDiscount(double price, double discount) {

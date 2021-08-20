@@ -23,6 +23,7 @@ public class HandleTimeCount {
     }
 
     public HandleTimeCount() {
+
     }
 
     public void setTv_time(TextView tv_time) {

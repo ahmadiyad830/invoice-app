@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import soft.mahmod.yourreceipt.dao.DaoProducts;
 import soft.mahmod.yourreceipt.model.entity.EntityProducts;
 
-@Database(entities = EntityProducts.class, version = 8)
+@Database(entities = EntityProducts.class, version = 9)
 public abstract class ProductsDatabase extends RoomDatabase {
     private static ProductsDatabase instance;
 
