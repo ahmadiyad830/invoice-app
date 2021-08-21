@@ -86,4 +86,5 @@
     <string name="old_password">Old Password</string>
     <string name="new_password">New Password</string>
     <string name="delete">delete</string>
+    <string name="skip">skip</string>
 </resources>

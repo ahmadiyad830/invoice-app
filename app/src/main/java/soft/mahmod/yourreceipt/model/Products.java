@@ -36,7 +36,7 @@ public class Products extends Cash {
 
     @Nullable
     @Ignore
-    @SerializedName("receipt_id")
+    @SerializedName("product_receipt_id")
     private String receiptId;
 
     @Nullable

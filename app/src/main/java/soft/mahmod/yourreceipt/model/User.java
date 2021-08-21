@@ -25,9 +25,7 @@ public  class User extends Cash {
         super(message, error, code);
     }
 
-    public String getUserId() {
-        return userId;
-    }
+
 
     public User(String email,
                 String password, String storeName, String phoneNum, String storeAddress, String userId) {
@@ -52,9 +50,6 @@ public  class User extends Cash {
         this.storeAddress = storeAddress;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     public User( String userId) {
         this.userId = userId;
@@ -75,7 +70,13 @@ public  class User extends Cash {
         this.storeAddress = storeAddress;
         this.userId = userId;
     }
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
+    public String getUserId() {
+        return userId;
+    }
     public String getEmail() {
         return email;
     }

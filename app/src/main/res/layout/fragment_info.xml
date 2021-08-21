@@ -16,10 +16,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{error}"
             android:textColor="@android:color/holo_red_dark"
             android:textSize="@dimen/_16ssp"
             android:textStyle="bold"
-            android:text="@{error}"
             app:layout_constraintBottom_toTopOf="@+id/btn_signup"
             app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
             app:layout_constraintStart_toStartOf="@+id/linearLayout2"
@@ -151,5 +151,18 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
             app:strokeColor="@color/icon_color"
             app:strokeWidth="@dimen/_2sdp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/skip"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_signup"
+            app:layout_constraintVertical_bias="0.196" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

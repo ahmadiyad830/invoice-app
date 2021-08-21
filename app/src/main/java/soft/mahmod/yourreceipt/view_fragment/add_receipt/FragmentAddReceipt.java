@@ -16,7 +16,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +42,7 @@ import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.model.entity.EntityProducts;
 import soft.mahmod.yourreceipt.utils.HandleTimeCount;
 import soft.mahmod.yourreceipt.view_activity.MainActivity;
+import soft.mahmod.yourreceipt.view_model.VMCreateProducts;
 import soft.mahmod.yourreceipt.view_model.VMCreateReceipt;
 import soft.mahmod.yourreceipt.view_model.room_products.VMProducts;
 
@@ -54,6 +58,11 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
     private ARProducts adapter;
     private List<Products> listModel = new ArrayList<>();
     private VMProducts vmProducts;
+    private VMCreateProducts vmCreateProducts;
+    private VMCreateReceipt vmCreateReceipt;
+    private boolean isSuccess;
+    @SerializedName("num_loop")
+    private int  numLoop;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,6 +84,8 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
 //            !binding.getHasItem()
         });
         binding.btnDown.setOnClickListener(v -> {
+
+//            testProducts();
             testReceipt();
         });
         binding.txtDeleteRec.setOnClickListener(v -> {
@@ -82,6 +93,31 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
         });
         binding.setModel(model);
         return binding.getRoot();
+    }
+
+    private void testProducts() {
+        numLoop = listModel.size();
+        String[] id = new String[listModel.size()];
+        String[] price = new String[listModel.size()];
+        String[] quantity = new String[listModel.size()];
+        String[] total = new String[listModel.size()];
+        String[] note = new String[listModel.size()];
+        String[] name = new String[listModel.size()];
+
+        for (int i = 0; i < listModel.size(); i++) {
+            id[i] = listModel.get(i).getReceiptId();
+            price[i] = listModel.get(i).getProductsPrice();
+            quantity[i] = listModel.get(i).getProductsQuantity();
+            total[i] = listModel.get(i).getTotal();
+            note[i] = listModel.get(i).getNotes();
+            name[i] = listModel.get(i).getItemName();
+
+        }
+
+        vmCreateProducts.createProducts(numLoop, id, price, quantity, total, note, name)
+                .observe(getViewLifecycleOwner(), cash -> {
+
+                });
     }
 
 
@@ -93,12 +129,12 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
         model.setTotalAll(binding.edtTotalAll.getText().toString().trim());
         model.setClientName(binding.edtClientName.getText().toString().trim());
         model.setClientPhone(binding.edtClientPhone.getText().toString().trim());
-
-        VMCreateReceipt vmCreateReceipt = new ViewModelProvider(requireActivity()
+        Log.d(TAG, "testReceipt: "+model.toString());
+        vmCreateReceipt = new ViewModelProvider(requireActivity()
                 , new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
                 .get(VMCreateReceipt.class);
         vmCreateReceipt.createReceipt(model).observe(getViewLifecycleOwner(), cash -> {
-            Log.d(TAG, "testReceipt: " + cash);
+//            Log.d(TAG, "testReceipt: " + cash.toString());
         });
     }
 
@@ -108,6 +144,10 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
                 getViewModelStore(),
                 new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())
         ).get(VMProducts.class);
+        vmCreateProducts = new ViewModelProvider(
+                getViewModelStore(),
+                new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())
+        ).get(VMCreateProducts.class);
         handleTimeCount = new HandleTimeCount();
         adapter = new ARProducts(listModel, this);
         binding.itemsRec.setHasFixedSize(true);

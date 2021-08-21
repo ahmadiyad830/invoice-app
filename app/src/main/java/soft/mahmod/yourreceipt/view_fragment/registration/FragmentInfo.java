@@ -31,17 +31,12 @@ public class FragmentInfo extends Fragment {
 
     private static final String TAG = "FragmentInfo456";
     private FragmentInfoBinding binding;
-    private VMSignUp viewModel;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_info, container, false);
-        viewModel = new ViewModelProvider
-                (getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
-                .get(VMSignUp.class);
-        // FragmentInfoPharmacyArgs args = FragmentInfoPharmacyArgs.fromBundle(getArguments());
+
         return binding.getRoot();
     }
 
@@ -52,31 +47,6 @@ public class FragmentInfo extends Fragment {
             String storeName = binding.storeName.getText().toString();
             String phoneNum = binding.phoneNum.getText().toString();
             String storeAddress = binding.storeAddress.getText().toString();
-            if (getArguments() != null) {
-                FragmentInfoArgs args = FragmentInfoArgs.fromBundle(getArguments());
-                User userArgs = args.getUserArgs();
-                if (userArgs != null) {
-                    User user = new User(userArgs.getEmail(), userArgs.getPassword(), storeName, phoneNum, storeAddress);
-                    ConditionsSignUp conditionsSignUp = new ConditionsSignUp
-                            (userArgs.getEmail(), userArgs.getPassword(), phoneNum, storeName, storeAddress);
-                    if (conditionsSignUp.isMore()) {
-                        viewModel.signUp(user).observe(getViewLifecycleOwner(), user1 -> {
-                            SessionManager manager = SessionManager.getInstance(requireContext());
-                            manager.setUser(user);
-                            manager.userSignIn(user);
-                            requireActivity().finish();
-                        });
-                    } else {
-//                         TODO Handle error if error user input
-                        binding.setError(user.getMessage());
-                    }
-                } else {
-//                    TODO Handle error if user args null
-                }
-            } else {
-//                TODO handle if getArguments() null
-
-            }
 
         });
 

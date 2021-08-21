@@ -22,11 +22,8 @@ public interface ApiServes extends ApiURLS {
 
     @FormUrlEncoded
     @POST(SIGN_UP)
-    Call<User> signUp(@Field("email") String email,
-                      @Field("password") String password,
-                      @Field("store_name") String storeName,
-                      @Field("phone_num") String phoneNumber,
-                      @Field("store_address") String storeAddress);
+    Call<Cash> signUp(@Field("email") String email,
+                      @Field("password") String password);
 
     @FormUrlEncoded
     @POST(ALL_RECEIPT_BY_EMAIL)
@@ -59,7 +56,7 @@ public interface ApiServes extends ApiURLS {
     @FormUrlEncoded
     @POST(CHANGE_PASSWORD)
     Call<Cash> changePassword(@Field("email") String email,
-                              @Field("old_password")String oldPass,
+                              @Field("old_password") String oldPass,
                               @Field("password") String password,
                               @Field("passwordConfirm") String passwordC);
 
@@ -100,5 +97,17 @@ public interface ApiServes extends ApiURLS {
     @FormUrlEncoded
     @POST(ALL_CLIENT_BY_EMAIL)
     Call<List<Client>> clientByEmail(@Field("email") String email);
+
+    @FormUrlEncoded
+    @POST(INSERT_PRODUCTS)
+    Call<Cash> createProducts(
+            @Field("num_loop")           int numLoop,
+            @Field("product_receipt_id") String[]receiptId,
+            @Field("products_price")     String[] price,
+            @Field("product_quantity")   String[] quantity,
+            @Field("total")                String[] total,
+            @Field("notes")                String[] notes,
+            @Field("item_name")             String[] name
+    );
 
 }

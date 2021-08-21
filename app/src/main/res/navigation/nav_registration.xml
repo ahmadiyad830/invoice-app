@@ -35,8 +35,8 @@
         <action
             android:id="@+id/action_fragmentSignUp_to_fragmentSignIn"
             app:destination="@id/fragmentSignIn"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right"/>
+            app:enterAnim="@android:anim/slide_out_right"
+            app:exitAnim="@android:anim/slide_in_left"/>
         <action
             android:id="@+id/action_fragmentSignUp_to_fragmentInfo2"
             app:destination="@id/fragmentInfo" />

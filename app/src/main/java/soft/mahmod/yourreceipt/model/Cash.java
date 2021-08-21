@@ -17,6 +17,8 @@ public class Cash implements Serializable {
     @Ignore
     @SerializedName("code")
     private int code;
+    @SerializedName("id")
+    private int id;
 
     public Cash() {
     }
@@ -25,6 +27,14 @@ public class Cash implements Serializable {
         this.message = message;
         this.error = error;
         this.code = code;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getMessage() {
@@ -62,6 +72,7 @@ public class Cash implements Serializable {
                 "message='" + message + '\'' +
                 ", error=" + error +
                 ", code=" + code +
+                ", id=" + id +
                 '}';
     }
 

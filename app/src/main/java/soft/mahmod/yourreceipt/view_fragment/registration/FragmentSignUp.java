@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import soft.mahmod.yourreceipt.R;
+import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.FragmentSignInBinding;
 import soft.mahmod.yourreceipt.databinding.FragmentSignUpBinding;
 import soft.mahmod.yourreceipt.model.User;
@@ -48,12 +49,17 @@ public class FragmentSignUp extends Fragment {
         binding.btnSignup.setOnClickListener(v -> {
             String email = binding.email.getText().toString().trim();
             String password = binding.password.getText().toString().trim();
-            User user = new User(email,password);
-            NavController controller = Navigation.findNavController(binding.getRoot());
-            FragmentSignUpDirections.ActionFragmentSignUpToFragmentInfo2 argsUser =
-                    FragmentSignUpDirections.actionFragmentSignUpToFragmentInfo2();
-            argsUser.setUserArgs(user);
-            controller.navigate(argsUser);
+            User user = new User(email, password);
+            viewModel.signUp(user).observe(getViewLifecycleOwner(), cash -> {
+                if (cash.getError()) {
+                    binding.setError(cash.getMessage());
+                }else {
+                    SessionManager manager = SessionManager.getInstance(requireContext());
+                    manager.setUser(user);
+                    manager.userSignIn(user);
+                    requireActivity().finish();
+                }
+            });
         });
     }
 }
