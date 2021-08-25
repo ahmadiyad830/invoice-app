@@ -8,6 +8,8 @@ public interface ApiURLS {
     * */
 //
 //    http://192.168.1.73/back%20end/api/
+//    user path
+    String USER_SIGN_IN = "users/";
     String STATIC_URL = " http://192.168.1.73/back%20end/api/";
     //    TODO USER ACCOUNT
     String SIGN_IN = "query_registration/sign_in.php";

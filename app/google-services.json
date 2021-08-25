@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1091823720988",
+    "project_id": "receipt-statmente-2021-729085",
+    "storage_bucket": "receipt-statmente-2021-729085.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1091823720988:android:a0314e973a2ead85239dd9",
+        "android_client_info": {
+          "package_name": "soft.mahmod.yourreceipt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1091823720988-40fgai8bvpn3meussq77uuuih83fr9pd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPLH9vSmAekuBH7aZ8oJu5Dw5_fgFGS6E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1091823720988-40fgai8bvpn3meussq77uuuih83fr9pd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -22,15 +22,10 @@ public class Items extends User {
 
 
 
-    public Items(String message, boolean error, Integer code, String email) {
-        super(message, error, code);
-        setEmail(email);
-    }
 
 
     public Items(String userId, String itemName, String itemPrice,
                  String itemTax, String itemNote,  String quantity) {
-        super(userId);
         this.itemName = itemName;
         this.itemPrice = itemPrice;
         this.itemTax = itemTax;

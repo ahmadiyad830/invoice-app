@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,7 @@ import android.view.ViewGroup;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.FragmentSettingBinding;
-import soft.mahmod.yourreceipt.view_model.VMChangePassword;
+import soft.mahmod.yourreceipt.view_model.setting.VMSetting;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,19 +27,21 @@ import soft.mahmod.yourreceipt.view_model.VMChangePassword;
 public class FragmentSetting extends Fragment implements View.OnClickListener {
     private static final String TAG = "FragmentSetting";
     private FragmentSettingBinding binding;
-    private SessionManager manager;
-    private VMChangePassword vmChangePassword;
+    private VMSetting vmSetting;
+    @Override
+    public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        vmSetting = new ViewModelProvider(
+                getViewModelStore(),
+                new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())
+        ).get(VMSetting.class);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false);
-        vmChangePassword = new ViewModelProvider(
-                getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(
-                requireActivity().getApplication()
-        )
-        ).get(VMChangePassword.class);
         binding.btnSignout.setOnClickListener(this);
         return binding.getRoot();
     }
@@ -48,7 +49,6 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        manager = SessionManager.getInstance(requireContext());
         binding.edtAccount.setOnClickListener(this);
     }
 
@@ -56,7 +56,16 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         int id = v.getId();
         if (binding.btnSignout.getId() == id) {
-            manager.userSignOut(requireActivity());
+            vmSetting.signOut();
+            vmSetting.getIsSignOut().observe(
+                    getViewLifecycleOwner(),
+                    aBoolean -> {
+                        if (aBoolean){
+                            SessionManager.getInstance(requireContext())
+                                    .userSignOut(requireActivity());
+                        }
+                    }
+            );
         } else if (binding.edtAccount.getId() == id) {
             NavController controller = Navigation.findNavController(binding.getRoot());
             controller.navigate(R.id.action_menu_setting_to_fragmentEditAccount);

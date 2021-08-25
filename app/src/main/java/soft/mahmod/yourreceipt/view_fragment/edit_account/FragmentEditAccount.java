@@ -18,9 +18,7 @@ import android.view.ViewGroup;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.FragmentEditAccountBinding;
-import soft.mahmod.yourreceipt.utils.DialogConfirm;
 import soft.mahmod.yourreceipt.view_activity.MainActivity;
-import soft.mahmod.yourreceipt.view_model.VMChangePassword;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,7 +28,6 @@ import soft.mahmod.yourreceipt.view_model.VMChangePassword;
 public class FragmentEditAccount extends Fragment {
     private static final String TAG = "FragmentEditAccount";
     private FragmentEditAccountBinding binding;
-    private VMChangePassword vmChangePassword;
     private SessionManager manager;
 
     @Override
@@ -48,26 +45,11 @@ public class FragmentEditAccount extends Fragment {
     }
 
     private void init() {
-        vmChangePassword = new ViewModelProvider(getViewModelStore()
-                , new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
-                .get(VMChangePassword.class);
         manager = SessionManager.getInstance(requireContext());
     }
 
     private void changePassword() {
-        vmChangePassword.changePassword(manager.getUser().getEmail(),
-                binding.oldPassword.getText().toString().trim(),
-                binding.newPassword.getText().toString().trim(),
-                binding.confirmPassword.getText().toString().trim()
-        ).observe(getViewLifecycleOwner(), cash -> {
-            Log.d(TAG, "changePassword: " + cash.getMessage());
-            binding.setError(cash.getMessage());
-            if (!cash.getError()) {
-                Intent intent = new Intent(requireActivity(), MainActivity.class);
-                startActivity(intent);
-                requireActivity().finish();
-            }
-        });
+
     }
 
     private void dialog() {

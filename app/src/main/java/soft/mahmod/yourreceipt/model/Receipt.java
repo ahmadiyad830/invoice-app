@@ -7,54 +7,24 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
-public class Receipt extends User  {
-    @SerializedName("receipt_id")
+public class Receipt   {
     private String receiptId;
-    @SerializedName("subject")
     private String subject;
-    @SerializedName("receipt_date")
     private String receiptDate;
-    @SerializedName("client_name")
     private String clientName;
-    @SerializedName("0")
     private List<Receipt> receiptList;
-    @SerializedName("total_all")
     private String totalAll;
-    @SerializedName("client_phone")
     private String clientPhone;
-
-
-    public Receipt(String userId) {
-        super(userId);
+    private String type;
+    public Receipt() {
     }
 
-    public Receipt(String userId, String receiptId, String subject,
-                   String receiptDate, String clientName, String totalAll,
-                   String clientPhone) {
-        super(userId);
-        this.receiptId = receiptId;
-        this.subject = subject;
-        this.receiptDate = receiptDate;
-        this.clientName = clientName;
-        this.totalAll = totalAll;
-        this.clientPhone = clientPhone;
+    public String getType() {
+        return type;
     }
 
-    public Receipt(String subject, String receiptDate, String clientName, List<Receipt> receiptList) {
-        this.subject = subject;
-        this.receiptDate = receiptDate;
-        this.clientName = clientName;
-        this.receiptList = receiptList;
-    }
-
-    public Receipt(String userId, String subject, String receiptDate,
-                   String clientName, String totalAll, String clientPhone) {
-        super(userId);
-        this.subject = subject;
-        this.receiptDate = receiptDate;
-        this.clientName = clientName;
-        this.totalAll = totalAll;
-        this.clientPhone = clientPhone;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public List<Receipt> getReceiptList() {

@@ -10,9 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +24,6 @@ import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.FragmentAddItemBinding;
 import soft.mahmod.yourreceipt.listeners.OnClickItemListener;
 import soft.mahmod.yourreceipt.model.Items;
-import soft.mahmod.yourreceipt.view_model.VMItemByEmail;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,7 +33,7 @@ import soft.mahmod.yourreceipt.view_model.VMItemByEmail;
 public class FragmentAddItem extends Fragment implements OnClickItemListener<Items>  {
     private static final String TAG = "FragmentAddItem";
     private FragmentAddItemBinding binding;
-    private VMItemByEmail vmItemByEmail;
+
     private ARItems adapter;
     private SessionManager manager;
     private List<Items> modelList = new ArrayList<>();
@@ -70,22 +67,9 @@ public class FragmentAddItem extends Fragment implements OnClickItemListener<Ite
         binding.recItem.setHasFixedSize(true);
         binding.recItem.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.recItem.setAdapter(adapter);
-        vmItemByEmail = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(
-                requireActivity().getApplication()
-        )).get(VMItemByEmail.class);
     }
 
     private void loadItems() {
-        vmItemByEmail.itemByEmail(manager.getUser().getEmail())
-                .observe(getViewLifecycleOwner(), items -> {
-                    if (items != null) {
-                        int oldSize = modelList.size();
-                        modelList.addAll(items);
-                        adapter.notifyItemRangeInserted(oldSize, modelList.size());
-                    }
-                    binding.swipeList.setRefreshing(false);
-
-                });
     }
 
     @Override
@@ -94,7 +78,7 @@ public class FragmentAddItem extends Fragment implements OnClickItemListener<Ite
         controller = Navigation.findNavController(view);
         binding.fabToCreateItem.setOnClickListener(v -> {
 
-            controller.navigate(R.id.action_fragmentAddItem_to_fragmentCreateItem);
+//            controller.navigate(R.id.action_fragmentAddItem_to_fragmentCreateItem);
         });
         binding.btnSearch.setOnClickListener(v -> {
             binding.setIsSearch(true);
@@ -111,9 +95,9 @@ public class FragmentAddItem extends Fragment implements OnClickItemListener<Ite
 
     @Override
     public void onClickItem(Items model) {
-        FragmentAddItemDirections.ActionFragmentAddItemToFragmentCreateProducts
-                argsCreateProducts = FragmentAddItemDirections.actionFragmentAddItemToFragmentCreateProducts();
-        argsCreateProducts.setItemArgs(model);
-        controller.navigate(argsCreateProducts);
+//        FragmentAddItemDirections.ActionFragmentAddItemToFragmentCreateProducts
+//                argsCreateProducts = FragmentAddItemDirections.actionFragmentAddItemToFragmentCreateProducts();
+//        argsCreateProducts.setItemArgs(model);
+//        controller.navigate(argsCreateProducts);
     }
 }

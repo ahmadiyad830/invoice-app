@@ -2,14 +2,10 @@ package soft.mahmod.yourreceipt.view_activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -20,14 +16,13 @@ import soft.mahmod.yourreceipt.databinding.ActivityDetailsBinding;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.view_fragment.details.FragmentProducts;
 import soft.mahmod.yourreceipt.view_fragment.details.FragmentReceipt;
-import soft.mahmod.yourreceipt.view_model.ui.VMSendReceipt;
 
 public class ActivityDetails extends AppCompatActivity {
     private static final String TAG = "ActivityDetails";
     private ActivityDetailsBinding binding;
     private ViewPager2Adapter viewPager2Adapter;
     private Receipt receipt;
-    private VMSendReceipt vmSendReceipt;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +40,7 @@ public class ActivityDetails extends AppCompatActivity {
     }
 
     private void sendData() {
-        vmSendReceipt = new ViewModelProvider(this).get(VMSendReceipt.class);
-        Receipt model = (Receipt) getIntent().getSerializableExtra("model");
-        vmSendReceipt.setModel(model);
-        vmSendReceipt.getModel().observe(this,receipt1 -> {
-            Log.d(TAG, "sendData: "+receipt1.toString());
-        });
+
     }
     private void loadTabLayout() {
         viewPager2Adapter = new ViewPager2Adapter(this);

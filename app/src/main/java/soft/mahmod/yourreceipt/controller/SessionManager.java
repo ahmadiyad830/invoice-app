@@ -36,14 +36,14 @@ public class SessionManager {
         return instance;
     }
 
-    public void userSignIn(User model) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(KEY_EMAIL, model.getEmail());
-        editor.putString(KEY_USER_ID, model.getUserId());
-        editor.putString(KEY_STORE_NAME, model.getStoreName());
-        editor.putString(KEY_STORE_ADDRESS, model.getStoreAddress());
-        editor.putString(KEY_STORE_PHONE, model.getPhoneNum());
-        editor.apply();
+    public void userSignIn() {
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.putString(KEY_EMAIL, model.getEmail());
+//        editor.putString(KEY_USER_ID, model.getUserId());
+//        editor.putString(KEY_STORE_NAME, model.getStoreName());
+//        editor.putString(KEY_STORE_ADDRESS, model.getStoreAddress());
+//        editor.putString(KEY_STORE_PHONE, model.getPhoneNum());
+//        editor.apply();
         Intent intent = new Intent(mCtx, MainActivity.class);
         mCtx.startActivity(intent);
 
@@ -56,12 +56,12 @@ public class SessionManager {
 
     public User getUserId() {
         return new User(
-                sharedPreferences.getString(KEY_USER_ID, null)
+//                sharedPreferences.getString(KEY_USER_ID, null)
         );
     }
 
     public void userSignOut(Activity activity) {
-        clearUser();
+//        clearUser();
         Intent intent = new Intent(mCtx, ActivityRegistration.class);
         mCtx.startActivity(intent);
         activity.finish();
@@ -72,23 +72,23 @@ public class SessionManager {
 
     public void setUser(User model) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(KEY_EMAIL, model.getEmail());
-        editor.putString(KEY_USER_ID, model.getUserId());
-        editor.putString(KEY_PASSWORD, model.getPassword());
-        editor.putString(KEY_USER_NAME, model.getPhoneNum());
-        editor.putString(KEY_STORE_NAME, model.getStoreName());
-        editor.putString(KEY_STORE_ADDRESS, model.getStoreAddress());
+//        editor.putString(KEY_EMAIL, model.getEmail());
+//        editor.putString(KEY_USER_ID, model.getUserId());
+//        editor.putString(KEY_PASSWORD, model.getPassword());
+//        editor.putString(KEY_USER_NAME, model.getPhoneNum());
+//        editor.putString(KEY_STORE_NAME, model.getStoreName());
+//        editor.putString(KEY_STORE_ADDRESS, model.getStoreAddress());
         editor.apply();
     }
 
     public User getUser() {
         return new User(
-                sharedPreferences.getString(KEY_EMAIL, ""),
-                sharedPreferences.getString(KEY_PASSWORD, ""),
-                sharedPreferences.getString(KEY_STORE_NAME, ""),
-                sharedPreferences.getString(KEY_STORE_PHONE, ""),
-                sharedPreferences.getString(KEY_STORE_ADDRESS, ""),
-                sharedPreferences.getString(KEY_USER_ID, "")
+//                sharedPreferences.getString(KEY_EMAIL, ""),
+//                sharedPreferences.getString(KEY_PASSWORD, ""),
+//                sharedPreferences.getString(KEY_STORE_NAME, ""),
+//                sharedPreferences.getString(KEY_STORE_PHONE, ""),
+//                sharedPreferences.getString(KEY_STORE_ADDRESS, ""),
+//                sharedPreferences.getString(KEY_USER_ID, "")
         );
     }
     public boolean hasNewPass(String password){

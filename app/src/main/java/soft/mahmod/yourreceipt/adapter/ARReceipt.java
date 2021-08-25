@@ -1,5 +1,6 @@
 package soft.mahmod.yourreceipt.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DatabaseError;
+
 import java.util.List;
 
 import soft.mahmod.yourreceipt.R;
@@ -15,14 +20,20 @@ import soft.mahmod.yourreceipt.databinding.ItemReceiptBinding;
 import soft.mahmod.yourreceipt.listeners.OnReceiptItemClick;
 import soft.mahmod.yourreceipt.model.Receipt;
 
-public class ARReceipt extends RecyclerView.Adapter<ARReceipt.ViewHolder> {
+public class ARReceipt extends FirebaseRecyclerAdapter<Receipt,ARReceipt.ViewHolder> {
+    private static final String TAG = "ARReceipt";
     private LayoutInflater inflater;
-    private List<Receipt> listModel;
     private OnReceiptItemClick itemClick;
 
-    public ARReceipt(List<Receipt> listModel,OnReceiptItemClick itemClick) {
-        this.listModel = listModel;
-        this.itemClick = itemClick;
+    public ARReceipt(@NonNull FirebaseRecyclerOptions<Receipt> options,OnReceiptItemClick onReceiptItemClick) {
+        super(options);
+        this.itemClick = onReceiptItemClick;
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return super.getSnapshots().size();
     }
 
     @NonNull
@@ -36,14 +47,15 @@ public class ARReceipt extends RecyclerView.Adapter<ARReceipt.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ARReceipt.ViewHolder holder, int position) {
-
-        holder.bind(listModel.get(position));
+    protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Receipt model) {
+        Log.d(TAG, "onBindViewHolder: "+model.getClientName());
+        holder.bind(model);
     }
 
     @Override
-    public int getItemCount() {
-        return listModel.size();
+    public void onError(@NonNull DatabaseError error) {
+        super.onError(error);
+        Log.d(TAG, "onError: "+error.getMessage());
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

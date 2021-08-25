@@ -24,6 +24,7 @@
         <variable
             name="date"
             type="String" />
+
         <variable
             name="totalAll"
             type="String" />
@@ -217,18 +218,28 @@
                                 android:layout_weight="1"
                                 android:background="?selectableItemBackground"
                                 android:drawableStart="@drawable/ic_baseline_add_24"
+                                android:drawablePadding="@dimen/_8sdp"
                                 android:drawableTint="@color/icon_color"
                                 android:paddingHorizontal="@dimen/_8sdp"
-                                android:text="@string/add_new_item"
+                                android:text="@string/create_item"
                                 android:textColor="@color/hint_color"
                                 android:textSize="@dimen/_16ssp"
                                 android:textStyle="italic" />
 
-                            <Spinner
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/add1_item"
                                 android:layout_width="0dp"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="@string/bill_to" />
+                                android:background="?selectableItemBackground"
+                                android:drawableStart="@drawable/ic_baseline_format_list_bulleted_24"
+                                android:drawablePadding="@dimen/_8sdp"
+                                android:drawableTint="@color/icon_color"
+                                android:paddingHorizontal="@dimen/_8sdp"
+                                android:text="@string/add_item"
+                                android:textColor="@color/hint_color"
+                                android:textSize="@dimen/_16ssp"
+                                android:textStyle="italic" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -338,10 +349,10 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/items_rec"
                         android:layout_width="match_parent"
-                        android:visibility='@{hasItem?View.VISIBLE:View.GONE,default = visible}'
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_8sdp"
-                        android:layout_marginBottom="@dimen/_8sdp" />
+                        android:layout_marginBottom="@dimen/_8sdp"
+                        android:visibility='@{hasItem?View.VISIBLE:View.GONE,default = visible}' />
 
                 </LinearLayout>
 
@@ -412,9 +423,9 @@
                         android:layout_marginVertical="@dimen/_12sdp"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/total_all"
-                        android:text="@{totalAll}"
                         android:inputType="numberDecimal"
-                        android:padding="@dimen/_12sdp" />
+                        android:padding="@dimen/_12sdp"
+                        android:text="@{totalAll}" />
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edt_note"

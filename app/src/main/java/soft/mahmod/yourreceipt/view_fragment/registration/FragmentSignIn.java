@@ -15,10 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import soft.mahmod.yourreceipt.R;
-import soft.mahmod.yourreceipt.conditions.ConditionsSignIn;
+import soft.mahmod.yourreceipt.conditions.catch_registration.ConditionsSignIn;
 import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.FragmentSignInBinding;
-import soft.mahmod.yourreceipt.view_model.VMSignIn;
+import soft.mahmod.yourreceipt.view_model.registration.VMAuthReg;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,16 +28,21 @@ import soft.mahmod.yourreceipt.view_model.VMSignIn;
 public class FragmentSignIn extends Fragment {
     private static final String TAG = "FragmentSignIn";
     private FragmentSignInBinding binding;
-    private VMSignIn vmSignIn;
+    private VMAuthReg vmAuthReg;
+
+    @Override
+    public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        vmAuthReg = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
+                (requireActivity().getApplication())).get(VMAuthReg.class);
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_in, container, false);
-        vmSignIn = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
-                (requireActivity().getApplication())).get(VMSignIn.class);
-
         return binding.getRoot();
     }
 
@@ -51,29 +56,32 @@ public class FragmentSignIn extends Fragment {
         binding.btnSignup.setOnClickListener(v -> {
             String email = binding.email.getText().toString().trim();
             String password = binding.password.getText().toString().trim();
+            ConditionsSignIn conditionsSignIn = new ConditionsSignIn(email, password);
+            if (conditionsSignIn.getError()){
+                binding.setError(conditionsSignIn.getMessage());
+                return;
+            }
             signIn(email, password);
-
         });
     }
 
     private void signIn(String email, String password) {
-        ConditionsSignIn conditionsSignIn = new ConditionsSignIn(email, password);
-        if (conditionsSignIn.isSignIn()) {
-            vmSignIn.signIn(email, password).observe(getViewLifecycleOwner(), user -> {
-                Log.d(TAG, "onViewCreated: " + user.toString());
-                if (!user.getError()) {
+        binding.setProgress(true);
+        vmAuthReg.signIn(email,password);
+        vmAuthReg.getErrorData().observe(getViewLifecycleOwner(), s -> {
+            Log.d(TAG, "signIn: "+s);
+            if (s.equals("true")){
+                vmAuthReg.getData().observe(getViewLifecycleOwner(),firebaseUser -> {
+                    binding.setProgress(false);
+                    Log.d(TAG, "signIn: "+firebaseUser.getEmail());
                     SessionManager manager = SessionManager.getInstance(requireContext());
-                    manager.setUser(user);
-                    manager.userSignIn(user);
-                    requireActivity().finish();
-                    Log.d(TAG, "signInerror: "+user.getError());
-                } else {
-                    binding.setError(user.getMessage());
-                }
-            });
-        } else {
-            binding.setError(conditionsSignIn.error());
-        }
+                    manager.userSignIn();
+                    binding.setError(s);
+                });
+            }
+            binding.setProgress(false);
+            binding.setError(s);
+        });
     }
 
 }

@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import io.reactivex.CompletableObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -21,7 +20,6 @@ import io.reactivex.schedulers.Schedulers;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.FragmentCreateProductsBinding;
 import soft.mahmod.yourreceipt.model.entity.EntityProducts;
-import soft.mahmod.yourreceipt.view_model.room_products.VMInsertProducts;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,44 +64,7 @@ public class FragmentCreateProducts extends Fragment {
     }
 
     private void insert() {
-        VMInsertProducts vmInsertProducts = new ViewModelProvider(
-                getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())
-        ).get(VMInsertProducts.class);
 
-        if (getProducts() != null) {
-            vmInsertProducts.insertProduct(getProducts())
-                    .subscribeOn(Schedulers.io())
-                    .subscribeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new CompletableObserver() {
-                        @Override
-                        public void onSubscribe(@NonNull Disposable d) {
-
-                        }
-
-                        @Override
-                        public void onComplete() {
-                            Log.d(TAG, "onComplete: save");
-                        }
-
-                        @Override
-                        public void onError(@NonNull Throwable e) {
-                            e.printStackTrace();
-                        }
-                    });
-        } else {
-            if (binding.edtDiscount.length() == 0) {
-                binding.edtDiscount.setText("0");
-            }
-            if (binding.edtQuantity.length() == 0) {
-                binding.edtQuantity.setText("1");
-            }
-            if (binding.edtPrice.length() == 0) {
-                binding.edtQuantity.setError("input price");
-            }
-            if (binding.edtTax.length() == 0) {
-                binding.edtTax.setText("1");
-            }
-        }
 
     }
 

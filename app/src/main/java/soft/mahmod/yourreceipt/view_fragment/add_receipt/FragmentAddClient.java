@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.FragmentAddClientBinding;
-import soft.mahmod.yourreceipt.view_model.VMClientsByEmail;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,7 +27,6 @@ import soft.mahmod.yourreceipt.view_model.VMClientsByEmail;
 public class FragmentAddClient extends Fragment {
     private static final String TAG = "FragmentAddClient";
     private FragmentAddClientBinding binding;
-    private VMClientsByEmail vmClientsByEmail;
     private SessionManager manager;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,18 +39,12 @@ public class FragmentAddClient extends Fragment {
     }
 
     private void loadClients() {
-        vmClientsByEmail.clientsByEmail(manager.getUser().getEmail())
-                .observe(getViewLifecycleOwner(),client -> {
-                    Log.d(TAG, "loadClients: "+client.get(0).toString());
-                });
+
 
     }
 
     private void init() {
-        manager = SessionManager.getInstance(requireContext());
-        vmClientsByEmail = new ViewModelProvider
-                (requireActivity(),new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
-                .get(VMClientsByEmail.class);
+
     }
 
     @Override
@@ -60,7 +52,7 @@ public class FragmentAddClient extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding.fabToCreateClient.setOnClickListener(v -> {
             NavController controller = Navigation.findNavController(view);
-            controller.navigate(R.id.action_fragmentAddClient_to_fragmentCreateClient);
+//            controller.navigate(R.id.action_fragmentAddClient_to_fragmentCreateClient);
         });
     }
 }

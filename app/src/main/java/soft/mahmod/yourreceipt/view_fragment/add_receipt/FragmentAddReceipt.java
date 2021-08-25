@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 
 import com.google.gson.annotations.SerializedName;
@@ -24,27 +23,16 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.SingleObserver;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.observers.DisposableCompletableObserver;
-import io.reactivex.schedulers.Schedulers;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ARProducts;
-import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.FragmentAddReceiptBinding;
 import soft.mahmod.yourreceipt.listeners.OnClickDeleteItemListener;
 import soft.mahmod.yourreceipt.model.CreateReceipt;
 import soft.mahmod.yourreceipt.model.Products;
 import soft.mahmod.yourreceipt.model.Receipt;
-import soft.mahmod.yourreceipt.model.entity.EntityProducts;
 import soft.mahmod.yourreceipt.utils.HandleTimeCount;
 import soft.mahmod.yourreceipt.view_activity.MainActivity;
-import soft.mahmod.yourreceipt.view_model.VMCreateProducts;
-import soft.mahmod.yourreceipt.view_model.VMCreateReceipt;
-import soft.mahmod.yourreceipt.view_model.room_products.VMProducts;
+import soft.mahmod.yourreceipt.view_model.create_receipt.VMReceipt;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,12 +45,19 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
     private HandleTimeCount handleTimeCount;
     private ARProducts adapter;
     private List<Products> listModel = new ArrayList<>();
-    private VMProducts vmProducts;
-    private VMCreateProducts vmCreateProducts;
-    private VMCreateReceipt vmCreateReceipt;
     private boolean isSuccess;
     @SerializedName("num_loop")
-    private int  numLoop;
+    private int numLoop;
+    private VMReceipt vmReceipt;
+
+    @Override
+    public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        vmReceipt = new ViewModelProvider(
+                getViewModelStore(),
+                new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())
+        ).get(VMReceipt.class);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,7 +81,8 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
         binding.btnDown.setOnClickListener(v -> {
 
 //            testProducts();
-            testReceipt();
+//            testReceipt();
+            setReceipt();
         });
         binding.txtDeleteRec.setOnClickListener(v -> {
             deleteAllItem();
@@ -95,59 +91,35 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
         return binding.getRoot();
     }
 
-    private void testProducts() {
-        numLoop = listModel.size();
-        String[] id = new String[listModel.size()];
-        String[] price = new String[listModel.size()];
-        String[] quantity = new String[listModel.size()];
-        String[] total = new String[listModel.size()];
-        String[] note = new String[listModel.size()];
-        String[] name = new String[listModel.size()];
-
-        for (int i = 0; i < listModel.size(); i++) {
-            id[i] = listModel.get(i).getReceiptId();
-            price[i] = listModel.get(i).getProductsPrice();
-            quantity[i] = listModel.get(i).getProductsQuantity();
-            total[i] = listModel.get(i).getTotal();
-            note[i] = listModel.get(i).getNotes();
-            name[i] = listModel.get(i).getItemName();
-
-        }
-
-        vmCreateProducts.createProducts(numLoop, id, price, quantity, total, note, name)
-                .observe(getViewLifecycleOwner(), cash -> {
-
-                });
+    private void setReceipt() {
+        vmReceipt.setReceipt(getReceipt());
+        vmReceipt.getErrorData().observe(
+                getViewLifecycleOwner(),
+                cash -> {
+                    if (!cash.getError()) {
+                        Intent intent = new Intent(requireContext(), MainActivity.class);
+                        startActivity(intent);
+                        requireActivity().finish();
+                    }
+                }
+        );
     }
 
-
-    private void testReceipt() {
-        Receipt model = new Receipt(SessionManager.getInstance(requireContext()).getUser().getUserId());
+    private Receipt getReceipt() {
+        Receipt model = new Receipt();
         model.setSubject(binding.edtSubject.getText().toString().trim());
-        model.setReceiptDate("time: " + binding.txtTime.getText().toString().trim() + "\n"
-                + "date: " + handleTimeCount.getDate());
+        model.setReceiptDate("time: " + binding.txtTime.getText().toString().trim() +" date: " + handleTimeCount.getDate());
         model.setTotalAll(binding.edtTotalAll.getText().toString().trim());
         model.setClientName(binding.edtClientName.getText().toString().trim());
         model.setClientPhone(binding.edtClientPhone.getText().toString().trim());
-        Log.d(TAG, "testReceipt: "+model.toString());
-        vmCreateReceipt = new ViewModelProvider(requireActivity()
-                , new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
-                .get(VMCreateReceipt.class);
-        vmCreateReceipt.createReceipt(model).observe(getViewLifecycleOwner(), cash -> {
-//            Log.d(TAG, "testReceipt: " + cash.toString());
+        binding.switchMaterial.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            model.setType(isChecked ? "take" : "dues");
         });
+        return model;
     }
 
     private void init() {
         binding.setHasItem(true);
-        vmProducts = new ViewModelProvider(
-                getViewModelStore(),
-                new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())
-        ).get(VMProducts.class);
-        vmCreateProducts = new ViewModelProvider(
-                getViewModelStore(),
-                new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())
-        ).get(VMCreateProducts.class);
         handleTimeCount = new HandleTimeCount();
         adapter = new ARProducts(listModel, this);
         binding.itemsRec.setHasFixedSize(true);
@@ -158,19 +130,6 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
     }
 
     public void loadProducts() {
-        CompositeDisposable disposable = new CompositeDisposable();
-        disposable.add(vmProducts.getProducts()
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(products -> {
-                    if (products.size() > 0) {
-                        totalAll();
-                        int old = listModel.size();
-                        listModel.addAll(products);
-                        adapter.notifyDataSetChanged();
-                        binding.setHasItem(true);
-                    }
-                }));
     }
 
     @Override
@@ -227,27 +186,6 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
 
     @Override
     public void onClickDeleteItem(Products model, int position) {
-        vmProducts.deleteById((EntityProducts) model)
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableCompletableObserver() {
-                    @Override
-                    public void onComplete() {
-                        listModel.remove(position);
-                        adapter.notifyItemRemoved(position);
-                        adapter.notifyItemRangeChanged(position, listModel.size());
-                        Log.d(TAG, "onComplete: delete" + model.getItemName());
-                        double total = Double.parseDouble(binding.getTotalAll());
-                        double price = Double.parseDouble(model.getProductsPrice());
-                        binding.setTotalAll(String.valueOf(total - price));
-
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        e.printStackTrace();
-                    }
-                });
     }
 
     @Override
@@ -256,58 +194,13 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
     }
 
     private void deleteAllItem() {
-        vmProducts.deleteAll()
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableCompletableObserver() {
-                    @Override
-                    public void onComplete() {
-                        binding.setTotalAll("0");
-                        listModel.clear();
-                        adapter.notifyDataSetChanged();
-//                        adapter.notifyItemRangeRemoved(listModel.inde);
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        e.printStackTrace();
-                    }
-                });
     }
 
     private void totalAll() {
-        vmProducts.totalAll()
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<List<String>>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onSuccess(@NonNull List<String> strings) {
-                        double sum = 0;
-                        for (String value : strings) {
-                            try {
-                                sum = sum + Double.parseDouble(value);
-                            } catch (NumberFormatException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        binding.setTotalAll(String.valueOf(sum));
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        e.printStackTrace();
-                    }
-                });
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        vmProducts.clear();
     }
 }

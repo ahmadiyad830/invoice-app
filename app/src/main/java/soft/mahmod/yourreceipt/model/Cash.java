@@ -8,19 +8,20 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class Cash implements Serializable {
+
     @Ignore
-    @SerializedName("message")
     private String message;
+
     @Ignore
-    @SerializedName("error")
     private boolean error;
+
     @Ignore
-    @SerializedName("code")
     private int code;
-    @SerializedName("id")
+
     private int id;
 
     public Cash() {
+
     }
 
     public Cash(String message, boolean error, Integer code) {

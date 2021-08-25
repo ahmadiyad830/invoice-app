@@ -6,21 +6,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import soft.mahmod.yourreceipt.R;
-import soft.mahmod.yourreceipt.conditions.ConditionsSignIn;
-import soft.mahmod.yourreceipt.conditions.ConditionsSignUp;
-import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.FragmentInfoBinding;
-import soft.mahmod.yourreceipt.model.User;
-import soft.mahmod.yourreceipt.view_model.VMSignUp;
 
 /**
  * A simple {@link Fragment} subclass.
