@@ -26,7 +26,6 @@ public class ActivityRegistration extends AppCompatActivity {
         manager = SessionManager.getInstance(this);
         vmAuthReg = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
                 (getApplication())).get(VMAuthReg.class);
-
     }
 
     @Override
@@ -34,7 +33,7 @@ public class ActivityRegistration extends AppCompatActivity {
         super.onStart();
         if (vmAuthReg.hasCredential()) {
             binding.setHasReg(true);
-            manager.userSignIn();
+            manager.userSignIn(this);
         } else {
             binding.setHasReg(false);
             onResume();

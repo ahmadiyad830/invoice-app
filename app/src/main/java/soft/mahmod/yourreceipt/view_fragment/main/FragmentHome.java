@@ -16,24 +16,17 @@ import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ARReceipt;
-import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.FragmentHomeBinding;
 import soft.mahmod.yourreceipt.listeners.OnReceiptItemClick;
 import soft.mahmod.yourreceipt.model.Receipt;
-import soft.mahmod.yourreceipt.repository.home.RepoHome;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.view_activity.ActivityDetails;
-import soft.mahmod.yourreceipt.view_model.home.VMReceipt;
 
 
 public class FragmentHome extends Fragment implements OnReceiptItemClick , DatabaseUrl {

@@ -36,7 +36,7 @@ public class SessionManager {
         return instance;
     }
 
-    public void userSignIn() {
+    public void userSignIn(Activity activity) {
 //        SharedPreferences.Editor editor = sharedPreferences.edit();
 //        editor.putString(KEY_EMAIL, model.getEmail());
 //        editor.putString(KEY_USER_ID, model.getUserId());
@@ -46,7 +46,7 @@ public class SessionManager {
 //        editor.apply();
         Intent intent = new Intent(mCtx, MainActivity.class);
         mCtx.startActivity(intent);
-
+        activity.finish();
     }
 
     public boolean isLogedin() {

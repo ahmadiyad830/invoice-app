@@ -1,15 +1,20 @@
 package soft.mahmod.yourreceipt.repository.create;
 
 
-
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 
 
 import soft.mahmod.yourreceipt.model.Cash;
+import soft.mahmod.yourreceipt.model.User;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 
 public class Repo<T> implements DatabaseUrl {
@@ -21,8 +26,18 @@ public class Repo<T> implements DatabaseUrl {
     private DatabaseReference reference;
     private String id;
     private final Cash cash = new Cash();
-
+    private Class<T> tClass;
     public Repo() {
+        data = new MutableLiveData<>();
+        errorData = new MutableLiveData<>();
+        path = "";
+        fAuth = FirebaseAuth.getInstance();
+        reference = FirebaseDatabase.getInstance().getReference();
+        id = String.valueOf(System.currentTimeMillis());
+    }
+
+    public Repo(Class<T> tClass) {
+        this.tClass = tClass;
         data = new MutableLiveData<>();
         errorData = new MutableLiveData<>();
         path = "";
@@ -42,12 +57,63 @@ public class Repo<T> implements DatabaseUrl {
                     }
                 })
                 .addOnFailureListener(e -> {
+                    e.printStackTrace();
                     cash.setMessage(e.getMessage());
                     cash.setCode(0);
                     cash.setError(true);
+                    errorData.postValue(cash);
                 });
     }
 
+    public synchronized void postUser(User model) {
+        reference.child(USER).child(fAuth.getUid()).setValue(model)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        cash.setCode(200);
+                        cash.setError(false);
+                        cash.setMessage("success");
+                        errorData.postValue(cash);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                    cash.setMessage(e.getMessage());
+                    cash.setCode(0);
+                    cash.setError(true);
+                    errorData.postValue(cash);
+                });
+    }
+
+    public synchronized void insert(T t) {
+        reference.child(getPath()).setValue(t)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        cash.setCode(200);
+                        cash.setError(false);
+                        cash.setMessage("success");
+                        errorData.postValue(cash);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                    cash.setMessage(e.getMessage());
+                    cash.setCode(0);
+                    cash.setError(true);
+                    errorData.postValue(cash);
+                });
+    }
+
+    public DatabaseReference getReference() {
+        return reference;
+    }
+
+    public Cash getCash() {
+        return cash;
+    }
+
+    public FirebaseAuth getfAuth() {
+        return fAuth;
+    }
 
     public String getPath() {
         return path;

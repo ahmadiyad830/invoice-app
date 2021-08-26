@@ -1,20 +1,35 @@
 package soft.mahmod.yourreceipt.view_model.registration;
 
-import android.app.Application;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
-
+import soft.mahmod.yourreceipt.model.Cash;
 import soft.mahmod.yourreceipt.model.User;
-import soft.mahmod.yourreceipt.repository.RepoDbUser;
+import soft.mahmod.yourreceipt.repository.create.RepoUser;
 
-public class VMDbUser extends AndroidViewModel {
-    private RepoDbUser repoDbUser;
-    public VMDbUser(@NonNull Application application) {
-        super(application);
-        repoDbUser = new RepoDbUser(application);
+public class VMDbUser extends ViewModel {
+    private RepoUser repoDbUser;
+    private MutableLiveData<User> data;
+    private MutableLiveData<Cash> errorData;
+
+    public VMDbUser() {
+        repoDbUser = new RepoUser();
+        data = repoDbUser.getData();
+        errorData = repoDbUser.getErrorData();
     }
-    public void newUser(User model,String path){
-        repoDbUser.newUser(model,path);
+    public void postUser(User model){
+        repoDbUser.postUser(model);
+    }
+
+    public void isUserActive(){
+        repoDbUser.readData();
+    }
+
+    public MutableLiveData<User> getData() {
+        return data;
+    }
+
+    public MutableLiveData<Cash> getErrorData() {
+        return errorData;
     }
 }

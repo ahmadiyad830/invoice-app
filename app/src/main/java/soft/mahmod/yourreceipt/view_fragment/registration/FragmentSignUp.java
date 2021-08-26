@@ -7,18 +7,22 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.concurrent.Semaphore;
+
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.conditions.catch_registration.ConditionsSignUp;
+import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.FragmentSignUpBinding;
 import soft.mahmod.yourreceipt.model.User;
 import soft.mahmod.yourreceipt.statics.ApiURLS;
+import soft.mahmod.yourreceipt.view_activity.ActivityRegistration;
 import soft.mahmod.yourreceipt.view_model.registration.VMAuthReg;
 import soft.mahmod.yourreceipt.view_model.registration.VMDbUser;
 
@@ -32,6 +36,8 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
     private FragmentSignUpBinding binding;
     private VMDbUser vmDbUser;
     private VMAuthReg vmAuthReg;
+    private NavController controller;
+    private SessionManager manager;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -54,8 +60,10 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        controller = Navigation.findNavController(view);
+        manager = SessionManager.getInstance(requireContext());
         binding.txtGoSignin.setOnClickListener(v -> {
-            Navigation.findNavController(view).navigate(R.id.action_fragmentSignUp_to_fragmentSignIn);
+            controller.navigate(FragmentSignUpDirections.actionFragmentSignUpToFragmentSignIn());
         });
         binding.btnSignup.setOnClickListener(v -> {
             String email = binding.email.getText().toString().trim();
@@ -72,17 +80,25 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
 
     private void signUp(String email, String pass1) {
         vmAuthReg.signUp(email, pass1);
-        vmAuthReg.getErrorData().observe(getViewLifecycleOwner(), s -> {
-            if (s.isEmpty()) {
-                vmAuthReg.getData().observe(getViewLifecycleOwner(), firebaseUser -> {
-                    if (firebaseUser != null) {
-                        User user = new User(email, pass1, firebaseUser.getUid());
-                        vmDbUser.newUser(user, USER_SIGN_IN + firebaseUser.getUid());
-                        Log.d(TAG, "onViewCreated: set value");
-                    } else Log.d(TAG, "onViewCreated: null");
-                });
+        vmAuthReg.getErrorData().observe(getViewLifecycleOwner(), cash -> {
+            if (cash.getError()) {
+                switch (cash.getCode()) {
+                    case 300 :
+                    case 200:
+                        uploadUser(email, pass1);
+                        break;
+                }
             }
-            binding.setError(s);
+            binding.setError(cash.getMessage());
+        });
+    }
+
+    private void uploadUser(String email, String pass1) {
+        vmDbUser.postUser(new User(email, pass1));
+        vmDbUser.getErrorData().observe(getViewLifecycleOwner(), cash1 -> {
+            if (!cash1.getError()) {
+                manager.userSignOut(requireActivity());
+            } else binding.setError(cash1.getMessage());
         });
     }
 }

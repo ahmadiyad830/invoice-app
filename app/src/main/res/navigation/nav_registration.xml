@@ -15,17 +15,9 @@
             app:destination="@id/fragmentSignUp"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right"/>
-    </fragment>
-    <fragment
-        android:id="@+id/fragmentInfo"
-        android:name="soft.mahmod.yourreceipt.view_fragment.registration.FragmentInfo"
-        android:label="More Info"
-        tools:layout="@layout/fragment_info" >
-        <argument
-            android:name="user_args"
-            app:argType="soft.mahmod.yourreceipt.model.User"
-            app:nullable="true"
-            android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_fragmentSignIn_to_fragmentActive"
+            app:destination="@id/fragmentActive" />
     </fragment>
     <fragment
         android:id="@+id/fragmentSignUp"
@@ -38,7 +30,12 @@
             app:enterAnim="@android:anim/slide_out_right"
             app:exitAnim="@android:anim/slide_in_left"/>
         <action
-            android:id="@+id/action_fragmentSignUp_to_fragmentInfo2"
-            app:destination="@id/fragmentInfo" />
+            android:id="@+id/action_fragmentSignUp_to_fragmentActive"
+            app:destination="@id/fragmentActive" />
     </fragment>
+    <fragment
+        android:id="@+id/fragmentActive"
+        tools:layout="@layout/fragment_active"
+        android:name="soft.mahmod.yourreceipt.view_fragment.registration.FragmentActive"
+        android:label="FragmentActive" />
 </navigation>

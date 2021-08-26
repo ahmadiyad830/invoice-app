@@ -1,31 +1,46 @@
 package soft.mahmod.yourreceipt.model;
 
 
-
 import java.io.Serializable;
 
-public  class User  implements Serializable{
+public class User implements Serializable {
 
     private String email;
     private String password;
     private String uid;
-
-
-
-
-    public User(String email, String password, String uid) {
-        this.email = email;
-        this.password = password;
-        this.uid = uid;
-    }
+    private boolean active = false, block = false;
 
     public User(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
+    public User(String email, String password, String uid, boolean active, boolean block) {
+        this.email = email;
+        this.password = password;
+        this.uid = uid;
+        this.active = active;
+        this.block = block;
+    }
+
     public User() {
 
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public boolean isBlock() {
+        return block;
+    }
+
+    public void setBlock(boolean block) {
+        this.block = block;
     }
 
     public String getEmail() {
@@ -52,5 +67,14 @@ public  class User  implements Serializable{
         this.uid = uid;
     }
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", uid='" + uid + '\'' +
+                ", active=" + active +
+                ", block=" + block +
+                '}';
+    }
 }
