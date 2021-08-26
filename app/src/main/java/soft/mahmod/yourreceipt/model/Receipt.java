@@ -7,16 +7,19 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
-public class Receipt   {
+public class Receipt {
     private String receiptId;
     private String subject;
     private String receiptDate;
     private String clientName;
-    private List<Receipt> receiptList;
+    private List<String> productId;
+    private List<String> clientId;
     private String totalAll;
     private String clientPhone;
     private String type;
+
     public Receipt() {
+
     }
 
     public String getType() {
@@ -27,13 +30,6 @@ public class Receipt   {
         this.type = type;
     }
 
-    public List<Receipt> getReceiptList() {
-        return receiptList;
-    }
-
-    public void setReceiptList(List<Receipt> receiptList) {
-        this.receiptList = receiptList;
-    }
 
     public String getReceiptId() {
         return receiptId;
@@ -79,6 +75,11 @@ public class Receipt   {
         this.clientName = clientName;
     }
 
+    public void setReceiptId(String receiptId) {
+        this.receiptId = receiptId;
+    }
+
+
     @NonNull
     @Override
     public String toString() {
@@ -87,7 +88,6 @@ public class Receipt   {
                 ", subject='" + subject + '\'' +
                 ", receiptDate='" + receiptDate + '\'' +
                 ", clientName='" + clientName + '\'' +
-                ", receiptList=" + receiptList +
                 ", totalAll='" + totalAll + '\'' +
                 ", clientPhone='" + clientPhone + '\'' +
                 '}';

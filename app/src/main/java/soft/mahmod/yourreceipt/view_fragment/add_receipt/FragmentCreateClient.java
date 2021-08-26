@@ -6,9 +6,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.FragmentCreateClientBinding;
 import soft.mahmod.yourreceipt.model.Client;
+import soft.mahmod.yourreceipt.view_model.create_receipt.VMClient;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,9 +27,23 @@ import soft.mahmod.yourreceipt.model.Client;
  * create an instance of this fragment.
  */
 public class FragmentCreateClient extends Fragment {
+    private static final String TAG = "FragmentCreateClient";
     private FragmentCreateClientBinding binding;
-    private SessionManager manager;
+    private VMClient vmClient;
     private NavController controller;
+
+    @Override
+    public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        vmClient = new ViewModelProvider(
+                getViewModelStore(),
+                new ViewModelProvider.AndroidViewModelFactory(
+                        requireActivity().getApplication()
+                )
+        ).get(VMClient.class);
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,20 +56,29 @@ public class FragmentCreateClient extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        init();
-        binding.btnDown.setOnClickListener(v -> postClient());
+        controller = Navigation.findNavController(view);
+        binding.btnDown.setOnClickListener(v -> {
+            postClient();
+        });
         binding.btnBack.setOnClickListener(v -> {
-            controller.navigate(R.id.action_fragmentCreateClient_to_fragmentAddClient);
+
+            controller.navigate(FragmentCreateClientDirections.actionFragmentCreateClientToFragmentAddReceipt());
 //            controller.popBackStack();
         });
     }
 
-    private void init() {
-        manager = SessionManager.getInstance(requireContext());
-        controller = Navigation.findNavController(binding.getRoot());
+    private void postClient() {
+        vmClient.postClient(getClient());
+        vmClient.getErrorData().observe(getViewLifecycleOwner(), cash -> {
+            if (!cash.getError()) {
+                controller.navigate(FragmentCreateClientDirections.actionFragmentCreateClientToFragmentAddReceipt());
+            }else {
+                Log.d(TAG, "postClient: " + cash.toString());
+            }
+        });
     }
 
-    private void postClient() {
+    private Client getClient() {
         Client client = new Client();
         client.setEmail(binding.edtEmail.getText().toString().trim());
         client.setName(binding.edtName.getText().toString().trim());
@@ -62,7 +88,6 @@ public class FragmentCreateClient extends Fragment {
         client.setAddress(binding.edtAddress.getText().toString().trim());
         client.setStoreAddress(binding.edtStoreAddress.getText().toString().trim());
         client.setNote(binding.edtNote.getText().toString().trim());
-        client.setUserId("model.getUserId()");
-
+        return client;
     }
 }

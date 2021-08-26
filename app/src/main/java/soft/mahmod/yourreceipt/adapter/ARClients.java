@@ -1,7 +1,6 @@
 package soft.mahmod.yourreceipt.adapter;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -11,24 +10,28 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import soft.mahmod.yourreceipt.R;
+import soft.mahmod.yourreceipt.databinding.ItemClientBinding;
 import soft.mahmod.yourreceipt.databinding.ItemItemsBinding;
 import soft.mahmod.yourreceipt.listeners.OnClickItemListener;
+import soft.mahmod.yourreceipt.listeners.OnClientClick;
+import soft.mahmod.yourreceipt.model.Client;
 import soft.mahmod.yourreceipt.model.Items;
-import soft.mahmod.yourreceipt.model.Receipt;
 
-public class ARItems extends FirebaseRecyclerAdapter<Items,ARItems.ViewHolder>{
+public class ARClients extends FirebaseRecyclerAdapter<Client, ARClients.ViewHolder> {
     private LayoutInflater inflater;
-    private OnClickItemListener<Items> listener;
 
-    public ARItems(@NonNull FirebaseRecyclerOptions<Items> options,OnClickItemListener<Items> listener) {
+    private OnClientClick listener;
+
+    public ARClients(@NonNull FirebaseRecyclerOptions<Client> options, OnClientClick listener) {
         super(options);
         this.listener = listener;
     }
 
+    @Override
+    protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Client model) {
+        holder.bind(model);
+    }
 
     @NonNull
     @Override
@@ -36,28 +39,22 @@ public class ARItems extends FirebaseRecyclerAdapter<Items,ARItems.ViewHolder>{
         if (inflater==null){
             inflater = LayoutInflater.from(parent.getContext());
         }
-        ItemItemsBinding binding = DataBindingUtil.inflate(inflater, R.layout.item_items,parent,false);
+        ItemClientBinding binding = DataBindingUtil.inflate(inflater,R.layout.item_client,parent,false);
         return new ViewHolder(binding);
     }
 
-
-
-    @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Items model) {
-        holder.bind(model);
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private ItemItemsBinding binding;
+        private ItemClientBinding binding;
 
-        public ViewHolder(@NonNull ItemItemsBinding binding) {
+        public ViewHolder(@NonNull ItemClientBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
-        public void bind(Items model){
+
+        public void bind(Client model) {
             binding.setModel(model);
             binding.goDetails.setOnClickListener(v -> {
-                listener.onClickItem(model);
+                listener.onClient(model);
             });
         }
     }

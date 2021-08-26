@@ -4,38 +4,33 @@ import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 import retrofit2.http.Field;
 
 public class Client extends Cash{
 
 
-    @SerializedName("client_email")
     private String email;
 
-    @SerializedName("phone_number")
     private String phone;
 
-    @SerializedName("additional_information")
     private String addInfo;
 
-    @SerializedName("tax_reg_no")
     private String taxRegNo;
 
-
-    @SerializedName("address")
     private String address;
 
-    @SerializedName("store_address")
     private String storeAddress;
 
-    @SerializedName("note")
     private String note;
 
-    @SerializedName("client_name")
     private String name;
 
-    @SerializedName("client_user_id")
-    private String userId;
+    private List<String> receiptId;
+
+
+    private String clientId;
 
     public Client() {
 
@@ -43,6 +38,14 @@ public class Client extends Cash{
 
     public Client(String message, boolean error, Integer code) {
         super(message, error, code);
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 
     public String getAddress() {
@@ -110,13 +113,7 @@ public class Client extends Cash{
         this.name = name;
     }
 
-    public String getUserId() {
-        return userId;
-    }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     @NonNull
     @Override
@@ -130,7 +127,6 @@ public class Client extends Cash{
                 ", storeAddress='" + storeAddress + '\'' +
                 ", note='" + note + '\'' +
                 ", name='" + name + '\'' +
-                ", userId='" + userId + '\'' +
                 '}';
     }
 }

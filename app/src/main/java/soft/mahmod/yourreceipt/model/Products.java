@@ -12,50 +12,31 @@ import com.google.gson.annotations.SerializedName;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public class Products extends Cash {
-    @Ignore
-    @SerializedName("products_id")
     private int productId;
 
-    @Nullable("1")
-    @SerializedName("products_price")
     private String productsPrice;
 
-    @Nullable("1")
-    @SerializedName("product_quantity")
     private String productsQuantity;
 
-    @Nullable
-    @SerializedName("total")
     private String total;
 
-    @Nullable("N/A")
-    @ColumnInfo(defaultValue = "N/A")
-    @SerializedName("notes")
     private String notes;
 
-    @Nullable
-    @Ignore
-    @SerializedName("product_receipt_id")
-    private String receiptId;
 
-    @Nullable
-    @ColumnInfo(defaultValue = "N/A")
-    @SerializedName("item_name")
     private String itemName;
-    @Nullable("0")
-    @SerializedName("discount")
-    private String discount = "0";
+    private String discount;
     //    TODO insert default value
-    @Nullable("0")
-    @SerializedName("item_tax")
-    private String tax = "0";
-
-    //constructor retrofit
+    private String tax;
     @Ignore
+    private List<String> receiptId;
+    //constructor retrofit
+
     public Products(String message, Boolean error, Integer code,
                     int productId, @Nullable String productsPrice, @Nullable String productsQuantity,
-                    @Nullable String total, @Nullable String notes, @Nullable String receiptId, @Nullable String itemName) {
+                    @Nullable String total, @Nullable String notes,  @Nullable String itemName) {
         super(message, error, code);
         this.itemName = itemName;
         this.productId = productId;
@@ -63,19 +44,19 @@ public class Products extends Cash {
         this.productsQuantity = productsQuantity;
         this.total = total;
         this.notes = notes;
-        this.receiptId = receiptId;
+
     }
 
     //constructor room database
     public Products(int productId, @Nullable String productsPrice, @Nullable String productsQuantity,
-                    @Nullable String total, @Nullable String notes, @Nullable String receiptId, @Nullable String itemName) {
+                    @Nullable String total, @Nullable String notes,  @Nullable String itemName) {
         this.productId = productId;
         this.productsPrice = productsPrice;
         this.productsQuantity = productsQuantity;
         this.total = total;
         this.itemName = itemName;
         this.notes = notes;
-        this.receiptId = receiptId;
+
 
     }
 
@@ -140,13 +121,7 @@ public class Products extends Cash {
         this.notes = notes;
     }
 
-    public @Nullable String getReceiptId() {
-        return receiptId;
-    }
 
-    public void setReceiptId(@Nullable String receiptId) {
-        this.receiptId = receiptId;
-    }
 
     public @Nullable String getItemName() {
         return itemName;
@@ -166,7 +141,6 @@ public class Products extends Cash {
                 ", productsQuantity='" + productsQuantity + '\'' +
                 ", total='" + total + '\'' +
                 ", notes='" + notes + '\'' +
-                ", receiptId='" + receiptId + '\'' +
                 ", itemName='" + itemName + '\'' +
                 '}';
     }

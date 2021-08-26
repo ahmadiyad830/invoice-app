@@ -4,40 +4,30 @@ import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Items extends User {
-    @SerializedName("item_name")
-    private String itemName;
-    @SerializedName("item_price")
+import java.io.Serializable;
+import java.util.List;
+
+public class Items implements Serializable {
+    private String itemName ;
     private String itemPrice;
-    @SerializedName("discount")
     private String discount;
-    @SerializedName("item_tax")
     private String itemTax;
-    @SerializedName("item_note")
     private String itemNote;
-    @SerializedName("item_id")
     private String itemId;
-    @SerializedName("quantity")
     private String quantity;
+    private List<String> productId;
 
+    public Items() {
 
+    }
 
-
-
-    public Items(String userId, String itemName, String itemPrice,
-                 String itemTax, String itemNote,  String quantity) {
+    public Items(String itemName, String itemPrice, String discount,
+                 String itemTax, String itemNote,String quantity) {
         this.itemName = itemName;
         this.itemPrice = itemPrice;
+        this.discount = discount;
         this.itemTax = itemTax;
         this.itemNote = itemNote;
-        this.quantity = quantity;
-    }
-
-    public String getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 
@@ -89,6 +79,14 @@ public class Items extends User {
         this.itemId = itemId;
     }
 
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
+
     @NonNull
     @Override
     public String toString() {
@@ -99,6 +97,7 @@ public class Items extends User {
                 ", itemTax='" + itemTax + '\'' +
                 ", itemNote='" + itemNote + '\'' +
                 ", itemId='" + itemId + '\'' +
-                '}'+super.toString();
+                ", quantity='" + quantity + '\'' +
+                '}';
     }
 }

@@ -47,9 +47,9 @@ public class FragmentCreateProducts extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        FragmentCreateProductsArgs args = FragmentCreateProductsArgs.fromBundle(getArguments());
-        binding.setModel(args.getItemArgs());
-        Log.d(TAG, "onViewCreated: " + args.getItemArgs().toString());
+//        FragmentCreateProductsArgs args = FragmentCreateProductsArgs.fromBundle(getArguments());
+//        binding.setModel(args.getItemArgs());
+//        Log.d(TAG, "onViewCreated: " + args.getItemArgs().toString());
     }
 
     private void cleanEdit() {

@@ -17,7 +17,7 @@ public class VMReceipt extends ViewModel {
         errorData = repoReceipt.getErrorData();
     }
     public void setReceipt(Receipt model){
-        repoReceipt.setReceipt(model);
+        repoReceipt.createReceipt(model);
     }
     public MutableLiveData<Receipt> getData() {
         return data;

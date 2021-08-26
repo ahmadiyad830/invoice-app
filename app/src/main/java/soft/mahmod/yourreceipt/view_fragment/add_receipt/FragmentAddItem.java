@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.lang.annotation.Inherited;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +52,6 @@ public class FragmentAddItem extends Fragment implements OnClickItemListener<Ite
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_item, container, false);
         init();
-
         binding.swipeList.setOnRefreshListener(() -> {
             modelList.clear();
             adapter.notifyDataSetChanged();
@@ -63,7 +63,7 @@ public class FragmentAddItem extends Fragment implements OnClickItemListener<Ite
     }
 
     private void init() {
-        adapter = new ARItems(modelList, this);
+//        adapter = new ARItems(modelList, this);
         binding.recItem.setHasFixedSize(true);
         binding.recItem.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.recItem.setAdapter(adapter);

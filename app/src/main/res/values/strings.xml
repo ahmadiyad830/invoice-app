@@ -88,4 +88,5 @@
     <string name="delete">delete</string>
     <string name="skip">skip</string>
     <string name="create_item">Create Item</string>
+    <string name="create_client">Create Client</string>
 </resources>
