@@ -31,7 +31,7 @@ public class ActivityRegistration extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (vmAuthReg.hasCredential()) {
+        if (vmAuthReg.hasCredential() && vmAuthReg.isVerified()) {
             binding.setHasReg(true);
             manager.userSignIn(this);
         } else {

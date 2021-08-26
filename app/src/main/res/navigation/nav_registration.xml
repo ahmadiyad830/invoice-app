@@ -28,7 +28,9 @@
             android:id="@+id/action_fragmentSignUp_to_fragmentSignIn"
             app:destination="@id/fragmentSignIn"
             app:enterAnim="@android:anim/slide_out_right"
-            app:exitAnim="@android:anim/slide_in_left"/>
+            app:exitAnim="@android:anim/slide_in_left"
+            app:popUpTo="@id/fragmentSignIn"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_fragmentSignUp_to_fragmentActive"
             app:destination="@id/fragmentActive" />

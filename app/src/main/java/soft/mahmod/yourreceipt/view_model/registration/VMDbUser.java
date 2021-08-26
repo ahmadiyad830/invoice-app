@@ -24,6 +24,9 @@ public class VMDbUser extends ViewModel {
     public void isUserActive(){
         repoDbUser.readData();
     }
+    public void readUser(){
+        repoDbUser.readData();
+    }
 
     public MutableLiveData<User> getData() {
         return data;

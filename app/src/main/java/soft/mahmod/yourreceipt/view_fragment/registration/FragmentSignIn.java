@@ -34,7 +34,7 @@ public class FragmentSignIn extends Fragment {
     private VMAuthReg vmAuthReg;
     private VMDbUser vmDbUser;
     private NavController controller;
-
+    private SessionManager manager;
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +86,7 @@ public class FragmentSignIn extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        manager = SessionManager.getInstance(requireContext());
         controller = Navigation.findNavController(view);
         binding.txtGoSignup.setOnClickListener(v -> {
             controller.navigate(FragmentSignInDirections.actionFragmentSignInToFragmentSignUp());
@@ -103,38 +104,16 @@ public class FragmentSignIn extends Fragment {
     }
 
     private void signIn(String email, String password) {
-        binding.setProgress(true);
         vmAuthReg.signIn(email, password);
-        vmAuthReg.getErrorData().observe(getViewLifecycleOwner(), cash -> {
-            if (!cash.getError()) {
-              checkIsActive();
-            } else {
-                binding.setError(cash.getMessage());
-            }
-        });
-        binding.setProgress(false);
-    }
-
-    private void checkIsActive() {
-        vmDbUser.getErrorData().observe(getViewLifecycleOwner(), cash1 -> {
-            if (cash1.getError()) {
-                binding.setProgress(false);
-                binding.setError(cash1.getMessage());
-            } else {
-                vmDbUser.getData().observe(getViewLifecycleOwner(), user -> {
-                    if (user.isActive() || user.isBlock()) {
-                        SessionManager manager = SessionManager.getInstance(requireContext());
+        vmAuthReg.getErrorData()
+                .observe(getViewLifecycleOwner(),cash -> {
+                    Log.d(TAG, "signIn: "+cash.toString());
+                    if (!cash.getError()){
                         manager.userSignIn(requireActivity());
-                    } else {
-                        controller.navigate(FragmentSignInDirections.actionFragmentSignInToFragmentActive());
+                    }else {
+                        binding.setError(cash.getMessage());
                     }
                 });
-            }
-            Log.d(TAG, "signIn: 3"+cash1);
-            binding.setError(cash1.getMessage());
-        });
-        binding.setProgress(false);
     }
-//ahmadiyad88@yahoo.com
 
 }

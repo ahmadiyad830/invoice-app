@@ -10,9 +10,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.concurrent.Semaphore;
 
@@ -81,14 +83,10 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
     private void signUp(String email, String pass1) {
         vmAuthReg.signUp(email, pass1);
         vmAuthReg.getErrorData().observe(getViewLifecycleOwner(), cash -> {
-            if (cash.getError()) {
-                switch (cash.getCode()) {
-                    case 300 :
-                    case 200:
-                        uploadUser(email, pass1);
-                        break;
-                }
+            if (!cash.getError()){
+                uploadUser(email,pass1);
             }
+            Log.d(TAG, "signUp: "+cash.toString());
             binding.setError(cash.getMessage());
         });
     }
@@ -97,8 +95,11 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
         vmDbUser.postUser(new User(email, pass1));
         vmDbUser.getErrorData().observe(getViewLifecycleOwner(), cash1 -> {
             if (!cash1.getError()) {
-                manager.userSignOut(requireActivity());
+                Toast.makeText(requireContext(), cash1.getMessage(), Toast.LENGTH_SHORT).show();
+                controller.navigate(FragmentSignUpDirections.actionFragmentSignUpToFragmentSignIn());
             } else binding.setError(cash1.getMessage());
+            Log.d(TAG, "uploadUser: "+cash1.toString());
+
         });
     }
 }

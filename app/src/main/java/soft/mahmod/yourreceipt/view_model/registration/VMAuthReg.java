@@ -11,12 +11,13 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.auth.FirebaseUser;
 
 import soft.mahmod.yourreceipt.model.Cash;
+import soft.mahmod.yourreceipt.model.User;
 import soft.mahmod.yourreceipt.repository.RepoRegistration;
 
 public class VMAuthReg extends AndroidViewModel {
     private static final String TAG = "VMAuthReg";
     private RepoRegistration repoRegistration;
-    private MutableLiveData<FirebaseUser> data;
+    private MutableLiveData<User> data;
     private MutableLiveData<Cash> errorData;
     public VMAuthReg(@NonNull Application application) {
         super(application);
@@ -43,11 +44,14 @@ public class VMAuthReg extends AndroidViewModel {
     public boolean hasCredential(){
         return repoRegistration.isHasCredential();
     }
+    public boolean isVerified(){
+        return repoRegistration.isVerified();
+    }
     public void forgetPassword(String email){
         repoRegistration.forGetPassword(email);
     }
 
-    public MutableLiveData<FirebaseUser> getData() {
+    public MutableLiveData<User> getData() {
         return data;
     }
 
