@@ -1,4 +1,4 @@
-package soft.mahmod.yourreceipt.view_model.registration;
+package soft.mahmod.yourreceipt.view_model.db_user;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;

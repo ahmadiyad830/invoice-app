@@ -1,4 +1,4 @@
-package soft.mahmod.yourreceipt.repository;
+package soft.mahmod.yourreceipt.repository.User;
 
 import android.app.Application;
 import android.os.Build;
@@ -38,9 +38,9 @@ public class RepoRegistration implements DatabaseUrl {
     public RepoRegistration(Application application) {
         this.application = application;
         fAuth = FirebaseAuth.getInstance();
+        fAuth.useAppLanguage();
         reference = FirebaseDatabase.getInstance().getReference();
         cash = new Cash();
-        fAuth.useAppLanguage();
         data = new MutableLiveData<>();
         errorData = new MutableLiveData<>();
     }
@@ -50,12 +50,12 @@ public class RepoRegistration implements DatabaseUrl {
         fAuth.signInWithEmailAndPassword(email, pass)
                 .addOnCompleteListener(application.getMainExecutor(), task -> {
                     if (task.isSuccessful()) {
-                        if (isVerified()){
+                        if (isVerified()) {
                             cash.setError(false);
                             cash.setMessage("success");
                             cash.setCode(200);
                             errorData.setValue(cash);
-                        }else {
+                        } else {
                             verified();
                         }
                     }
@@ -150,7 +150,6 @@ public class RepoRegistration implements DatabaseUrl {
     }
 
 
-
     public MutableLiveData<User> getData() {
         return data;
     }
@@ -189,5 +188,24 @@ public class RepoRegistration implements DatabaseUrl {
                     cash.setError(true);
                     errorData.setValue(cash);
                 });
+    }
+
+    public FirebaseAuth getfAuth() {
+        return fAuth;
+    }
+
+    public Application getApplication() {
+        return application;
+    }
+
+    public Cash getCash() {
+        return cash;
+    }
+
+    public void signOut() {
+        cash.setError(false);
+        cash.setCode(SUCCESS);
+        cash.setMessage("success");
+        fAuth.signOut();
     }
 }

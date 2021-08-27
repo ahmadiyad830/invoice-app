@@ -16,17 +16,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import java.util.concurrent.Semaphore;
-
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.conditions.catch_registration.ConditionsSignUp;
 import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.FragmentSignUpBinding;
 import soft.mahmod.yourreceipt.model.User;
 import soft.mahmod.yourreceipt.statics.ApiURLS;
-import soft.mahmod.yourreceipt.view_activity.ActivityRegistration;
-import soft.mahmod.yourreceipt.view_model.registration.VMAuthReg;
-import soft.mahmod.yourreceipt.view_model.registration.VMDbUser;
+import soft.mahmod.yourreceipt.view_model.auth_user.VMAuthReg;
+import soft.mahmod.yourreceipt.view_model.db_user.VMDbUser;
 
 /**
  * A simple {@link Fragment} subclass.

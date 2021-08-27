@@ -91,4 +91,7 @@
     <string name="create_client">Create Client</string>
     <string name="active_your_account">active your account</string>
     <string name="contact_by_whatsapp_or_call">Contact by WhatsApp or call</string>
+    <string name="sign_in_with_another_account">Sign In with another account</string>
+    <string name="or">OR</string>
+    <string name="create_store">create store</string>
 </resources>

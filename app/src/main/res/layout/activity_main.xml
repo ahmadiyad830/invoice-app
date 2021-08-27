@@ -4,10 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="isActive"
             type="Boolean" />
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -30,8 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:visibility='@{isActive?View.VISIBLE:View.GONE,default = gone}'
-            app:fabCradleMargin="20dp"
             app:fabAlignmentMode="center"
+            app:fabCradleMargin="20dp"
             app:fabCradleRoundedCornerRadius="20dp"
             app:fabCradleVerticalOffset="8dp">
 
@@ -47,16 +49,47 @@
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility='@{isActive?View.VISIBLE:View.GONE,default = gone}'
             android:src="@drawable/ic_baseline_add_24"
+            android:visibility='@{isActive?View.VISIBLE:View.GONE,default = gone}'
             app:layout_anchor="@id/bottom_nav_bar" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility='@{isActive?View.GONE:View.VISIBLE,default = visible}'
-            android:text="@string/active_your_account"
-            android:layout_height="wrap_content"/>
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/active_your_account"
+                android:textColor="@color/top_and_bottom_color"
+                android:textSize="@dimen/_16ssp"
+                android:visibility='@{isActive?View.GONE:View.VISIBLE,default = visible}' />
+
+            <TextView
+                android:id="@+id/txt_or"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/or"
+                android:textColor="@color/hint_color"
+                android:layout_marginVertical="@dimen/_12sdp"
+                android:textSize="@dimen/_16ssp"
+                android:visibility='@{isActive?View.GONE:View.VISIBLE,default = visible}' />
+
+            <TextView
+                android:id="@+id/txt_another_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sign_in_with_another_account"
+                android:textColor="@color/top_and_bottom_color"
+                android:textSize="@dimen/_16ssp"
+                android:visibility='@{isActive?View.GONE:View.VISIBLE,default = visible}'
+                app:layout_anchor="@color/top_and_bottom_color"
+                app:layout_anchorGravity="bottom" />
+        </LinearLayout>
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

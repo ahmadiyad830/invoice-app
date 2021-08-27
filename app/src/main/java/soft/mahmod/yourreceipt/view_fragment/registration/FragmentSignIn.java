@@ -23,9 +23,8 @@ import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.conditions.catch_registration.ConditionsSignIn;
 import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.FragmentSignInBinding;
-import soft.mahmod.yourreceipt.model.Cash;
-import soft.mahmod.yourreceipt.view_model.registration.VMAuthReg;
-import soft.mahmod.yourreceipt.view_model.registration.VMDbUser;
+import soft.mahmod.yourreceipt.view_model.auth_user.VMAuthReg;
+import soft.mahmod.yourreceipt.view_model.db_user.VMDbUser;
 
 
 public class FragmentSignIn extends Fragment {
