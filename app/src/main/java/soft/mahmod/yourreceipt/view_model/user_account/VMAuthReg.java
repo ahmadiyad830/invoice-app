@@ -1,4 +1,4 @@
-package soft.mahmod.yourreceipt.view_model.auth_user;
+package soft.mahmod.yourreceipt.view_model.user_account;
 
 import android.app.Application;
 import android.os.Build;

@@ -9,5 +9,6 @@ public interface DatabaseUrl extends ErrorCode{
     String USER= "users/";
     String ACTIVE_USER = "users/active";
     String ACTIVE = "/active";
+    String STORE = "/store/";
 
 }

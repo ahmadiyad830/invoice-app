@@ -1,11 +1,11 @@
-package soft.mahmod.yourreceipt.view_model.create_receipt;
+package soft.mahmod.yourreceipt.view_model.database;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import soft.mahmod.yourreceipt.model.Cash;
 import soft.mahmod.yourreceipt.model.Client;
-import soft.mahmod.yourreceipt.repository.create.RepoClient;
+import soft.mahmod.yourreceipt.repository.Database.RepoClient;
 
 public class VMClient extends ViewModel{
     private RepoClient repoClient;

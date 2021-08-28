@@ -94,4 +94,6 @@
     <string name="sign_in_with_another_account">Sign In with another account</string>
     <string name="or">OR</string>
     <string name="create_store">create store</string>
+    <string name="address_2">Address 2</string>
+    <string name="address_1">Address 1</string>
 </resources>

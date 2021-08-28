@@ -1,6 +1,4 @@
-package soft.mahmod.yourreceipt.repository.create;
-
-import android.util.Log;
+package soft.mahmod.yourreceipt.repository.Database;
 
 import androidx.lifecycle.MutableLiveData;
 

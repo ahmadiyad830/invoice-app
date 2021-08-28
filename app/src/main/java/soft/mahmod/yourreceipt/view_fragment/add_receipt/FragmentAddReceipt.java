@@ -24,7 +24,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.core.Repo;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ARClients;
@@ -41,7 +40,7 @@ import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.utils.HandleTimeCount;
 import soft.mahmod.yourreceipt.view_activity.MainActivity;
-import soft.mahmod.yourreceipt.view_model.create_receipt.VMReceipt;
+import soft.mahmod.yourreceipt.view_model.database.VMReceipt;
 
 /**
  * A simple {@link Fragment} subclass.

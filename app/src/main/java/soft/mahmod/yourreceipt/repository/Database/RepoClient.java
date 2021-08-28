@@ -1,4 +1,4 @@
-package soft.mahmod.yourreceipt.repository.create;
+package soft.mahmod.yourreceipt.repository.Database;
 
 
 import soft.mahmod.yourreceipt.model.Client;

@@ -11,7 +11,7 @@ import android.os.Bundle;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.ActivityRegistrationBinding;
-import soft.mahmod.yourreceipt.view_model.auth_user.VMAuthReg;
+import soft.mahmod.yourreceipt.view_model.user_account.VMAuthReg;
 
 public class ActivityRegistration extends AppCompatActivity {
     private static final String TAG = "ActivityRegistration";

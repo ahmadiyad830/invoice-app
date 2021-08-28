@@ -1,18 +1,17 @@
-package soft.mahmod.yourreceipt.repository.create;
+package soft.mahmod.yourreceipt.repository.Database;
 
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import soft.mahmod.yourreceipt.model.User;
 
-public class RepoUser extends Repo<User>{
+public class RepoUser extends Repo<User> {
     @Override
-    public synchronized void insert(User user) {
-        super.insert(user);
+    public synchronized void insertObject(User user) {
+        super.insertObject(user);
     }
 
     public void readData() {

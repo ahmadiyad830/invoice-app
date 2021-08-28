@@ -16,10 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import soft.mahmod.yourreceipt.R;
-import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.FragmentCreateClientBinding;
 import soft.mahmod.yourreceipt.model.Client;
-import soft.mahmod.yourreceipt.view_model.create_receipt.VMClient;
+import soft.mahmod.yourreceipt.view_model.database.VMClient;
 
 /**
  * A simple {@link Fragment} subclass.

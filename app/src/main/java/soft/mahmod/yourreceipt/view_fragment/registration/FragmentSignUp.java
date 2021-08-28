@@ -22,8 +22,8 @@ import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.FragmentSignUpBinding;
 import soft.mahmod.yourreceipt.model.User;
 import soft.mahmod.yourreceipt.statics.ApiURLS;
-import soft.mahmod.yourreceipt.view_model.auth_user.VMAuthReg;
-import soft.mahmod.yourreceipt.view_model.db_user.VMDbUser;
+import soft.mahmod.yourreceipt.view_model.user_account.VMAuthReg;
+import soft.mahmod.yourreceipt.view_model.database.VMDbUser;
 
 /**
  * A simple {@link Fragment} subclass.

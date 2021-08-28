@@ -10,16 +10,14 @@ import androidx.navigation.ui.NavigationUI;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.ActivityMainBinding;
-import soft.mahmod.yourreceipt.view_model.auth_user.VMAuthReg;
-import soft.mahmod.yourreceipt.view_model.db_user.VMDbUser;
+import soft.mahmod.yourreceipt.view_model.user_account.VMAuthReg;
+import soft.mahmod.yourreceipt.view_model.database.VMDbUser;
 
 public class MainActivity extends AppCompatActivity {
-//    ahmadiyad830@gmail.com
     private static final String TAG = "MainActivity";
     private ActivityMainBinding binding;
     private VMDbUser vmDbUser;

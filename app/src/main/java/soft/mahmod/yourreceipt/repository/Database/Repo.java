@@ -1,5 +1,7 @@
-package soft.mahmod.yourreceipt.repository.create;
+package soft.mahmod.yourreceipt.repository.Database;
 
+
+import android.annotation.SuppressLint;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -13,11 +15,14 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 
+import java.util.List;
+import java.util.Optional;
+
 import soft.mahmod.yourreceipt.model.Cash;
 import soft.mahmod.yourreceipt.model.User;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 
-public class Repo<T> implements DatabaseUrl {
+public class Repo<T> implements DatabaseUrl, OnRepoInsert<T> {
     private static final String TAG = "Repo<T>";
     private MutableLiveData<T> data;
     private MutableLiveData<Cash> errorData;
@@ -27,6 +32,7 @@ public class Repo<T> implements DatabaseUrl {
     private String id;
     private final Cash cash = new Cash();
     private Class<T> tClass;
+
     public Repo() {
         data = new MutableLiveData<>();
         errorData = new MutableLiveData<>();
@@ -84,7 +90,8 @@ public class Repo<T> implements DatabaseUrl {
                 });
     }
 
-    public synchronized void insert(T t) {
+    @Override
+    public void insertObject(T t) {
         reference.child(getPath()).setValue(t)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -102,6 +109,50 @@ public class Repo<T> implements DatabaseUrl {
                     errorData.postValue(cash);
                 });
     }
+
+
+
+    @Override
+    public void insertValue(T t, String path) {
+        getReference().child(path.concat(getfAuth().getUid())).setValue(t)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        cash.setCode(200);
+                        cash.setError(false);
+                        cash.setMessage("success");
+                        errorData.postValue(cash);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                    cash.setMessage(e.getMessage());
+                    cash.setCode(0);
+                    cash.setError(true);
+                    errorData.postValue(cash);
+                });
+    }
+
+    @Override
+    public void insertList(List<T> t) {
+        // FIXME: 8/28/2021 i guess list need convert to array
+        getReference().child(path.concat(getfAuth().getUid())).setValue(t)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        cash.setCode(200);
+                        cash.setError(false);
+                        cash.setMessage("success");
+                        errorData.postValue(cash);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                    cash.setMessage(e.getMessage());
+                    cash.setCode(0);
+                    cash.setError(true);
+                    errorData.postValue(cash);
+                });
+    }
+
 
     public DatabaseReference getReference() {
         return reference;
@@ -134,4 +185,5 @@ public class Repo<T> implements DatabaseUrl {
     public MutableLiveData<T> getData() {
         return data;
     }
+
 }

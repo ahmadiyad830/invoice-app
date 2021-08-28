@@ -1,9 +1,11 @@
 package soft.mahmod.yourreceipt.model;
 
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
-public class User implements Serializable {
+public class User extends Cash implements Serializable {
 
     private String email;
     private String password;
@@ -67,6 +69,7 @@ public class User implements Serializable {
         this.uid = uid;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "User{" +
