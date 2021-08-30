@@ -19,11 +19,14 @@ import soft.mahmod.yourreceipt.model.Client;
 import soft.mahmod.yourreceipt.model.Items;
 
 public class ARClients extends FirebaseRecyclerAdapter<Client, ARClients.ViewHolder> {
+    public interface OnClickClient{
+        void clickClient(Client model,int position);
+    }
     private LayoutInflater inflater;
 
-    private OnClientClick listener;
+    private OnClickClient listener;
 
-    public ARClients(@NonNull FirebaseRecyclerOptions<Client> options, OnClientClick listener) {
+    public ARClients(@NonNull FirebaseRecyclerOptions<Client> options, OnClickClient listener) {
         super(options);
         this.listener = listener;
     }
@@ -54,7 +57,7 @@ public class ARClients extends FirebaseRecyclerAdapter<Client, ARClients.ViewHol
         public void bind(Client model) {
             binding.setModel(model);
             binding.goDetails.setOnClickListener(v -> {
-                listener.onClient(model);
+                listener.clickClient(model,getBindingAdapterPosition());
             });
         }
     }

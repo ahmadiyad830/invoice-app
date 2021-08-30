@@ -2,18 +2,15 @@ package soft.mahmod.yourreceipt.model;
 
 import androidx.annotation.NonNull;
 
-import com.google.gson.annotations.SerializedName;
-
-import java.io.Serializable;
 import java.util.List;
 
 public class Receipt {
-    private String receiptId;
+    private long receiptId;
     private String subject;
     private String receiptDate;
     private String clientName;
-    private List<String> productId;
-    private List<String> clientId;
+    private List<Long> itemId;
+    private long clientId;
     private String totalAll;
     private String clientPhone;
     private String type;
@@ -30,8 +27,7 @@ public class Receipt {
         this.type = type;
     }
 
-
-    public String getReceiptId() {
+    public long getReceiptId() {
         return receiptId;
     }
 
@@ -75,10 +71,25 @@ public class Receipt {
         this.clientName = clientName;
     }
 
-    public void setReceiptId(String receiptId) {
+    public void setReceiptId(long receiptId) {
         this.receiptId = receiptId;
     }
 
+    public List<Long> getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(List<Long> itemId) {
+        this.itemId = itemId;
+    }
+
+    public long getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
+    }
 
     @NonNull
     @Override

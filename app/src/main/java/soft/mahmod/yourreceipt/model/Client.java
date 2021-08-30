@@ -13,11 +13,11 @@ public class Client extends Cash{
 
     private String email;
 
-    private String phone;
+    private int phone;
 
     private String addInfo;
 
-    private String taxRegNo;
+    private double taxRegNo;
 
     private String address;
 
@@ -27,10 +27,10 @@ public class Client extends Cash{
 
     private String name;
 
-    private List<String> receiptId;
+    private List<Long> receiptId;
 
 
-    private String clientId;
+    private long clientId;
 
     public Client() {
 
@@ -40,12 +40,36 @@ public class Client extends Cash{
         super(message, error, code);
     }
 
-    public String getClientId() {
-        return clientId;
+    public String getEmail() {
+        return email;
     }
 
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getPhone() {
+        return phone;
+    }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
+    }
+
+    public String getAddInfo() {
+        return addInfo;
+    }
+
+    public void setAddInfo(String addInfo) {
+        this.addInfo = addInfo;
+    }
+
+    public double getTaxRegNo() {
+        return taxRegNo;
+    }
+
+    public void setTaxRegNo(double taxRegNo) {
+        this.taxRegNo = taxRegNo;
     }
 
     public String getAddress() {
@@ -64,39 +88,6 @@ public class Client extends Cash{
         this.storeAddress = storeAddress;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getAddInfo() {
-        return addInfo;
-    }
-
-    public void setAddInfo(String addInfo) {
-        this.addInfo = addInfo;
-    }
-
-    public String getTaxRegNo() {
-        return taxRegNo;
-    }
-
-    public void setTaxRegNo(String taxRegNo) {
-        this.taxRegNo = taxRegNo;
-    }
-
-
     public String getNote() {
         return note;
     }
@@ -113,7 +104,21 @@ public class Client extends Cash{
         this.name = name;
     }
 
+    public List<Long> getReceiptId() {
+        return receiptId;
+    }
 
+    public void setReceiptId(List<Long> receiptId) {
+        this.receiptId = receiptId;
+    }
+
+    public long getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
+    }
 
     @NonNull
     @Override

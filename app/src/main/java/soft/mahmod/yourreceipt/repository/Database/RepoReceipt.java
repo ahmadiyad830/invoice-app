@@ -17,7 +17,7 @@ public class RepoReceipt implements DatabaseUrl {
     private MutableLiveData<Receipt> data;
     private MutableLiveData<Cash> errorData;
     public String path;
-    public String randomId = String.valueOf(System.currentTimeMillis());
+    public long randomId = System.currentTimeMillis();
 
     public FirebaseAuth getfAuth() {
         return fAuth;
@@ -36,7 +36,7 @@ public class RepoReceipt implements DatabaseUrl {
     }
 
     public void createReceipt(Receipt model) {
-        String randomId = String.valueOf(System.currentTimeMillis());
+        long randomId = System.currentTimeMillis();
         model.setReceiptId(randomId);
         Cash cash = new Cash();
         reference.child(path)

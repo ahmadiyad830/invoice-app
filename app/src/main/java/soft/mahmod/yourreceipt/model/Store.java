@@ -4,10 +4,12 @@ import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
-public class Store extends Cash implements Serializable {
-    private String name, address1, address2, numberPhone, email;
 
-    public Store(String name, String address1, String address2, String numberPhone, String email) {
+public class Store extends Cash implements Serializable {
+    private String name, address1, address2, email;
+    private int numberPhone;
+
+    public Store(String name, String address1, String address2, int numberPhone, String email) {
         this.name = name;
         this.address1 = address1;
         this.address2 = address2;
@@ -43,11 +45,11 @@ public class Store extends Cash implements Serializable {
         this.address2 = address2;
     }
 
-    public String getNumberPhone() {
+    public int getNumberPhone() {
         return numberPhone;
     }
 
-    public void setNumberPhone(String numberPhone) {
+    public void setNumberPhone(int numberPhone) {
         this.numberPhone = numberPhone;
     }
 

@@ -232,6 +232,14 @@
                         android:layout_marginTop="@dimen/_8sdp"
                         android:gravity="center">
 
+                        <ImageView
+                            android:id="@+id/refresh_products"
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_weight="0.1"
+                            app:tint="@color/icon_color"
+                            android:src="@drawable/ic_baseline_refresh_24"
+                            android:layout_height="@dimen/_25sdp"/>
+
                         <TextView
                             android:id="@+id/txt_visible_rec"
                             android:layout_width="0dp"
@@ -260,12 +268,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/_8sdp"
-                        android:orientation="horizontal"
-                        android:visibility='@{hasItem?View.VISIBLE:View.GONE,default = visible}'
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="0dp"
@@ -323,10 +326,11 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/items_rec"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginHorizontal="@dimen/_8sdp"
                         android:layout_marginBottom="@dimen/_8sdp"
-                        android:visibility='@{hasItem?View.VISIBLE:View.GONE,default = visible}' />
+                        android:visibility='@{hasItem?View.VISIBLE:View.GONE,default = visible}'
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 </LinearLayout>
 
@@ -396,7 +400,7 @@
                     android:layout_margin="@dimen/_8sdp"
                     android:background="@drawable/custom_stork"
                     android:hint="@string/client_name"
-                    android:inputType="numberDecimal"
+                    android:inputType="textPersonName"
                     android:padding="@dimen/_12sdp" />
 
                 <androidx.cardview.widget.CardView

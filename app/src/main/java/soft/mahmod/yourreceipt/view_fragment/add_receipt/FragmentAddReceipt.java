@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,9 +27,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ARClients;
 import soft.mahmod.yourreceipt.adapter.ARItems;
+import soft.mahmod.yourreceipt.adapter.ARProducts;
 import soft.mahmod.yourreceipt.databinding.FragmentAddReceiptBinding;
 import soft.mahmod.yourreceipt.databinding.LayoutClientBinding;
 import soft.mahmod.yourreceipt.databinding.LayoutItemsBinding;
@@ -36,6 +42,7 @@ import soft.mahmod.yourreceipt.listeners.OnClientClick;
 import soft.mahmod.yourreceipt.model.Client;
 import soft.mahmod.yourreceipt.model.CreateReceipt;
 import soft.mahmod.yourreceipt.model.Items;
+import soft.mahmod.yourreceipt.model.Products;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.utils.HandleTimeCount;
@@ -48,19 +55,22 @@ import soft.mahmod.yourreceipt.view_model.database.VMReceipt;
  * create an instance of this fragment.
  */
 public class FragmentAddReceipt extends Fragment implements View.OnClickListener
-        , OnClickItemListener<Items>, OnClientClick, DatabaseUrl {
+        , ARItems.OnCLickItem, ARClients.OnClickClient, DatabaseUrl, ARProducts.OnClickItem {
     private static final String TAG = "FragmentAddReceipt";
     private FragmentAddReceiptBinding binding;
     private HandleTimeCount handleTimeCount;
     private VMReceipt vmReceipt;
     private ARItems adapter;
     private ARClients adapterClient;
-    private DatabaseReference reference;
+    private final List<Long> listItemID = new ArrayList<>();
+    private final List<Products> listProduct = new ArrayList<>();
+    private ARProducts adapterProduct;
+    private int sizeProduct = 0;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        reference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         vmReceipt = new ViewModelProvider(
                 getViewModelStore(),
                 new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())
@@ -75,16 +85,19 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
 
         adapterClient = new ARClients(optionsClient, this);
         handleTimeCount = new HandleTimeCount();
+        adapterProduct = new ARProducts(listProduct, this);
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_receipt, container, false);
+        init();
+        binding.setHasItem(true);
         CreateReceipt model = new CreateReceipt();
 
-        handleTimeCount.getDate();
         handleTimeCount.setTv_time(binding.txtTime);
         handleTimeCount.countDownStart();
         binding.setDate(handleTimeCount.getDate());
@@ -92,25 +105,20 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
         binding.switchPrint.setOnCheckedChangeListener((buttonView, isChecked) -> {
             binding.setChecked(isChecked);
         });
-        binding.txtVisibleRec.setOnClickListener(v -> {
-            binding.setHasItem(!binding.getHasItem());
-//            !binding.getHasItem()
-        });
-        binding.btnDown.setOnClickListener(v -> {
 
-//            testProducts();
-//            testReceipt();
-            setReceipt();
-        });
-        binding.txtDeleteRec.setOnClickListener(v -> {
-            deleteAllItem();
-        });
+
         binding.setModel(model);
         return binding.getRoot();
     }
 
+    private void init() {
+        binding.itemsRec.setHasFixedSize(true);
+        binding.itemsRec.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.itemsRec.setAdapter(adapterProduct);
+    }
+
     private void setReceipt() {
-        vmReceipt.setReceipt(getReceipt());
+        vmReceipt.setReceipt(getReceipt(listItemID));
         vmReceipt.getErrorData().observe(
                 getViewLifecycleOwner(),
                 cash -> {
@@ -123,13 +131,16 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
         );
     }
 
-    private Receipt getReceipt() {
+    private Receipt getReceipt(List<Long> listItemId) {
         Receipt model = new Receipt();
         model.setSubject(binding.edtSubject.getText().toString().trim());
         model.setReceiptDate("time: " + binding.txtTime.getText().toString().trim() + " date: " + handleTimeCount.getDate());
         model.setTotalAll(binding.edtTotalAll.getText().toString().trim());
-//        model.setClientName(binding.cl.getText().toString().trim());
+//        model.setClientName();
         model.setClientPhone(binding.edtClientPhone.getText().toString().trim());
+        model.setItemId(listItemId);
+        // FIXME: 8/30/2021 client id not name
+//        model.setClientId(binding.edtClientName.getText().toString().trim());
         binding.switchMaterial.setOnCheckedChangeListener((buttonView, isChecked) -> {
             model.setType(isChecked ? "take" : "dues");
         });
@@ -139,14 +150,20 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
     @Override
     public void onStart() {
         super.onStart();
+//        item
         binding.add1Item.setOnClickListener(this);
         binding.createItem.setOnClickListener(this);
+//        client
         binding.addClient.setOnClickListener(this);
         binding.createClient.setOnClickListener(this);
-
+//        back
         binding.btnBack.setOnClickListener(this);
+//        down
+        binding.btnDown.setOnClickListener(this);
+//        recycler product
+        binding.txtVisibleRec.setOnClickListener(this);
+        binding.txtDeleteRec.setOnClickListener(this);
     }
-
 
 
     private void loadItems() {
@@ -200,13 +217,6 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
     }
 
 
-    private void deleteAllItem() {
-//
-    }
-
-    private void totalAll() {
-
-    }
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -225,21 +235,73 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
             loadItems();
         } else if (binding.addClient.getId() == id) {
             loadClients();
+        } else if (binding.btnDown.getId() == id) {
+            setReceipt();
+        } else if (binding.txtVisibleRec.getId() == id) {
+            binding.setHasItem(!binding.getHasItem());
+        } else if (binding.txtDeleteRec.getId() == id) {
+            deleteAllItem();
+        } else if (binding.refreshProducts.getId() == id) {
+            binding.setHasItem(false);
+            binding.setHasItem(true);
         }
     }
+
     @Override
     public void onPause() {
         super.onPause();
         handleTimeCount.onPause();
     }
 
+    //    TODO update product like price or quantity or discount and tax
+    // product listener
     @Override
-    public void onClickItem(Items model) {
+    public void clickProduct(Products model, int position) {
 
     }
 
+    //    TODO delete product from list
     @Override
-    public void onClient(Client model) {
+    public void deleteProduct(Products model, int position) {
+        listProduct.remove(position);
+        adapterProduct.notifyItemRemoved(position);
+        adapterProduct.notifyItemRangeChanged(position, listProduct.size());
+        sizeProduct = listProduct.size();
+        binding.setHasItem(sizeProduct > 0);
+    }
 
+    //    TODO get client object and set name in ui
+    // client listener
+    @Override
+    public void clickClient(Client model, int position) {
+        binding.edtClientName.setText(model.getName());
+    }
+
+    //    item listener
+//    TODO add item in product
+    @Override
+    public void clickItem(Products model, int position) {
+        listItemID.add(model.getProductId());
+        listProduct.add(model);
+        adapterProduct.notifyItemInserted(position);
+        sizeProduct = listProduct.size();
+        binding.setHasItem(true);
+    }
+
+    //    TODO total all product price
+    private String totalAll() {
+        double total = 0.0;
+        for (Products model : listProduct) {
+            total = model.getProductsPrice() * model.getProductsQuantity();
+        }
+        return String.valueOf(total);
+    }
+
+    //    TODO delete all item
+    private void deleteAllItem() {
+        sizeProduct = 0;
+        listProduct.clear();
+        adapterProduct.notifyItemRangeRemoved(0, listProduct.size());
+        binding.setHasItem(false);
     }
 }

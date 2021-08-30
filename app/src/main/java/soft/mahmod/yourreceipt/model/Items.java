@@ -9,20 +9,19 @@ import java.util.List;
 
 public class Items implements Serializable {
     private String itemName ;
-    private String itemPrice;
-    private String discount;
-    private String itemTax;
+    private double itemPrice;
+    private double discount;
+    private double itemTax;
     private String itemNote;
-    private String itemId;
-    private String quantity;
+    private long itemId;
+    private double quantity;
     private List<String> productId;
 
     public Items() {
 
     }
 
-    public Items(String itemName, String itemPrice, String discount,
-                 String itemTax, String itemNote,String quantity) {
+    public Items(String itemName, double itemPrice, double discount, double itemTax, String itemNote, double quantity) {
         this.itemName = itemName;
         this.itemPrice = itemPrice;
         this.discount = discount;
@@ -39,27 +38,27 @@ public class Items implements Serializable {
         this.itemName = itemName;
     }
 
-    public String getItemPrice() {
+    public double getItemPrice() {
         return itemPrice;
     }
 
-    public void setItemPrice(String itemPrice) {
+    public void setItemPrice(double itemPrice) {
         this.itemPrice = itemPrice;
     }
 
-    public String getDiscount() {
+    public double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(String discount) {
+    public void setDiscount(double discount) {
         this.discount = discount;
     }
 
-    public String getItemTax() {
+    public double getItemTax() {
         return itemTax;
     }
 
-    public void setItemTax(String itemTax) {
+    public void setItemTax(double itemTax) {
         this.itemTax = itemTax;
     }
 
@@ -71,20 +70,28 @@ public class Items implements Serializable {
         this.itemNote = itemNote;
     }
 
-    public String getItemId() {
+    public long getItemId() {
         return itemId;
     }
 
-    public void setItemId(String itemId) {
+    public void setItemId(long itemId) {
         this.itemId = itemId;
     }
 
-    public String getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
+    }
+
+    public List<String> getProductId() {
+        return productId;
+    }
+
+    public void setProductId(List<String> productId) {
+        this.productId = productId;
     }
 
     @NonNull

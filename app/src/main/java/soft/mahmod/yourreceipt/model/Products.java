@@ -15,122 +15,103 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class Products extends Cash {
-    private int productId;
+    private long productId;
 
-    private String productsPrice;
+    private double productsPrice;
 
-    private String productsQuantity;
+    private double productsQuantity;
 
-    private String total;
+    private double total;
 
     private String notes;
 
 
     private String itemName;
-    private String discount;
+    private double discount;
     //    TODO insert default value
-    private String tax;
+    private double tax;
     @Ignore
     private List<String> receiptId;
-    //constructor retrofit
 
-    public Products(String message, Boolean error, Integer code,
-                    int productId, @Nullable String productsPrice, @Nullable String productsQuantity,
-                    @Nullable String total, @Nullable String notes,  @Nullable String itemName) {
-        super(message, error, code);
-        this.itemName = itemName;
-        this.productId = productId;
-        this.productsPrice = productsPrice;
-        this.productsQuantity = productsQuantity;
-        this.total = total;
-        this.notes = notes;
-
-    }
-
-    //constructor room database
-    public Products(int productId, @Nullable String productsPrice, @Nullable String productsQuantity,
-                    @Nullable String total, @Nullable String notes,  @Nullable String itemName) {
-        this.productId = productId;
-        this.productsPrice = productsPrice;
-        this.productsQuantity = productsQuantity;
-        this.total = total;
-        this.itemName = itemName;
-        this.notes = notes;
-
-
-    }
-
-    // default constructor
     public Products() {
 
     }
 
-    public String getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(String discount) {
-        this.discount = discount;
-    }
-
-    public String getTax() {
-        return tax;
-    }
-
-    public void setTax(String tax) {
-        this.tax = tax;
-    }
-
-    public int getProductId() {
+    public long getProductId() {
         return productId;
+    }
+
+    public void setProductId(long productId) {
+        this.productId = productId;
     }
 
     public void setProductId(int productId) {
         this.productId = productId;
     }
 
-    public @Nullable String getProductsPrice() {
+    public double getProductsPrice() {
         return productsPrice;
     }
 
-    public void setProductsPrice(@Nullable String productsPrice) {
+    public void setProductsPrice(double productsPrice) {
         this.productsPrice = productsPrice;
     }
 
-    public @Nullable String getProductsQuantity() {
+    public double getProductsQuantity() {
         return productsQuantity;
     }
 
-    public void setProductsQuantity(@Nullable String productsQuantity) {
+    public void setProductsQuantity(double productsQuantity) {
         this.productsQuantity = productsQuantity;
     }
 
-    public @Nullable String getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(@Nullable String total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 
-    public @Nullable String getNotes() {
+    public String getNotes() {
         return notes;
     }
 
-    public void setNotes(@Nullable String notes) {
+    public void setNotes(String notes) {
         this.notes = notes;
     }
 
-
-
-    public @Nullable String getItemName() {
+    public String getItemName() {
         return itemName;
     }
 
-    public void setItemName(@Nullable String itemName) {
+    public void setItemName(String itemName) {
         this.itemName = itemName;
     }
 
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public double getTax() {
+        return tax;
+    }
+
+    public void setTax(double tax) {
+        this.tax = tax;
+    }
+
+    public List<String> getReceiptId() {
+        return receiptId;
+    }
+
+    public void setReceiptId(List<String> receiptId) {
+        this.receiptId = receiptId;
+    }
 
     @NonNull
     @Override

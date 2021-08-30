@@ -12,6 +12,5 @@ public class RepoClient extends Repo<Client> {
     public void postData(Client model) {
         model.setClientId(getId());
         super.postData(model);
-
     }
 }

@@ -49,7 +49,17 @@ public class FragmentProducts extends Fragment implements OnClickDeleteItemListe
     private void loadProducts(String id) {
         binding.productsRecycler.setHasFixedSize(true);
         binding.productsRecycler.setLayoutManager(new LinearLayoutManager(requireContext()));
-        adapter = new ARProducts(listModel,this);
+        adapter = new ARProducts(listModel, new ARProducts.OnClickItem() {
+            @Override
+            public void clickProduct(Products model, int position) {
+
+            }
+
+            @Override
+            public void deleteProduct(Products model, int position) {
+
+            }
+        });
         binding.productsRecycler.setAdapter(adapter);
     }
 

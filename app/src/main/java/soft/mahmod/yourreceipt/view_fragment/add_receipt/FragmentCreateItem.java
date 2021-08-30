@@ -81,11 +81,11 @@ public class FragmentCreateItem extends Fragment {
 
     private Items getModel() {
         String itemName = binding.edtName.getText().toString().trim();
-        String itemPrice = binding.edtPrice.getText().toString().trim();
-        String quantity = binding.edtQuantity.getText().toString().trim();
-        String itemTax = binding.edtTax.getText().toString().trim();
+        double itemPrice = Double.parseDouble(binding.edtPrice.getText().toString().trim());
+        double quantity = Double.parseDouble(binding.edtQuantity.getText().toString().trim());
+        double itemTax = Double.parseDouble(binding.edtTax.getText().toString().trim());
+        double discount = Double.parseDouble(binding.edtDiscount.getText().toString().trim());
         String itemNote = binding.edtSubject.getText().toString().trim();
-        String discount = binding.edtDiscount.getText().toString().trim();
         return new Items(itemName, itemPrice, discount, itemTax, itemNote, quantity);
     }
 

@@ -11,17 +11,24 @@ import java.util.List;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.ItemProductBinding;
-import soft.mahmod.yourreceipt.listeners.OnClickDeleteItemListener;
 import soft.mahmod.yourreceipt.model.Products;
 
 public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
+
+    public interface OnClickItem {
+        void clickProduct(Products model, int position);
+
+        void deleteProduct(Products model, int position);
+
+    }
+
     private LayoutInflater inflater;
     private final List<Products> listModel;
-    private OnClickDeleteItemListener<Products> listener;
+    private OnClickItem onClickItem;
 
-    public ARProducts(List<Products> listModel, OnClickDeleteItemListener<Products>  listener) {
+    public ARProducts(List<Products> listModel, OnClickItem onClickItem) {
         this.listModel = listModel;
-        this.listener = listener;
+        this.onClickItem = onClickItem;
     }
 
     @NonNull
@@ -55,10 +62,11 @@ public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
         public void bind(Products model) {
             binding.setModel(model);
             binding.btnDelete.setOnClickListener(v -> {
-                listener.onClickDeleteItem(model,getAdapterPosition());
+                onClickItem.deleteProduct(model, getBindingAdapterPosition());
             });
             binding.getRoot().setOnClickListener(v -> {
-                listener.onClickItem(model);
+                onClickItem.clickProduct(model, getBindingAdapterPosition());
+
             });
         }
     }

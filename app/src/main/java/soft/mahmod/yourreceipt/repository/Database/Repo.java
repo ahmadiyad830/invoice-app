@@ -29,7 +29,7 @@ public class Repo<T> implements DatabaseUrl, OnRepoInsert<T> {
     private String path;
     private FirebaseAuth fAuth;
     private DatabaseReference reference;
-    private String id;
+    private long id;
     private final Cash cash = new Cash();
     private Class<T> tClass;
 
@@ -39,7 +39,7 @@ public class Repo<T> implements DatabaseUrl, OnRepoInsert<T> {
         path = "";
         fAuth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference();
-        id = String.valueOf(System.currentTimeMillis());
+        id = System.currentTimeMillis();
     }
 
     public Repo(Class<T> tClass) {
@@ -49,11 +49,11 @@ public class Repo<T> implements DatabaseUrl, OnRepoInsert<T> {
         path = "";
         fAuth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference();
-        id = String.valueOf(System.currentTimeMillis());
+        id = System.currentTimeMillis();
     }
 
     public synchronized void postData(T model) {
-        reference.child(getPath()).child(fAuth.getUid()).child(id).setValue(model)
+        reference.child(getPath()).child(fAuth.getUid()).child(String.valueOf(id)).setValue(model)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         cash.setCode(200);
@@ -109,9 +109,19 @@ public class Repo<T> implements DatabaseUrl, OnRepoInsert<T> {
                     errorData.postValue(cash);
                 });
     }
+    public void asas(Class<T> mClass){
+        getReference().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                T t = snapshot.getValue(mClass);
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-
+            }
+        });
+    }
     @Override
     public void insertValue(T t, String path) {
         getReference().child(path.concat(getfAuth().getUid())).setValue(t)
@@ -170,7 +180,7 @@ public class Repo<T> implements DatabaseUrl, OnRepoInsert<T> {
         return path;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 

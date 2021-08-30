@@ -48,19 +48,16 @@ public class ARReceipt extends FirebaseRecyclerAdapter<Receipt,ARReceipt.ViewHol
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Receipt model) {
-        Log.d(TAG, "onBindViewHolder: "+model.getClientName());
         holder.bind(model);
     }
 
     @Override
     public void onError(@NonNull DatabaseError error) {
         super.onError(error);
-        Log.d(TAG, "onError: "+error.getMessage());
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ItemReceiptBinding binding;
-
         public ViewHolder(@NonNull ItemReceiptBinding binding) {
             super(binding.getRoot());
             this.binding = binding;

@@ -140,8 +140,7 @@
                         android:background="@drawable/custom_stork"
                         android:hint="@string/price"
                         android:inputType="numberDecimal"
-                        android:padding="@dimen/_12sdp"
-                        android:text='@{model.itemPrice,default = "1"}' />
+                        android:padding="@dimen/_12sdp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -165,8 +164,7 @@
                         android:background="@drawable/custom_stork"
                         android:hint="@string/quantity"
                         android:inputType="numberDecimal"
-                        android:padding="@dimen/_12sdp"
-                        android:text='@{model.quantity,default = "1"}' />
+                        android:padding="@dimen/_12sdp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -190,8 +188,7 @@
                         android:background="@drawable/custom_stork"
                         android:hint="@string/discount"
                         android:inputType="numberDecimal"
-                        android:padding="@dimen/_12sdp"
-                        android:text='@{model.discount,default = "0"}' />
+                        android:padding="@dimen/_12sdp" />
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/linearLayout9"
@@ -215,7 +212,7 @@
                         android:hint="@string/tax"
                         android:inputType="numberDecimal"
                         android:padding="@dimen/_12sdp"
-                        android:text='@{model.itemTax ,default = "0"}' />
+                        />
                 </LinearLayout>
 
                 <LinearLayout

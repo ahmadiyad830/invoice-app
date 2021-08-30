@@ -97,7 +97,7 @@ public class FragmentEditAccount extends Fragment {
         String name = binding.edtName.getText().toString().trim();
         store.setName(name);
         String number = binding.edtPhoneNum.getText().toString().trim();
-        store.setNumberPhone(number);
+        store.setNumberPhone(Integer.parseInt(number));
         String email = binding.edtEmail.getText().toString().trim();
         store.setEmail(email);
         String address1 = binding.edtAddress1.getText().toString().trim();

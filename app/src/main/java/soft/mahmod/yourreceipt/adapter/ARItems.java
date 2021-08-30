@@ -1,5 +1,6 @@
 package soft.mahmod.yourreceipt.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +19,18 @@ import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.ItemItemsBinding;
 import soft.mahmod.yourreceipt.listeners.OnClickItemListener;
 import soft.mahmod.yourreceipt.model.Items;
+import soft.mahmod.yourreceipt.model.Products;
 import soft.mahmod.yourreceipt.model.Receipt;
 
-public class ARItems extends FirebaseRecyclerAdapter<Items,ARItems.ViewHolder>{
-    private LayoutInflater inflater;
-    private OnClickItemListener<Items> listener;
+public class ARItems extends FirebaseRecyclerAdapter<Items, ARItems.ViewHolder> {
+    public interface OnCLickItem {
+        void clickItem(Products model, int position);
+    }
 
-    public ARItems(@NonNull FirebaseRecyclerOptions<Items> options,OnClickItemListener<Items> listener) {
+    private LayoutInflater inflater;
+    private OnCLickItem listener;
+
+    public ARItems(@NonNull FirebaseRecyclerOptions<Items> options, OnCLickItem listener) {
         super(options);
         this.listener = listener;
     }
@@ -33,13 +39,12 @@ public class ARItems extends FirebaseRecyclerAdapter<Items,ARItems.ViewHolder>{
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (inflater==null){
+        if (inflater == null) {
             inflater = LayoutInflater.from(parent.getContext());
         }
-        ItemItemsBinding binding = DataBindingUtil.inflate(inflater, R.layout.item_items,parent,false);
+        ItemItemsBinding binding = DataBindingUtil.inflate(inflater, R.layout.item_items, parent, false);
         return new ViewHolder(binding);
     }
-
 
 
     @Override
@@ -54,11 +59,21 @@ public class ARItems extends FirebaseRecyclerAdapter<Items,ARItems.ViewHolder>{
             super(binding.getRoot());
             this.binding = binding;
         }
-        public void bind(Items model){
+
+        public void bind(Items model) {
             binding.setModel(model);
             binding.goDetails.setOnClickListener(v -> {
-                listener.onClickItem(model);
+                listener.clickItem(getProducts(model), getBindingAdapterPosition());
             });
+        }
+
+        private Products getProducts(Items model) {
+            Products products = new Products();
+            products.setItemName(model.getItemName());
+            products.setProductsPrice(model.getItemPrice());
+            products.setProductsQuantity(model.getQuantity());
+            products.setTotal(products.getProductsPrice() * products.getProductsQuantity());
+            return products;
         }
     }
 }
