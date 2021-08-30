@@ -11,8 +11,8 @@ public class Receipt {
     private String clientName;
     private List<Long> itemId;
     private long clientId;
-    private String totalAll;
-    private String clientPhone;
+    private double totalAll;
+    private int clientPhone;
     private String type;
 
     public Receipt() {
@@ -31,19 +31,19 @@ public class Receipt {
         return receiptId;
     }
 
-    public String getTotalAll() {
+    public double getTotalAll() {
         return totalAll;
     }
 
-    public void setTotalAll(String totalAll) {
+    public void setTotalAll(double totalAll) {
         this.totalAll = totalAll;
     }
 
-    public String getClientPhone() {
+    public int getClientPhone() {
         return clientPhone;
     }
 
-    public void setClientPhone(String clientPhone) {
+    public void setClientPhone(int clientPhone) {
         this.clientPhone = clientPhone;
     }
 

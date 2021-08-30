@@ -7,7 +7,10 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.DoubleStream;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.ItemProductBinding;
@@ -20,11 +23,17 @@ public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
 
         void deleteProduct(Products model, int position);
 
+        void setTotalAll(double total);
+    }
+
+    public interface OnTotalProducts {
+        double totalAll();
     }
 
     private LayoutInflater inflater;
     private final List<Products> listModel;
     private OnClickItem onClickItem;
+    public double totalAll = 0.0;
 
     public ARProducts(List<Products> listModel, OnClickItem onClickItem) {
         this.listModel = listModel;
@@ -44,6 +53,9 @@ public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ARProducts.ViewHolder holder, int position) {
         holder.bind(listModel.get(position));
+        double total = DoubleStream.of(listModel.get(position).getProductsPrice()).sum() *
+                DoubleStream.of(listModel.get(position).getProductsQuantity()).sum();
+        totalAll = total;
     }
 
     @Override
@@ -51,7 +63,7 @@ public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
         return listModel.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements ARProducts.OnTotalProducts {
         private final ItemProductBinding binding;
 
         public ViewHolder(ItemProductBinding binding) {
@@ -66,8 +78,19 @@ public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
             });
             binding.getRoot().setOnClickListener(v -> {
                 onClickItem.clickProduct(model, getBindingAdapterPosition());
-
             });
+            onClickItem.setTotalAll(totalAll());
+        }
+
+        @Override
+        public double totalAll() {
+            double price = 0.0;
+            double quantity = 0.0;
+            double total = price * quantity;
+            for (Products model : listModel) {
+                total = total + model.getProductsPrice() * model.getProductsQuantity();
+            }
+            return total;
         }
     }
 }

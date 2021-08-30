@@ -37,10 +37,7 @@ import soft.mahmod.yourreceipt.adapter.ARProducts;
 import soft.mahmod.yourreceipt.databinding.FragmentAddReceiptBinding;
 import soft.mahmod.yourreceipt.databinding.LayoutClientBinding;
 import soft.mahmod.yourreceipt.databinding.LayoutItemsBinding;
-import soft.mahmod.yourreceipt.listeners.OnClickItemListener;
-import soft.mahmod.yourreceipt.listeners.OnClientClick;
 import soft.mahmod.yourreceipt.model.Client;
-import soft.mahmod.yourreceipt.model.CreateReceipt;
 import soft.mahmod.yourreceipt.model.Items;
 import soft.mahmod.yourreceipt.model.Products;
 import soft.mahmod.yourreceipt.model.Receipt;
@@ -49,13 +46,11 @@ import soft.mahmod.yourreceipt.utils.HandleTimeCount;
 import soft.mahmod.yourreceipt.view_activity.MainActivity;
 import soft.mahmod.yourreceipt.view_model.database.VMReceipt;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentAddReceipt#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class FragmentAddReceipt extends Fragment implements View.OnClickListener
-        , ARItems.OnCLickItem, ARClients.OnClickClient, DatabaseUrl, ARProducts.OnClickItem {
+public class FragmentAddReceipt extends Fragment implements
+        View.OnClickListener
+        , ARItems.OnCLickItem, ARClients.OnClickClient
+        , DatabaseUrl, ARProducts.OnClickItem {
+
     private static final String TAG = "FragmentAddReceipt";
     private FragmentAddReceiptBinding binding;
     private HandleTimeCount handleTimeCount;
@@ -66,6 +61,7 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
     private final List<Products> listProduct = new ArrayList<>();
     private ARProducts adapterProduct;
     private int sizeProduct = 0;
+    private long clientId;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -95,9 +91,7 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_receipt, container, false);
         init();
-        binding.setHasItem(true);
-        CreateReceipt model = new CreateReceipt();
-
+        binding.setHasItem(false);
         handleTimeCount.setTv_time(binding.txtTime);
         handleTimeCount.countDownStart();
         binding.setDate(handleTimeCount.getDate());
@@ -106,8 +100,6 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
             binding.setChecked(isChecked);
         });
 
-
-        binding.setModel(model);
         return binding.getRoot();
     }
 
@@ -135,12 +127,12 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
         Receipt model = new Receipt();
         model.setSubject(binding.edtSubject.getText().toString().trim());
         model.setReceiptDate("time: " + binding.txtTime.getText().toString().trim() + " date: " + handleTimeCount.getDate());
-        model.setTotalAll(binding.edtTotalAll.getText().toString().trim());
+        model.setTotalAll(Double.parseDouble(binding.edtTotalAll.getText().toString().trim()));
 //        model.setClientName();
-        model.setClientPhone(binding.edtClientPhone.getText().toString().trim());
+        model.setClientPhone(Integer.parseInt(binding.edtClientPhone.getText().toString().trim()));
         model.setItemId(listItemId);
         // FIXME: 8/30/2021 client id not name
-//        model.setClientId(binding.edtClientName.getText().toString().trim());
+        model.setClientId(getClientId());
         binding.switchMaterial.setOnCheckedChangeListener((buttonView, isChecked) -> {
             model.setType(isChecked ? "take" : "dues");
         });
@@ -163,6 +155,7 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
 //        recycler product
         binding.txtVisibleRec.setOnClickListener(this);
         binding.txtDeleteRec.setOnClickListener(this);
+        Log.d(TAG, "onStart: " + adapterProduct.totalAll);
     }
 
 
@@ -241,9 +234,6 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
             binding.setHasItem(!binding.getHasItem());
         } else if (binding.txtDeleteRec.getId() == id) {
             deleteAllItem();
-        } else if (binding.refreshProducts.getId() == id) {
-            binding.setHasItem(false);
-            binding.setHasItem(true);
         }
     }
 
@@ -266,8 +256,14 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
         listProduct.remove(position);
         adapterProduct.notifyItemRemoved(position);
         adapterProduct.notifyItemRangeChanged(position, listProduct.size());
+        listItemID.remove(position);
         sizeProduct = listProduct.size();
         binding.setHasItem(sizeProduct > 0);
+    }
+
+    @Override
+    public void setTotalAll(double total) {
+        binding.setTotalAll(String.valueOf(total));
     }
 
     //    TODO get client object and set name in ui
@@ -275,32 +271,44 @@ public class FragmentAddReceipt extends Fragment implements View.OnClickListener
     @Override
     public void clickClient(Client model, int position) {
         binding.edtClientName.setText(model.getName());
+        setClientId(model.getClientId());
+    }
+    //    TODO client
+    @Override
+    public void editClient(Client model) {
+
+    }
+
+    public long getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
     }
 
     //    item listener
 //    TODO add item in product
     @Override
-    public void clickItem(Products model, int position) {
-        listItemID.add(model.getProductId());
+    public void clickItem(Products model, Items itemModel, int position) {
+        Log.d(TAG, "clickItem: " + itemModel.getItemId());
+        listItemID.add(itemModel.getItemId());
         listProduct.add(model);
         adapterProduct.notifyItemInserted(position);
         sizeProduct = listProduct.size();
         binding.setHasItem(true);
     }
+    //    TODO edit item
+    @Override
+    public void editItem(Items model) {
 
-    //    TODO total all product price
-    private String totalAll() {
-        double total = 0.0;
-        for (Products model : listProduct) {
-            total = model.getProductsPrice() * model.getProductsQuantity();
-        }
-        return String.valueOf(total);
     }
 
     //    TODO delete all item
     private void deleteAllItem() {
         sizeProduct = 0;
         listProduct.clear();
+        listItemID.clear();
         adapterProduct.notifyItemRangeRemoved(0, listProduct.size());
         binding.setHasItem(false);
     }

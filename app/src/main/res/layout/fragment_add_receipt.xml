@@ -4,11 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <!--model save state create receipt-->
-        <variable
-            name="model"
-            type="soft.mahmod.yourreceipt.model.CreateReceipt" />
-
         <variable
             name="checked"
             type="Boolean" />
@@ -220,25 +215,21 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/liner_rec"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/linearLayout12"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:id="@+id/refresh_products"
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_weight="0.1"
-                            app:tint="@color/icon_color"
-                            android:src="@drawable/ic_baseline_refresh_24"
-                            android:layout_height="@dimen/_25sdp"/>
+                        android:gravity="center"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
                             android:id="@+id/txt_visible_rec"
@@ -268,7 +259,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/_8sdp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout12">
 
                         <TextView
                             android:layout_width="0dp"
@@ -326,13 +318,17 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/items_rec"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="@dimen/_200sdp"
                         android:layout_marginHorizontal="@dimen/_8sdp"
-                        android:layout_marginBottom="@dimen/_8sdp"
                         android:visibility='@{hasItem?View.VISIBLE:View.GONE,default = visible}'
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardViedwProducts"
@@ -429,33 +425,35 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edt_subject"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_8sdp"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/subject"
                         android:inputType="text"
                         android:padding="@dimen/_12sdp" />
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edt_client_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_8sdp"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/client_phone"
                         android:inputType="numberDecimal"
                         android:padding="@dimen/_12sdp" />
 
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edt_total_all"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_8sdp"
-                        android:layout_marginVertical="@dimen/_12sdp"
+                        android:layout_marginBottom="@dimen/_8sdp"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/total_all"
                         android:inputType="numberDecimal"
@@ -467,6 +465,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_8sdp"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/note"
                         android:padding="@dimen/_12sdp" />
