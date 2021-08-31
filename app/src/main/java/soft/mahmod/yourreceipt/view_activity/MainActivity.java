@@ -72,6 +72,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        manager = null;
         getViewModelStore().clear();
+        vmAuthReg.onCleared();
+        vmAuthReg = null;
+        vmUser.onCleared();
+        vmUser = null;
+
     }
 }

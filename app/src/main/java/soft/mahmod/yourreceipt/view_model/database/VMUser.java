@@ -29,5 +29,8 @@ public class VMUser extends AndroidViewModel {
         return repoDbUser.getUser();
     }
 
+    public void onCleared(){
+        super.onCleared();
+    }
 
 }

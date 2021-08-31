@@ -2,6 +2,8 @@ package soft.mahmod.yourreceipt.view_activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.databinding.OnRebindCallback;
+import androidx.databinding.ViewDataBinding;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
@@ -21,8 +23,6 @@ public class ActivityDetails extends AppCompatActivity {
     private static final String TAG = "ActivityDetails";
     private ActivityDetailsBinding binding;
     private ViewPager2Adapter viewPager2Adapter;
-    private Receipt receipt;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class ActivityDetails extends AppCompatActivity {
         sendData();
         loadTabLayout();
         binding.btnBack.setOnClickListener(v -> {
-            Intent intent = new Intent(this,MainActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
         });
@@ -42,12 +42,12 @@ public class ActivityDetails extends AppCompatActivity {
     private void sendData() {
 
     }
+
     private void loadTabLayout() {
         viewPager2Adapter = new ViewPager2Adapter(this);
         viewPager2Adapter.addFragment(new FragmentReceipt());
         viewPager2Adapter.addFragment(new FragmentProducts());
         binding.viewPager2.setAdapter(viewPager2Adapter);
-        asd(binding.tableLayout, binding.viewPager2);
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(binding.tableLayout,
                 binding.viewPager2, (tab, position) -> {
             switch (position) {
@@ -64,8 +64,9 @@ public class ActivityDetails extends AppCompatActivity {
         tabLayoutMediator.attach();
     }
 
-    private void asd(TabLayout tableLayout, ViewPager2 viewPager2) {
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        binding = null;
     }
-
-
 }

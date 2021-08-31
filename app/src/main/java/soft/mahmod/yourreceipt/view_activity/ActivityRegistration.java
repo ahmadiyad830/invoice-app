@@ -86,4 +86,16 @@ public class ActivityRegistration extends AppCompatActivity {
     private void startWhatsApp() {
         IntentActivity.startWhatsApp(this);
     }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        binding = null;
+        manager = null;
+        getViewModelStore().clear();
+        vmAuthReg.onCleared();
+        vmAuthReg = null;
+
+    }
 }

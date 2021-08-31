@@ -67,8 +67,7 @@ public class VMAuthReg extends AndroidViewModel {
         return errorData;
     }
 
-    @Override
-    protected void onCleared() {
+    public void onCleared(){
         super.onCleared();
     }
 
