@@ -17,12 +17,13 @@
         android:layout_height="match_parent"
         tools:context=".view_activity.MainActivity">
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/main_container"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="?actionBarSize"
+            android:visibility='@{isActive?View.VISIBLE:View.GONE,default = gone}'
             app:defaultNavHost="true"
             app:navGraph="@navigation/nav_main" />
 

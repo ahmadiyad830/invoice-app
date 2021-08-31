@@ -55,16 +55,16 @@ public class FragmentEditAccount extends Fragment {
     }
 
     private void loadStore() {
-        vmStore.readStore();
-        vmStore.getErrorDate().observe(getViewLifecycleOwner(), cash -> {
-            if (cash.getError() && cash.getCode() != 404) {
-                binding.setError(cash.getMessage());
-            } else if (cash.getCode() != 404) {
-                vmStore.getData().observe(getViewLifecycleOwner(), store -> {
-                    binding.setModel(store);
-                });
-            }
-        });
+//        vmStore.readStore();
+//        vmStore.getErrorDate().observe(getViewLifecycleOwner(), cash -> {
+//            if (cash.getError() && cash.getCode() != 404) {
+//                binding.setError(cash.getMessage());
+//            } else if (cash.getCode() != 404) {
+//                vmStore.getData().observe(getViewLifecycleOwner(), store -> {
+//                    binding.setModel(store);
+//                });
+//            }
+//        });
     }
 
     private void dialog() {
@@ -86,10 +86,10 @@ public class FragmentEditAccount extends Fragment {
     }
 
     private void createStore() {
-        vmStore.insertStore(getStore());
-        vmStore.getErrorDate().observe(getViewLifecycleOwner(), cash -> {
-            Log.d(TAG, "createStore: " + cash.toString());
-        });
+//        vmStore.insertStore(getStore());
+//        vmStore.getErrorDate().observe(getViewLifecycleOwner(), cash -> {
+//            Log.d(TAG, "createStore: " + cash.toString());
+//        });
     }
 
     private Store getStore() {

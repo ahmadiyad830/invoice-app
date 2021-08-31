@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class Products extends Cash {
-    private long productId;
+    private String productId;
 
     private double productsPrice;
 
@@ -37,15 +37,12 @@ public class Products extends Cash {
 
     }
 
-    public long getProductId() {
+    public String getProductId() {
         return productId;
     }
 
-    public void setProductId(long productId) {
-        this.productId = productId;
-    }
 
-    public void setProductId(int productId) {
+    public void setProductId(String productId) {
         this.productId = productId;
     }
 

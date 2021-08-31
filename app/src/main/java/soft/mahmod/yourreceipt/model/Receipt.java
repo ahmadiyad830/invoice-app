@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import java.util.List;
 
 public class Receipt {
-    private long receiptId;
+    private String receiptId;
     private String subject;
     private String receiptDate;
     private String clientName;
@@ -27,7 +27,7 @@ public class Receipt {
         this.type = type;
     }
 
-    public long getReceiptId() {
+    public String getReceiptId() {
         return receiptId;
     }
 
@@ -71,7 +71,7 @@ public class Receipt {
         this.clientName = clientName;
     }
 
-    public void setReceiptId(long receiptId) {
+    public void setReceiptId(String receiptId) {
         this.receiptId = receiptId;
     }
 

@@ -23,7 +23,7 @@ import soft.mahmod.yourreceipt.databinding.FragmentSignUpBinding;
 import soft.mahmod.yourreceipt.model.User;
 import soft.mahmod.yourreceipt.statics.ApiURLS;
 import soft.mahmod.yourreceipt.view_model.user_account.VMAuthReg;
-import soft.mahmod.yourreceipt.view_model.database.VMDbUser;
+import soft.mahmod.yourreceipt.view_model.database.VMUser;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,7 +33,7 @@ import soft.mahmod.yourreceipt.view_model.database.VMDbUser;
 public class FragmentSignUp extends Fragment implements ApiURLS {
     private static final String TAG = "FragmentSignUp";
     private FragmentSignUpBinding binding;
-    private VMDbUser vmDbUser;
+    private VMUser vmDbUser;
     private VMAuthReg vmAuthReg;
     private NavController controller;
     private SessionManager manager;
@@ -42,7 +42,7 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         vmDbUser = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
-                (requireActivity().getApplication())).get(VMDbUser.class);
+                (requireActivity().getApplication())).get(VMUser.class);
         vmAuthReg = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
                 (requireActivity().getApplication())).get(VMAuthReg.class);
     }
@@ -89,14 +89,14 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
     }
 
     private void uploadUser(String email, String pass1) {
-        vmDbUser.postUser(new User(email, pass1));
-        vmDbUser.getErrorData().observe(getViewLifecycleOwner(), cash1 -> {
-            if (!cash1.getError()) {
-                Toast.makeText(requireContext(), cash1.getMessage(), Toast.LENGTH_SHORT).show();
-                controller.navigate(FragmentSignUpDirections.actionFragmentSignUpToFragmentSignIn());
-            } else binding.setError(cash1.getMessage());
-            Log.d(TAG, "uploadUser: "+cash1.toString());
+//        vmDbUser.postUser(new User(email, pass1));
+//        vmDbUser.getErrorData().observe(getViewLifecycleOwner(), cash1 -> {
+//            if (!cash1.getError()) {
+//                Toast.makeText(requireContext(), cash1.getMessage(), Toast.LENGTH_SHORT).show();
+//                controller.navigate(FragmentSignUpDirections.actionFragmentSignUpToFragmentSignIn());
+//            } else binding.setError(cash1.getMessage());
+//            Log.d(TAG, "uploadUser: "+cash1.toString());
 
-        });
+//        });
     }
 }

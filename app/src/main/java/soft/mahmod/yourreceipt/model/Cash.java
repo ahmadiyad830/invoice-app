@@ -18,7 +18,7 @@ public class Cash implements Serializable {
     @Ignore
     private  int code;
     @Exclude
-    private  int id;
+    private  String id;
 
     public Cash() {
 
@@ -30,11 +30,11 @@ public class Cash implements Serializable {
         this.code = code;
     }
     @Exclude
-    public int getId() {
+    public String getId() {
         return id;
     }
     @Exclude
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
     @Exclude

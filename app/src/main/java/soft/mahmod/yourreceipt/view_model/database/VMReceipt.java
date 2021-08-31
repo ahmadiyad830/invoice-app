@@ -1,29 +1,31 @@
 package soft.mahmod.yourreceipt.view_model.database;
 
+import android.app.Application;
+import android.os.Build;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import soft.mahmod.yourreceipt.model.Cash;
 import soft.mahmod.yourreceipt.model.Receipt;
-import soft.mahmod.yourreceipt.repository.Database.RepoReceipt;
+import soft.mahmod.yourreceipt.repository.database.RepoReceipt;
 
-public class VMReceipt extends ViewModel {
-    private MutableLiveData<Receipt> data;
-    private MutableLiveData<Cash> errorData;
+public class VMReceipt extends AndroidViewModel {
+
     private RepoReceipt repoReceipt;
-    public VMReceipt() {
-        repoReceipt = new RepoReceipt();
-        data = repoReceipt.getData();
-        errorData = repoReceipt.getErrorData();
-    }
-    public void setReceipt(Receipt model){
-        repoReceipt.createReceipt(model);
-    }
-    public MutableLiveData<Receipt> getData() {
-        return data;
+
+    public VMReceipt(@NonNull Application application) {
+        super(application);
+        repoReceipt = new RepoReceipt(application);
     }
 
-    public MutableLiveData<Cash> getErrorData() {
-        return errorData;
+    public LiveData<Cash> postReceipt(Receipt model){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            return repoReceipt.postReceipt(model);
+        }else return repoReceipt.postClientTLow(model);
     }
+
 }

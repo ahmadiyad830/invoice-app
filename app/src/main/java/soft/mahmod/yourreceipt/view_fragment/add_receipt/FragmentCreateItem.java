@@ -65,26 +65,42 @@ public class FragmentCreateItem extends Fragment {
     }
 
     private void createItem() {
-        vmItems.createItem(getModel());
-        vmItems.getErrorData()
-                .observe(
-                        getViewLifecycleOwner(),
-                        cash -> {
-                            if (!cash.getError()) {
-                                controller.navigate(FragmentCreateItemDirections.actionFragmentCreateItemToFragmentAddReceipt());
-                            } else {
-                                Log.d(TAG, "createItem: " + cash.toString());
-                            }
-                        }
-                );
+        vmItems.postItem(getModel())
+                .observe(getViewLifecycleOwner(),cash -> {
+                    if (!cash.getError()){
+                        controller.navigate(FragmentCreateItemDirections.actionFragmentCreateItemToFragmentAddReceipt());
+                    }
+                    Log.d(TAG, "createItem: " + cash.toString());
+                });
     }
 
     private Items getModel() {
+        double itemPrice = 0;
+        try {
+            itemPrice = Double.parseDouble(binding.edtPrice.getText().toString().trim());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        double quantity = 0;
+        try {
+            quantity = Double.parseDouble(binding.edtQuantity.getText().toString().trim());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        double itemTax = 0;
+        try {
+            itemTax = Double.parseDouble(binding.edtTax.getText().toString().trim());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        double discount = 0;
+        try {
+            discount = Double.parseDouble(binding.edtDiscount.getText().toString().trim());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
         String itemName = binding.edtName.getText().toString().trim();
-        double itemPrice = Double.parseDouble(binding.edtPrice.getText().toString().trim());
-        double quantity = Double.parseDouble(binding.edtQuantity.getText().toString().trim());
-        double itemTax = Double.parseDouble(binding.edtTax.getText().toString().trim());
-        double discount = Double.parseDouble(binding.edtDiscount.getText().toString().trim());
         String itemNote = binding.edtSubject.getText().toString().trim();
         return new Items(itemName, itemPrice, discount, itemTax, itemNote, quantity);
     }

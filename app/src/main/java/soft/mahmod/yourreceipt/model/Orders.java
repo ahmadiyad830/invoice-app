@@ -7,6 +7,15 @@ public class Orders {
     private String clientId;
     private String receiptId;
     private String userId;
+    private String orderId;
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
 
     public Orders() {
 

@@ -24,14 +24,14 @@ import soft.mahmod.yourreceipt.conditions.catch_registration.ConditionsSignIn;
 import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.FragmentSignInBinding;
 import soft.mahmod.yourreceipt.view_model.user_account.VMAuthReg;
-import soft.mahmod.yourreceipt.view_model.database.VMDbUser;
+import soft.mahmod.yourreceipt.view_model.database.VMUser;
 
 
 public class FragmentSignIn extends Fragment {
     private static final String TAG = "FragmentSignIn";
     private FragmentSignInBinding binding;
     private VMAuthReg vmAuthReg;
-    private VMDbUser vmDbUser;
+    private VMUser vmDbUser;
     private NavController controller;
     private SessionManager manager;
     @Override
@@ -40,7 +40,7 @@ public class FragmentSignIn extends Fragment {
         vmAuthReg = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
                 (requireActivity().getApplication())).get(VMAuthReg.class);
         vmDbUser = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
-                (requireActivity().getApplication())).get(VMDbUser.class);
+                (requireActivity().getApplication())).get(VMUser.class);
 
     }
 

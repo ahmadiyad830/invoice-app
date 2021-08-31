@@ -129,17 +129,14 @@ public class FragmentAddReceipt extends Fragment implements
         vmRulesAddReceipt.getErrorData().observe(getViewLifecycleOwner(), cash -> {
             Log.d(TAG, "setReceipt: " + cash.toString());
         });
-        vmReceipt.setReceipt(getReceipt());
-        vmReceipt.getErrorData().observe(
-                getViewLifecycleOwner(),
-                cash -> {
+        vmReceipt.postReceipt(getReceipt())
+                .observe(getViewLifecycleOwner(),cash -> {
                     if (!cash.getError()) {
                         Intent intent = new Intent(requireContext(), MainActivity.class);
                         startActivity(intent);
                         requireActivity().finish();
                     }
-                }
-        );
+                });
     }
 
     private Receipt getReceipt() {
@@ -318,6 +315,7 @@ public class FragmentAddReceipt extends Fragment implements
     public void clickClient(Client model, int position) {
         binding.edtClientName.setText(model.getName());
         binding.edtClientPhone.setText(String.valueOf(model.getPhone()));
+        Log.d(TAG, "clickClient: "+model.getClientId());
         setClientId(model.getClientId());
 
     }

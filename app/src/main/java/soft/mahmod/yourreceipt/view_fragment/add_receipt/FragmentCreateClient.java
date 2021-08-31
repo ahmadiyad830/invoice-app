@@ -67,13 +67,11 @@ public class FragmentCreateClient extends Fragment {
     }
 
     private void postClient() {
-        vmClient.postClient(getClient());
-        vmClient.getErrorData().observe(getViewLifecycleOwner(), cash -> {
-            if (!cash.getError()) {
+        vmClient.postClient(getClient()).observe(getViewLifecycleOwner(),cash -> {
+            if (!cash.getError()){
                 controller.navigate(FragmentCreateClientDirections.actionFragmentCreateClientToFragmentAddReceipt());
-            }else {
-                Log.d(TAG, "postClient: " + cash.toString());
             }
+            Log.d(TAG, "postClient: " + cash.toString());
         });
     }
 

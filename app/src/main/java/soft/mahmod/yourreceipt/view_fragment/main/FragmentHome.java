@@ -46,7 +46,7 @@ public class FragmentHome extends Fragment implements OnReceiptItemClick , Datab
         super.onCreate(savedInstanceState);
         reference = FirebaseDatabase.getInstance().getReference();
         options = new FirebaseRecyclerOptions.Builder<Receipt>().setQuery
-                (reference.child(ALL_RECEIPT + FirebaseAuth.getInstance().getUid()), Receipt.class)
+                (reference.child(RECEIPT + FirebaseAuth.getInstance().getUid()), Receipt.class)
                 .build();
         adapter = new ARReceipt(options, this);
     }

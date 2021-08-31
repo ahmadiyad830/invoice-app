@@ -27,7 +27,7 @@ public class Client extends Cash{
 
     private String name;
 
-    private List<Long> receiptId;
+    private List<String> receiptId;
 
 
     private String clientId;
@@ -104,11 +104,11 @@ public class Client extends Cash{
         this.name = name;
     }
 
-    public List<Long> getReceiptId() {
+    public List<String> getReceiptId() {
         return receiptId;
     }
 
-    public void setReceiptId(List<Long> receiptId) {
+    public void setReceiptId(List<String> receiptId) {
         this.receiptId = receiptId;
     }
 

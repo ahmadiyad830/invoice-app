@@ -21,13 +21,16 @@ public class Items implements Serializable {
 
     }
 
-    public Items(String itemName, double itemPrice, double discount, double itemTax, String itemNote, double quantity) {
+    public Items(String itemName, double itemPrice, double discount,
+                 double itemTax, String itemNote
+            , double quantity) {
         this.itemName = itemName;
         this.itemPrice = itemPrice;
         this.discount = discount;
         this.itemTax = itemTax;
         this.itemNote = itemNote;
         this.quantity = quantity;
+        this.productId = productId;
     }
 
     public String getItemName() {

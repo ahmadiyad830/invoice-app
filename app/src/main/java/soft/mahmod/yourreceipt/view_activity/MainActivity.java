@@ -2,6 +2,7 @@ package soft.mahmod.yourreceipt.view_activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -15,12 +16,12 @@ import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.ActivityMainBinding;
 import soft.mahmod.yourreceipt.view_model.user_account.VMAuthReg;
-import soft.mahmod.yourreceipt.view_model.database.VMDbUser;
+import soft.mahmod.yourreceipt.view_model.database.VMUser;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private ActivityMainBinding binding;
-    private VMDbUser vmDbUser;
+    private VMUser vmUser;
     private VMAuthReg vmAuthReg;
     private SessionManager manager;
     @Override
@@ -28,24 +29,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         manager = SessionManager.getInstance(this);
-        vmDbUser = new ViewModelProvider(
+        vmUser = new ViewModelProvider(
                 getViewModelStore(),
                 new ViewModelProvider.AndroidViewModelFactory(
                         getApplication()
                 )
-        ).get(VMDbUser.class);
-        vmAuthReg = new ViewModelProvider(this,new ViewModelProvider.AndroidViewModelFactory(getApplication()))
+        ).get(VMUser.class);
+        vmAuthReg = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication()))
                 .get(VMAuthReg.class);
-        vmDbUser.readUser();
-        vmDbUser.getErrorData().observe(this,cash -> {
-            if (!cash.getError()){
-                vmDbUser.getData().observe(this,user -> {
-                    if (user.isActive()){
-                        onStart();
-                    }else {
-                        binding.setIsActive(false);
-                    }
-                });
+
+        vmUser.getUser().observe(this, user -> {
+            if (!user.getError()) {
+                binding.setIsActive(user.isActive());
             }
         });
     }
@@ -60,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ActivityAddReceipt.class);
             startActivity(intent);
         });
-        if(binding.getIsActive()){
+        if (binding.getIsActive()) {
             binding.txtActive.setOnClickListener(v -> {
-                String url = "https://api.whatsapp.com/send?phone="+"+962782317354";
+                String url = "https://api.whatsapp.com/send?phone=" + "+962782317354";
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);

@@ -1,31 +1,31 @@
 package soft.mahmod.yourreceipt.view_model.database;
 
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+import android.app.Application;
+import android.os.Build;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
 import soft.mahmod.yourreceipt.model.Cash;
 import soft.mahmod.yourreceipt.model.Client;
-import soft.mahmod.yourreceipt.repository.Database.RepoClient;
+import soft.mahmod.yourreceipt.repository.database.RepoClient;
 
-public class VMClient extends ViewModel{
+public class VMClient extends AndroidViewModel {
     private RepoClient repoClient;
-    private MutableLiveData<Client> data;
-    private MutableLiveData<Cash> errorData;
 
-    public VMClient() {
-        repoClient = new RepoClient();
-        data = repoClient.getData();
-        errorData = repoClient.getErrorData();
-    }
-    public void postClient(Client model){
-        repoClient.postData(model);
+    public VMClient(@NonNull Application application) {
+        super(application);
+        repoClient = new RepoClient(application);
     }
 
-    public MutableLiveData<Cash> getErrorData() {
-        return errorData;
+    public LiveData<Cash> postClient(Client model){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            return repoClient.postClient(model);
+        }else {
+            return repoClient.postClientTLow(model);
+        }
     }
 
-    public MutableLiveData<Client> getData() {
-        return data;
-    }
+
 }
