@@ -23,13 +23,23 @@ public class RepoStore extends Repo<Store> implements OnRepoRead<Store> {
         insertValue(model,STORE);
     }
 
-    public void updateData(Map<String,Object> updateValue){
-        getReference().updateChildren(updateValue, new DatabaseReference.CompletionListener() {
-            @Override
-            public void onComplete(@Nullable @org.jetbrains.annotations.Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-
-            }
-        });
+    public void insertValue(Store model, String path) {
+        getReference().child(path.concat(getfAuth().getUid())).setValue(model)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        getCash().setCode(200);
+                       getCash().setError(false);
+                       getCash().setMessage("success");
+                        getErrorData().postValue(getCash());
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                    getCash().setMessage(e.getMessage());
+                    getCash().setCode(0);
+                    getCash().setError(true);
+                    getErrorData().postValue(getCash());
+                });
     }
     @Override
     public MutableLiveData<Store> getData() {

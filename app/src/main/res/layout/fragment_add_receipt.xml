@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="checked"
             type="Boolean" />
@@ -399,6 +400,17 @@
                     android:inputType="textPersonName"
                     android:padding="@dimen/_12sdp" />
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_client_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:background="@drawable/custom_stork"
+                    android:hint="@string/client_phone"
+                    android:inputType="numberDecimal"
+                    android:padding="@dimen/_12sdp" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView"
                     android:layout_width="match_parent"
@@ -437,16 +449,15 @@
                         android:padding="@dimen/_12sdp" />
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edt_client_phone"
+                        android:id="@+id/edt_discount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_8sdp"
                         android:layout_marginBottom="@dimen/_8sdp"
                         android:background="@drawable/custom_stork"
-                        android:hint="@string/client_phone"
+                        android:hint="@string/discount"
                         android:inputType="numberDecimal"
                         android:padding="@dimen/_12sdp" />
-
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edt_total_all"
@@ -459,6 +470,7 @@
                         android:inputType="numberDecimal"
                         android:padding="@dimen/_12sdp"
                         android:text="@{totalAll}" />
+
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edt_note"

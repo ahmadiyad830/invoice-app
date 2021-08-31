@@ -9,8 +9,8 @@ public class Receipt {
     private String subject;
     private String receiptDate;
     private String clientName;
-    private List<Long> itemId;
-    private long clientId;
+    private List<String> itemId;
+    private String clientId;
     private double totalAll;
     private int clientPhone;
     private String type;
@@ -75,19 +75,19 @@ public class Receipt {
         this.receiptId = receiptId;
     }
 
-    public List<Long> getItemId() {
+    public List<String> getItemId() {
         return itemId;
     }
 
-    public void setItemId(List<Long> itemId) {
+    public void setItemId(List<String> itemId) {
         this.itemId = itemId;
     }
 
-    public long getClientId() {
+    public String getClientId() {
         return clientId;
     }
 
-    public void setClientId(long clientId) {
+    public void setClientId(String clientId) {
         this.clientId = clientId;
     }
 

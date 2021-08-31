@@ -13,7 +13,7 @@ public class Items implements Serializable {
     private double discount;
     private double itemTax;
     private String itemNote;
-    private long itemId;
+    private String itemId;
     private double quantity;
     private List<String> productId;
 
@@ -70,11 +70,11 @@ public class Items implements Serializable {
         this.itemNote = itemNote;
     }
 
-    public long getItemId() {
+    public String getItemId() {
         return itemId;
     }
 
-    public void setItemId(long itemId) {
+    public void setItemId(String itemId) {
         this.itemId = itemId;
     }
 

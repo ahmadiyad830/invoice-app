@@ -14,13 +14,13 @@ public class RepoItem implements DatabaseUrl {
     public RepoItem() {
         data = new MutableLiveData<>();
         receipt = new RepoReceipt();
-        receipt.path = ITEMS + receipt.getfAuth().getUid() + "/" + receipt.randomId;
+        receipt.path = ITEMS + receipt.getfAuth().getUid();
     }
 
     public void createItem(Items model) {
         Cash cash = new Cash();
-        model.setItemId(receipt.randomId);
-        receipt.getReference().child(receipt.path).setValue(model)
+        model.setItemId(receipt.getReference().push().toString());
+        receipt.getReference().child(receipt.path).push().setValue(model)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         cash.setError(false);

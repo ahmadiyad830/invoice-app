@@ -1,5 +1,6 @@
 package soft.mahmod.yourreceipt.view_fragment.add_receipt;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -34,7 +35,9 @@ import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ARClients;
 import soft.mahmod.yourreceipt.adapter.ARItems;
 import soft.mahmod.yourreceipt.adapter.ARProducts;
+import soft.mahmod.yourreceipt.conditions.catch_add_receipt.RulesAddReceipt;
 import soft.mahmod.yourreceipt.databinding.FragmentAddReceiptBinding;
+import soft.mahmod.yourreceipt.databinding.FragmentCreateProductsBinding;
 import soft.mahmod.yourreceipt.databinding.LayoutClientBinding;
 import soft.mahmod.yourreceipt.databinding.LayoutItemsBinding;
 import soft.mahmod.yourreceipt.model.Client;
@@ -42,8 +45,11 @@ import soft.mahmod.yourreceipt.model.Items;
 import soft.mahmod.yourreceipt.model.Products;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
+import soft.mahmod.yourreceipt.utils.DialogConfirm;
+import soft.mahmod.yourreceipt.utils.DialogListener;
 import soft.mahmod.yourreceipt.utils.HandleTimeCount;
 import soft.mahmod.yourreceipt.view_activity.MainActivity;
+import soft.mahmod.yourreceipt.view_model.add_receipt.VMRulesAddReceipt;
 import soft.mahmod.yourreceipt.view_model.database.VMReceipt;
 
 public class FragmentAddReceipt extends Fragment implements
@@ -57,11 +63,13 @@ public class FragmentAddReceipt extends Fragment implements
     private VMReceipt vmReceipt;
     private ARItems adapter;
     private ARClients adapterClient;
-    private final List<Long> listItemID = new ArrayList<>();
+    private final List<String> listItemID = new ArrayList<>();
     private final List<Products> listProduct = new ArrayList<>();
     private ARProducts adapterProduct;
     private int sizeProduct = 0;
-    private long clientId;
+    private String clientId;
+    private NavController controller;
+    private VMRulesAddReceipt vmRulesAddReceipt;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -71,6 +79,7 @@ public class FragmentAddReceipt extends Fragment implements
                 getViewModelStore(),
                 new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())
         ).get(VMReceipt.class);
+        vmRulesAddReceipt = new ViewModelProvider(this).get(VMRulesAddReceipt.class);
         FirebaseRecyclerOptions<Items> options = new FirebaseRecyclerOptions.Builder<Items>()
                 .setQuery(reference.child(ITEMS + FirebaseAuth.getInstance().getUid()), Items.class)
                 .build();
@@ -78,12 +87,12 @@ public class FragmentAddReceipt extends Fragment implements
                 .setQuery(reference.child(CLIENT + FirebaseAuth.getInstance().getUid()), Client.class)
                 .build();
         adapter = new ARItems(options, this);
-
         adapterClient = new ARClients(optionsClient, this);
         handleTimeCount = new HandleTimeCount();
         adapterProduct = new ARProducts(listProduct, this);
 
     }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -103,6 +112,12 @@ public class FragmentAddReceipt extends Fragment implements
         return binding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        controller = Navigation.findNavController(view);
+    }
+
     private void init() {
         binding.itemsRec.setHasFixedSize(true);
         binding.itemsRec.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -110,7 +125,11 @@ public class FragmentAddReceipt extends Fragment implements
     }
 
     private void setReceipt() {
-        vmReceipt.setReceipt(getReceipt(listItemID));
+        vmRulesAddReceipt.sizeListProduct(listProduct.size());
+        vmRulesAddReceipt.getErrorData().observe(getViewLifecycleOwner(), cash -> {
+            Log.d(TAG, "setReceipt: " + cash.toString());
+        });
+        vmReceipt.setReceipt(getReceipt());
         vmReceipt.getErrorData().observe(
                 getViewLifecycleOwner(),
                 cash -> {
@@ -123,16 +142,26 @@ public class FragmentAddReceipt extends Fragment implements
         );
     }
 
-    private Receipt getReceipt(List<Long> listItemId) {
+    private Receipt getReceipt() {
         Receipt model = new Receipt();
         model.setSubject(binding.edtSubject.getText().toString().trim());
         model.setReceiptDate("time: " + binding.txtTime.getText().toString().trim() + " date: " + handleTimeCount.getDate());
-        model.setTotalAll(Double.parseDouble(binding.edtTotalAll.getText().toString().trim()));
-//        model.setClientName();
-        model.setClientPhone(Integer.parseInt(binding.edtClientPhone.getText().toString().trim()));
-        model.setItemId(listItemId);
+        try {
+            model.setTotalAll(Double.parseDouble(binding.edtTotalAll.getText().toString().trim()));
+        } catch (NumberFormatException e) {
+            model.setTotalAll(0.0);
+            e.printStackTrace();
+        }
+        try {
+            model.setClientPhone(Integer.parseInt(binding.edtClientPhone.getText().toString().trim()));
+        } catch (NumberFormatException e) {
+            model.setClientPhone(0);
+            e.printStackTrace();
+        }
+        model.setItemId(listItemID);
         // FIXME: 8/30/2021 client id not name
         model.setClientId(getClientId());
+        model.setClientName(binding.edtClientName.getText().toString().trim());
         binding.switchMaterial.setOnCheckedChangeListener((buttonView, isChecked) -> {
             model.setType(isChecked ? "take" : "dues");
         });
@@ -243,11 +272,28 @@ public class FragmentAddReceipt extends Fragment implements
         handleTimeCount.onPause();
     }
 
-    //    TODO update product like price or quantity or discount and tax
+    //    TODO edit product
     // product listener
     @Override
-    public void clickProduct(Products model, int position) {
+    public void editProduct(Products model, int position) {
+        DialogConfirm dialogConfirm = new DialogConfirm(requireContext(), new DialogListener() {
+            @Override
+            public void clickOk(DialogInterface dialog) {
 
+            }
+
+            @Override
+            public void clickCancel(DialogInterface dialog) {
+                dialog.dismiss();
+            }
+        });
+        dialogConfirm.setResContainer(R.id.products_container);
+        FragmentCreateProductsBinding binding = DataBindingUtil.inflate(LayoutInflater.from(dialogConfirm.context()),
+                R.layout.fragment_create_products, dialogConfirm.getResContainer(), false);
+//        binding.getRoot().setwid
+        dialogConfirm.addView(binding.getRoot());
+        dialogConfirm.createDialog("Edit product", "asd");
+        dialogConfirm.showDialog();
     }
 
     //    TODO delete product from list
@@ -271,19 +317,22 @@ public class FragmentAddReceipt extends Fragment implements
     @Override
     public void clickClient(Client model, int position) {
         binding.edtClientName.setText(model.getName());
+        binding.edtClientPhone.setText(String.valueOf(model.getPhone()));
         setClientId(model.getClientId());
+
     }
+
     //    TODO client
     @Override
     public void editClient(Client model) {
 
     }
 
-    public long getClientId() {
+    public String getClientId() {
         return clientId;
     }
 
-    public void setClientId(long clientId) {
+    public void setClientId(String clientId) {
         this.clientId = clientId;
     }
 
@@ -298,6 +347,7 @@ public class FragmentAddReceipt extends Fragment implements
         sizeProduct = listProduct.size();
         binding.setHasItem(true);
     }
+
     //    TODO edit item
     @Override
     public void editItem(Items model) {

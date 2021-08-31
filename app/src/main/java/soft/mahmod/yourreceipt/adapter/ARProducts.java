@@ -7,8 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.DoubleStream;
 
@@ -19,13 +17,12 @@ import soft.mahmod.yourreceipt.model.Products;
 public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
 
     public interface OnClickItem {
-        void clickProduct(Products model, int position);
+        void editProduct(Products model, int position);
 
         void deleteProduct(Products model, int position);
 
         void setTotalAll(double total);
     }
-
     public interface OnTotalProducts {
         double totalAll();
     }
@@ -77,7 +74,7 @@ public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
                 onClickItem.deleteProduct(model, getBindingAdapterPosition());
             });
             binding.getRoot().setOnClickListener(v -> {
-                onClickItem.clickProduct(model, getBindingAdapterPosition());
+                onClickItem.editProduct(model, getBindingAdapterPosition());
             });
             onClickItem.setTotalAll(totalAll());
         }

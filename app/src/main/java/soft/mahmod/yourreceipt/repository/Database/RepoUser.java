@@ -9,11 +9,25 @@ import com.google.firebase.database.ValueEventListener;
 import soft.mahmod.yourreceipt.model.User;
 
 public class RepoUser extends Repo<User> {
-    @Override
-    public synchronized void insertObject(User user) {
-        super.insertObject(user);
-    }
 
+    public void insertObject(User model) {
+        getReference().child(getPath()).setValue(model)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        getCash().setCode(200);
+                        getCash().setError(false);
+                        getCash().setMessage("success");
+                        getErrorData().postValue(getCash());
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                    getCash().setMessage(e.getMessage());
+                    getCash().setCode(0);
+                    getCash().setError(true);
+                    getErrorData().postValue(getCash());
+                });
+    }
     public void readData() {
         setPath(USER+getfAuth().getUid());
         getReference().addValueEventListener(new ValueEventListener() {

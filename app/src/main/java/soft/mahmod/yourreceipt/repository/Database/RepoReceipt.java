@@ -32,14 +32,14 @@ public class RepoReceipt implements DatabaseUrl {
         reference = FirebaseDatabase.getInstance().getReference();
         data = new MutableLiveData<>();
         errorData = new MutableLiveData<>();
-        path = ALL_RECEIPT + fAuth.getUid() + "/" + randomId;
+        path = ALL_RECEIPT + fAuth.getUid();
     }
 
     public void createReceipt(Receipt model) {
         long randomId = System.currentTimeMillis();
         model.setReceiptId(randomId);
         Cash cash = new Cash();
-        reference.child(path)
+        reference.child(path).push()
                 .setValue(model)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
