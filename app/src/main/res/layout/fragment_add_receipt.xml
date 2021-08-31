@@ -395,7 +395,7 @@
                         android:textStyle="italic" />
                 </LinearLayout>
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_client_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -403,6 +403,7 @@
                     android:textColorHint="@color/hint_color"
                     android:background="@drawable/custom_stork"
                     android:hint="@string/client_name"
+                    android:textColor="@color/text_color"
                     android:inputType="textPersonName"
                     android:padding="@dimen/_12sdp" />
 
@@ -410,6 +411,7 @@
                     android:id="@+id/edt_client_phone"
                     android:layout_width="match_parent"
                     android:textColorHint="@color/hint_color"
+                    android:textColor="@color/text_color"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_8sdp"
                     android:layout_marginBottom="@dimen/_8sdp"
@@ -453,6 +455,7 @@
                         android:layout_marginBottom="@dimen/_8sdp"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/subject"
+                        android:textColor="@color/text_color"
                         android:textColorHint="@color/hint_color"
                         android:inputType="text"
                         android:padding="@dimen/_12sdp" />
@@ -465,6 +468,7 @@
                         android:layout_marginBottom="@dimen/_8sdp"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/discount"
+                        android:textColor="@color/text_color"
                         android:textColorHint="@color/hint_color"
                         android:inputType="numberDecimal"
                         android:padding="@dimen/_12sdp" />
@@ -475,6 +479,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_8sdp"
                         android:layout_marginBottom="@dimen/_8sdp"
+                        android:textColor="@color/text_color"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/total_all"
                         android:textColorHint="@color/hint_color"
@@ -492,6 +497,7 @@
                         android:textColorHint="@color/hint_color"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/note"
+                        android:textColor="@color/text_color"
                         android:padding="@dimen/_12sdp" />
 
                     <com.google.android.material.switchmaterial.SwitchMaterial

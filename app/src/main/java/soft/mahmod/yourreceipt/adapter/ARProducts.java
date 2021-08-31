@@ -23,6 +23,7 @@ public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
 
         void setTotalAll(double total);
     }
+
     public interface OnTotalProducts {
         double totalAll();
     }
@@ -68,7 +69,7 @@ public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
             this.binding = binding;
         }
 
-        public void bind(Products model) {
+        public synchronized void bind(Products model) {
             binding.setModel(model);
             binding.btnDelete.setOnClickListener(v -> {
                 onClickItem.deleteProduct(model, getBindingAdapterPosition());

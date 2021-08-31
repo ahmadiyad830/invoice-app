@@ -296,7 +296,12 @@ public class FragmentAddReceipt extends Fragment implements
     //    TODO delete product from list
     @Override
     public void deleteProduct(Products model, int position) {
-        listProduct.remove(position);
+        try {
+            listProduct.remove(position);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            listProduct.remove(model);
+            e.printStackTrace();
+        }
         adapterProduct.notifyItemRemoved(position);
         adapterProduct.notifyItemRangeChanged(position, listProduct.size());
         listItemID.remove(position);
