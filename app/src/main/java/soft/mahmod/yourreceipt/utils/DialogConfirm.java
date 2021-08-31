@@ -13,17 +13,14 @@ public class DialogConfirm {
     private DialogListener dialogListener;
     private int resContainer;
 
-    public void setResContainer(int resContainer) {
-        this.resContainer = resContainer;
-    }
 
-    public ViewGroup getResContainer() {
-        return alertDialog.create().findViewById(resContainer);
-    }
 
     public DialogConfirm(Context context, DialogListener dialogListener) {
         alertDialog = new AlertDialog.Builder(context);
         this.dialogListener = dialogListener;
+    }
+    public  DialogConfirm(Context context){
+        alertDialog = new AlertDialog.Builder(context);
     }
     public void addView(View recLayout){
 
@@ -45,8 +42,18 @@ public class DialogConfirm {
         return this;
     }
 
+    public void setDialogListener(DialogListener dialogListener) {
+        this.dialogListener = dialogListener;
+    }
+
     public void showDialog() {
         alertDialog.show();
     }
+    public void setResContainer(int resContainer) {
+        this.resContainer = resContainer;
+    }
 
+    public ViewGroup getResContainer() {
+        return alertDialog.create().findViewById(resContainer);
+    }
 }

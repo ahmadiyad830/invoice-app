@@ -39,5 +39,5 @@
         android:id="@+id/fragmentActive"
         tools:layout="@layout/fragment_active"
         android:name="soft.mahmod.yourreceipt.view_fragment.registration.FragmentActive"
-        android:label="FragmentActive" />
+        android:label="Active Your Account" />
 </navigation>

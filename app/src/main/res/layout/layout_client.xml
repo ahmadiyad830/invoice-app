@@ -13,7 +13,7 @@
         android:id="@+id/container_client"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/main_color"
+        android:background="@color/background_page"
         android:orientation="vertical">
 
         <LinearLayout

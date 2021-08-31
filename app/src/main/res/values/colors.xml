@@ -8,9 +8,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-
+    <color name="background_page">#FFFFFF</color>
     <color name="main_color">#FFFFFF</color>
+
     <color name="top_and_bottom_color">#3448B9</color>
+
     <color name="background_icon">#F8F8F8</color>
     <color name="text_color">#000000</color>
     <color name="line_color">#000000</color>

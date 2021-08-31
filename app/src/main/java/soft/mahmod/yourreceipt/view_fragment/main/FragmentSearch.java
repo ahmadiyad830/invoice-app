@@ -39,6 +39,7 @@ public class FragmentSearch extends Fragment implements OnReceiptItemClick, Data
     private FirebaseRecyclerOptions<Receipt> options;
     private String[] sort = {"clientName", "clientPhone", "subject"};
     private String key = sort[0];
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,6 +51,10 @@ public class FragmentSearch extends Fragment implements OnReceiptItemClick, Data
             binding.setIsSearch(true);
             String client = binding.textSearch.getText().toString().trim();
             init(client);
+        });
+        binding.btnClean.setOnClickListener(v -> {
+            binding.textSearch.setText("");
+            init("");
         });
         return binding.getRoot();
     }

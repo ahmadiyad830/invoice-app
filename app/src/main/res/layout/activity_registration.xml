@@ -17,10 +17,12 @@
         android:layout_width="match_parent"
         android:visibility='@{hasReg?View.GONE:View.VISIBLE,default = visible}'
         android:layout_height="match_parent"
+        android:background="@color/background_page"
         tools:context=".view_activity.ActivityRegistration">
         <androidx.cardview.widget.CardView
             android:id="@+id/card_toolbar"
             android:layout_width="match_parent"
+            android:backgroundTint="@color/top_and_bottom_color"
             android:layout_height="wrap_content"
             app:cardCornerRadius="@dimen/_6sdp"
             app:cardElevation="@dimen/_3sdp"
@@ -42,6 +44,7 @@
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
                     android:layout_weight="1"
+                    app:tint="@color/text_btn_color"
                     android:src="@drawable/ic_outline_help_outline_24"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/textView3"
@@ -55,8 +58,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="9"
                     android:gravity="center"
+                    android:paddingEnd="@dimen/_10sdp"
                     android:text="@{name}"
-                    android:textColor="@color/text_color"
+                    android:textColor="@color/text_btn_color"
                     android:textSize="@dimen/_14ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

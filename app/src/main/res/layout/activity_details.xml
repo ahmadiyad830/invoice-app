@@ -10,12 +10,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background_page"
         tools:context=".view_activity.ActivityDetails">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/top_and_bottom_color"
             app:cardCornerRadius="@dimen/_6sdp"
             app:cardElevation="@dimen/_3sdp"
             app:cardUseCompatPadding="true"
@@ -27,6 +29,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/relativeLayout"
                 android:layout_width="match_parent"
+
                 android:layout_height="?actionBarSize"
                 android:gravity="left">
 
@@ -38,14 +41,15 @@
                     android:src="@drawable/ic_baseline_print_24"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/text_btn_color" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/receipt"
-                    android:textColor="@color/text_color"
+                    android:textColor="@color/text_btn_color"
                     android:textSize="@dimen/_14ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/scan_barcode"
@@ -62,7 +66,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/icon_color" />
+                    app:tint="@color/text_btn_color" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
@@ -72,13 +76,14 @@
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:layout_gravity="bottom"
-            android:background="?colorOnPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/card_toolbar"
             app:tabIndicatorFullWidth="true"
             app:tabInlineLabel="true"
+            android:backgroundTint="@color/text_btn_color"
+            app:tabIndicatorColor="@color/top_and_bottom_color"
             app:tabSelectedTextColor="@color/top_and_bottom_color"
             app:tabTextColor="@android:color/darker_gray" />
 

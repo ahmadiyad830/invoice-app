@@ -14,6 +14,7 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
+        android:background="@color/background_page"
         android:layout_height="match_parent"
         tools:context=".view_activity.MainActivity">
 
@@ -32,6 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            app:backgroundTint="@color/top_and_bottom_color"
             android:visibility='@{isActive?View.VISIBLE:View.GONE,default = gone}'
             app:fabAlignmentMode="center"
             app:fabCradleMargin="20dp"
@@ -40,6 +42,9 @@
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/main_bottom"
+                app:itemIconTint="@color/text_btn_color"
+                app:itemTextColor="@color/text_btn_color"
+                app:backgroundTint="@color/top_and_bottom_color"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="16dp"
@@ -51,8 +56,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_baseline_add_24"
+            app:backgroundTint="@color/text_btn_color"
+            app:tint="@color/top_and_bottom_color"
             android:visibility='@{isActive?View.VISIBLE:View.GONE,default = gone}'
-            app:layout_anchor="@id/bottom_nav_bar" />
+            app:layout_anchor="@id/bottom_nav_bar"
+            android:contentDescription="@string/todo" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -74,9 +82,9 @@
                 android:id="@+id/txt_or"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_12sdp"
                 android:text="@string/or"
                 android:textColor="@color/hint_color"
-                android:layout_marginVertical="@dimen/_12sdp"
                 android:textSize="@dimen/_16ssp"
                 android:visibility='@{isActive?View.GONE:View.VISIBLE,default = visible}' />
 

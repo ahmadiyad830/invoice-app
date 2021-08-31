@@ -12,6 +12,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:background="@color/background_page"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/_8sdp">
 

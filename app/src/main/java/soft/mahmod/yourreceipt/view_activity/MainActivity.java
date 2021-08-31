@@ -15,6 +15,7 @@ import android.os.Bundle;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.ActivityMainBinding;
+import soft.mahmod.yourreceipt.utils.IntentActivity;
 import soft.mahmod.yourreceipt.view_model.user_account.VMAuthReg;
 import soft.mahmod.yourreceipt.view_model.database.VMUser;
 
@@ -24,11 +25,13 @@ public class MainActivity extends AppCompatActivity {
     private VMUser vmUser;
     private VMAuthReg vmAuthReg;
     private SessionManager manager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         manager = SessionManager.getInstance(this);
+
         vmUser = new ViewModelProvider(
                 getViewModelStore(),
                 new ViewModelProvider.AndroidViewModelFactory(
@@ -57,10 +60,7 @@ public class MainActivity extends AppCompatActivity {
         });
         if (binding.getIsActive()) {
             binding.txtActive.setOnClickListener(v -> {
-                String url = "https://api.whatsapp.com/send?phone=" + "+962782317354";
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
-                startActivity(i);
+                IntentActivity.startWhatsApp(this);
             });
             binding.txtAnotherAccount.setOnClickListener(v -> {
                 vmAuthReg.signOut();

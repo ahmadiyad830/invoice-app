@@ -3,6 +3,7 @@ package soft.mahmod.yourreceipt.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 
 public class IntentActivity {
     private final Activity activity;
@@ -32,5 +33,12 @@ public class IntentActivity {
 
     public void finish() {
         activity.finish();
+    }
+
+    public static void startWhatsApp(Activity activity){
+        String url = "https://api.whatsapp.com/send?phone=" + "+962782317354";
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        activity.startActivity(i);
     }
 }

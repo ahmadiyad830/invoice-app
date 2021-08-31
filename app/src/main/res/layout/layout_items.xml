@@ -14,8 +14,8 @@
     <LinearLayout
         android:id="@+id/container_items"
         android:layout_width="match_parent"
+        android:background="@color/background_page"
         android:layout_height="match_parent"
-        android:background="@color/main_color"
         android:orientation="vertical">
 
         <LinearLayout
