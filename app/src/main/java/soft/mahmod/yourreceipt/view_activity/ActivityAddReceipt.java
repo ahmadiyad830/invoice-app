@@ -6,11 +6,12 @@ import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
 
 import soft.mahmod.yourreceipt.R;
+import soft.mahmod.yourreceipt.databinding.ActivityAddReceiptBinding;
 import soft.mahmod.yourreceipt.databinding.ActivityDetailsBinding;
 import soft.mahmod.yourreceipt.databinding.FragmentAddReceiptBinding;
 
 public class ActivityAddReceipt extends AppCompatActivity {
-    private FragmentAddReceiptBinding binding;
+    private ActivityAddReceiptBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
