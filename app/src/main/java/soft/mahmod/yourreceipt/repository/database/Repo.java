@@ -19,6 +19,14 @@ public class Repo<T> implements DatabaseUrl {
     private final MutableLiveData<T> data;
     private final Application application;
     private final Cash cash;
+    private T t ;
+    public T getT() {
+        return t;
+    }
+
+    public void setT(T t) {
+        this.t = t;
+    }
 
     public Repo(Application application) {
         this.application = application;

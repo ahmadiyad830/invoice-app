@@ -3,8 +3,13 @@ package soft.mahmod.yourreceipt.repository.database;
 import android.app.Application;
 import android.os.Build;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import soft.mahmod.yourreceipt.model.Cash;
 import soft.mahmod.yourreceipt.model.Store;
@@ -74,6 +79,22 @@ public class RepoStore extends Repo<Store> {
     }
 
     public LiveData<Store> getStore() {
+        setT(new Store());
+       getReference().child(STORE).child(getfUser().getUid())
+               .addListenerForSingleValueEvent(new ValueEventListener() {
+                   @Override
+                   public void onDataChange(@NonNull DataSnapshot snapshot) {
+                       getT().setError(false);
+                       getData().setValue(snapshot.getValue(Store.class));
+                   }
+
+                   @Override
+                   public void onCancelled(@NonNull DatabaseError error) {
+                       getT().setMessage(error.getMessage());
+                       getT().setError(true);
+                       getData().setValue(getT());
+                   }
+               });
         return getData();
     }
 }

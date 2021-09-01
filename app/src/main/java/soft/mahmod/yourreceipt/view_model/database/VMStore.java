@@ -27,4 +27,7 @@ public class VMStore extends AndroidViewModel {
             return repoStore.postStore(model);
         } else return repoStore.postStoreTLow(model);
     }
+    public LiveData<Store> getStore(){
+        return repoStore.getStore();
+    }
 }

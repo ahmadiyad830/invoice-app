@@ -38,12 +38,13 @@
             android:layout_height="@dimen/_120sdp"
             android:layout_marginTop="28dp"
             android:imageURL="@{imageUrl}"
+            app:riv_corner_radius="@dimen/_50sdp"
             android:src="@mipmap/ic_launcher"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/type_receipt"
-            app:riv_corner_radius="@dimen/_50sdp" />
+           />
 
         <TextView
             android:id="@+id/details_receipt"

@@ -9,6 +9,7 @@ public class Store extends Cash implements Serializable {
     private String name, address1, address2, email;
     private int numberPhone;
     private String storeId;
+    private String logo;
     public Store(String name, String address1, String address2, int numberPhone, String email) {
         this.name = name;
         this.address1 = address1;
@@ -19,6 +20,14 @@ public class Store extends Cash implements Serializable {
 
     public Store() {
 
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
     public String getStoreId() {

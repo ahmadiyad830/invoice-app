@@ -1,10 +1,15 @@
 package soft.mahmod.yourreceipt.view_fragment.add_receipt;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -14,6 +19,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +53,7 @@ import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.utils.DialogConfirm;
 import soft.mahmod.yourreceipt.utils.DialogListener;
 import soft.mahmod.yourreceipt.utils.HandleTimeCount;
+import soft.mahmod.yourreceipt.utils.IntentActivity;
 import soft.mahmod.yourreceipt.view_activity.MainActivity;
 import soft.mahmod.yourreceipt.view_model.add_receipt.VMRulesAddReceipt;
 import soft.mahmod.yourreceipt.view_model.database.VMReceipt;
@@ -61,7 +68,7 @@ public class FragmentAddReceipt extends Fragment implements
     private VMRulesAddReceipt vmRulesAddReceipt;
     private VMReceipt vmReceipt;
     private HandleTimeCount handleTimeCount;
-
+    public static final int REQUEST_CAMERA = 0x82317354;
 
     private ARItems adapter;
     private ARClients adapterClient;
@@ -131,7 +138,7 @@ public class FragmentAddReceipt extends Fragment implements
             Log.d(TAG, "setReceipt: " + cash.toString());
         });
         vmReceipt.postReceipt(getReceipt())
-                .observe(getViewLifecycleOwner(),cash -> {
+                .observe(getViewLifecycleOwner(), cash -> {
                     if (!cash.getError()) {
                         Intent intent = new Intent(requireContext(), MainActivity.class);
                         startActivity(intent);
@@ -169,19 +176,21 @@ public class FragmentAddReceipt extends Fragment implements
     @Override
     public void onStart() {
         super.onStart();
-//        item
+//     TODO   item
         binding.add1Item.setOnClickListener(this);
         binding.createItem.setOnClickListener(this);
-//        client
+//      TODO  client
         binding.addClient.setOnClickListener(this);
         binding.createClient.setOnClickListener(this);
-//        back
+//       TODO back
         binding.btnBack.setOnClickListener(this);
-//        down
+//     TODO   down
         binding.btnDown.setOnClickListener(this);
-//        recycler product
+//       TODO recycler product
         binding.txtVisibleRec.setOnClickListener(this);
         binding.txtDeleteRec.setOnClickListener(this);
+//       TODO camera
+        binding.btnCamera.setOnClickListener(this);
         Log.d(TAG, "onStart: " + adapterProduct.totalAll);
     }
 
@@ -261,8 +270,23 @@ public class FragmentAddReceipt extends Fragment implements
             binding.setHasItem(!binding.getHasItem());
         } else if (binding.txtDeleteRec.getId() == id) {
             deleteAllItem();
+        } else if (binding.btnCamera.getId() == id) {
+            openCamera();
         }
     }
+
+    public  void openCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        mLauncher.launch(intent);
+    }
+
+    private ActivityResultLauncher<Intent> mLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result != null) {
+                    Log.d(TAG, "mLauncher: " + result.toString());
+                }
+            });
 
     //    TODO edit product
     // product listener
@@ -315,7 +339,7 @@ public class FragmentAddReceipt extends Fragment implements
     public void clickClient(Client model, int position) {
         binding.edtClientName.setText(model.getName());
         binding.edtClientPhone.setText(String.valueOf(model.getPhone()));
-        Log.d(TAG, "clickClient: "+model.getClientId());
+        Log.d(TAG, "clickClient: " + model.getClientId());
         setClientId(model.getClientId());
 
     }
@@ -358,6 +382,7 @@ public class FragmentAddReceipt extends Fragment implements
         adapterProduct.notifyItemRangeRemoved(0, listProduct.size());
         binding.setHasItem(false);
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
