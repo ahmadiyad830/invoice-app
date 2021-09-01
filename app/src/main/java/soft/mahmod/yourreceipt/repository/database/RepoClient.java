@@ -3,13 +3,18 @@ package soft.mahmod.yourreceipt.repository.database;
 import android.app.Application;
 import android.os.Build;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import soft.mahmod.yourreceipt.model.Cash;
 import soft.mahmod.yourreceipt.model.Client;
 
-public class RepoClient extends Repo<Client>  {
+public class RepoClient extends Repo<Client> {
 
 
     public RepoClient(Application application) {
@@ -61,19 +66,55 @@ public class RepoClient extends Repo<Client>  {
         return getErrorDate();
     }
 
-    public LiveData<Cash> putClient(Client model){
+    public LiveData<Cash> putClient(Client model) {
         return getErrorDate();
     }
-    public LiveData<Cash> putClientTLow(Client model){
+
+    public LiveData<Cash> putClientTLow(Client model) {
         return getErrorDate();
     }
-    public LiveData<Cash> deleteClient(Client model){
+
+    public LiveData<Cash> deleteClient(Client model) {
         return getErrorDate();
     }
-    public LiveData<Cash> deleteClientTLow(Client model){
+
+    public LiveData<Cash> deleteClientTLow(Client model) {
         return getErrorDate();
     }
-    public LiveData<Client> getClient(){
+
+    public LiveData<Client> getClient(String pushKey) {
+        getReference().child(CLIENT).child(getfUser().getUid()).child(pushKey)
+                .addListenerForSingleValueEvent(getClient);
         return getData();
+    }
+
+    ValueEventListener getClient = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            Client client = new Client();
+            if (snapshot.exists()) {
+                client = snapshot.getValue(Client.class);
+                client.setError(false);
+                client.setMessage("success");
+                client.setCode(SUCCESS);
+            } else {
+                client.setError(true);
+                client.setMessage("path not exists");
+                client.setCode(PATH_NOT_EXISTS);
+            }
+
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+            Client client = new Client();
+            client.setError(true);
+            client.setMessage(error.getMessage());
+            client.setCode(TRY_AGAIN);
+        }
+    };
+
+    public void clean() {
+        getReference().removeEventListener(getClient);
     }
 }

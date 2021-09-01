@@ -24,5 +24,6 @@ public class ActivityAddReceipt extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         binding = null;
+        getViewModelStore().clear();
     }
 }

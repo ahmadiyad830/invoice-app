@@ -27,5 +27,8 @@ public class VMReceipt extends AndroidViewModel {
             return repoReceipt.postReceipt(model);
         }else return repoReceipt.postClientTLow(model);
     }
+    public LiveData<Receipt> getReceipt(String pushKey){
+        return repoReceipt.getReceipt(pushKey);
+    }
 
 }

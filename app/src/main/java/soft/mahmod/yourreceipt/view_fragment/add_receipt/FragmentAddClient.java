@@ -28,6 +28,7 @@ public class FragmentAddClient extends Fragment {
     private static final String TAG = "FragmentAddClient";
     private FragmentAddClientBinding binding;
     private SessionManager manager;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,5 +55,13 @@ public class FragmentAddClient extends Fragment {
             NavController controller = Navigation.findNavController(view);
 //            controller.navigate(R.id.action_fragmentAddClient_to_fragmentCreateClient);
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        manager = null;
+        binding = null;
+        getViewModelStore().clear();
     }
 }

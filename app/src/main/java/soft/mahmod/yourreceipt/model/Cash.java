@@ -5,12 +5,16 @@ import androidx.room.Ignore;
 
 import com.google.firebase.database.Exclude;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 
 public class Cash implements Serializable {
+    @Nullable
     @Exclude
     @Ignore
     private String message;
+
     @Exclude
     @Ignore
     private  boolean error;
@@ -38,7 +42,7 @@ public class Cash implements Serializable {
         this.id = id;
     }
     @Exclude
-    public String getMessage() {
+    public @Nullable String getMessage() {
         return message;
     }
     @Exclude
@@ -50,7 +54,7 @@ public class Cash implements Serializable {
         return code;
     }
     @Exclude
-    public void setMessage(String message) {
+    public void setMessage(@Nullable String message) {
         this.message = message;
     }
     @Exclude

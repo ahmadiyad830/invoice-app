@@ -32,10 +32,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import soft.mahmod.yourreceipt.R;
-import soft.mahmod.yourreceipt.adapter.ARClients;
-import soft.mahmod.yourreceipt.adapter.ARItems;
+import soft.mahmod.yourreceipt.adapter.firebase.ARClients;
+import soft.mahmod.yourreceipt.adapter.firebase.ARItems;
 import soft.mahmod.yourreceipt.adapter.ARProducts;
-import soft.mahmod.yourreceipt.conditions.catch_add_receipt.RulesAddReceipt;
 import soft.mahmod.yourreceipt.databinding.FragmentAddReceiptBinding;
 import soft.mahmod.yourreceipt.databinding.FragmentCreateProductsBinding;
 import soft.mahmod.yourreceipt.databinding.LayoutClientBinding;
@@ -59,8 +58,11 @@ public class FragmentAddReceipt extends Fragment implements
 
     private static final String TAG = "FragmentAddReceipt";
     private FragmentAddReceiptBinding binding;
-    private HandleTimeCount handleTimeCount;
+    private VMRulesAddReceipt vmRulesAddReceipt;
     private VMReceipt vmReceipt;
+    private HandleTimeCount handleTimeCount;
+
+
     private ARItems adapter;
     private ARClients adapterClient;
     private final List<String> listItemID = new ArrayList<>();
@@ -69,7 +71,7 @@ public class FragmentAddReceipt extends Fragment implements
     private int sizeProduct = 0;
     private String clientId;
     private NavController controller;
-    private VMRulesAddReceipt vmRulesAddReceipt;
+
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -263,12 +265,6 @@ public class FragmentAddReceipt extends Fragment implements
         }
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        handleTimeCount.onPause();
-    }
-
     //    TODO edit product
     // product listener
     @Override
@@ -364,5 +360,12 @@ public class FragmentAddReceipt extends Fragment implements
         listItemID.clear();
         adapterProduct.notifyItemRangeRemoved(0, listProduct.size());
         binding.setHasItem(false);
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        handleTimeCount.onPause();
+        binding = null;
+        getViewModelStore().clear();
     }
 }

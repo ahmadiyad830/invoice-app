@@ -19,7 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import soft.mahmod.yourreceipt.R;
-import soft.mahmod.yourreceipt.adapter.ARReceipt;
+import soft.mahmod.yourreceipt.adapter.firebase.ARReceipt;
 import soft.mahmod.yourreceipt.databinding.FragmentSearchBinding;
 import soft.mahmod.yourreceipt.listeners.OnReceiptItemClick;
 import soft.mahmod.yourreceipt.model.Receipt;

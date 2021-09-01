@@ -79,9 +79,20 @@ public class FragmentCreateClient extends Fragment {
         Client client = new Client();
         client.setEmail(binding.edtEmail.getText().toString().trim());
         client.setName(binding.edtName.getText().toString().trim());
-        client.setPhone(Integer.parseInt(binding.edtClientPhone.getText().toString().trim()));
+        try {
+            // FIXME: 9/1/2021
+            client.setPhone(Integer.parseInt(binding.edtClientPhone.getText().toString().trim()));
+        } catch (NumberFormatException e) {
+
+            e.printStackTrace();
+        }
         client.setAddInfo(binding.edtAddInfo.getText().toString().trim());
-        client.setTaxRegNo(Integer.parseInt(binding.edtTax4.getText().toString().trim()));
+        try {
+            client.setTaxRegNo(Double.parseDouble(binding.edtTax4.getText().toString().trim()));
+        } catch (NumberFormatException e) {
+            // FIXME: 9/1/2021
+            e.printStackTrace();
+        }
         client.setAddress(binding.edtAddress.getText().toString().trim());
         client.setStoreAddress(binding.edtStoreAddress.getText().toString().trim());
         client.setNote(binding.edtNote.getText().toString().trim());

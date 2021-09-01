@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,12 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.lang.annotation.Inherited;
 import java.util.ArrayList;
 import java.util.List;
 
 import soft.mahmod.yourreceipt.R;
-import soft.mahmod.yourreceipt.adapter.ARItems;
+import soft.mahmod.yourreceipt.adapter.firebase.ARItems;
 import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.FragmentAddItemBinding;
 import soft.mahmod.yourreceipt.listeners.OnClickItemListener;
@@ -33,10 +31,11 @@ import soft.mahmod.yourreceipt.model.Items;
  */
 public class FragmentAddItem extends Fragment implements OnClickItemListener<Items>  {
     private static final String TAG = "FragmentAddItem";
+
     private FragmentAddItemBinding binding;
+    private SessionManager manager;
 
     private ARItems adapter;
-    private SessionManager manager;
     private List<Items> modelList = new ArrayList<>();
     private NavController controller;
 
@@ -99,5 +98,13 @@ public class FragmentAddItem extends Fragment implements OnClickItemListener<Ite
 //                argsCreateProducts = FragmentAddItemDirections.actionFragmentAddItemToFragmentCreateProducts();
 //        argsCreateProducts.setItemArgs(model);
 //        controller.navigate(argsCreateProducts);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        manager = null;
+        binding = null;
+        getViewModelStore().clear();
     }
 }

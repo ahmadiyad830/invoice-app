@@ -114,7 +114,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/name"
-                        android:inputType="text"
+                        android:inputType="textPersonName"
                         android:padding="@dimen/_12sdp" />
                 </LinearLayout>
 
@@ -162,7 +162,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/phone_number"
-                        android:inputType="text"
+                        android:inputType="numberDecimal"
                         android:padding="@dimen/_12sdp" />
                 </LinearLayout>
 
@@ -210,7 +210,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/tax_reg_no"
-                        android:inputType="text"
+                        android:inputType="numberDecimal"
                         android:padding="@dimen/_12sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"

@@ -1,4 +1,4 @@
-package soft.mahmod.yourreceipt.adapter;
+package soft.mahmod.yourreceipt.adapter.firebase;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -12,11 +12,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.ItemClientBinding;
-import soft.mahmod.yourreceipt.databinding.ItemItemsBinding;
-import soft.mahmod.yourreceipt.listeners.OnClickItemListener;
-import soft.mahmod.yourreceipt.listeners.OnClientClick;
 import soft.mahmod.yourreceipt.model.Client;
-import soft.mahmod.yourreceipt.model.Items;
 
 public class ARClients extends FirebaseRecyclerAdapter<Client, ARClients.ViewHolder> {
     public interface OnClickClient{

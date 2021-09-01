@@ -26,6 +26,9 @@ public class VMClient extends AndroidViewModel {
             return repoClient.postClientTLow(model);
         }
     }
+    public LiveData<Client> getClient(String pushKey){
+        return repoClient.getClient(pushKey);
+    }
 
 
 }

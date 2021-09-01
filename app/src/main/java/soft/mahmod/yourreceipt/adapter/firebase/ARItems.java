@@ -1,8 +1,6 @@
-package soft.mahmod.yourreceipt.adapter;
+package soft.mahmod.yourreceipt.adapter.firebase;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -12,15 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.ItemItemsBinding;
-import soft.mahmod.yourreceipt.listeners.OnClickItemListener;
 import soft.mahmod.yourreceipt.model.Items;
 import soft.mahmod.yourreceipt.model.Products;
-import soft.mahmod.yourreceipt.model.Receipt;
 
 public class ARItems extends FirebaseRecyclerAdapter<Items, ARItems.ViewHolder> {
     public interface OnCLickItem {
