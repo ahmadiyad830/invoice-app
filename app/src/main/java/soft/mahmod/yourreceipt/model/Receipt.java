@@ -2,8 +2,6 @@ package soft.mahmod.yourreceipt.model;
 
 import androidx.annotation.NonNull;
 
-import com.google.firebase.auth.FirebaseAuthEmailException;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -13,7 +11,7 @@ public class Receipt extends Cash implements Serializable {
     private String subject;
     private String receiptDate;
     private String clientName;
-    private List<String> itemId;
+    private List<Products> products;
     private String clientId;
     private double totalAll;
     private int clientPhone;
@@ -79,12 +77,12 @@ public class Receipt extends Cash implements Serializable {
         this.receiptId = receiptId;
     }
 
-    public List<String> getItemId() {
-        return itemId;
+    public List<Products> getProducts() {
+        return products;
     }
 
-    public void setItemId(List<String> itemId) {
-        this.itemId = itemId;
+    public void setProducts(List<Products> products) {
+        this.products = products;
     }
 
     public String getClientId() {
@@ -103,7 +101,7 @@ public class Receipt extends Cash implements Serializable {
                 ", subject='" + subject + '\'' +
                 ", receiptDate='" + receiptDate + '\'' +
                 ", clientName='" + clientName + '\'' +
-               "\n" + ", itemId=" + itemId +"\n"+
+               "\n" + ", itemId=" + products +"\n"+
                 ", clientId='" + clientId + '\'' +
                 ", totalAll=" + totalAll +
                 ", clientPhone=" + clientPhone +

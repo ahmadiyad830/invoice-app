@@ -14,31 +14,38 @@ public class DialogConfirm {
     private int resContainer;
 
 
-
     public DialogConfirm(Context context, DialogListener dialogListener) {
         alertDialog = new AlertDialog.Builder(context);
         this.dialogListener = dialogListener;
     }
-    public  DialogConfirm(Context context){
+
+    public DialogConfirm(Context context) {
         alertDialog = new AlertDialog.Builder(context);
     }
-    public void addView(View recLayout){
+
+    public void addView(View recLayout) {
 
         alertDialog.setView(recLayout);
     }
-    public Context context (){
-       return alertDialog.getContext();
+
+    public Context context() {
+        return alertDialog.getContext();
     }
-    public DialogConfirm createDialog(String title, String message) {
-        alertDialog.setTitle(title)
-                .setMessage(message)
-                .setCancelable(false)
+
+    public void listenerDialog() {
+        alertDialog
                 .setNegativeButton("CANCEL", (dialog, which) -> {
                     dialogListener.clickCancel(dialog);
                 })
                 .setPositiveButton("OK", (dialog, which) -> {
                     dialogListener.clickOk(dialog);
                 });
+    }
+
+    public DialogConfirm createDialog(String title, String message) {
+        alertDialog.setTitle(title)
+                .setMessage(message)
+                .setCancelable(false);
         return this;
     }
 
@@ -49,6 +56,7 @@ public class DialogConfirm {
     public void showDialog() {
         alertDialog.show();
     }
+
     public void setResContainer(int resContainer) {
         this.resContainer = resContainer;
     }

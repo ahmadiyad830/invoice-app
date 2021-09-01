@@ -79,6 +79,7 @@ public class ActivityRegistration extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+        confirm.listenerDialog();
         confirm.createDialog("Help","content with us ");
         confirm.showDialog();
     }

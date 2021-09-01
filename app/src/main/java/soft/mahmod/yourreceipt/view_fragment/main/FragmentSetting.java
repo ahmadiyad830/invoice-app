@@ -116,7 +116,9 @@ public class FragmentSetting extends Fragment implements View.OnClickListener, D
                 dialog.dismiss();
                 changePassword(pass1, pass2);
             }
-        }).createDialog("change password", "Are you Shore");
+        });
+        dialogConfirm.createDialog("change password", "Are you Shore");
+        dialogConfirm.listenerDialog();
         dialogConfirm.showDialog();
     }
 

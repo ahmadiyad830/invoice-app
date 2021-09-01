@@ -65,7 +65,6 @@ public class FragmentAddReceipt extends Fragment implements
 
     private ARItems adapter;
     private ARClients adapterClient;
-    private final List<String> listItemID = new ArrayList<>();
     private final List<Products> listProduct = new ArrayList<>();
     private ARProducts adapterProduct;
     private int sizeProduct = 0;
@@ -157,7 +156,7 @@ public class FragmentAddReceipt extends Fragment implements
             model.setClientPhone(0);
             e.printStackTrace();
         }
-        model.setItemId(listItemID);
+        model.setProducts(listProduct);
         // FIXME: 8/30/2021 client id not name
         model.setClientId(getClientId());
         model.setClientName(binding.edtClientName.getText().toString().trim());
@@ -285,6 +284,7 @@ public class FragmentAddReceipt extends Fragment implements
                 R.layout.fragment_create_products, dialogConfirm.getResContainer(), false);
 //        binding.getRoot().setwid
         dialogConfirm.addView(binding.getRoot());
+        dialogConfirm.listenerDialog();
         dialogConfirm.createDialog("Edit product", "asd");
         dialogConfirm.showDialog();
     }
@@ -300,7 +300,6 @@ public class FragmentAddReceipt extends Fragment implements
         }
         adapterProduct.notifyItemRemoved(position);
         adapterProduct.notifyItemRangeChanged(position, listProduct.size());
-        listItemID.remove(position);
         sizeProduct = listProduct.size();
         binding.setHasItem(sizeProduct > 0);
     }
@@ -340,7 +339,6 @@ public class FragmentAddReceipt extends Fragment implements
     @Override
     public void clickItem(Products model, Items itemModel, int position) {
         Log.d(TAG, "clickItem: " + itemModel.getItemId());
-        listItemID.add(itemModel.getItemId());
         listProduct.add(model);
         adapterProduct.notifyItemInserted(position);
         sizeProduct = listProduct.size();
@@ -357,7 +355,6 @@ public class FragmentAddReceipt extends Fragment implements
     private void deleteAllItem() {
         sizeProduct = 0;
         listProduct.clear();
-        listItemID.clear();
         adapterProduct.notifyItemRangeRemoved(0, listProduct.size());
         binding.setHasItem(false);
     }
