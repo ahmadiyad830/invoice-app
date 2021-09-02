@@ -2,6 +2,7 @@ package soft.mahmod.yourreceipt.view_fragment.edit_account;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.NetworkRequest;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -21,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 
+import com.squareup.picasso.Picasso;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.FragmentEditAccountBinding;
@@ -28,19 +30,15 @@ import soft.mahmod.yourreceipt.model.Store;
 import soft.mahmod.yourreceipt.view_model.database.VMStore;
 import soft.mahmod.yourreceipt.view_model.storage.VMLogo;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentEditAccount#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FragmentEditAccount extends Fragment {
     private static final String TAG = "FragmentEditAccount";
     private FragmentEditAccountBinding binding;
     private VMStore vmStore;
     private VMLogo vmLogo;
     private Intent intent;
-    private final int IMAGE_REQUEST = 200;
+    public final static int IMAGE_REQUEST = 200;
     private Uri uri;
+
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +53,7 @@ public class FragmentEditAccount extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_account, container, false);
@@ -78,17 +76,17 @@ public class FragmentEditAccount extends Fragment {
     }
 
 
-    public void openGallery(){
+    public void openGallery() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent,IMAGE_REQUEST);
+        startActivityForResult(intent, IMAGE_REQUEST);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==IMAGE_REQUEST&&resultCode==Activity.RESULT_OK&&data!=null&&data.getData()!=null){
+        if (requestCode == IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             uri = data.getData();
             binding.setLogo(uri.toString());
         }
@@ -105,21 +103,20 @@ public class FragmentEditAccount extends Fragment {
 //            ActivityIntent.getInstance(requireContext()).userMakeChange(requireActivity());
             Toast.makeText(requireContext(), "Your store has been created", Toast.LENGTH_SHORT).show();
         });
-        dialog.setNegativeButton("NO", (dialog1, which) -> {
-            dialog1.dismiss();
-        });
+        dialog.setNegativeButton("NO", (dialog1, which) -> dialog1.dismiss());
         dialog.create();
         dialog.show();
     }
 
     private void createStore() {
-        vmLogo.postLogo(uri).observe(getViewLifecycleOwner(), cash ->{
-            if (!cash.getError()){
-                Log.d(TAG, "createStore:getMessage"+cash.getMessage());
-                vmStore.postStore(getStore(cash.getMessage())).observe(getViewLifecycleOwner(),cash1 -> {
-                    Log.d(TAG, "createStore: "+getStore(cash.getMessage()).getLogo());
+        vmLogo.postLogo(uri).observe(getViewLifecycleOwner(), cash -> {
+            if (!cash.getError()) {
+                Log.d(TAG, "createStore:getMessage" + cash.getMessage());
+                vmStore.postStore(getStore(cash.getMessage())).observe(getViewLifecycleOwner(), cash1 -> {
+                    if (cash1.getError())
+                        binding.setError(cash1.getMessage());
                 });
-            }
+            } else binding.setError(cash.getMessage());
         });
     }
 
@@ -155,6 +152,7 @@ public class FragmentEditAccount extends Fragment {
     public void setPath(String path) {
         this.path = path;
     }
+
     private void loadStore() {
         vmStore.getStore().observe(getViewLifecycleOwner(), store -> {
             binding.setModel(store);

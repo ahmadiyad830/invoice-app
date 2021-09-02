@@ -14,7 +14,7 @@ import com.google.firebase.storage.StorageReference;
 
 import soft.mahmod.yourreceipt.model.Cash;
 
-public class Repo<T> {
+public class Repo<T> extends soft.mahmod.yourreceipt.repository.database.Repo<T> {
     private StorageReference reference;
     private String uid;
     private Application application;
@@ -22,18 +22,19 @@ public class Repo<T> {
     private Cash cash ;
     private FirebaseUser fUser;
     public Repo(Application application) {
+        super(application);
         this.application = application;
         data = new MutableLiveData<>();
         cash = new Cash();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        reference = FirebaseStorage.getInstance().getReference("image/");
+        reference = FirebaseStorage.getInstance().getReference();
     }
 
     public MutableLiveData<T> getData() {
         return data;
     }
 
-    public StorageReference getReference() {
+    public StorageReference getRefStorage() {
         return reference;
     }
 

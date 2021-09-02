@@ -17,17 +17,22 @@ public class RepoInvoice extends Repo<Cash> {
     }
 
     private StorageReference pathFile(Uri uri) {
-        return getReference().child(getUid())
-                .child("Invoice" + "." + getFileExtension(uri));
+        return getRefStorage().child(getUid())
+                .child(System.currentTimeMillis() + "." + getFileExtension(uri));
     }
     @RequiresApi(api = Build.VERSION_CODES.P)
     public LiveData<Cash> postInvoice(Uri uri) {
         pathFile(uri).putFile(uri)
-                .addOnCompleteListener(getApplication().getMainExecutor(), task -> {
-                    if (task.isSuccessful()) {
+                .addOnSuccessListener(getApplication().getMainExecutor(), task -> {
+                    task.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(getApplication().getMainExecutor(), uri1 -> {
                         getCash().setError(false);
+                        getCash().setMessage(uri1.toString());
                         getData().setValue(getCash());
-                    }
+                    }).addOnFailureListener(getApplication().getMainExecutor(),e -> {
+                        getCash().setError(true);
+                        getCash().setMessage(e.getMessage());
+                        getData().setValue(getCash());
+                    });
                 })
                 .addOnFailureListener(getApplication().getMainExecutor(), e -> {
                     getCash().setError(true);
@@ -42,18 +47,23 @@ public class RepoInvoice extends Repo<Cash> {
 
     public LiveData<Cash> postInvoiceTLow(Uri uri) {
         pathFile(uri).putFile(uri)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
+                .addOnSuccessListener( task -> {
+                    task.getMetadata().getReference().getDownloadUrl().addOnSuccessListener( uri1 -> {
                         getCash().setError(false);
+                        getCash().setMessage(uri1.toString());
                         getData().setValue(getCash());
-                    }
+                    }).addOnFailureListener(e -> {
+                        getCash().setError(true);
+                        getCash().setMessage(e.getMessage());
+                        getData().setValue(getCash());
+                    });
                 })
-                .addOnFailureListener(e -> {
+                .addOnFailureListener( e -> {
                     getCash().setError(true);
                     getCash().setMessage(e.getMessage());
                     getData().setValue(getCash());
                 })
-                .addOnProgressListener(snapshot -> {
+                .addOnProgressListener( snapshot -> {
                     //TODO when we need make a progress design
                 });
         return getData();

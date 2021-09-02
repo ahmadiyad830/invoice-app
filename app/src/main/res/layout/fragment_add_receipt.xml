@@ -25,6 +25,10 @@
             name="totalAll"
             type="String" />
 
+        <variable
+            name="invoice"
+            type="String" />
+
         <import type="android.view.View" />
     </data>
 
@@ -38,10 +42,10 @@
             android:id="@+id/card_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/top_and_bottom_color"
             app:cardCornerRadius="@dimen/_6sdp"
             app:cardElevation="@dimen/_3sdp"
             app:cardUseCompatPadding="true"
-            android:backgroundTint="@color/top_and_bottom_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -59,13 +63,13 @@
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
                     android:layout_weight="1"
-                    app:tint="@color/text_btn_color"
                     android:src="@drawable/ic_baseline_check_24"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/textView3"
                     app:layout_constraintHorizontal_bias="0.120"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/text_btn_color" />
 
                 <TextView
                     android:id="@+id/textView3"
@@ -87,13 +91,13 @@
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
                     android:layout_weight="1"
-                    app:tint="@color/text_btn_color"
                     android:src="@drawable/ic_baseline_arrow_back_24"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.880"
                     app:layout_constraintStart_toEndOf="@+id/textView3"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/text_btn_color" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -108,10 +112,47 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/card_toolbar">
 
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/logo"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_150sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginVertical="@dimen/_8sdp"
+                        android:imageURL="@{invoice}"
+                        android:src="@mipmap/ic_launcher"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:riv_corner_radius="@dimen/_50sdp" />
+
+                    <ImageView
+                        android:id="@+id/btn_camera"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:layout_gravity="end|center"
+                        android:layout_marginHorizontal="@dimen/_8sdp"
+                        android:src="@drawable/ic_outline_camera_alt_24"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:tint="@color/top_and_bottom_color" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
                     android:id="@+id/linearLayout4"
@@ -145,21 +186,14 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardViewProducts"
-                    android:backgroundTint="@color/top_and_bottom_color"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
+                    android:backgroundTint="@color/top_and_bottom_color"
                     app:cardCornerRadius="@dimen/_6sdp"
                     app:cardElevation="@dimen/_3sdp"
                     app:cardUseCompatPadding="true">
-                    <ImageView
-                        android:id="@+id/btn_camera"
-                        android:layout_width="@dimen/_25sdp"
-                        android:src="@drawable/ic_outline_camera_alt_24"
-                        android:layout_gravity="end|center"
-                        android:layout_marginHorizontal="@dimen/_8sdp"
-                        app:tint="@color/text_btn_color"
-                        android:layout_height="@dimen/_25sdp"/>
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="?actionBarSize"
@@ -345,8 +379,8 @@
                     android:id="@+id/cardViedwProducts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/top_and_bottom_color"
                     android:layout_marginTop="@dimen/_8sdp"
+                    android:backgroundTint="@color/top_and_bottom_color"
                     app:cardCornerRadius="@dimen/_6sdp"
                     app:cardElevation="@dimen/_3sdp"
                     app:cardUseCompatPadding="true">
@@ -406,25 +440,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_8sdp"
-                    android:textColorHint="@color/hint_color"
                     android:background="@drawable/custom_stork"
                     android:hint="@string/client_name"
-                    android:textColor="@color/text_color"
                     android:inputType="textPersonName"
-                    android:padding="@dimen/_12sdp" />
+                    android:padding="@dimen/_12sdp"
+                    android:textColor="@color/text_color"
+                    android:textColorHint="@color/hint_color" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_client_phone"
                     android:layout_width="match_parent"
-                    android:textColorHint="@color/hint_color"
-                    android:textColor="@color/text_color"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_8sdp"
                     android:layout_marginBottom="@dimen/_8sdp"
                     android:background="@drawable/custom_stork"
                     android:hint="@string/client_phone"
                     android:inputType="numberDecimal"
-                    android:padding="@dimen/_12sdp" />
+                    android:padding="@dimen/_12sdp"
+                    android:textColor="@color/text_color"
+                    android:textColorHint="@color/hint_color" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView"
@@ -461,10 +495,10 @@
                         android:layout_marginBottom="@dimen/_8sdp"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/subject"
-                        android:textColor="@color/text_color"
-                        android:textColorHint="@color/hint_color"
                         android:inputType="text"
-                        android:padding="@dimen/_12sdp" />
+                        android:padding="@dimen/_12sdp"
+                        android:textColor="@color/text_color"
+                        android:textColorHint="@color/hint_color" />
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edt_discount"
@@ -474,10 +508,10 @@
                         android:layout_marginBottom="@dimen/_8sdp"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/discount"
-                        android:textColor="@color/text_color"
-                        android:textColorHint="@color/hint_color"
                         android:inputType="numberDecimal"
-                        android:padding="@dimen/_12sdp" />
+                        android:padding="@dimen/_12sdp"
+                        android:textColor="@color/text_color"
+                        android:textColorHint="@color/hint_color" />
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edt_total_all"
@@ -485,13 +519,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_8sdp"
                         android:layout_marginBottom="@dimen/_8sdp"
-                        android:textColor="@color/text_color"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/total_all"
-                        android:textColorHint="@color/hint_color"
                         android:inputType="numberDecimal"
                         android:padding="@dimen/_12sdp"
-                        android:text="@{totalAll}" />
+                        android:text="@{totalAll}"
+                        android:textColor="@color/text_color"
+                        android:textColorHint="@color/hint_color" />
 
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -500,11 +534,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_8sdp"
                         android:layout_marginBottom="@dimen/_8sdp"
-                        android:textColorHint="@color/hint_color"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/note"
+                        android:padding="@dimen/_12sdp"
                         android:textColor="@color/text_color"
-                        android:padding="@dimen/_12sdp" />
+                        android:textColorHint="@color/hint_color" />
 
                     <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/switchMaterial"
@@ -513,8 +547,8 @@
                         android:layout_marginHorizontal="@dimen/_8sdp"
                         android:layout_marginVertical="@dimen/_12sdp"
                         android:text="@string/type_receipt"
-                        android:textColorHint="@color/hint_color"
                         android:textColor="@color/text_color"
+                        android:textColorHint="@color/hint_color"
                         android:textOff="@string/take"
                         android:textOn="@string/dues"
                         android:textSize="@dimen/_12ssp"
@@ -571,6 +605,8 @@
                         android:visibility='@{checked ? View.VISIBLE:View.GONE , default=gone}' />
                 </LinearLayout>
             </LinearLayout>
+
+
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

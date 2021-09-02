@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
@@ -55,8 +56,10 @@ import soft.mahmod.yourreceipt.utils.DialogListener;
 import soft.mahmod.yourreceipt.utils.HandleTimeCount;
 import soft.mahmod.yourreceipt.utils.IntentActivity;
 import soft.mahmod.yourreceipt.view_activity.MainActivity;
+import soft.mahmod.yourreceipt.view_fragment.edit_account.FragmentEditAccount;
 import soft.mahmod.yourreceipt.view_model.add_receipt.VMRulesAddReceipt;
 import soft.mahmod.yourreceipt.view_model.database.VMReceipt;
+import soft.mahmod.yourreceipt.view_model.storage.VMInvoice;
 
 public class FragmentAddReceipt extends Fragment implements
         View.OnClickListener
@@ -69,15 +72,15 @@ public class FragmentAddReceipt extends Fragment implements
     private VMReceipt vmReceipt;
     private HandleTimeCount handleTimeCount;
     public static final int REQUEST_CAMERA = 0x82317354;
-
+    private final List<String> emptyField = new ArrayList<>();
     private ARItems adapter;
     private ARClients adapterClient;
     private final List<Products> listProduct = new ArrayList<>();
     private ARProducts adapterProduct;
     private int sizeProduct = 0;
     private String clientId;
-    private NavController controller;
-
+    private VMInvoice vmInvoice;
+    private Uri uri;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -88,6 +91,10 @@ public class FragmentAddReceipt extends Fragment implements
                 new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())
         ).get(VMReceipt.class);
         vmRulesAddReceipt = new ViewModelProvider(this).get(VMRulesAddReceipt.class);
+        vmInvoice = new ViewModelProvider(
+                getViewModelStore(),
+                new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())
+        ).get(VMInvoice.class);
         FirebaseRecyclerOptions<Items> options = new FirebaseRecyclerOptions.Builder<Items>()
                 .setQuery(reference.child(ITEMS + FirebaseAuth.getInstance().getUid()), Items.class)
                 .build();
@@ -123,7 +130,7 @@ public class FragmentAddReceipt extends Fragment implements
     @Override
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        controller = Navigation.findNavController(view);
+        NavController controller = Navigation.findNavController(view);
     }
 
     private void init() {
@@ -137,19 +144,26 @@ public class FragmentAddReceipt extends Fragment implements
         vmRulesAddReceipt.getErrorData().observe(getViewLifecycleOwner(), cash -> {
             Log.d(TAG, "setReceipt: " + cash.toString());
         });
-        vmReceipt.postReceipt(getReceipt())
-                .observe(getViewLifecycleOwner(), cash -> {
-                    if (!cash.getError()) {
-                        Intent intent = new Intent(requireContext(), MainActivity.class);
-                        startActivity(intent);
-                        requireActivity().finish();
-                    }
-                });
+        vmInvoice.postInvoice(uri).observe(getViewLifecycleOwner(), cash -> {
+            if (!cash.getError()) {
+                vmReceipt.postReceipt(getReceipt(cash.getMessage()))
+                        .observe(getViewLifecycleOwner(), cash1 -> {
+                            if (!cash1.getError()) {
+                                Intent intent = new Intent(requireContext(), MainActivity.class);
+                                startActivity(intent);
+                                requireActivity().finish();
+                            }
+                        });
+            }
+        });
+
+
     }
 
-    private Receipt getReceipt() {
+    private Receipt getReceipt(String uri) {
         Receipt model = new Receipt();
         model.setSubject(binding.edtSubject.getText().toString().trim());
+        model.setInvoice(uri);
         model.setReceiptDate("time: " + binding.txtTime.getText().toString().trim() + " date: " + handleTimeCount.getDate());
         try {
             model.setTotalAll(Double.parseDouble(binding.edtTotalAll.getText().toString().trim()));
@@ -275,18 +289,22 @@ public class FragmentAddReceipt extends Fragment implements
         }
     }
 
-    public  void openCamera() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        mLauncher.launch(intent);
+    public void openCamera() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, FragmentEditAccount.IMAGE_REQUEST);
     }
 
-    private ActivityResultLauncher<Intent> mLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result != null) {
-                    Log.d(TAG, "mLauncher: " + result.toString());
-                }
-            });
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == FragmentEditAccount.IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+            uri = data.getData();
+            binding.setInvoice(uri.toString());
+        }
+    }
+
 
     //    TODO edit product
     // product listener

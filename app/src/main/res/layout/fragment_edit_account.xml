@@ -132,6 +132,7 @@
                         android:layout_height="?actionBarSize"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/name"
+                        android:paddingHorizontal="@dimen/_8sdp"
                         android:padding="@dimen/_8sdp"
                         android:text="@{model.name}"
                         android:textColor="@color/text_color" />
@@ -145,6 +146,7 @@
                         android:layout_marginVertical="@dimen/_8sdp"
                         android:padding="@dimen/_8sdp"
                         android:inputType="numberDecimal"
+                        android:paddingHorizontal="@dimen/_8sdp"
                         android:text="@{String.valueOf(model.numberPhone)}"
                         android:textColor="@color/text_color" />
 
@@ -156,6 +158,7 @@
                         android:hint="@string/email"
                         android:inputType="textEmailSubject"
                         android:text="@{model.email}"
+                        android:paddingHorizontal="@dimen/_8sdp"
                         android:padding="@dimen/_8sdp"
                         android:textColor="@color/text_color" />
 
@@ -167,6 +170,7 @@
                         android:hint="@string/address_1"
                         android:inputType="text"
                         android:padding="@dimen/_8sdp"
+                        android:paddingHorizontal="@dimen/_8sdp"
                         android:layout_marginVertical="@dimen/_8sdp"
                         android:text="@{model.address1}"
                         android:textColor="@color/text_color" />
@@ -179,6 +183,7 @@
                         android:hint="@string/address_2"
                         android:inputType="text"
                         android:padding="@dimen/_8sdp"
+                        android:paddingHorizontal="@dimen/_8sdp"
                         android:text="@{model.address2}"
                         android:textColor="@color/text_color" />
 

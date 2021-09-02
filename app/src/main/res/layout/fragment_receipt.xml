@@ -40,7 +40,7 @@
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_120sdp"
             android:layout_marginTop="28dp"
-            android:imageURL="@{imageUrl}"
+            android:imageURL="@{model.invoice}"
             app:riv_corner_radius="@dimen/_50sdp"
             android:src="@mipmap/ic_launcher"
             app:layout_constraintEnd_toEndOf="parent"
