@@ -2,15 +2,10 @@ package soft.mahmod.yourreceipt.view_fragment.edit_account;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
-import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
@@ -19,21 +14,19 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import java.io.File;
+
 
 import soft.mahmod.yourreceipt.R;
-import soft.mahmod.yourreceipt.controller.ActivityIntent;
 import soft.mahmod.yourreceipt.databinding.FragmentEditAccountBinding;
 import soft.mahmod.yourreceipt.model.Store;
-import soft.mahmod.yourreceipt.utils.IntentActivity;
 import soft.mahmod.yourreceipt.view_model.database.VMStore;
+import soft.mahmod.yourreceipt.view_model.storage.VMLogo;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,13 +37,21 @@ public class FragmentEditAccount extends Fragment {
     private static final String TAG = "FragmentEditAccount";
     private FragmentEditAccountBinding binding;
     private VMStore vmStore;
-
+    private VMLogo vmLogo;
+    private Intent intent;
+    private final int IMAGE_REQUEST = 200;
+    private Uri uri;
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         vmStore = new ViewModelProvider
                 (getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
                 .get(VMStore.class);
+
+        vmLogo = new ViewModelProvider
+                (getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
+                .get(VMLogo.class);
+
     }
 
     @Override
@@ -64,27 +65,33 @@ public class FragmentEditAccount extends Fragment {
             NavController controller = Navigation.findNavController(binding.getRoot());
             controller.navigate(R.id.action_fragmentEditAccount_to_menu_setting);
         });
-        binding.btnLogo.setOnClickListener(v -> {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intent, IntentActivity.REQUEST_CAMERA);
-        });
+
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        binding.btnLogo.setOnClickListener(v -> {
+            openGallery();
+        });
+    }
+
+
+    public void openGallery(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent,IMAGE_REQUEST);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == IntentActivity.REQUEST_CAMERA && resultCode==Activity.RESULT_OK && data!=null){
-            Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-            Log.d(TAG, "onActivityResult: "+thumbnail.toString());
-            binding.logo.setImageBitmap(thumbnail);
+        if (requestCode==IMAGE_REQUEST&&resultCode==Activity.RESULT_OK&&data!=null&&data.getData()!=null){
+            uri = data.getData();
+            binding.setLogo(uri.toString());
         }
-    }
-
-    private void loadStore() {
-        vmStore.getStore().observe(getViewLifecycleOwner(), store -> {
-            binding.setModel(store);
-        });
     }
 
     private void dialog() {
@@ -95,7 +102,7 @@ public class FragmentEditAccount extends Fragment {
         dialog.setPositiveButton("OK", (dialog1, which) -> {
             createStore();
             dialog1.dismiss();
-            ActivityIntent.getInstance(requireContext()).userMakeChange(requireActivity());
+//            ActivityIntent.getInstance(requireContext()).userMakeChange(requireActivity());
             Toast.makeText(requireContext(), "Your store has been created", Toast.LENGTH_SHORT).show();
         });
         dialog.setNegativeButton("NO", (dialog1, which) -> {
@@ -106,10 +113,17 @@ public class FragmentEditAccount extends Fragment {
     }
 
     private void createStore() {
-
+        vmLogo.postLogo(uri).observe(getViewLifecycleOwner(), cash ->{
+            if (!cash.getError()){
+                Log.d(TAG, "createStore:getMessage"+cash.getMessage());
+                vmStore.postStore(getStore(cash.getMessage())).observe(getViewLifecycleOwner(),cash1 -> {
+                    Log.d(TAG, "createStore: "+getStore(cash.getMessage()).getLogo());
+                });
+            }
+        });
     }
 
-    private Store getStore() {
+    private Store getStore(String url) {
         Store store = new Store();
         String name = binding.edtName.getText().toString().trim();
         store.setName(name);
@@ -127,6 +141,7 @@ public class FragmentEditAccount extends Fragment {
             store.setLogo("");
             e.printStackTrace();
         }
+        store.setLogo(url);
         return store;
     }
 
@@ -139,6 +154,12 @@ public class FragmentEditAccount extends Fragment {
 
     public void setPath(String path) {
         this.path = path;
+    }
+    private void loadStore() {
+        vmStore.getStore().observe(getViewLifecycleOwner(), store -> {
+            binding.setModel(store);
+            binding.setLogo(store.getLogo());
+        });
     }
 
 

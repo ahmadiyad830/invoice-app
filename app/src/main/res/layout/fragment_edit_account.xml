@@ -8,7 +8,9 @@
         <variable
             name="error"
             type="String" />
-
+        <variable
+            name="logo"
+            type="String" />
         <variable
             name="model"
             type="soft.mahmod.yourreceipt.model.Store" />
@@ -96,11 +98,11 @@
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/logo"
-                    android:layout_width="@dimen/_120sdp"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/_120sdp"
                     android:layout_gravity="center"
                     android:layout_marginVertical="@dimen/_8sdp"
-                    android:imageURL="@{model.logo}"
+                    android:imageURL="@{logo}"
                     android:src="@mipmap/ic_launcher"
                     app:layout_constraintBottom_toTopOf="@+id/linearLayout10"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -125,10 +127,12 @@
                     <EditText
                         android:id="@+id/edt_name"
                         android:layout_width="match_parent"
+                        android:maxLines="1"
+                        android:inputType="textPersonName"
                         android:layout_height="?actionBarSize"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/name"
-                        android:paddingHorizontal="@dimen/_6sdp"
+                        android:padding="@dimen/_8sdp"
                         android:text="@{model.name}"
                         android:textColor="@color/text_color" />
 
@@ -136,10 +140,11 @@
                         android:id="@+id/edt_phone_num"
                         android:layout_width="match_parent"
                         android:layout_height="?actionBarSize"
-                        android:layout_marginVertical="@dimen/_8sdp"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/phone_number"
-                        android:paddingHorizontal="@dimen/_6sdp"
+                        android:layout_marginVertical="@dimen/_8sdp"
+                        android:padding="@dimen/_8sdp"
+                        android:inputType="numberDecimal"
                         android:text="@{String.valueOf(model.numberPhone)}"
                         android:textColor="@color/text_color" />
 
@@ -149,18 +154,20 @@
                         android:layout_height="?actionBarSize"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/email"
-                        android:paddingHorizontal="@dimen/_6sdp"
+                        android:inputType="textEmailSubject"
                         android:text="@{model.email}"
+                        android:padding="@dimen/_8sdp"
                         android:textColor="@color/text_color" />
 
                     <EditText
                         android:id="@+id/edt_address1"
                         android:layout_width="match_parent"
                         android:layout_height="?actionBarSize"
-                        android:layout_marginVertical="@dimen/_8sdp"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/address_1"
-                        android:paddingHorizontal="@dimen/_6sdp"
+                        android:inputType="text"
+                        android:padding="@dimen/_8sdp"
+                        android:layout_marginVertical="@dimen/_8sdp"
                         android:text="@{model.address1}"
                         android:textColor="@color/text_color" />
 
@@ -170,7 +177,8 @@
                         android:layout_height="?actionBarSize"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/address_2"
-                        android:paddingHorizontal="@dimen/_6sdp"
+                        android:inputType="text"
+                        android:padding="@dimen/_8sdp"
                         android:text="@{model.address2}"
                         android:textColor="@color/text_color" />
 

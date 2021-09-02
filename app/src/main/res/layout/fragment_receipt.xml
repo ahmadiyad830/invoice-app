@@ -10,6 +10,9 @@
         <variable
             name="imageUrl"
             type="String" />
+        <variable
+            name="context"
+            type="android.content.Context" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
