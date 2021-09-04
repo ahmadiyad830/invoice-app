@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.FragmentCreateClientBinding;
@@ -59,19 +60,14 @@ public class FragmentCreateClient extends Fragment {
         binding.btnDown.setOnClickListener(v -> {
             postClient();
         });
-        binding.btnBack.setOnClickListener(v -> {
 
-//            controller.navigate(FragmentCreateClientDirections.actionFragmentCreateClientToFragmentAddReceipt());
-//            controller.popBackStack();
-        });
     }
 
     private void postClient() {
         vmClient.postClient(getClient()).observe(getViewLifecycleOwner(),cash -> {
             if (!cash.getError()){
-//                controller.navigate(FragmentCreateClientDirections.actionFragmentCreateClientToFragmentAddReceipt());
-            }
-            Log.d(TAG, "postClient: " + cash.toString());
+                controller.navigate(FragmentCreateClientDirections.actionFragmentCreateClientToFragmentAddClient());
+            }else Toast.makeText(requireContext(), cash.getMessage(), Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -80,18 +76,15 @@ public class FragmentCreateClient extends Fragment {
         client.setEmail(binding.edtEmail.getText().toString().trim());
         client.setName(binding.edtName.getText().toString().trim());
         try {
-            // FIXME: 9/1/2021
             client.setPhone(Integer.parseInt(binding.edtClientPhone.getText().toString().trim()));
         } catch (NumberFormatException e) {
-
-            e.printStackTrace();
+            client.setPhone(0);
         }
         client.setAddInfo(binding.edtAddInfo.getText().toString().trim());
         try {
             client.setTaxRegNo(Double.parseDouble(binding.edtTax4.getText().toString().trim()));
         } catch (NumberFormatException e) {
-            // FIXME: 9/1/2021
-            e.printStackTrace();
+            client.setTaxRegNo(0.0);
         }
         client.setAddress(binding.edtAddress.getText().toString().trim());
         client.setStoreAddress(binding.edtStoreAddress.getText().toString().trim());

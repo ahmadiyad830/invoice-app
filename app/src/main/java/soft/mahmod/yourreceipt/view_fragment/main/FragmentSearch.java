@@ -69,6 +69,7 @@ public class FragmentSearch extends Fragment implements OnReceiptItemClick, Data
 
     private void init(String textSearch) {
         reference = FirebaseDatabase.getInstance().getReference();
+
         options = new FirebaseRecyclerOptions.Builder<Receipt>()
                 .setQuery(reference.child(RECEIPT + FirebaseAuth.getInstance().getUid())
                         .orderByChild(key).startAt(textSearch).endAt(textSearch + "\uf8ff"), Receipt.class)

@@ -2,7 +2,6 @@ package soft.mahmod.yourreceipt.model;
 
 import androidx.annotation.NonNull;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class Receipt extends Cash  {
@@ -132,6 +131,7 @@ public class Receipt extends Cash  {
     @Override
     public String toString() {
         return "Receipt{" +
+                "invoice='" + invoice + '\'' +
                 "receiptId='" + receiptId + '\'' +
                 ", subject='" + subject + '\'' +
                 ", note='" + note + '\'' +
