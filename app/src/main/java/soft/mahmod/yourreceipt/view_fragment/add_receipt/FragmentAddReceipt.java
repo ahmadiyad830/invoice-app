@@ -110,11 +110,11 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl {
     }
 
     private void dialogWarning() {
-
         DialogConfirm dialogConfirm = new DialogConfirm(requireContext());
         dialogConfirm.setDialogListener(new DialogListener() {
             @Override
             public void clickOk(DialogInterface dialog) {
+                listWarning.clear();
                 setReceipt();
             }
 
@@ -126,6 +126,7 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl {
         });
         dialogConfirm.listenerDialog();
 //        TODO translate
+        dialogConfirm.addIcon(R.drawable.ic_twotone_warning_24);
         StringBuilder warning = new StringBuilder("\n");
         for (int i = 0; i < listWarning.size(); i++) {
             warning.append(listWarning.get(i)).append("\n");

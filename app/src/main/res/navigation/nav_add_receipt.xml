@@ -29,6 +29,11 @@
             android:defaultValue="@null"
             app:argType="soft.mahmod.yourreceipt.model.Receipt"
             app:nullable="true" />
+        <argument
+            android:name="editItem"
+            app:argType="soft.mahmod.yourreceipt.model.Items"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/fragmentCreateClient"

@@ -81,13 +81,6 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
 
         handleTimeCount = new HandleTimeCount();
         arProducts = new ARProducts(listProduct, this);
-
-
-//        handleTimeCount.setTv_time(binding.txtTime);
-//        handleTimeCount.countDownStart();
-//        binding.setDate(handleTimeCount.getDate());
-
-
         init();
         return binding.getRoot();
     }
@@ -128,18 +121,17 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
     // TODO listener items
     @Override
     public void clickItem(Products model, Items itemModel, int position) {
-//        FragmentAddItemDirections.ActionFragmentAddItemToFragmentCreateProducts4
-//                argsCreateProducts = FragmentAddItemDirections.actionFragmentAddItemToFragmentCreateProducts4();
-//        argsCreateProducts.setArgsProduct(model);
         int oldSize = listProduct.size();
         listProduct.add(model);
         arProducts.notifyItemRangeInserted(oldSize, listProduct.size());
-//        controller.navigate(argsCreateProducts);
     }
 
     @Override
     public void editItem(Items model) {
-
+        FragmentAddItemDirections.ActionFragmentAddItemToFragmentCreateItem5
+                createItem = FragmentAddItemDirections.actionFragmentAddItemToFragmentCreateItem5();
+        createItem.setEditItem(model);
+        controller.navigate(createItem);
     }
 
     // TODO listener products
@@ -179,8 +171,8 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
                         .orderByChild("itemName").startAt(search).endAt(search + "\uf8ff"));
             }
         });
-        itemsBinding.btnDismiss.setOnClickListener(v -> {
-            itemBottomDialog.dismiss();
+        itemsBinding.btnAdd.setOnClickListener(v -> {
+            controller.navigate(FragmentAddItemDirections.actionFragmentAddItemToFragmentCreateItem5());
         });
         itemBottomDialog.show();
         if (itemBottomDialog.isShowing()) {

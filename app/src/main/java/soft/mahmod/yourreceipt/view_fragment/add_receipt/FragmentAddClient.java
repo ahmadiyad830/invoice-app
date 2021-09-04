@@ -65,7 +65,7 @@ public class FragmentAddClient extends Fragment implements ARClients.OnClickClie
         super.onViewCreated(view, savedInstanceState);
          controller = Navigation.findNavController(view);
         binding.fabToCreateClient.setOnClickListener(v -> {
-
+            controller.navigate(FragmentAddClientDirections.actionFragmentAddClientToFragmentCreateClient3());
         });
     }
 
@@ -88,6 +88,7 @@ public class FragmentAddClient extends Fragment implements ARClients.OnClickClie
         FragmentAddClientDirections.ActionFragmentAddClientToFragmentAddItem3 argsClient
                 = FragmentAddClientDirections.actionFragmentAddClientToFragmentAddItem3();
         argsClient.setClientToItem(model);
+
         FragmentAddClientArgs argsReceipt = FragmentAddClientArgs.fromBundle(getArguments());
         argsReceipt.getReceiptToClient().setClientName(model.getName());
         argsReceipt.getReceiptToClient().setClientPhone(model.getPhone());

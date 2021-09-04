@@ -146,6 +146,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_8sdp"
                         android:layout_marginBottom="@dimen/_8sdp"
+                        android:maxLength="500"
+                        android:maxLines="15"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/note"
                         android:padding="@dimen/_12sdp"
@@ -172,25 +174,20 @@
 
 
         </androidx.core.widget.NestedScrollView>
-
-        <com.google.android.material.button.MaterialButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btn_next"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:layout_marginHorizontal="@dimen/_8sdp"
-            android:backgroundTint="@color/text_btn_color"
-            android:text="@string/next"
-            android:textColor="@color/top_and_bottom_color"
-            android:textSize="@dimen/_14ssp"
-            android:layout_marginBottom="@dimen/_24sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/ic_baseline_check_24"
+            app:backgroundTint="@color/top_and_bottom_color"
+            app:tint="@color/text_btn_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.90"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            app:strokeColor="@color/top_and_bottom_color"
-            app:strokeWidth="@dimen/_2sdp" />
+            app:layout_constraintVertical_bias="0.8" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

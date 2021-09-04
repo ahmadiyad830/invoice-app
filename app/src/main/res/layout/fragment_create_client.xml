@@ -7,7 +7,9 @@
         <variable
             name="isSearch"
             type="Boolean" />
-
+        <variable
+            name="model"
+            type="soft.mahmod.yourreceipt.model.Client" />
         <import type="android.view.View" />
     </data>
 
@@ -17,71 +19,22 @@
         android:background="@color/background_page"
         tools:context=".view_fragment.add_receipt.FragmentCreateClient">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_toolbar"
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/_6sdp"
-            app:cardElevation="@dimen/_3sdp"
-            app:cardUseCompatPadding="true"
+            android:layout_height="0dp"
+            android:layout_marginVertical="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
-                android:id="@+id/relativeLayout"
                 android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="9"
-                    android:gravity="center"
-                    android:text="@string/receipt"
-                    android:textColor="@color/text_color"
-                    android:textSize="@dimen/_14ssp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-                <ImageView
-                    android:id="@+id/btn_down"
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:layout_marginHorizontal="@dimen/_8sdp"
-                    android:layout_weight="0"
-                    android:src="@drawable/ic_baseline_check_24"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/textView3"
-                    app:layout_constraintHorizontal_bias="0.120"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="wrap_content"
 
-
-
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginVertical="@dimen/_8sdp"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_toolbar">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/linearLayout5"
@@ -103,6 +56,8 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/name"
+                        android:text='@{model.name}'
+                        android:textColor="@color/text_color"
                         android:inputType="textPersonName"
                         android:padding="@dimen/_12sdp" />
                 </LinearLayout>
@@ -123,10 +78,12 @@
 
                     <EditText
                         android:id="@+id/edt_email"
+                        android:textColor="@color/text_color"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/email"
+                        android:text='@{model.email}'
                         android:inputType="textEmailAddress"
                         android:padding="@dimen/_12sdp" />
                 </LinearLayout>
@@ -147,10 +104,12 @@
 
                     <EditText
                         android:id="@+id/edt_client_phone"
+                        android:textColor="@color/text_color"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/phone_number"
+                        android:text='@{String.valueOf(model.phone)}'
                         android:inputType="numberDecimal"
                         android:padding="@dimen/_12sdp" />
                 </LinearLayout>
@@ -172,10 +131,12 @@
                     <EditText
                         android:id="@+id/edt_add_info"
                         android:layout_width="match_parent"
+                        android:textColor="@color/text_color"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/add_info"
                         android:inputType="text"
+                        android:text='@{model.addInfo}'
                         android:padding="@dimen/_12sdp" />
                 </LinearLayout>
 
@@ -197,10 +158,12 @@
                         android:id="@+id/edt_tax4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/text_color"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/tax_reg_no"
                         android:inputType="numberDecimal"
                         android:padding="@dimen/_12sdp"
+                        android:text='@{String.valueOf(model.taxRegNo)}'
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -228,6 +191,8 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/address"
+                        android:text='@{model.address}'
+                        android:textColor="@color/text_color"
                         android:inputType="text"
                         android:padding="@dimen/_12sdp" />
                 </LinearLayout>
@@ -253,7 +218,9 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/store_address"
+                        android:textColor="@color/text_color"
                         android:inputType="text"
+                        android:text='@{model.storeAddress}'
                         android:padding="@dimen/_12sdp" />
                 </LinearLayout>
 
@@ -277,6 +244,8 @@
                         android:background="@drawable/custom_stork"
                         android:hint="@string/note"
                         android:inputType="text"
+                        android:text='@{model.note}'
+                        android:textColor="@color/text_color"
                         android:padding="@dimen/_12sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -286,6 +255,22 @@
 
             </LinearLayout>
         </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_to_create_client"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/ic_baseline_check_24"
+            app:backgroundTint="@color/top_and_bottom_color"
+            app:tint="@color/text_btn_color"
+            android:layout_margin="@dimen/_28sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

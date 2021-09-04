@@ -84,13 +84,13 @@
                 android:textSize="@dimen/_14sdp" />
 
             <ImageView
-                android:id="@+id/btn_dismiss"
+                android:id="@+id/btn_add"
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="@dimen/_25sdp"
                 android:layout_margin="@dimen/_8sdp"
                 android:layout_weight="0"
                 android:contentDescription="@string/todo"
-                android:src="@drawable/ic_baseline_close_24"
+                android:src="@drawable/ic_baseline_add_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"

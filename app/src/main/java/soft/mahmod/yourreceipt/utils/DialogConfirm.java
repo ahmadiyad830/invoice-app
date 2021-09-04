@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AlertDialog;
 
 public class DialogConfirm {
@@ -40,6 +41,11 @@ public class DialogConfirm {
                 .setPositiveButton("OK", (dialog, which) -> {
                     dialogListener.clickOk(dialog);
                 });
+    }
+
+    public DialogConfirm addIcon(@DrawableRes int resIcon) {
+        alertDialog.setIcon(resIcon);
+        return this;
     }
 
     public DialogConfirm createDialog(String title, String message) {

@@ -55,6 +55,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/progress_horizontal_add_receipt"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_3sdp"
                     android:layout_marginHorizontal="@dimen/_6sdp"

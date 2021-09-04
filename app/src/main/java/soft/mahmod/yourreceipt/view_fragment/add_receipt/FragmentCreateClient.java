@@ -1,6 +1,11 @@
 package soft.mahmod.yourreceipt.view_fragment.add_receipt;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,15 +15,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
+import java.util.ArrayList;
+import java.util.List;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.FragmentCreateClientBinding;
 import soft.mahmod.yourreceipt.model.Client;
+import soft.mahmod.yourreceipt.utils.DialogConfirm;
+import soft.mahmod.yourreceipt.utils.DialogListener;
 import soft.mahmod.yourreceipt.view_model.database.VMClient;
 
 /**
@@ -31,7 +35,7 @@ public class FragmentCreateClient extends Fragment {
     private FragmentCreateClientBinding binding;
     private VMClient vmClient;
     private NavController controller;
-
+    private final List<String> listWarning = new ArrayList<>();
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,20 +60,19 @@ public class FragmentCreateClient extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        FragmentCreateClientArgs addClientArgs = FragmentCreateClientArgs.fromBundle(getArguments());
+        if (addClientArgs != null)
+            binding.setModel(addClientArgs.getEditClient());
         controller = Navigation.findNavController(view);
-        binding.btnDown.setOnClickListener(v -> {
-            postClient();
+        binding.fabToCreateClient.setOnClickListener(v -> {
+            if (warningClient()) {
+                dialogWarning();
+            } else postClient();
+
         });
 
     }
 
-    private void postClient() {
-        vmClient.postClient(getClient()).observe(getViewLifecycleOwner(),cash -> {
-            if (!cash.getError()){
-                controller.navigate(FragmentCreateClientDirections.actionFragmentCreateClientToFragmentAddClient());
-            }else Toast.makeText(requireContext(), cash.getMessage(), Toast.LENGTH_SHORT).show();
-        });
-    }
 
     private Client getClient() {
         Client client = new Client();
@@ -90,5 +93,55 @@ public class FragmentCreateClient extends Fragment {
         client.setStoreAddress(binding.edtStoreAddress.getText().toString().trim());
         client.setNote(binding.edtNote.getText().toString().trim());
         return client;
+    }
+
+    private void postClient() {
+        vmClient.postClient(getClient()).observe(getViewLifecycleOwner(), cash -> {
+            if (!cash.getError()) {
+                requireActivity().onBackPressed();
+                controller.navigate(FragmentCreateClientDirections.actionFragmentCreateClientToFragmentAddClient());
+            } else Toast.makeText(requireContext(), cash.getMessage(), Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private boolean warningClient() {
+        if (getClient().getName().equals("")) {
+            listWarning.add(getResources().getString(R.string.client_name));
+        }
+        if (getClient().getPhone() == 0) {
+            listWarning.add(getResources().getString(R.string.client_phone));
+        }
+        if (getClient().getStoreAddress().equals("")) {
+            listWarning.add(getResources().getString(R.string.store_address));
+        }
+        return listWarning.size() > 0;
+    }
+    private void dialogWarning() {
+        DialogConfirm dialogConfirm = new DialogConfirm(requireContext());
+        dialogConfirm.setDialogListener(new DialogListener() {
+            @Override
+            public void clickOk(DialogInterface dialog) {
+                listWarning.clear();
+                postClient();
+            }
+
+            @Override
+            public void clickCancel(DialogInterface dialog) {
+                dialog.dismiss();
+                listWarning.clear();
+            }
+        });
+        dialogConfirm.addIcon(R.drawable.ic_twotone_warning_24);
+        dialogConfirm.listenerDialog();
+//        TODO translate
+        StringBuilder warning = new StringBuilder("\n");
+        for (int i = 0; i < listWarning.size(); i++) {
+            warning.append(listWarning.get(i)).append("\n");
+        }
+        dialogConfirm.createDialog(getResources().getString(R.string.warning),
+                getResources().getString(R.string.warning_not_add)
+                        + warning.toString()
+        );
+        dialogConfirm.showDialog();
     }
 }

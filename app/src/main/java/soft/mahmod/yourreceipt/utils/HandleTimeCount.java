@@ -10,9 +10,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class HandleTimeCount {
-    private String EVENT_DATE_TIME = "2021-12-31 10:30:00";
-    private String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
-    private TextView tv_time;
+    private String tv_time;
     private Handler handler = new Handler();
     private Runnable runnable;
     private final String date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
@@ -26,10 +24,9 @@ public class HandleTimeCount {
 
     }
 
-    public void setTv_time(TextView tv_time) {
-        this.tv_time = tv_time;
+    public String getTv_time() {
+        return tv_time;
     }
-
 
     public void countDownStart() {
         runnable = new Runnable() {
@@ -38,7 +35,7 @@ public class HandleTimeCount {
                 try {
                     handler.postDelayed(this, 1000);
                     String formatTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
-                    tv_time.setText(formatTime);
+                    tv_time = formatTime;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
