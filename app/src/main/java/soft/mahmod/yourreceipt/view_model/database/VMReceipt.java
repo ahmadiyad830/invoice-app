@@ -22,13 +22,19 @@ public class VMReceipt extends AndroidViewModel {
         repoReceipt = new RepoReceipt(application);
     }
 
-    public LiveData<Cash> postReceipt(Receipt model){
+    public LiveData<Cash> postReceipt(Receipt model) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             return repoReceipt.postReceipt(model);
-        }else return repoReceipt.postClientTLow(model);
+        } else return repoReceipt.postClientTLow(model);
     }
-    public LiveData<Receipt> getReceipt(String pushKey){
+
+    public LiveData<Receipt> getReceipt(String pushKey) {
         return repoReceipt.getReceipt(pushKey);
+    }
+
+    public LiveData<Cash> editValue(double editValue, String pushKey, String keyEdit) {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ? repoReceipt.putEditValue(editValue, pushKey, keyEdit)
+                : repoReceipt.putEditValueTLow(editValue, pushKey, keyEdit);
     }
 
 }

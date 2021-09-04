@@ -11,6 +11,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import soft.mahmod.yourreceipt.model.Cash;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.model.User;
@@ -65,18 +68,55 @@ public class RepoReceipt extends Repo<Receipt>{
         return getErrorDate();
     }
 
-    public LiveData<Cash> putReceipt(Receipt model){
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    public LiveData<Cash> putEditValue(double editValue, String pushKey, String editKey){
+        Map<String, Object> result = new HashMap<>();
+        result.put(editKey,editValue);
+        getReference().child(RECEIPT).child(getfUser().getUid()).child(pushKey)
+                .updateChildren(result)
+                .addOnSuccessListener(getApplication().getMainExecutor(),unused -> {
+                    getCash().setMessage("success");
+                    getCash().setCode(200);
+                    getCash().setError(false);
+                    getErrorDate().setValue(getCash());
+                })
+                .addOnFailureListener(getApplication().getMainExecutor(),e -> {
+                    getCash().setMessage(e.getMessage());
+                    getCash().setCode(404);
+                    getCash().setError(true);
+                    getErrorDate().setValue(getCash());
+                });
         return getErrorDate();
     }
-    public LiveData<Cash> putReceiptTLow(Receipt model){
+    public LiveData<Cash> putEditValueTLow(double editValue, String pushKey, String editKey){
+        Map<String, Object> result = new HashMap<>();
+        result.put(editKey,editValue);
+        getReference().child(RECEIPT).child(getfUser().getUid()).child(pushKey)
+                .updateChildren(result)
+                .addOnSuccessListener(unused -> {
+                    getCash().setMessage("success");
+                    getCash().setCode(200);
+                    getCash().setError(false);
+                    getErrorDate().setValue(getCash());
+                })
+                .addOnFailureListener(e -> {
+                    getCash().setMessage(e.getMessage());
+                    getCash().setCode(404);
+                    getCash().setError(true);
+                    getErrorDate().setValue(getCash());
+                });
         return getErrorDate();
     }
+
+
     public LiveData<Cash> deleteReceipt(Receipt model){
         return getErrorDate();
     }
+
     public LiveData<Cash> deleteReceiptTLow(Receipt model){
         return getErrorDate();
     }
+
     public LiveData<Receipt> getReceipt(String pushKey){
         getReference().child(RECEIPT).child(getfUser().getUid()).child(pushKey)
                 .addListenerForSingleValueEvent(getReceipt);

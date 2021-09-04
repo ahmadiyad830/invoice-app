@@ -13,6 +13,7 @@ import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ViewPager2Adapter;
 import soft.mahmod.yourreceipt.databinding.ActivityDetailsBinding;
 import soft.mahmod.yourreceipt.model.Receipt;
+import soft.mahmod.yourreceipt.utils.IntentActivity;
 import soft.mahmod.yourreceipt.view_fragment.details.FragmentProducts;
 import soft.mahmod.yourreceipt.view_fragment.details.FragmentReceipt;
 import soft.mahmod.yourreceipt.view_model.send.data.VMSendReceipt;
@@ -34,8 +35,11 @@ public class ActivityDetails extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
-
-
+        binding.btnEdit.setOnClickListener(v -> {
+            Intent intent = new Intent(this,ActivityEdit.class);
+            startActivity(intent);
+            finish();
+        });
     }
 
     private void sendData() {
@@ -49,6 +53,7 @@ public class ActivityDetails extends AppCompatActivity {
     }
 
     private void loadTabLayout() {
+        binding.setToolbar(getResources().getString(R.string.receipt));
         viewPager2Adapter = new ViewPager2Adapter(this);
         viewPager2Adapter.addFragment(new FragmentReceipt());
         viewPager2Adapter.addFragment(new FragmentProducts());
@@ -57,11 +62,11 @@ public class ActivityDetails extends AppCompatActivity {
                 binding.viewPager2, (tab, position) -> {
             switch (position) {
                 case 1:
-                    tab.setText("Products");
+                    tab.setText(getResources().getString(R.string.products));
                     break;
                 case 0:
                 default:
-                    tab.setText("Receipt");
+                    tab.setText(binding.getToolbar());
                     break;
 
             }

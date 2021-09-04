@@ -1,14 +1,18 @@
 package soft.mahmod.yourreceipt.adapter.firebase;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.internal.ContextUtils;
 import com.google.firebase.database.DatabaseError;
 
 import soft.mahmod.yourreceipt.R;
@@ -37,6 +41,7 @@ public class ARReceipt extends FirebaseRecyclerAdapter<Receipt,ARReceipt.ViewHol
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (inflater == null) {
             inflater = LayoutInflater.from(parent.getContext());
+            parent.getContext().getString(R.string.account);
         }
         ItemReceiptBinding binding = DataBindingUtil.inflate(inflater, R.layout.item_receipt, parent, false);
         return new ViewHolder(binding);
@@ -61,7 +66,7 @@ public class ARReceipt extends FirebaseRecyclerAdapter<Receipt,ARReceipt.ViewHol
 
         public void bind(Receipt model) {
             binding.setModel(model);
-            binding.goDetails.setOnClickListener(v -> {
+            binding.getRoot().setOnClickListener(v -> {
                 itemClick.itemClick(model);
             });
         }

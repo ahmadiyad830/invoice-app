@@ -10,6 +10,7 @@ public class Receipt extends Cash implements Serializable {
     private String receiptId;
     private String subject;
     private String receiptDate;
+    private String date, time;
     private String clientName;
     private List<Products> products;
     private String clientId;
@@ -17,12 +18,29 @@ public class Receipt extends Cash implements Serializable {
     private int clientPhone;
     private String type;
     private String invoice;
+
     public Receipt() {
 
     }
 
     public String getInvoice() {
         return invoice;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public void setInvoice(String invoice) {
@@ -109,7 +127,7 @@ public class Receipt extends Cash implements Serializable {
                 ", subject='" + subject + '\'' +
                 ", receiptDate='" + receiptDate + '\'' +
                 ", clientName='" + clientName + '\'' +
-               "\n" + ", itemId=" + products +"\n"+
+                "\n" + ", itemId=" + products + "\n" +
                 ", clientId='" + clientId + '\'' +
                 ", totalAll=" + totalAll +
                 ", clientPhone=" + clientPhone +

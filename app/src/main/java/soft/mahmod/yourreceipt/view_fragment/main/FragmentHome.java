@@ -31,15 +31,11 @@ public class FragmentHome extends Fragment implements OnReceiptItemClick , Datab
     private static final String TAG = "FragmentHome";
     private FragmentHomeBinding binding;
     private ARReceipt adapter;
-    private DatabaseReference reference;
-    private FirebaseRecyclerOptions<Receipt> options;
-    private String[] sort = {"client", "items", "receipt"};
-    private String key = sort[0];
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        reference = FirebaseDatabase.getInstance().getReference();
-        options = new FirebaseRecyclerOptions.Builder<Receipt>().setQuery
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        FirebaseRecyclerOptions<Receipt> options = new FirebaseRecyclerOptions.Builder<Receipt>().setQuery
                 (reference.child(RECEIPT + FirebaseAuth.getInstance().getUid()), Receipt.class)
                 .build();
         adapter = new ARReceipt(options, this);

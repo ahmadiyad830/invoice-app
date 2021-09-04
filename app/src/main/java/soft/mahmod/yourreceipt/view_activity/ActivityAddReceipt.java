@@ -17,13 +17,12 @@ public class ActivityAddReceipt extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_add_receipt);
 
-
-
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
         binding = null;
         getViewModelStore().clear();
+
     }
 }

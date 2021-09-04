@@ -32,7 +32,7 @@ import soft.mahmod.yourreceipt.view_model.user_account.VMEditAccount;
  * Use the {@link FragmentSetting#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentSetting extends Fragment implements View.OnClickListener, DialogListener {
+public class FragmentSetting extends Fragment implements View.OnClickListener {
     private static final String TAG = "FragmentSetting";
     private FragmentSettingBinding binding;
     private VMAuthReg vmAuthReg;
@@ -79,7 +79,21 @@ public class FragmentSetting extends Fragment implements View.OnClickListener, D
     public void onClick(View v) {
         int id = v.getId();
         if (binding.btnSignout.getId() == id) {
-            DialogConfirm dialog = new DialogConfirm(requireContext(), this);
+            DialogConfirm dialog = new DialogConfirm(requireContext());
+            dialog.listenerDialog();
+            dialog.setDialogListener(new DialogListener() {
+                @Override
+                public void clickOk(DialogInterface dialog) {
+                    vmAuthReg.signOut();
+                    intent.userSignOut(requireActivity());
+                    dialog.dismiss();
+                }
+
+                @Override
+                public void clickCancel(DialogInterface dialog) {
+                    dialog.dismiss();
+                }
+            });
             dialog.createDialog("Sign out", "Are You shure");
             dialog.showDialog();
         } else if (binding.edtAccount.getId() == id) {
@@ -128,17 +142,5 @@ public class FragmentSetting extends Fragment implements View.OnClickListener, D
                 Toast.makeText(requireContext(), cash.getMessage(), Toast.LENGTH_SHORT).show();
             } else intent.userMakeChange(requireActivity());
         });
-    }
-
-    @Override
-    public void clickCancel(DialogInterface dialog) {
-        dialog.dismiss();
-    }
-
-    @Override
-    public void clickOk(DialogInterface dialog) {
-        vmAuthReg.signOut();
-        intent.userSignOut(requireActivity());
-        dialog.dismiss();
     }
 }

@@ -155,8 +155,15 @@ public class FragmentEditAccount extends Fragment {
 
     private void loadStore() {
         vmStore.getStore().observe(getViewLifecycleOwner(), store -> {
-            binding.setModel(store);
-            binding.setLogo(store.getLogo());
+            if (!store.getError()){
+                binding.setModel(store);
+                try {
+                    binding.setLogo(store.getLogo());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            Log.d(TAG, "loadStore: "+store.getMessage());
         });
     }
 

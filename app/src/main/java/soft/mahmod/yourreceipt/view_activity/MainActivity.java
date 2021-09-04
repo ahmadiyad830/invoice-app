@@ -12,6 +12,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.ActivityMainBinding;
@@ -31,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         manager = SessionManager.getInstance(this);
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.child("receipt").removeValue();
 
         vmUser = new ViewModelProvider(
                 getViewModelStore(),

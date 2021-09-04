@@ -38,6 +38,7 @@ import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.utils.DialogConfirm;
 import soft.mahmod.yourreceipt.utils.DialogListener;
+import soft.mahmod.yourreceipt.view_model.database.VMReceipt;
 import soft.mahmod.yourreceipt.view_model.send.data.VMSendReceipt;
 
 /**
@@ -53,12 +54,15 @@ public class FragmentProducts extends Fragment implements ARProduct.OnClickItem,
     private ARProduct adapter;
     private DatabaseReference reference;
     private String uid;
-
+    private VMReceipt vmReceipt;
+    private Receipt receiptModel;
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         reference = FirebaseDatabase.getInstance().getReference();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        vmReceipt = new ViewModelProvider(getViewModelStore(),new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())).get(VMReceipt.class);
+
     }
 
     @Override
@@ -82,6 +86,7 @@ public class FragmentProducts extends Fragment implements ARProduct.OnClickItem,
         vmSendReceipt = new ViewModelProvider(requireActivity()).get(VMSendReceipt.class);
         vmSendReceipt.getModel().observe(getViewLifecycleOwner(), receipt -> {
             if (!receipt.getError()) {
+                receiptModel = receipt;
                 FirebaseRecyclerOptions<Products> options = new FirebaseRecyclerOptions.Builder<Products>().setQuery
                         (reference
                                 .child("receipt")
@@ -137,7 +142,6 @@ public class FragmentProducts extends Fragment implements ARProduct.OnClickItem,
                 dialog.dismiss();
             }
         });
-
         dialogConfirm.addView(cardView);
         dialogConfirm.listenerDialog();
         dialogConfirm.createDialog(name, "edit " + name);
@@ -146,7 +150,14 @@ public class FragmentProducts extends Fragment implements ARProduct.OnClickItem,
 
     @Override
     public void deleteProduct(Products model, int position) {
+        double oldTotal = receiptModel.getTotalAll();
+        double totalRemove = model.getTotal();
+        double newTotal = oldTotal - totalRemove;
         adapter.getRef(position).removeValue();
+        vmReceipt.editValue(newTotal,receiptModel.getReceiptId(),"totalAll")
+                .observe(getViewLifecycleOwner(),cash -> {
+                    Log.d(TAG, "deleteProduct: "+cash.toString());
+                });
     }
 
     @Override

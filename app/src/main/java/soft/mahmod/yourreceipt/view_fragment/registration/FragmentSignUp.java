@@ -14,7 +14,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.conditions.catch_registration.ConditionsSignUp;
@@ -33,7 +36,7 @@ import soft.mahmod.yourreceipt.view_model.database.VMUser;
 public class FragmentSignUp extends Fragment implements ApiURLS {
     private static final String TAG = "FragmentSignUp";
     private FragmentSignUpBinding binding;
-    private VMUser vmDbUser;
+    private VMUser vmUser;
     private VMAuthReg vmAuthReg;
     private NavController controller;
     private SessionManager manager;
@@ -41,7 +44,7 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        vmDbUser = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
+        vmUser = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
                 (requireActivity().getApplication())).get(VMUser.class);
         vmAuthReg = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
                 (requireActivity().getApplication())).get(VMAuthReg.class);
@@ -89,14 +92,9 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
     }
 
     private void uploadUser(String email, String pass1) {
-//        vmDbUser.postUser(new User(email, pass1));
-//        vmDbUser.getErrorData().observe(getViewLifecycleOwner(), cash1 -> {
-//            if (!cash1.getError()) {
-//                Toast.makeText(requireContext(), cash1.getMessage(), Toast.LENGTH_SHORT).show();
-//                controller.navigate(FragmentSignUpDirections.actionFragmentSignUpToFragmentSignIn());
-//            } else binding.setError(cash1.getMessage());
-//            Log.d(TAG, "uploadUser: "+cash1.toString());
-
-//        });
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(pass1);
+        vmUser.postUser(user);
     }
 }

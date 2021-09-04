@@ -29,6 +29,10 @@
             name="invoice"
             type="String" />
 
+        <variable
+            name="hasImage"
+            type="Boolean" />
+
         <import type="android.view.View" />
     </data>
 
@@ -113,7 +117,6 @@
             app:layout_constraintTop_toBottomOf="@+id/card_toolbar">
 
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -132,6 +135,7 @@
                         android:layout_marginVertical="@dimen/_8sdp"
                         android:imageURL="@{invoice}"
                         android:src="@mipmap/ic_launcher"
+                        android:visibility='@{hasImage?View.VISIBLE:View.GONE,default = gone}'
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

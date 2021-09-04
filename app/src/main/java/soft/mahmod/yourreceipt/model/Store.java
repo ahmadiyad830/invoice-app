@@ -81,6 +81,7 @@ public class Store extends Cash implements Serializable {
     @NonNull
     @Override
     public String toString() {
+        super.toString();
         return "Store{" +
                 "name='" + name + '\'' +
                 ", address1='" + address1 + '\'' +

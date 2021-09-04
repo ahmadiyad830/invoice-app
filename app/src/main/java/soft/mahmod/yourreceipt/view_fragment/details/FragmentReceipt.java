@@ -50,10 +50,6 @@ public class FragmentReceipt extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         vmSendReceipt = new ViewModelProvider(requireActivity()).get(VMSendReceipt.class);
         vmSendReceipt.getModel().observe(getViewLifecycleOwner(), receipt -> {
-//            if (!receipt.getClientId().isEmpty()){
-//                vmClientl.getClient()
-//            }
-//            vmReceipt.getReceipt(receipt.getReceiptId())
             binding.setModel(receipt);
         });
     }
