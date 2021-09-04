@@ -5,7 +5,12 @@
 
 
     <data>
-
+        <variable
+            name="nameFragment"
+            type="String" />
+        <variable
+            name="progress"
+            type="Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,8 +19,59 @@
         android:background="@color/background_page"
         tools:context=".view_activity.ActivityAddReceipt">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentContainerView2"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/top_and_bottom_color"
+            app:cardCornerRadius="@dimen/_6sdp"
+            app:cardElevation="@dimen/_3sdp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/relativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:layout_marginVertical="@dimen/_8sdp"
+                android:gravity="left">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@{nameFragment}"
+                    android:textColor="@color/text_btn_color"
+                    android:textSize="@dimen/_14ssp"
+                    android:layout_marginBottom="@dimen/_6sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_3sdp"
+                    android:layout_marginHorizontal="@dimen/_6sdp"
+                    android:progress="@{progress}"
+                    android:progressTint="@color/white"
+                    app:indicatorColor="@color/text_btn_color"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView6" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <fragment
+            android:id="@+id/fragment_container_add_receipt"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -24,7 +80,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_toolbar"
             app:navGraph="@navigation/nav_add_receipt" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

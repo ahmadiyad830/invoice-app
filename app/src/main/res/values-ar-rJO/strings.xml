@@ -82,4 +82,7 @@
     <string name="forget_your_password">هل نسيت كلمة السر</string>
     <string name="text_some_things">ابحث عن بعض الأشياء</string>
     <string name="camera">الكاميرا</string>
+    <string name="invoice">صورة الفاتورة</string>
+    <string name="warning">تحذير</string>
+    <string name="warning_not_add">تحذير لم يتم اضافة العناصر تالية</string>
 </resources>

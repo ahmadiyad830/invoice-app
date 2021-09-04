@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         binding.setIsActive(true);
         NavController controller = Navigation.findNavController(this, R.id.main_container);
         NavigationUI.setupWithNavController(binding.mainBottom, controller);
+
         binding.fab.setOnClickListener(v -> {
             Intent intent = new Intent(this, ActivityAddReceipt.class);
             startActivity(intent);

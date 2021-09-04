@@ -61,7 +61,7 @@ public class FragmentCreateClient extends Fragment {
         });
         binding.btnBack.setOnClickListener(v -> {
 
-            controller.navigate(FragmentCreateClientDirections.actionFragmentCreateClientToFragmentAddReceipt());
+//            controller.navigate(FragmentCreateClientDirections.actionFragmentCreateClientToFragmentAddReceipt());
 //            controller.popBackStack();
         });
     }
@@ -69,7 +69,7 @@ public class FragmentCreateClient extends Fragment {
     private void postClient() {
         vmClient.postClient(getClient()).observe(getViewLifecycleOwner(),cash -> {
             if (!cash.getError()){
-                controller.navigate(FragmentCreateClientDirections.actionFragmentCreateClientToFragmentAddReceipt());
+//                controller.navigate(FragmentCreateClientDirections.actionFragmentCreateClientToFragmentAddReceipt());
             }
             Log.d(TAG, "postClient: " + cash.toString());
         });

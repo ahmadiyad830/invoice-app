@@ -18,9 +18,18 @@ public class Receipt extends Cash  {
     private int clientPhone;
     private String type;
     private String invoice;
+    private String note;
 
     public Receipt() {
 
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public String getInvoice() {
@@ -125,6 +134,7 @@ public class Receipt extends Cash  {
         return "Receipt{" +
                 "receiptId='" + receiptId + '\'' +
                 ", subject='" + subject + '\'' +
+                ", note='" + note + '\'' +
                 ", receiptDate='" + receiptDate + '\'' +
                 ", clientName='" + clientName + '\'' +
                 "\n" + ", itemId=" + products + "\n" +

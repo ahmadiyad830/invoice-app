@@ -1,21 +1,36 @@
 package soft.mahmod.yourreceipt.view_activity;
 
+import android.os.Bundle;
+import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-
-import android.os.Bundle;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.ActivityAddReceiptBinding;
-import soft.mahmod.yourreceipt.databinding.ActivityDetailsBinding;
-import soft.mahmod.yourreceipt.databinding.FragmentAddReceiptBinding;
 
 public class ActivityAddReceipt extends AppCompatActivity {
+    private static final String TAG = "ActivityAddReceipt";
     private ActivityAddReceiptBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_add_receipt);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_receipt);
+
+
+        NavController controller = Navigation.findNavController(this, R.id.fragment_container_add_receipt);
+        controller.addOnDestinationChangedListener((controller1, destination, arguments) -> {
+            binding.setNameFragment(destination.getLabel().toString());
+            if (getResources().getString(R.string.receipt).trim().equals(destination.getLabel().toString())) {
+                binding.setProgress(35);
+            } else if (getResources().getString(R.string.client).trim().equals(destination.getLabel().toString())) {
+                binding.setProgress(65);
+            } else if (getResources().getString(R.string.items).trim().equals(destination.getLabel().toString())) {
+                binding.setProgress(100);
+            }
+        });
 
     }
     @Override

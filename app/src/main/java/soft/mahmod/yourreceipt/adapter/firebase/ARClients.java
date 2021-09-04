@@ -53,7 +53,7 @@ public class ARClients extends FirebaseRecyclerAdapter<Client, ARClients.ViewHol
 
         public void bind(Client model) {
             binding.setModel(model);
-            binding.goDetails.setOnClickListener(v -> {
+            binding.getRoot().setOnClickListener(v -> {
                 listener.clickClient(model,getBindingAdapterPosition());
             });
             binding.goEdit.setOnClickListener(v -> {

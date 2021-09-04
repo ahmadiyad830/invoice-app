@@ -60,7 +60,7 @@ public class FragmentCreateItem extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         controller = Navigation.findNavController(view);
         binding.btnBack.setOnClickListener(v -> {
-            controller.navigate(FragmentCreateItemDirections.actionFragmentCreateItemToFragmentAddReceipt());
+//            controller.navigate(FragmentCreateItemDirections.actionFragmentCreateItemToFragmentAddReceipt());
         });
     }
 
@@ -68,7 +68,7 @@ public class FragmentCreateItem extends Fragment {
         vmItems.postItem(getModel())
                 .observe(getViewLifecycleOwner(),cash -> {
                     if (!cash.getError()){
-                        controller.navigate(FragmentCreateItemDirections.actionFragmentCreateItemToFragmentAddReceipt());
+//                        controller.navigate(FragmentCreateItemDirections.actionFragmentCreateItemToFragmentAddReceipt());
                     }
                     Log.d(TAG, "createItem: " + cash.toString());
                 });
