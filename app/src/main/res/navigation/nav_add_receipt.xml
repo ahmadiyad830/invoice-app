@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_fragmentAddReceipt_to_fragmentAddClient5"
             app:destination="@id/fragmentAddClient" />
+        <action
+            android:id="@+id/action_fragmentAddReceipt_to_fragmentZoomImage"
+            app:destination="@id/fragmentZoomImage" />
     </fragment>
     <fragment
         android:id="@+id/fragmentCreateItem"
@@ -101,5 +104,16 @@
         <action
             android:id="@+id/action_fragmentAddItem_to_fragmentCreateItem5"
             app:destination="@id/fragmentCreateItem" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentZoomImage"
+        tools:layout="@layout/fragment_zoom_image"
+        android:name="soft.mahmod.yourreceipt.view_fragment.details.FragmentZoomImage"
+        android:label="FragmentZoomImage" >
+        <argument
+            android:name="urlToZoom"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="false" />
     </fragment>
 </navigation>

@@ -80,6 +80,12 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl {
         binding.btnCamera.setOnClickListener(v -> {
             openCamera();
         });
+        binding.logo.setOnClickListener(v -> {
+            FragmentAddReceiptDirections.ActionFragmentAddReceiptToFragmentZoomImage zoomImage
+                    = FragmentAddReceiptDirections.actionFragmentAddReceiptToFragmentZoomImage();
+            zoomImage.setUrlToZoom(uri.toString());
+            Navigation.findNavController(requireView()).navigate(zoomImage);
+        });
     }
     public void openCamera() {
         Intent intent = new Intent();
