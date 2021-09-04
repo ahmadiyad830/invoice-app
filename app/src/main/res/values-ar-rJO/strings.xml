@@ -46,12 +46,12 @@
     <string name="total">المجموع</string>
     <string name="time">الوقت</string>
     <string name="date">تاريخ</string>
-    <string name="add_client">اضافة عميل</string>
+    <string name="add_client">اضافة عميل جديد</string>
     <string name="add_item">اضافة عنصر</string>
     <string name="client_phone">رقم العميل</string>
     <string name="discount">خصم</string>
     <string name="add_new_client">اضافة عميل</string>
-    <string name="add_new_item">اضافة عنصر</string>
+    <string name="add_new_item">اضافة عنصر جديد</string>
     <string name="more">اخرى</string>
     <string name="note">تذكير</string>
     <string name="add_logo">شعار</string>
@@ -86,4 +86,5 @@
     <string name="warning">تحذير</string>
     <string name="warning_not_add">تحذير لم يتم اضافة العناصر تالية</string>
     <string name="delete_all">حذف الجميع</string>
+    <string name="create_product">اضافة منتج جديد</string>
 </resources>

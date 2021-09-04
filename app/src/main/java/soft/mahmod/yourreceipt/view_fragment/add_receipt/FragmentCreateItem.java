@@ -1,6 +1,10 @@
 package soft.mahmod.yourreceipt.view_fragment.add_receipt;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,14 +14,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import java.util.ArrayList;
+import java.util.List;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.FragmentCreateItemBinding;
 import soft.mahmod.yourreceipt.model.Items;
+import soft.mahmod.yourreceipt.utils.DialogConfirm;
+import soft.mahmod.yourreceipt.utils.DialogListener;
 import soft.mahmod.yourreceipt.view_model.database.VMItems;
 
 /**
@@ -30,7 +34,7 @@ public class FragmentCreateItem extends Fragment {
     private FragmentCreateItemBinding binding;
     private VMItems vmItems;
     private NavController controller;
-
+    private final List<String> listWarning = new ArrayList<>();
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +51,7 @@ public class FragmentCreateItem extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_item, container, false);
-        binding.btnDown.setOnClickListener(v -> {
-            createItem();
-        });
+
 
         return binding.getRoot();
     }
@@ -59,18 +61,20 @@ public class FragmentCreateItem extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         controller = Navigation.findNavController(view);
-        binding.btnBack.setOnClickListener(v -> {
-//            controller.navigate(FragmentCreateItemDirections.actionFragmentCreateItemToFragmentAddReceipt());
+        binding.btnDown.setOnClickListener(v -> {
+            if (warning()){
+                dialogWarning();
+            }else postItem();
         });
     }
 
-    private void createItem() {
+    private void postItem() {
         vmItems.postItem(getModel())
-                .observe(getViewLifecycleOwner(),cash -> {
-                    if (!cash.getError()){
-//                        controller.navigate(FragmentCreateItemDirections.actionFragmentCreateItemToFragmentAddReceipt());
+                .observe(getViewLifecycleOwner(), cash -> {
+                    if (!cash.getError()) {
+                        requireActivity().onBackPressed();
+//                        controller.navigate(FragmentCreateClientDirections.actionFragmentCreateClientToFragmentAddClient());
                     }
-                    Log.d(TAG, "createItem: " + cash.toString());
                 });
     }
 
@@ -99,10 +103,50 @@ public class FragmentCreateItem extends Fragment {
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-
         String itemName = binding.edtName.getText().toString().trim();
         String itemNote = binding.edtSubject.getText().toString().trim();
         return new Items(itemName, itemPrice, discount, itemTax, itemNote, quantity);
+    }
+
+    private boolean warning() {
+        if (getModel().getItemName().equals("")) {
+            listWarning.add(getResources().getString(R.string.name));
+        }
+        if (getModel().getItemPrice() == 0.0) {
+            listWarning.add(getResources().getString(R.string.price));
+        }
+        if (getModel().getQuantity() == 0.0) {
+            listWarning.add(getResources().getString(R.string.quantity));
+        }
+        return listWarning.size() > 0;
+    }
+    private void dialogWarning() {
+        DialogConfirm dialogConfirm = new DialogConfirm(requireContext());
+        dialogConfirm.setDialogListener(new DialogListener() {
+            @Override
+            public void clickOk(DialogInterface dialog) {
+                listWarning.clear();
+                postItem();
+            }
+
+            @Override
+            public void clickCancel(DialogInterface dialog) {
+                dialog.dismiss();
+                listWarning.clear();
+            }
+        });
+        dialogConfirm.addIcon(R.drawable.ic_twotone_warning_24);
+        dialogConfirm.listenerDialog();
+//        TODO translate
+        StringBuilder warning = new StringBuilder("\n");
+        for (int i = 0; i < listWarning.size(); i++) {
+            warning.append(listWarning.get(i)).append("\n");
+        }
+        dialogConfirm.createDialog(getResources().getString(R.string.warning),
+                getResources().getString(R.string.warning_not_add)
+                        + warning.toString()
+        );
+        dialogConfirm.showDialog();
     }
 
 }

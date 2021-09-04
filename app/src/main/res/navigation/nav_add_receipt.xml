@@ -54,7 +54,7 @@
     <fragment
         android:id="@+id/fragmentCreateProducts"
         android:name="soft.mahmod.yourreceipt.view_fragment.add_receipt.FragmentCreateProducts"
-        android:label="@string/products"
+        android:label="@string/create_product"
         tools:layout="@layout/fragment_create_products">
         <argument
             android:name="args_product"

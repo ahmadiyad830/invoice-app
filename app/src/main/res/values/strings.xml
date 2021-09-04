@@ -1,29 +1,39 @@
 <resources>
-    <string name="app_name">Your Receipt</string>
+    <!--    TODO registration-->
+    <string name="you_dont_have_account">you dont have account ?</string>
+    <string name="sign_up">sign up</string>
+    <string name="account">Account</string>
+    <!--    TODO account-->
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="config_password">config password</string>
-    <string name="home">Home</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
-    <string name="add">add</string>
-    <string name="delete_all">delete all</string>
-    <string name="profile">profile</string>
-    <string name="my_orders">My Orders</string>
-    <string name="you_dont_have_account">you dont have account ?</string>
-    <string name="sign_up">sign up</string>
-    <string name="you_have_account">you have account ?</string>
-    <string name="next">next</string>
+    <string name="forget_your_password">Forgot your password ?</string>
+    <string name="change_password">Change Password</string>
     <string name="user_name">user name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="sotre_name">Store Name</string>
+    <!--    TODO main-->
+    <string name="app_name">Your Receipt</string>
+    <string name="home">Home</string>
+    <string name="profile">profile</string>
     <string name="setting">Setting</string>
     <string name="settings">Settings</string>
+
+    <string name="add">add</string>
+    <string name="delete_all">delete all</string>
+
+    <string name="my_orders">My Orders</string>
+
+
+    <string name="you_have_account">you have account ?</string>
+    <string name="next">next</string>
+
 
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
-    <string name="account">Account</string>
     <string name="edit_profile">Edit Account</string>
-    <string name="change_password">Change Password</string>
+
     <string name="privicy">Privacy</string>
     <string name="notification">Notification</string>
     <string name="app_notification" translatable="false">App Notification</string>
@@ -32,8 +42,6 @@
     <string name="sale">sale</string>
     <string name="no_result_found">No Result Found</string>
     <string name="quantity">Quantity</string>
-    <string name="phone_number">Phone Number</string>
-    <string name="sotre_name">Store Name</string>
     <string name="store_address">Store Address</string>
     <string name="error">error</string>
     <string name="search">Search</string>
@@ -41,34 +49,45 @@
     <string name="warning">Warning</string>
     <string name="warning_not_add">Warning The following items have not been added</string>
     <string name="invoice">invoice picture</string>
+
+    <string name="details">Details</string>
+    <string name="name">Name</string>
+    <string name="price">Price</string>
+
+    <!--    TODO receipt-->
     <string name="type_receipt">Type Receipt</string>
     <string name="receipt_details">Receipt Details</string>
     <string name="products_receipt">Products Receipt</string>
     <string name="receipt">Receipt</string>
-    <string name="details">Details</string>
-    <string name="name">Name</string>
-    <string name="price">Price</string>
+    <!--    TODO client-->
     <string name="client_name">Client Name</string>
+    <string name="add_client">Add new Client</string>
+    <string name="client_phone">Client Phone</string>
+    <string name="add_new_client">Add Client</string>
+    <string name="create_client">Create new Client</string>
+    <string name="client">Client</string>
+    <!--    TODO items-->
+    <string name="add_item">Add Item</string>
+    <string name="add_new_item">Add new item</string>
+    <string name="create_item">Create new Item</string>
+    <string name="items">Items</string>
+
+
+
     <string name="title">Title</string>
     <string name="total">Total</string>
     <string name="time">time</string>
     <string name="date">date</string>
-    <string name="add_client">Add Client</string>
-    <string name="add_item">Add Item</string>
-    <string name="client_phone">Client Phone</string>
     <string name="discount">Discount</string>
     <string name="take" translatable="false">take</string>
     <string name="dues" translatable="false">dues</string>
-    <string name="add_new_client">Add Client</string>
-    <string name="add_new_item">Add Item</string>
     <string name="more">More</string>
     <string name="note">Note</string>
     <string name="add_logo">Add Logo</string>
     <string name="print">Print</string>
     <string name="products">Products</string>
+    <string name="create_product">Add new product</string>
     <string name="discount_total_all">Discount Total All</string>
-    <string name="items">Items</string>
-    <string name="client">Client</string>
     <string name="tax">Tax</string>
     <string name="add_info">Additional Information</string>
     <string name="tax_reg_no">Tax Reg No</string>
@@ -79,8 +98,6 @@
     <string name="new_password">New Password</string>
     <string name="delete">Delete</string>
     <string name="skip">skip</string>
-    <string name="create_item">Create new Item</string>
-    <string name="create_client">Create new Client</string>
     <string name="active_your_account">active your account</string>
     <string name="contact_by_whatsapp_or_call">Contact by WhatsApp or call</string>
     <string name="sign_in_with_another_account">Sign In with another account</string>
@@ -89,8 +106,8 @@
     <string name="address_2">Address 2</string>
     <string name="address_1">Address 1</string>
     <string name="todo" translatable="false">TODO</string>
-    <string name="forget_your_password">Forgot your password ?</string>
     <string name="text_some_things">search some things</string>
     <string name="camera">camera</string>
     <string name="please_confirm">plase confirm</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 </resources>

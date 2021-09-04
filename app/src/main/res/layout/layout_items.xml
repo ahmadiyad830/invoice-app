@@ -78,7 +78,7 @@
                 android:ellipsize="end"
                 android:includeFontPadding="false"
                 android:maxLines="1"
-                android:text="@string/items"
+                android:text="@string/add_item"
                 android:gravity="center"
                 android:textColor="@color/text_btn_color"
                 android:textSize="@dimen/_14sdp" />

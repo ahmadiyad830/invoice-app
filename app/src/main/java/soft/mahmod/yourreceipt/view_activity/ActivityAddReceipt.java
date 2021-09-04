@@ -31,7 +31,9 @@ public class ActivityAddReceipt extends AppCompatActivity {
                 binding.setProgress(65);
             } else if (getResources().getString(R.string.items).trim().equals(destination.getLabel().toString())) {
                 binding.setProgress(100);
-            }else binding.progressHorizontalAddReceipt.setVisibility(View.GONE);
+            }else{
+                binding.progressHorizontalAddReceipt.setVisibility(View.GONE);
+            }
         });
 
     }
@@ -41,6 +43,7 @@ public class ActivityAddReceipt extends AppCompatActivity {
         super.onBackPressed();
         Log.d(TAG, "onBackPressed: click");
     }
+
 
     @Override
     protected void onDestroy() {
