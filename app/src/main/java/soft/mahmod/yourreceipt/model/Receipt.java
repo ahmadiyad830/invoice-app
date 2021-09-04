@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import java.io.Serializable;
 import java.util.List;
 
-public class Receipt extends Cash implements Serializable {
+public class Receipt extends Cash  {
 
     private String receiptId;
     private String subject;
