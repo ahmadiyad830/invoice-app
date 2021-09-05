@@ -48,6 +48,11 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (!uri.toString().isEmpty()) {
+            binding.setHasImage(true);
+            binding.setInvoice(uri.toString());
+        }
+
         binding.btnNext.setOnClickListener(v -> {
             if (warningReceipt())
                 dialogWarning();
@@ -132,7 +137,7 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl {
         });
         dialogConfirm.listenerDialog();
 //        TODO translate
-        dialogConfirm.addIcon(R.drawable.ic_twotone_warning_24);
+        dialogConfirm.setIcon(R.drawable.ic_twotone_warning_24);
         StringBuilder warning = new StringBuilder("\n");
         for (int i = 0; i < listWarning.size(); i++) {
             warning.append(listWarning.get(i)).append("\n");

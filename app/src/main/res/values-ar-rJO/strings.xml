@@ -87,4 +87,16 @@
     <string name="warning_not_add">تحذير لم يتم اضافة العناصر تالية</string>
     <string name="delete_all">حذف الجميع</string>
     <string name="create_product">اضافة منتج جديد</string>
+    <!--    help-->
+    <string name="help_client">اضغط على البطاقة لإضافة معلومات العميل
+انقر على القلم لتعديل العميل</string>
+    <string name="help_item_product">لإضافة منتج اضغط على اضافة العناصر اعلى الشاشة و اضف
+
+1-  الكمية
+2-  السعر
+3- الخصم
+4- الضريبة
+
+او اضف جميع العناصر</string>
+    <string name="phone_pictures">صور الهاتف</string>
 </resources>

@@ -15,7 +15,8 @@
             app:destination="@id/fragmentAddClient" />
         <action
             android:id="@+id/action_fragmentAddReceipt_to_fragmentZoomImage"
-            app:destination="@id/fragmentZoomImage" />
+            app:destination="@id/fragmentZoomImage"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/fragmentCreateItem"
@@ -48,11 +49,6 @@
             app:argType="soft.mahmod.yourreceipt.model.Client"
             app:nullable="true"
             android:defaultValue="@null" />
-        <action
-            android:id="@+id/action_fragmentCreateClient_to_fragmentAddClient"
-            app:destination="@id/fragmentAddClient"
-            app:popUpTo="@id/fragmentAddClient"
-            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/fragmentCreateProducts"
@@ -104,6 +100,11 @@
         <action
             android:id="@+id/action_fragmentAddItem_to_fragmentCreateItem5"
             app:destination="@id/fragmentCreateItem" />
+        <argument
+            android:name="productFromCreateProduct"
+            app:argType="soft.mahmod.yourreceipt.model.Products"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/fragmentZoomImage"

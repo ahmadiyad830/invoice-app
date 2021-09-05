@@ -35,9 +35,6 @@ public class MainActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         manager = SessionManager.getInstance(this);
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        reference.child("receipt").removeValue();
-
         vmUser = new ViewModelProvider(
                 getViewModelStore(),
                 new ViewModelProvider.AndroidViewModelFactory(

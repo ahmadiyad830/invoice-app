@@ -50,6 +50,7 @@ public class RepoLogo extends Repo<Cash> {
                 })
                 .addOnProgressListener(getApplication().getMainExecutor(), snapshot -> {
                     //TODO when we need make a progress design
+
                 });
         return getData();
     }

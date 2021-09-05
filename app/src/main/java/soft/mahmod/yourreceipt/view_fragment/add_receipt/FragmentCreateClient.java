@@ -99,7 +99,7 @@ public class FragmentCreateClient extends Fragment {
         vmClient.postClient(getClient()).observe(getViewLifecycleOwner(), cash -> {
             if (!cash.getError()) {
                 requireActivity().onBackPressed();
-                controller.navigate(FragmentCreateClientDirections.actionFragmentCreateClientToFragmentAddClient());
+//                controller.navigate(FragmentCreateClientDirections.actionFragmentCreateClientToFragmentAddClient());
             } else Toast.makeText(requireContext(), cash.getMessage(), Toast.LENGTH_SHORT).show();
         });
     }
@@ -131,7 +131,7 @@ public class FragmentCreateClient extends Fragment {
                 listWarning.clear();
             }
         });
-        dialogConfirm.addIcon(R.drawable.ic_twotone_warning_24);
+        dialogConfirm.setIcon(R.drawable.ic_twotone_warning_24);
         dialogConfirm.listenerDialog();
 //        TODO translate
         StringBuilder warning = new StringBuilder("\n");

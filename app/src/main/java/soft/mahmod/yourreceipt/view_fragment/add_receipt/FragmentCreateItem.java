@@ -135,7 +135,7 @@ public class FragmentCreateItem extends Fragment {
                 listWarning.clear();
             }
         });
-        dialogConfirm.addIcon(R.drawable.ic_twotone_warning_24);
+        dialogConfirm.setIcon(R.drawable.ic_twotone_warning_24);
         dialogConfirm.listenerDialog();
 //        TODO translate
         StringBuilder warning = new StringBuilder("\n");

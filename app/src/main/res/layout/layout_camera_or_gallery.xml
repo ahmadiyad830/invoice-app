@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="model"
+            type="soft.mahmod.yourreceipt.model.Products" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_page"
+        >
+
+        <LinearLayout
+            android:id="@+id/layout_client_side"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_8sdp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:background="@drawable/custom_stork"
+                android:hint="@string/price"
+                android:inputType="numberDecimal"
+                android:padding="@dimen/_12sdp"
+                android:text="@{String.valueOf(model.productsPrice)}"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/hint_color" />
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_quantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:background="@drawable/custom_stork"
+                android:hint="@string/quantity"
+                android:inputType="numberDecimal"
+                android:maxLength="500"
+                android:maxLines="15"
+                android:padding="@dimen/_12sdp"
+                android:text="@{String.valueOf(model.productsQuantity)}"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/hint_color" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_discount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:background="@drawable/custom_stork"
+                android:hint="@string/discount"
+                android:inputType="numberDecimal"
+                android:maxLength="500"
+                android:maxLines="15"
+                android:padding="@dimen/_12sdp"
+                android:text="@{String.valueOf(model.discount)}"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/hint_color" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_tax"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:background="@drawable/custom_stork"
+                android:hint="@string/tax"
+                android:inputType="numberDecimal"
+                android:maxLength="500"
+                android:maxLines="15"
+                android:padding="@dimen/_12sdp"
+                android:text="@{String.valueOf(model.tax)}"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/hint_color" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_12sdp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_client_side">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_down"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@android:string/ok"
+                android:textColor="@color/text_btn_color"
+                android:textSize="@dimen/_13ssp"
+                app:backgroundTint="@color/top_and_bottom_color" />
+
+            <View
+                android:layout_width="@dimen/_1sdp"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="@dimen/_8sdp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@android:string/cancel"
+                android:textColor="@color/text_btn_color"
+                android:textSize="@dimen/_13ssp"
+                app:backgroundTint="@color/top_and_bottom_color" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

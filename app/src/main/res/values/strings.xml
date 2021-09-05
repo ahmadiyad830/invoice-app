@@ -107,6 +107,21 @@
     <string name="todo" translatable="false">TODO</string>
     <string name="text_some_things">search some things</string>
     <string name="camera">camera</string>
+    <string name="phone_pictures">phone pictures</string>
+    <string name="cancel" translatable="false">@android:string/cancel</string>
+    <string name="ok" translatable="false">@android:string/ok</string>
     <string name="please_confirm">plase confirm</string>
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+
+    <!--    help-->
+    <string name="help_client">Click on the card to add customer information
+Click on the pen to edit the customer</string>
+    <string name="help_item_product">To add a product, click on Add Items at the top of the screen and add
+
+1- Quantity
+2- Price
+3- Discount
+4- Tax
+
+Or add all items</string>
 </resources>

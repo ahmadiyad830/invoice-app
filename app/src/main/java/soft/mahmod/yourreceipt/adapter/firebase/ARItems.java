@@ -18,7 +18,9 @@ import soft.mahmod.yourreceipt.model.Products;
 public class ARItems extends FirebaseRecyclerAdapter<Items, ARItems.ViewHolder> {
     public interface OnCLickItem {
         void clickItem(Products model,Items itemModel, int position);
+
         void editItem(Items model);
+
     }
 
     private LayoutInflater inflater;

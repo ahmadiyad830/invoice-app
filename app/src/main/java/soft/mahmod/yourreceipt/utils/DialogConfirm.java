@@ -2,6 +2,7 @@ package soft.mahmod.yourreceipt.utils;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,13 +20,15 @@ public class DialogConfirm {
         alertDialog = new AlertDialog.Builder(context);
         this.dialogListener = dialogListener;
     }
+    public AlertDialog create(){
+        return alertDialog.create();
+    }
 
     public DialogConfirm(Context context) {
         alertDialog = new AlertDialog.Builder(context);
     }
 
     public void addView(View recLayout) {
-
         alertDialog.setView(recLayout);
     }
 
@@ -33,7 +36,7 @@ public class DialogConfirm {
         return alertDialog.getContext();
     }
 
-    public void listenerDialog() {
+    public DialogConfirm listenerDialog() {
         alertDialog
                 .setNegativeButton("CANCEL", (dialog, which) -> {
                     dialogListener.clickCancel(dialog);
@@ -41,17 +44,37 @@ public class DialogConfirm {
                 .setPositiveButton("OK", (dialog, which) -> {
                     dialogListener.clickOk(dialog);
                 });
+        return this;
     }
 
-    public DialogConfirm addIcon(@DrawableRes int resIcon) {
+    public DialogConfirm defaultListener(){
+        alertDialog.setPositiveButton("OK",(dialog, which) -> {
+            dialog.dismiss();
+        });
+        return this;
+    }
+    public DialogConfirm setCancel(boolean canCancel) {
+        alertDialog.setCancelable(canCancel);
+        return this;
+    }
+
+    public DialogConfirm setIcon(@DrawableRes int resIcon) {
         alertDialog.setIcon(resIcon);
+        return this;
+    }
+
+    public DialogConfirm setTitle(String title) {
+        alertDialog.setTitle(title);
+        return this;
+    }
+    public DialogConfirm setMessage(String message) {
+        alertDialog.setTitle(message);
         return this;
     }
 
     public DialogConfirm createDialog(String title, String message) {
         alertDialog.setTitle(title)
-                .setMessage(message)
-                .setCancelable(false);
+                .setMessage(message);
         return this;
     }
 

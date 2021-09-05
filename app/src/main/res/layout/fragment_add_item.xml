@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="totalAll"
             type="Double" />
@@ -25,6 +26,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txt_my_items"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?selectableItemBackground"
+                android:gravity="center"
+                android:text='@string/add_item'
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/_13sdp"
+                app:drawableEndCompat="@drawable/ic_baseline_format_list_bulleted_24"
+                app:drawableTint="@color/text_color" />
+
             <TextView
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
@@ -32,18 +46,21 @@
                 android:layout_weight="9"
                 android:gravity="center"
                 android:text='@{@string/total_all+": "+String.valueOf(totalAll)}'
-                android:textColor="@color/text_color"
+                android:textColor="@color/mony_color"
                 android:textSize="@dimen/_14ssp" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/txt_delete_all"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="?selectableItemBackground"
                 android:gravity="center"
                 android:text="@string/delete_all"
-                android:textColor="@android:color/holo_red_dark"
-                android:textSize="@dimen/_14ssp" />
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/_14ssp"
+                app:drawableEndCompat="@drawable/ic_baseline_delete_outline_24"
+                app:drawableTint="@android:color/holo_red_light" />
         </LinearLayout>
 
 
@@ -58,21 +75,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout12" />
 
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_to_create_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/todo"
-            android:src="@drawable/ic_baseline_add_24"
+            android:src="@drawable/ic_baseline_check_24"
             app:backgroundTint="@color/top_and_bottom_color"
-            app:tint="@color/text_btn_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.90"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.8" />
+            app:layout_constraintVertical_bias="0.8"
+            app:tint="@color/text_btn_color" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

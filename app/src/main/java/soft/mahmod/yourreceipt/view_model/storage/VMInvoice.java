@@ -22,4 +22,7 @@ public class VMInvoice extends AndroidViewModel {
             return repoInvoice.postInvoice(uri);
         }else return repoInvoice.postInvoiceTLow(uri);
     }
+    public double getProgress(){
+        return repoInvoice.getProgress();
+    }
 }

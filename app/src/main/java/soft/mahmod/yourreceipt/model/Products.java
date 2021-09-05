@@ -37,6 +37,14 @@ public class Products extends Cash {
 
     }
 
+    public Products(double productsPrice, double productsQuantity, double total, double discount, double tax) {
+        this.productsPrice = productsPrice;
+        this.productsQuantity = productsQuantity;
+        this.total = total;
+        this.discount = discount;
+        this.tax = tax;
+    }
+
     public String getProductId() {
         return productId;
     }
