@@ -12,6 +12,7 @@
         <variable
             name="total"
             type="Double" />
+        <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -204,6 +205,7 @@
                     android:id="@+id/linearLayout9"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility='@{model.taxClientNoReg?View.GONE:View.VISIBLE}'
                     android:layout_marginHorizontal="@dimen/_8sdp"
                     android:orientation="vertical">
 

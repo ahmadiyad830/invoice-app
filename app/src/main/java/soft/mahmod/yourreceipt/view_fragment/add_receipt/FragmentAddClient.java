@@ -1,19 +1,17 @@
 package soft.mahmod.yourreceipt.view_fragment.add_receipt;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,7 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.firebase.ARClients;
-import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.FragmentAddClientBinding;
 import soft.mahmod.yourreceipt.model.Client;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
@@ -37,6 +34,7 @@ public class FragmentAddClient extends Fragment implements ARClients.OnClickClie
     private FragmentAddClientBinding binding;
     private ARClients adapterClient;
     private NavController controller;
+    private FragmentAddClientDirections.ActionFragmentAddClientToFragmentCreateClient3 editClient;
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +62,9 @@ public class FragmentAddClient extends Fragment implements ARClients.OnClickClie
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
          controller = Navigation.findNavController(view);
+        editClient = FragmentAddClientDirections.actionFragmentAddClientToFragmentCreateClient3();
         binding.fabToCreateClient.setOnClickListener(v -> {
+            editClient.setIsEdit(false);
             controller.navigate(FragmentAddClientDirections.actionFragmentAddClientToFragmentCreateClient3());
         });
     }
@@ -100,9 +100,9 @@ public class FragmentAddClient extends Fragment implements ARClients.OnClickClie
 
     @Override
     public void editClient(Client model) {
-        FragmentAddClientDirections.ActionFragmentAddClientToFragmentCreateClient3 editClient
-                = FragmentAddClientDirections.actionFragmentAddClientToFragmentCreateClient3();
+
         editClient.setEditClient(model);
+        editClient.setIsEdit(true);
         controller.navigate(editClient);
     }
 }

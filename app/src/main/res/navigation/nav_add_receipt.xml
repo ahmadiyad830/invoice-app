@@ -49,6 +49,10 @@
             app:argType="soft.mahmod.yourreceipt.model.Client"
             app:nullable="true"
             android:defaultValue="@null" />
+        <argument
+            android:name="isEdit"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/fragmentCreateProducts"

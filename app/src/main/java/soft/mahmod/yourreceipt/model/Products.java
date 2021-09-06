@@ -1,16 +1,9 @@
 package soft.mahmod.yourreceipt.model;
 
-import android.text.TextUtils;
-
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
 import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
 
-import com.google.gson.annotations.SerializedName;
-
-import org.jetbrains.annotations.Nullable;
+import com.google.firebase.database.Exclude;
 
 import java.util.List;
 
@@ -32,6 +25,16 @@ public class Products extends Cash {
     private double tax;
     @Ignore
     private List<String> receiptId;
+    @Exclude
+    private boolean taxClientNoReg;
+    @Exclude
+    public boolean isTaxClientNoReg() {
+        return taxClientNoReg;
+    }
+    @Exclude
+    public void setTaxClientNoReg(boolean taxClientNoReg) {
+        this.taxClientNoReg = taxClientNoReg;
+    }
 
     public Products() {
 
@@ -123,11 +126,15 @@ public class Products extends Cash {
     public String toString() {
         return "Products{" +
                 "productId='" + productId + '\'' +
-                ", productsPrice='" + productsPrice + '\'' +
-                ", productsQuantity='" + productsQuantity + '\'' +
-                ", total='" + total + '\'' +
+                ", productsPrice=" + productsPrice +
+                ", productsQuantity=" + productsQuantity +
+                ", total=" + total +
                 ", notes='" + notes + '\'' +
                 ", itemName='" + itemName + '\'' +
+                ", discount=" + discount +
+                ", tax=" + tax +
+                ", receiptId=" + receiptId +
+                ", taxClientNoReg=" + taxClientNoReg +
                 '}';
     }
 }

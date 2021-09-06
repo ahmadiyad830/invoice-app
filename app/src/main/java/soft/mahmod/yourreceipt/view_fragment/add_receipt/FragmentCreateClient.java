@@ -2,6 +2,7 @@ package soft.mahmod.yourreceipt.view_fragment.add_receipt;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,40 +67,35 @@ public class FragmentCreateClient extends Fragment {
         controller = Navigation.findNavController(view);
         binding.fabToCreateClient.setOnClickListener(v -> {
             if (warningClient()) {
-                dialogWarning();
-            } else postClient();
+                dialogWarning(addClientArgs.getIsEdit());
+            } else client(addClientArgs.getIsEdit());
+
 
         });
 
     }
 
 
-    private Client getClient() {
-        Client client = new Client();
-        client.setEmail(binding.edtEmail.getText().toString().trim());
-        client.setName(binding.edtName.getText().toString().trim());
-        try {
-            client.setPhone(Integer.parseInt(binding.edtClientPhone.getText().toString().trim()));
-        } catch (NumberFormatException e) {
-            client.setPhone(0);
-        }
-        client.setAddInfo(binding.edtAddInfo.getText().toString().trim());
-        try {
-            client.setTaxRegNo(Double.parseDouble(binding.edtTax4.getText().toString().trim()));
-        } catch (NumberFormatException e) {
-            client.setTaxRegNo(0.0);
-        }
-        client.setAddress(binding.edtAddress.getText().toString().trim());
-        client.setStoreAddress(binding.edtStoreAddress.getText().toString().trim());
-        client.setNote(binding.edtNote.getText().toString().trim());
-        return client;
-    }
-
     private void postClient() {
         vmClient.postClient(getClient()).observe(getViewLifecycleOwner(), cash -> {
             if (!cash.getError()) {
                 requireActivity().onBackPressed();
-//                controller.navigate(FragmentCreateClientDirections.actionFragmentCreateClientToFragmentAddClient());
+            } else Toast.makeText(requireContext(), cash.getMessage(), Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void client(boolean edit) {
+        if (edit) {
+            putClient();
+        } else {
+            postClient();
+        }
+    }
+
+    private void putClient() {
+        vmClient.putClient(getClient()).observe(getViewLifecycleOwner(), cash -> {
+            if (!cash.getError()) {
+                requireActivity().onBackPressed();
             } else Toast.makeText(requireContext(), cash.getMessage(), Toast.LENGTH_SHORT).show();
         });
     }
@@ -116,13 +112,14 @@ public class FragmentCreateClient extends Fragment {
         }
         return listWarning.size() > 0;
     }
-    private void dialogWarning() {
+
+    private void dialogWarning(boolean edit) {
         DialogConfirm dialogConfirm = new DialogConfirm(requireContext());
         dialogConfirm.setDialogListener(new DialogListener() {
             @Override
             public void clickOk(DialogInterface dialog) {
                 listWarning.clear();
-                postClient();
+                client(edit);
             }
 
             @Override
@@ -143,5 +140,26 @@ public class FragmentCreateClient extends Fragment {
                         + warning.toString()
         );
         dialogConfirm.showDialog();
+    }
+
+    private Client getClient() {
+        Client client = new Client();
+        try {
+            client.setClientId(binding.getModel().getClientId());
+        } catch (Exception ignored) {
+        }
+        client.setEmail(binding.edtEmail.getText().toString().trim());
+        client.setName(binding.edtName.getText().toString().trim());
+        try {
+            client.setPhone(Integer.parseInt(binding.edtClientPhone.getText().toString().trim()));
+        } catch (NumberFormatException e) {
+            client.setPhone(0);
+        }
+        client.setAddInfo(binding.edtAddInfo.getText().toString().trim());
+        client.setTaxRegNo(binding.switchTax.isChecked());
+        client.setAddress(binding.edtAddress.getText().toString().trim());
+        client.setStoreAddress(binding.edtStoreAddress.getText().toString().trim());
+        client.setNote(binding.edtNote.getText().toString().trim());
+        return client;
     }
 }

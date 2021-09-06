@@ -23,7 +23,6 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginVertical="@dimen/_8sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -40,7 +39,7 @@
                     android:id="@+id/linearLayout5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_margin="@dimen/_8sdp"
                     android:orientation="vertical">
 
                     <TextView
@@ -66,7 +65,7 @@
                     android:id="@+id/linearLayout6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_margin="@dimen/_8sdp"
                     android:orientation="vertical">
 
                     <TextView
@@ -92,7 +91,7 @@
                     android:id="@+id/linearLayout7"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_margin="@dimen/_8sdp"
                     android:orientation="vertical">
 
                     <TextView
@@ -118,8 +117,9 @@
                     android:id="@+id/linearLayout8"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_margin="@dimen/_8sdp"
                     android:orientation="vertical">
+
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -143,8 +143,10 @@
                 <LinearLayout
                     android:id="@+id/linearLayout93"
                     android:layout_width="match_parent"
+                    android:layout_gravity="start"
+                    android:gravity="start"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_margin="@dimen/_8sdp"
                     android:orientation="vertical">
 
                     <TextView
@@ -154,16 +156,12 @@
                         android:textColor="@color/text_color"
                         android:textSize="@dimen/_12ssp" />
 
-                    <EditText
-                        android:id="@+id/edt_tax4"
-                        android:layout_width="match_parent"
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_tax"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/text_color"
-                        android:background="@drawable/custom_stork"
-                        android:hint="@string/tax_reg_no"
-                        android:inputType="numberDecimal"
                         android:padding="@dimen/_12sdp"
-                        android:text='@{String.valueOf(model.taxRegNo)}'
+                        android:checked="@{model.taxRegNo}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -175,7 +173,7 @@
                     android:id="@+id/linearLayodut9"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_margin="@dimen/_8sdp"
                     android:orientation="vertical">
 
                     <TextView
@@ -202,7 +200,7 @@
                     android:id="@+id/linearLasadyodut9"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_margin="@dimen/_8sdp"
                     android:orientation="vertical">
 
                     <TextView
@@ -226,8 +224,8 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_margin="@dimen/_8sdp"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_8sdp"
                     android:orientation="vertical">
 
                     <TextView

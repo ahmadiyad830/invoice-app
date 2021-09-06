@@ -55,6 +55,8 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
     private Query query;
     private VMReceipt vmReceipt;
     private VMInvoice vmInvoice;
+    private FragmentAddItemArgs addItemArgs;
+    private FragmentAddItemDirections.ActionFragmentAddItemToFragmentCreateProducts4 addProduct;
 
     public void setQuery(Query query) {
         this.query = query;
@@ -101,6 +103,8 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         controller = Navigation.findNavController(view);
+        addItemArgs = FragmentAddItemArgs.fromBundle(getArguments());
+        addProduct = FragmentAddItemDirections.actionFragmentAddItemToFragmentCreateProducts4();
 //        FragmentAddItemArgs productFromCreateProduct = FragmentAddItemArgs.fromBundle(getArguments());
 //        if (productFromCreateProduct.getProductFromCreateProduct()!=null){
 //            if (getArguments()!=null){
@@ -149,7 +153,6 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
     }
 
     private Receipt getReceipt() {
-        FragmentAddItemArgs addItemArgs = FragmentAddItemArgs.fromBundle(getArguments());
         Receipt model = addItemArgs.getReceiptToItems();
         model.setDate(handleTimeCount.getDate());
         model.setProducts(listProduct);
@@ -163,8 +166,7 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
     // TODO listener items
     @Override
     public void clickItem(Products model, Items itemModel, int position) {
-        FragmentAddItemDirections.ActionFragmentAddItemToFragmentCreateProducts4
-                addProduct = FragmentAddItemDirections.actionFragmentAddItemToFragmentCreateProducts4();
+        model.setTaxClientNoReg(addItemArgs.getClientToItem().isTaxRegNo());
         addProduct.setArgsProduct(model);
         controller.navigate(addProduct);
         itemBottomDialog.dismiss();
@@ -179,6 +181,7 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
                 createItem = FragmentAddItemDirections.actionFragmentAddItemToFragmentCreateItem5();
         createItem.setEditItem(model);
         controller.navigate(createItem);
+        itemBottomDialog.dismiss();
     }
 
     // TODO listener products

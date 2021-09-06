@@ -17,7 +17,7 @@ public class Client extends Cash{
 
     private String addInfo;
 
-    private double taxRegNo;
+    private boolean taxRegNo;
 
     private String address;
 
@@ -64,11 +64,11 @@ public class Client extends Cash{
         this.addInfo = addInfo;
     }
 
-    public double getTaxRegNo() {
+    public boolean isTaxRegNo() {
         return taxRegNo;
     }
 
-    public void setTaxRegNo(double taxRegNo) {
+    public void setTaxRegNo(boolean taxRegNo) {
         this.taxRegNo = taxRegNo;
     }
 

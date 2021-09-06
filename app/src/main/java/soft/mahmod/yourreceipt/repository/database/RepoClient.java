@@ -66,15 +66,51 @@ public class RepoClient extends Repo<Client> {
         return getErrorDate();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     public LiveData<Cash> putClient(Client model) {
+        getReference().child(CLIENT).child(getfUser().getUid()).child(model.getClientId())
+                .setValue(model)
+                .addOnCompleteListener(getApplication().getMainExecutor(), task -> {
+                    if (task.isSuccessful()) {
+                        getCash().setError(false);
+                        getCash().setMessage("success");
+                        getCash().setCode(SUCCESS);
+                        getErrorDate().setValue(getCash());
+                    }
+
+                })
+                .addOnFailureListener(getApplication().getMainExecutor(), e -> {
+                    getCash().setError(true);
+                    getCash().setMessage(e.getMessage());
+                    getCash().setCode(TRY_AGAIN);
+                    getErrorDate().setValue(getCash());
+                });
         return getErrorDate();
     }
 
     public LiveData<Cash> putClientTLow(Client model) {
+        getReference().child(CLIENT).child(getfUser().getUid()).child(model.getClientId())
+                .setValue(model)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        getCash().setError(false);
+                        getCash().setMessage("success");
+                        getCash().setCode(SUCCESS);
+                        getErrorDate().setValue(getCash());
+                    }
+
+                })
+                .addOnFailureListener(e -> {
+                    getCash().setError(true);
+                    getCash().setMessage(e.getMessage());
+                    getCash().setCode(TRY_AGAIN);
+                    getErrorDate().setValue(getCash());
+                });
         return getErrorDate();
     }
 
     public LiveData<Cash> deleteClient(Client model) {
+
         return getErrorDate();
     }
 

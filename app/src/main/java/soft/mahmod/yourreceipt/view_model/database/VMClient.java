@@ -26,6 +26,13 @@ public class VMClient extends AndroidViewModel {
             return repoClient.postClientTLow(model);
         }
     }
+    public LiveData<Cash> putClient(Client model){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            return repoClient.putClient(model);
+        }else {
+            return repoClient.putClientTLow(model);
+        }
+    }
     public LiveData<Client> getClient(String pushKey){
         return repoClient.getClient(pushKey);
     }
