@@ -82,15 +82,15 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl {
     @Override
     public void onStart() {
         super.onStart();
-        binding.btnCamera.setOnClickListener(v -> {
-            openCamera();
-        });
-        binding.logo.setOnClickListener(v -> {
-            FragmentAddReceiptDirections.ActionFragmentAddReceiptToFragmentZoomImage zoomImage
-                    = FragmentAddReceiptDirections.actionFragmentAddReceiptToFragmentZoomImage();
-            zoomImage.setUrlToZoom(uri.toString());
-            Navigation.findNavController(requireView()).navigate(zoomImage);
-        });
+//        binding.btnCamera.setOnClickListener(v -> {
+//            openCamera();
+//        });
+//        binding.logo.setOnClickListener(v -> {
+//            FragmentAddReceiptDirections.ActionFragmentAddReceiptToFragmentZoomImage zoomImage
+//                    = FragmentAddReceiptDirections.actionFragmentAddReceiptToFragmentZoomImage();
+//            zoomImage.setUrlToZoom(uri.toString());
+//            Navigation.findNavController(requireView()).navigate(zoomImage);
+//        });
     }
     public void openCamera() {
         Intent intent = new Intent();

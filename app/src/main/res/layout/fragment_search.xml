@@ -57,18 +57,18 @@
                     android:id="@+id/text_search"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:autofillHints="name"
                     android:hint="@string/text_some_things"
-                    android:textColor="@color/text_btn_color"
-                    android:textColorHint="@color/item_background"
+                    android:inputType="text"
                     android:paddingHorizontal="@dimen/_8sdp"
+                    android:textColor="@color/text_btn_color"
                     android:visibility='@{isSearch?View.VISIBLE:View.GONE,default = gone}'
+                    android:textColorHint="@color/item_background"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/btn_search"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_clean"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:inputType="text"
-                    android:autofillHints="name" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/btn_search"

@@ -54,50 +54,13 @@
             <LinearLayout
                 android:id="@+id/linearLayout4"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:layout_marginTop="@dimen/_35sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-                <!--invoice-->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-
-                    <com.makeramen.roundedimageview.RoundedImageView
-                        android:id="@+id/logo"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_150sdp"
-                        android:layout_gravity="center"
-                        android:layout_marginVertical="@dimen/_8sdp"
-                        android:imageURL="@{invoice}"
-                        android:src="@mipmap/ic_launcher"
-                        android:visibility='@{hasImage?View.VISIBLE:View.GONE,default = gone}'
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:riv_corner_radius="@dimen/_24sdp" />
-
-                    <ImageView
-                        android:id="@+id/btn_camera"
-                        android:layout_width="@dimen/_25sdp"
-                        android:layout_height="@dimen/_25sdp"
-                        android:layout_gravity="end|center"
-                        android:layout_marginHorizontal="@dimen/_8sdp"
-                        android:src="@drawable/ic_outline_image_24"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.0"
-                        app:tint="@color/top_and_bottom_color" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
                 <!--receipt-->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView"
@@ -133,10 +96,11 @@
                         android:layout_marginHorizontal="@dimen/_8sdp"
                         android:layout_marginBottom="@dimen/_8sdp"
                         android:background="@drawable/custom_stork"
-                        android:hint="@string/subject"
-                        android:inputType="text"
                         android:padding="@dimen/_12sdp"
                         android:textColor="@color/text_color"
+                        android:hint="@string/subject"
+                        android:inputType="text"
+
                         android:textColorHint="@color/hint_color" />
 
 
@@ -161,6 +125,8 @@
                         android:layout_marginHorizontal="@dimen/_8sdp"
                         android:layout_marginVertical="@dimen/_12sdp"
                         android:text="@string/type_receipt"
+                        app:thumbTint="@color/top_and_bottom_color"
+                        app:trackTint="@color/hint_color"
                         android:textColor="@color/text_color"
                         android:textColorHint="@color/hint_color"
                         android:textOff="@string/take"

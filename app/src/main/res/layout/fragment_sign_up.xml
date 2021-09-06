@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
                 android:gravity="center"
-                android:textColor="@color/text_color"
+                android:textColor="@color/top_and_bottom_color"
                 android:textSize="@dimen/_18ssp"/>
         </LinearLayout>
 
@@ -69,12 +69,14 @@
                         android:id="@+id/email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="@android:color/transparent"
+                        android:backgroundTint="@color/text_btn_color"
+                        android:background="@drawable/custom_stork"
+                        android:textColorHint="@color/hint_color"
+                        android:padding="@dimen/_12sdp"
                         android:hint="@string/email"
                         android:inputType="textEmailAddress"
                         android:singleLine="true"
                         android:textColor="@color/text_color"
-                        android:textColorHint="@color/hint_color"
                         android:textSize="@dimen/_14ssp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -103,12 +105,15 @@
                         android:id="@+id/password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="@android:color/transparent"
                         android:hint="@string/password"
+                        android:backgroundTint="@color/text_btn_color"
+                        android:background="@drawable/custom_stork"
+                        android:textColorHint="@color/hint_color"
+                        android:padding="@dimen/_12sdp"
+
                         android:inputType="textPassword"
                         android:singleLine="true"
                         android:textColor="@color/text_color"
-                        android:textColorHint="@color/hint_color"
                         android:textSize="@dimen/_14ssp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -134,12 +139,14 @@
                         android:id="@+id/password_config"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="@android:color/transparent"
                         android:hint="@string/config_password"
                         android:inputType="textPassword"
+                        android:backgroundTint="@color/text_btn_color"
+                        android:background="@drawable/custom_stork"
+                        android:textColorHint="@color/hint_color"
+                        android:padding="@dimen/_12sdp"
                         android:singleLine="true"
                         android:textColor="@color/text_color"
-                        android:textColorHint="@color/hint_color"
                         android:textSize="@dimen/_14ssp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

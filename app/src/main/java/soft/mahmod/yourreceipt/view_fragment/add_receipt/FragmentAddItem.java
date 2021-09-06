@@ -98,6 +98,9 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
     private void init() {
         binding.recItem.setHasFixedSize(true);
         binding.recItem.setAdapter(arProducts);
+        binding.total.setOnClickListener(v -> {
+            controller.navigate(R.id.action_fragmentAddItem_to_fragmentPrintReceipt);
+        });
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
