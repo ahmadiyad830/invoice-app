@@ -35,7 +35,7 @@
                 android:gravity="left">
 
                 <ImageView
-                    android:id="@+id/scan_barcode"
+                    android:id="@+id/btn_print"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
                     android:layout_marginHorizontal="@dimen/_12sdp"

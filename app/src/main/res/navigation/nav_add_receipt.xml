@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_add_receipt"
-    app:startDestination="@id/fragmentPrintReceipt">
+    app:startDestination="@id/fragmentAddReceipt">
 
     <fragment
         android:id="@+id/fragmentAddReceipt"
@@ -128,5 +128,11 @@
         android:id="@+id/fragmentPrintReceipt"
         tools:layout="@layout/fragment_print_receipt"
         android:name="soft.mahmod.yourreceipt.view_fragment.add_receipt.FragmentPrintReceipt"
-        android:label="FragmentPrintReceipt" />
+        android:label="FragmentPrintReceipt" >
+        <argument
+            android:name="argsReceiptPrint"
+            app:argType="soft.mahmod.yourreceipt.model.Receipt"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 </navigation>

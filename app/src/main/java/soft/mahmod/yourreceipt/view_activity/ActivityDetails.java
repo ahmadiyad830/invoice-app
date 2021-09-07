@@ -40,6 +40,9 @@ public class ActivityDetails extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+        binding.btnPrint.setOnClickListener(v -> {
+
+        });
     }
 
     private void sendData() {

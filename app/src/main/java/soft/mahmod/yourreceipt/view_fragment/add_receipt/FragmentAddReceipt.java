@@ -54,9 +54,7 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl {
         }
 
         binding.btnNext.setOnClickListener(v -> {
-            if (warningReceipt())
-                dialogWarning();
-            else setReceipt();
+            setReceipt();
         });
     }
 
@@ -149,6 +147,7 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl {
         );
         dialogConfirm.showDialog();
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

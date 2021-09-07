@@ -57,7 +57,7 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
     private VMInvoice vmInvoice;
     private FragmentAddItemArgs addItemArgs;
     private FragmentAddItemDirections.ActionFragmentAddItemToFragmentCreateProducts4 addProduct;
-
+    private String date;
     public void setQuery(Query query) {
         this.query = query;
     }
@@ -81,6 +81,8 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
                 .get(VMReceipt.class);
         vmInvoice = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
                 .get(VMInvoice.class);
+        handleTimeCount = new HandleTimeCount();
+        handleTimeCount.countDownStart();
     }
 
     @Override
@@ -108,24 +110,12 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
         controller = Navigation.findNavController(view);
         addItemArgs = FragmentAddItemArgs.fromBundle(getArguments());
         addProduct = FragmentAddItemDirections.actionFragmentAddItemToFragmentCreateProducts4();
-//        FragmentAddItemArgs productFromCreateProduct = FragmentAddItemArgs.fromBundle(getArguments());
-//        if (productFromCreateProduct.getProductFromCreateProduct()!=null){
-//            if (getArguments()!=null){
-//                int oldSize = listProduct.size();
-//                listProduct.add(productFromCreateProduct.getProductFromCreateProduct());
-//                arProducts.notifyItemRangeInserted(oldSize, listProduct.size());
-//            }
-//        }
 
         binding.txtMyItems.setOnClickListener(v -> {
             loadItems();
         });
         binding.fabToCreateItem.setOnClickListener(v -> {
-            if (warning()) {
-                dialogWarning();
-            } else {
-                setReceipt();
-            }
+            setReceipt();
         });
         binding.txtDeleteAll.setOnClickListener(v -> {
             sizeProduct = listProduct.size();
@@ -143,21 +133,19 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
         confirm.setIcon(R.mipmap.ic_launcher)
                 .setTitle(getResources().getString(R.string.app_name))
                 .setCancel(true);
-        vmInvoice.postInvoice(Uri.parse(getReceipt().getInvoice())).observe(getViewLifecycleOwner(), cashInvoice -> {
-            Receipt model = getReceipt();
-            Log.d(TAG, "setReceipt: " + vmInvoice.getProgress());
-            model.setInvoice(cashInvoice.getMessage());
-            if (cashInvoice.getError())
-                confirm.setMessage(cashInvoice.getMessage());
-            vmReceipt.postReceipt(model).observe(getViewLifecycleOwner(), cashReceipt -> {
-
-            });
-        });
+        FragmentAddItemDirections.ActionFragmentAddItemToFragmentPrintReceipt printReceipt
+                = FragmentAddItemDirections.actionFragmentAddItemToFragmentPrintReceipt();
+        printReceipt.setArgsReceiptPrint(getReceipt());
+        controller.navigate(printReceipt);
+//        vmReceipt.postReceipt(getReceipt()).observe(getViewLifecycleOwner(), cashReceipt -> {
+//
+//        });
     }
 
     private Receipt getReceipt() {
         Receipt model = addItemArgs.getReceiptToItems();
         model.setDate(handleTimeCount.getDate());
+        Log.d(TAG, "getReceipt: "+handleTimeCount.getDate());
         model.setProducts(listProduct);
         model.setClientId(addItemArgs.getClientToItem().getClientId());
         model.setClientPhone(addItemArgs.getClientToItem().getPhone());
@@ -173,9 +161,6 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
         addProduct.setArgsProduct(model);
         controller.navigate(addProduct);
         itemBottomDialog.dismiss();
-//        int oldSize = listProduct.size();
-//        listProduct.add(model);
-//        arProducts.notifyItemRangeInserted(oldSize, listProduct.size());
     }
 
     @Override
