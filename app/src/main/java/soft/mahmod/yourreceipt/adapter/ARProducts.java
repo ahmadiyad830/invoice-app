@@ -1,3 +1,4 @@
+
 package soft.mahmod.yourreceipt.adapter;
 
 import android.view.LayoutInflater;

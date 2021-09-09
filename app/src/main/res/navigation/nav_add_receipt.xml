@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentCreateItem"
-        android:name="soft.mahmod.yourreceipt.view_fragment.add_receipt.FragmentCreateItem"
+        android:name="soft.mahmod.yourreceipt.view_fragment.create.FragmentCreateItem"
         android:label="@string/add_new_item"
         tools:layout="@layout/fragment_create_item">
         <argument
@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentCreateClient"
-        android:name="soft.mahmod.yourreceipt.view_fragment.add_receipt.FragmentCreateClient"
+        android:name="soft.mahmod.yourreceipt.view_fragment.create.FragmentCreateClient"
         android:label="@string/add_client"
         tools:layout="@layout/fragment_create_client" >
         <argument
@@ -56,7 +56,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentCreateProducts"
-        android:name="soft.mahmod.yourreceipt.view_fragment.add_receipt.FragmentCreateProducts"
+        android:name="soft.mahmod.yourreceipt.view_fragment.create.FragmentCreateProducts"
         android:label="@string/create_product"
         tools:layout="@layout/fragment_create_products">
         <argument
@@ -127,7 +127,7 @@
     <fragment
         android:id="@+id/fragmentPrintReceipt"
         tools:layout="@layout/fragment_print_receipt"
-        android:name="soft.mahmod.yourreceipt.view_fragment.add_receipt.FragmentPrintReceipt"
+        android:name="soft.mahmod.yourreceipt.view_fragment.print.FragmentPrintReceipt"
         android:label="FragmentPrintReceipt" >
         <argument
             android:name="argsReceiptPrint"

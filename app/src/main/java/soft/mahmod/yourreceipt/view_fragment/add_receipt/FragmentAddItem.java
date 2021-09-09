@@ -1,8 +1,9 @@
 package soft.mahmod.yourreceipt.view_fragment.add_receipt;
 
 import android.content.DialogInterface;
-import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +31,7 @@ import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ARProducts;
 import soft.mahmod.yourreceipt.adapter.firebase.ARItems;
 import soft.mahmod.yourreceipt.databinding.FragmentAddItemBinding;
-import soft.mahmod.yourreceipt.databinding.LayoutItemsBinding;
+import soft.mahmod.yourreceipt.databinding.FragmentItemsBinding;
 import soft.mahmod.yourreceipt.model.Items;
 import soft.mahmod.yourreceipt.model.Products;
 import soft.mahmod.yourreceipt.model.Receipt;
@@ -41,7 +42,7 @@ import soft.mahmod.yourreceipt.utils.HandleTimeCount;
 import soft.mahmod.yourreceipt.view_model.database.VMReceipt;
 import soft.mahmod.yourreceipt.view_model.storage.VMInvoice;
 
-public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, ARProducts.OnClickItem, DatabaseUrl {
+public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, ARProducts.OnClickItem, DatabaseUrl, TextWatcher {
     private static final String TAG = "FragmentAddItem";
     private FragmentAddItemBinding binding;
     private ARItems arItems;
@@ -193,21 +194,15 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
     private BottomSheetDialog itemBottomDialog;
     private void loadItems() {
         itemBottomDialog = new BottomSheetDialog(requireContext());
-        LayoutItemsBinding itemsBinding = DataBindingUtil.inflate(
+        FragmentItemsBinding itemsBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(requireContext())
-                , R.layout.layout_items
+                , R.layout.fragment_items
                 , requireView().findViewById(R.id.container_items)
                 , false);
         itemBottomDialog.setContentView(itemsBinding.getRoot());
         itemsBinding.recyclerItemsView.setAdapter(arItems);
-        itemsBinding.btnSearch.setOnClickListener(v1 -> {
-            String search = itemsBinding.textSearch.getText().toString().trim();
-            itemsBinding.textSearch.setFocusable(true);
-            if (!search.isEmpty()) {
-                setQuery(reference.child(RECEIPT + FirebaseAuth.getInstance().getUid())
-                        .orderByChild("itemName").startAt(search).endAt(search + "\uf8ff"));
-            }
-        });
+        itemsBinding.textSearch.addTextChangedListener(this);
+
         itemsBinding.btnAdd.setOnClickListener(v -> {
             controller.navigate(FragmentAddItemDirections.actionFragmentAddItemToFragmentCreateItem5());
             itemBottomDialog.dismiss();
@@ -261,5 +256,24 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
             listWarning.add(getResources().getString(R.string.products));
         }
         return listWarning.size() > 0;
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        String search = s.toString().trim();
+        if (!search.isEmpty()) {
+            setQuery(reference.child(RECEIPT + FirebaseAuth.getInstance().getUid())
+                    .orderByChild("itemName").startAt(search).endAt(search + "\uf8ff"));
+        }
     }
 }

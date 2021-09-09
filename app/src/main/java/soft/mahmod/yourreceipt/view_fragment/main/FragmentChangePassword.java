@@ -1,4 +1,4 @@
-package soft.mahmod.yourreceipt.view_fragment.edit_account;
+package soft.mahmod.yourreceipt.view_fragment.main;
 
 import android.content.DialogInterface;
 import android.os.Bundle;

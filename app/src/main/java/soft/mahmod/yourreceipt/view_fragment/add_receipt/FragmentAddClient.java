@@ -63,10 +63,6 @@ public class FragmentAddClient extends Fragment implements ARClients.OnClickClie
         super.onViewCreated(view, savedInstanceState);
          controller = Navigation.findNavController(view);
         editClient = FragmentAddClientDirections.actionFragmentAddClientToFragmentCreateClient3();
-        binding.fabToCreateClient.setOnClickListener(v -> {
-            editClient.setIsEdit(false);
-            controller.navigate(FragmentAddClientDirections.actionFragmentAddClientToFragmentCreateClient3());
-        });
     }
 
     @Override

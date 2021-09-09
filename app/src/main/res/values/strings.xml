@@ -126,4 +126,5 @@ Click on the pen to edit the customer</string>
 4- Tax
 
 Or add all items</string>
+    <string name="add_new_receipt">add new receipt</string>
 </resources>

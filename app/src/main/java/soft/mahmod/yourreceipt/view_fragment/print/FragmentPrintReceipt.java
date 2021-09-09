@@ -1,4 +1,4 @@
-package soft.mahmod.yourreceipt.view_fragment.add_receipt;
+package soft.mahmod.yourreceipt.view_fragment.print;
 
 import android.Manifest;
 import android.content.Context;

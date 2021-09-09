@@ -1,8 +1,7 @@
-package soft.mahmod.yourreceipt.view_fragment.add_receipt;
+package soft.mahmod.yourreceipt.view_fragment.create;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,16 +60,22 @@ public class FragmentCreateClient extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FragmentCreateClientArgs addClientArgs = FragmentCreateClientArgs.fromBundle(getArguments());
-        if (addClientArgs != null)
-            binding.setModel(addClientArgs.getEditClient());
-        controller = Navigation.findNavController(view);
-        binding.fabToCreateClient.setOnClickListener(v -> {
-            if (warningClient()) {
-                dialogWarning(addClientArgs.getIsEdit());
-            } else client(addClientArgs.getIsEdit());
+        if (addClientArgs != null){
+            binding.setModel(addClientArgs.getMainClientToCreateClient());
+        }
 
-
+        binding.btnDown.setOnClickListener(v -> {
+            postClient();
+            requireActivity().onBackPressed();
         });
+//        controller = Navigation.findNavController(view);
+//        binding.fabToCreateClient.setOnClickListener(v -> {
+//            if (warningClient()) {
+//                dialogWarning(addClientArgs.getIsEdit());
+//            } else client(addClientArgs.getIsEdit());
+
+
+//        });
 
     }
 

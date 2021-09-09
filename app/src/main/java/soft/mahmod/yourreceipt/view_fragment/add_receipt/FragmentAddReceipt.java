@@ -1,9 +1,5 @@
 package soft.mahmod.yourreceipt.view_fragment.add_receipt;
 
-import android.app.Activity;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,9 +19,6 @@ import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.FragmentAddReceiptBinding;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
-import soft.mahmod.yourreceipt.utils.DialogConfirm;
-import soft.mahmod.yourreceipt.utils.DialogListener;
-import soft.mahmod.yourreceipt.view_fragment.edit_account.FragmentEditAccount;
 
 public class FragmentAddReceipt extends Fragment implements DatabaseUrl {
 

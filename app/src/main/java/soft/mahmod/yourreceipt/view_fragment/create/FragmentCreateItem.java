@@ -1,4 +1,4 @@
-package soft.mahmod.yourreceipt.view_fragment.add_receipt;
+package soft.mahmod.yourreceipt.view_fragment.create;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -61,6 +61,8 @@ public class FragmentCreateItem extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         controller = Navigation.findNavController(view);
+        FragmentCreateItemArgs itemArgs = FragmentCreateItemArgs.fromBundle(getArguments());
+        binding.setModel(itemArgs.getMainItemToCreateItem());
         binding.btnDown.setOnClickListener(v -> {
             if (warning()){
                 dialogWarning();

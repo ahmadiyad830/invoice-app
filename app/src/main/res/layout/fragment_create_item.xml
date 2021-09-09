@@ -5,39 +5,28 @@
 
     <data>
 
+        <variable
+            name="model"
+            type="soft.mahmod.yourreceipt.model.Items" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background_page"
-        tools:context=".view_fragment.add_receipt.FragmentCreateItem">
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btn_down"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_28sdp"
-            android:contentDescription="@string/todo"
-            android:src="@drawable/ic_baseline_check_24"
-            app:backgroundTint="@color/top_and_bottom_color"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            app:tint="@color/text_btn_color" />
+        tools:context=".view_fragment.create.FragmentCreateItem">
 
         <ScrollView
+            android:id="@+id/scrollView2"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_8sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginVertical="@dimen/_8sdp"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -71,6 +60,8 @@
                         android:hint="@string/name"
                         android:inputType="text"
                         android:padding="@dimen/_12sdp"
+                        android:textColor="@color/text_color"
+                        android:text="@{model.itemName}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -104,7 +95,9 @@
                         android:background="@drawable/custom_stork"
                         android:hint="@string/price"
                         android:inputType="text"
+                        android:textColor="@color/text_color"
                         android:padding="@dimen/_12sdp"
+                        android:text="@{String.valueOf(model.itemPrice)}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -139,6 +132,7 @@
                         android:hint="@string/quantity"
                         android:inputType="text"
                         android:padding="@dimen/_12sdp"
+                        android:text="@{String.valueOf(model.quantity)}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -173,6 +167,8 @@
                         android:hint="@string/discount"
                         android:inputType="text"
                         android:padding="@dimen/_12sdp"
+                        android:textColor="@color/text_color"
+                        android:text="@{String.valueOf(model.discount)}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -206,7 +202,9 @@
                         android:background="@drawable/custom_stork"
                         android:hint="@string/tax"
                         android:inputType="text"
+                        android:textColor="@color/text_color"
                         android:padding="@dimen/_12sdp"
+                        android:text="@{String.valueOf(model.itemTax)}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -239,15 +237,35 @@
                         android:background="@drawable/custom_stork"
                         android:hint="@string/note"
                         android:inputType="text"
+                        android:textColor="@color/text_color"
                         android:padding="@dimen/_12sdp"
+                        android:text="@{String.valueOf(model.itemNote)}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/cardView" />
                 </LinearLayout>
 
+
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+
         </ScrollView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_down"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:layout_marginHorizontal="@dimen/_12sdp"
+            android:text="@string/ok"
+            android:backgroundTint="@color/top_and_bottom_color"
+            android:textColor="@color/text_btn_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.516"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+            app:layout_constraintVertical_bias="0.50" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

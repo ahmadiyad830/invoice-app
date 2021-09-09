@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view_fragment.add_receipt.FragmentPrintReceipt">
+        tools:context=".view_fragment.print.FragmentPrintReceipt">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

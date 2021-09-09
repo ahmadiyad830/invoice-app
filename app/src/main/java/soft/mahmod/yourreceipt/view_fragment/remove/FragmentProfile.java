@@ -1,4 +1,4 @@
-package soft.mahmod.yourreceipt.view_fragment.main;
+package soft.mahmod.yourreceipt.view_fragment.remove;
 
 import android.os.Bundle;
 

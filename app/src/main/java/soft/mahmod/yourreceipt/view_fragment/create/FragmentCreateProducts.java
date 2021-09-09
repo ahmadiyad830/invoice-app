@@ -1,4 +1,4 @@
-package soft.mahmod.yourreceipt.view_fragment.add_receipt;
+package soft.mahmod.yourreceipt.view_fragment.create;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.FragmentCreateProductsBinding;
 import soft.mahmod.yourreceipt.model.Products;
+import soft.mahmod.yourreceipt.view_fragment.add_receipt.FragmentAddItem;
 
 public class FragmentCreateProducts extends Fragment implements TextWatcher {
     private static final String TAG = "FragmentCreateProducts";

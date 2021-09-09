@@ -25,15 +25,14 @@ import com.google.firebase.database.Query;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.firebase.ARItems;
-import soft.mahmod.yourreceipt.databinding.LayoutItemsBinding;
+import soft.mahmod.yourreceipt.databinding.FragmentItemsBinding;
 import soft.mahmod.yourreceipt.model.Items;
 import soft.mahmod.yourreceipt.model.Products;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
-import soft.mahmod.yourreceipt.view_fragment.add_receipt.FragmentAddItemDirections;
 
-public class FragmentItem extends Fragment implements ARItems.OnCLickItem, DatabaseUrl, TextWatcher, AdapterView.OnItemSelectedListener {
+public class FragmentItems extends Fragment implements ARItems.OnCLickItem, DatabaseUrl, TextWatcher, AdapterView.OnItemSelectedListener {
     private static final String TAG = "FragmentItem";
-    private LayoutItemsBinding binding;
+    private FragmentItemsBinding binding;
     private Query query;
     private ARItems adapter;
     private String[] sortItems = {"itemName", "itemPrice", "quantity"};
@@ -53,7 +52,7 @@ public class FragmentItem extends Fragment implements ARItems.OnCLickItem, Datab
     @org.jetbrains.annotations.Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.layout_items, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_items, container, false);
 
         return binding.getRoot();
     }
@@ -63,7 +62,7 @@ public class FragmentItem extends Fragment implements ARItems.OnCLickItem, Datab
         super.onViewCreated(view, savedInstanceState);
         controller = Navigation.findNavController(view);
         binding.btnAdd.setOnClickListener(v -> {
-            controller.navigate(FragmentItemDirections.actionMenuItemToFragmentCreateItem2());
+            controller.navigate(FragmentItemsDirections.actionMenuItemToFragmentCreateItem2());
         });
     }
 
@@ -74,7 +73,10 @@ public class FragmentItem extends Fragment implements ARItems.OnCLickItem, Datab
 
     @Override
     public void editItem(Items model) {
-
+        FragmentItemsDirections.ActionMenuItemToFragmentCreateItem2
+                detailsItem = FragmentItemsDirections.actionMenuItemToFragmentCreateItem2();
+        detailsItem.setMainItemToCreateItem(model);
+        controller.navigate(detailsItem);
     }
 
     @Override
