@@ -33,7 +33,6 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl {
     private FragmentAddReceiptBinding binding;
     public static final int REQUEST_CAMERA = 0x82317354;
     private final List<String> listWarning = new ArrayList<>();
-    private Uri uri = Uri.EMPTY;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -48,11 +47,6 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (!uri.toString().isEmpty()) {
-            binding.setHasImage(true);
-            binding.setInvoice(uri.toString());
-        }
-
         binding.btnNext.setOnClickListener(v -> {
             setReceipt();
         });
@@ -69,83 +63,11 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl {
 
     private Receipt getReceipt() {
         Receipt model = new Receipt();
-        model.setInvoice(uri.toString());
         model.setSubject(binding.edtSubject.getText().toString().trim());
         model.setNote(binding.edtNote.getText().toString().trim());
         model.setType(binding.switchMaterial.isChecked() ? binding.switchMaterial.getTextOff().toString()
                 : binding.switchMaterial.getTextOn().toString());
         return model;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-//        binding.btnCamera.setOnClickListener(v -> {
-//            openCamera();
-//        });
-//        binding.logo.setOnClickListener(v -> {
-//            FragmentAddReceiptDirections.ActionFragmentAddReceiptToFragmentZoomImage zoomImage
-//                    = FragmentAddReceiptDirections.actionFragmentAddReceiptToFragmentZoomImage();
-//            zoomImage.setUrlToZoom(uri.toString());
-//            Navigation.findNavController(requireView()).navigate(zoomImage);
-//        });
-    }
-    public void openCamera() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, FragmentEditAccount.IMAGE_REQUEST);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == FragmentEditAccount.IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
-            binding.setHasImage(true);
-            uri = data.getData();
-            binding.setInvoice(uri.toString());
-
-        }
-    }
-
-    private boolean warningReceipt() {
-        if (getReceipt().getInvoice().equals("")) {
-            listWarning.add(getResources().getString(R.string.invoice));
-        }
-        if (getReceipt().getSubject().equals("")) {
-            listWarning.add(getResources().getString(R.string.subject));
-        }
-        return listWarning.size() > 0;
-    }
-
-    private void dialogWarning() {
-        DialogConfirm dialogConfirm = new DialogConfirm(requireContext());
-        dialogConfirm.setDialogListener(new DialogListener() {
-            @Override
-            public void clickOk(DialogInterface dialog) {
-                listWarning.clear();
-                setReceipt();
-            }
-
-            @Override
-            public void clickCancel(DialogInterface dialog) {
-                dialog.dismiss();
-                listWarning.clear();
-            }
-        });
-        dialogConfirm.listenerDialog();
-//        TODO translate
-        dialogConfirm.setIcon(R.drawable.ic_twotone_warning_24);
-        StringBuilder warning = new StringBuilder("\n");
-        for (int i = 0; i < listWarning.size(); i++) {
-            warning.append(listWarning.get(i)).append("\n");
-        }
-
-        dialogConfirm.createDialog(getResources().getString(R.string.warning),
-                getResources().getString(R.string.warning_not_add)
-                        + warning.toString()
-        );
-        dialogConfirm.showDialog();
     }
 
     @Override

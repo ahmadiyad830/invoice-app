@@ -9,9 +9,6 @@
             name="error"
             type="String" />
         <variable
-            name="logo"
-            type="String" />
-        <variable
             name="model"
             type="soft.mahmod.yourreceipt.model.Store" />
     </data>
@@ -22,66 +19,6 @@
         tools:context=".view_fragment.edit_account.FragmentEditAccount">
 
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/top_and_bottom_color"
-            app:cardCornerRadius="@dimen/_6sdp"
-            app:cardElevation="@dimen/_3sdp"
-            app:cardUseCompatPadding="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/relativeLayout"
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:gravity="left">
-
-                <ImageView
-                    android:id="@+id/btn_back"
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:src="@drawable/ic_baseline_arrow_back_24"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.92"
-                    app:layout_constraintStart_toEndOf="@+id/textView4"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/text_btn_color" />
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/create_store"
-                    android:textColor="@color/text_btn_color"
-                    android:textSize="@dimen/_14ssp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/btn_down"
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:src="@drawable/ic_baseline_check_24"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/textView4"
-                    app:layout_constraintHorizontal_bias="0.133"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/text_btn_color" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -89,27 +26,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_toolbar">
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_marginTop="@dimen/_18sdp"
                 android:orientation="vertical">
-
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/logo"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_120sdp"
-                    android:layout_gravity="center"
-                    android:layout_marginVertical="@dimen/_8sdp"
-                    android:imageURL="@{logo}"
-                    android:src="@mipmap/ic_launcher"
-                    app:layout_constraintBottom_toTopOf="@+id/linearLayout10"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/card_toolbar"
-                    app:riv_corner_radius="@dimen/_50sdp" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout10"
@@ -127,13 +51,13 @@
                     <EditText
                         android:id="@+id/edt_name"
                         android:layout_width="match_parent"
-                        android:maxLines="1"
-                        android:inputType="textPersonName"
                         android:layout_height="?actionBarSize"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/name"
-                        android:paddingHorizontal="@dimen/_8sdp"
+                        android:inputType="textPersonName"
+                        android:maxLines="1"
                         android:padding="@dimen/_8sdp"
+                        android:paddingHorizontal="@dimen/_8sdp"
                         android:text="@{model.name}"
                         android:textColor="@color/text_color" />
 
@@ -141,11 +65,11 @@
                         android:id="@+id/edt_phone_num"
                         android:layout_width="match_parent"
                         android:layout_height="?actionBarSize"
+                        android:layout_marginVertical="@dimen/_8sdp"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/phone_number"
-                        android:layout_marginVertical="@dimen/_8sdp"
-                        android:padding="@dimen/_8sdp"
                         android:inputType="numberDecimal"
+                        android:padding="@dimen/_8sdp"
                         android:paddingHorizontal="@dimen/_8sdp"
                         android:text="@{String.valueOf(model.numberPhone)}"
                         android:textColor="@color/text_color" />
@@ -157,21 +81,21 @@
                         android:background="@drawable/custom_stork"
                         android:hint="@string/email"
                         android:inputType="textEmailSubject"
-                        android:text="@{model.email}"
-                        android:paddingHorizontal="@dimen/_8sdp"
                         android:padding="@dimen/_8sdp"
+                        android:paddingHorizontal="@dimen/_8sdp"
+                        android:text="@{model.email}"
                         android:textColor="@color/text_color" />
 
                     <EditText
                         android:id="@+id/edt_address1"
                         android:layout_width="match_parent"
                         android:layout_height="?actionBarSize"
+                        android:layout_marginVertical="@dimen/_8sdp"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/address_1"
                         android:inputType="text"
                         android:padding="@dimen/_8sdp"
                         android:paddingHorizontal="@dimen/_8sdp"
-                        android:layout_marginVertical="@dimen/_8sdp"
                         android:text="@{model.address1}"
                         android:textColor="@color/text_color" />
 
@@ -189,40 +113,26 @@
 
                 </LinearLayout>
 
+
                 <TextView
                     android:id="@+id/textView45"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                   android:layout_margin="@dimen/_8sdp"
+                    android:layout_margin="@dimen/_8sdp"
                     android:gravity="center"
                     android:text="@{error}"
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/_14ssp" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_edit_store"
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    android:backgroundTint="@color/top_and_bottom_color"
+                    android:textColor="@color/text_btn_color"
+                    android:text="@string/edit_store"
+                    android:layout_marginHorizontal="@dimen/_8sdp"/>
             </LinearLayout>
         </ScrollView>
-
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btn_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_32sdp"
-            android:layout_marginBottom="@dimen/_32sdp"
-            android:contentDescription="@string/todo"
-            android:src="@drawable/ic_outline_camera_alt_24"
-            app:backgroundTint="@color/top_and_bottom_color"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            app:tint="@color/text_btn_color" />
-
-
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

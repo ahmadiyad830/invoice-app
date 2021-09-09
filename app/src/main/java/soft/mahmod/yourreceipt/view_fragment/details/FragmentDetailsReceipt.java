@@ -8,21 +8,20 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import soft.mahmod.yourreceipt.R;
-import soft.mahmod.yourreceipt.databinding.FragmentReceiptBinding;
+import soft.mahmod.yourreceipt.databinding.FragmentDetailsReceiptBinding;
 import soft.mahmod.yourreceipt.view_model.database.VMClient;
 import soft.mahmod.yourreceipt.view_model.database.VMReceipt;
 import soft.mahmod.yourreceipt.view_model.send.data.VMSendReceipt;
 
 
-public class FragmentReceipt extends Fragment {
+public class FragmentDetailsReceipt extends Fragment {
     private static final String TAG = "FragmentReceipt";
-    private FragmentReceiptBinding binding;
+    private FragmentDetailsReceiptBinding binding;
     private VMSendReceipt vmSendReceipt;
     private VMReceipt vmReceipt;
     private VMClient vmClientl;
@@ -41,7 +40,7 @@ public class FragmentReceipt extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_receipt, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details_receipt, container, false);
         return binding.getRoot();
     }
 

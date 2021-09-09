@@ -5,14 +5,6 @@
     <data>
 
         <variable
-            name="model"
-            type="soft.mahmod.yourreceipt.model.Items" />
-
-        <variable
-            name="isSearch"
-            type="Boolean" />
-
-        <variable
             name="hasValue"
             type="Boolean" />
 
@@ -20,20 +12,24 @@
 
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container_items"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@color/background_page"
-        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutHeader"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:background="@color/top_and_bottom_color"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/btn_search"
@@ -46,17 +42,15 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/textView2"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="@color/text_btn_color" />
             <!-- -->
             <EditText
                 android:id="@+id/text_search"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:autofillHints="name"
-                android:visibility='@{isSearch?View.VISIBLE:View.GONE,default = gone}'
                 android:hint="@string/text_some_things"
                 android:inputType="text"
                 android:paddingHorizontal="@dimen/_8sdp"
@@ -64,29 +58,61 @@
                 android:textColorHint="@color/item_background"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_search"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btn_delete"
                 app:layout_constraintTop_toTopOf="parent" />
-            <TextView
-                android:id="@+id/textTitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginEnd="@dimen/_8sdp"
-                android:layout_weight="1"
-                android:visibility='@{isSearch?View.GONE:View.VISIBLE,default = visible}'
-                android:ellipsize="end"
-                android:includeFontPadding="false"
-                android:maxLines="1"
-                android:text="@string/add_item"
-                android:gravity="center"
-                android:textColor="@color/text_btn_color"
-                android:textSize="@dimen/_14sdp" />
 
             <ImageView
-                android:id="@+id/btn_add"
+                android:id="@+id/btn_delete"
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="@dimen/_25sdp"
+                android:layout_margin="@dimen/_8sdp"
+                android:layout_weight="0"
+                android:contentDescription="@string/todo"
+                android:src="@drawable/ic_baseline_close_24"
+                android:visibility='@{hasValue?View.VISIBLE:View.GONE,default=gone}'
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/text_btn_color" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_main_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.044"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutHeader"
+            app:layout_constraintVertical_bias="0.0">
+
+            <Spinner
+                android:id="@+id/spinner_sort_list"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_8sdp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/icon_color"
+                android:gravity="start" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_add"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:backgroundTint="@android:color/transparent"
+                android:text="@string/add_item"
+                android:textColor="@color/text_color"
+                android:shadowColor="@color/white"
+                android:shadowRadius="0"
+                android:outlineSpotShadowColor="@color/white"
+                android:background="?selectableItemBackground"
+                app:icon="@drawable/ic_baseline_add_24"
+                app:iconSize="@dimen/_12sdp"
+                app:iconTint="@color/icon_color"
                 android:layout_margin="@dimen/_8sdp"
                 android:layout_weight="0"
                 android:contentDescription="@string/todo"
@@ -94,21 +120,21 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/textView2"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/text_btn_color" />
-
-
+                app:tint="@color/icon_color" />
         </LinearLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_items_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:clipToPadding="false"
             android:orientation="vertical"
             android:padding="@dimen/_8sdp"
             android:scrollbars="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-    </LinearLayout>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linear_main_item" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

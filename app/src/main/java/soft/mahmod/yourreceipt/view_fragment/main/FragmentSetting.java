@@ -26,12 +26,6 @@ import soft.mahmod.yourreceipt.utils.DialogConfirm;
 import soft.mahmod.yourreceipt.utils.DialogListener;
 import soft.mahmod.yourreceipt.view_model.user_account.VMAuthReg;
 import soft.mahmod.yourreceipt.view_model.user_account.VMEditAccount;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentSetting#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FragmentSetting extends Fragment implements View.OnClickListener {
     private static final String TAG = "FragmentSetting";
     private FragmentSettingBinding binding;
@@ -59,7 +53,6 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false);
-        binding.btnSignout.setOnClickListener(this);
 
         return binding.getRoot();
     }
@@ -72,75 +65,21 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
         binding.edtAccount.setOnClickListener(this);
         binding.txtChangePassword.setOnClickListener(this);
         binding.txtStore.setOnClickListener(this);
-        binding.btnDown.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if (binding.btnSignout.getId() == id) {
-            DialogConfirm dialog = new DialogConfirm(requireContext());
-            dialog.listenerDialog();
-            dialog.setDialogListener(new DialogListener() {
-                @Override
-                public void clickOk(DialogInterface dialog) {
-                    vmAuthReg.signOut();
-                    intent.userSignOut(requireActivity());
-                    dialog.dismiss();
-                }
+        if (binding.edtAccount.getId() == id) {
 
-                @Override
-                public void clickCancel(DialogInterface dialog) {
-                    dialog.dismiss();
-                }
-            });
-            dialog.createDialog("Sign out", "Are You shure");
-            dialog.showDialog();
         } else if (binding.edtAccount.getId() == id) {
             binding.setIsEditAccount(!binding.getIsEditAccount());
         } else if (binding.txtChangePassword.getId() == id) {
             binding.setIsChangPassword(!binding.getIsChangPassword());
-        } else if (binding.btnDown.getId() == id) {
-            String pass1 = binding.oldPassword.getText().toString().trim();
-            String pass2 = binding.newPassword.getText().toString().trim();
-            ChangePassword changePassword = new ChangePassword();
-            if (changePassword.changePassword(pass1, pass2)) {
-                Toast.makeText(requireContext(),
-                        changePassword.errorChangePassword(), Toast.LENGTH_SHORT).show();
-            } else {
-                dialogChangePassword(pass1, pass2);
-            }
-            Log.d(TAG, "onClick: "+changePassword.errorChangePassword());
-
         } else if (binding.txtStore.getId() == id) {
-            NavController controller = Navigation.findNavController(binding.getRoot());
-            controller.navigate(R.id.action_menu_setting_to_fragmentEditAccount);
+
         }
     }
 
-    private void dialogChangePassword(String pass1, String pass2) {
-        DialogConfirm dialogConfirm = new DialogConfirm(requireContext(), new DialogListener() {
-            @Override
-            public void clickCancel(DialogInterface dialog) {
-                dialog.dismiss();
-            }
 
-            @Override
-            public void clickOk(DialogInterface dialog) {
-                dialog.dismiss();
-                changePassword(pass1, pass2);
-            }
-        });
-        dialogConfirm.createDialog("change password", "Are you Shore");
-        dialogConfirm.listenerDialog();
-        dialogConfirm.showDialog();
-    }
-
-    private void changePassword(String pass1, String pass2) {
-        account.changePassword(pass1, pass2).observe(getViewLifecycleOwner(), cash -> {
-            if (cash.getError()) {
-                Toast.makeText(requireContext(), cash.getMessage(), Toast.LENGTH_SHORT).show();
-            } else intent.userMakeChange(requireActivity());
-        });
-    }
 }

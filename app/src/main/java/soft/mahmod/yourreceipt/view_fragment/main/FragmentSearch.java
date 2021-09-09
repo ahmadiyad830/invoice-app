@@ -2,16 +2,17 @@ package soft.mahmod.yourreceipt.view_fragment.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,7 +32,7 @@ import soft.mahmod.yourreceipt.view_activity.ActivityDetails;
  * Use the {@link FragmentSearch#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentSearch extends Fragment implements OnReceiptItemClick, DatabaseUrl, AdapterView.OnItemSelectedListener {
+public class FragmentSearch extends Fragment implements OnReceiptItemClick, DatabaseUrl, AdapterView.OnItemSelectedListener, TextWatcher {
     private static final String TAG = "FragmentSearch";
     private FragmentSearchBinding binding;
     private ARReceipt adapter;
@@ -48,10 +49,10 @@ public class FragmentSearch extends Fragment implements OnReceiptItemClick, Data
         spinnerInit();
         init("");
         binding.btnSearch.setOnClickListener(v -> {
-            binding.setIsSearch(true);
             String client = binding.textSearch.getText().toString().trim();
             init(client);
         });
+        binding.textSearch.addTextChangedListener(this);
         binding.btnClean.setOnClickListener(v -> {
             binding.textSearch.setText("");
             init("");
@@ -61,8 +62,7 @@ public class FragmentSearch extends Fragment implements OnReceiptItemClick, Data
 
     private void spinnerInit() {
         binding.spinnerSortList.setOnItemSelectedListener(this);
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>
-                (requireContext(), android.R.layout.simple_spinner_item, sort);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, sort);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerSortList.setAdapter(adapter);
     }
@@ -79,7 +79,6 @@ public class FragmentSearch extends Fragment implements OnReceiptItemClick, Data
         binding.searchRecycler.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.searchRecycler.setAdapter(adapter);
         adapter.startListening();
-        binding.setHasValue(true);
     }
 
     @Override
@@ -97,5 +96,21 @@ public class FragmentSearch extends Fragment implements OnReceiptItemClick, Data
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    // listener text search
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        binding.setHasValue(s.length() > 0);
     }
 }

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="isEditAccount"
             type="Boolean" />
@@ -131,71 +130,9 @@
                         android:textColor="@color/text_color"
                         android:textSize="@dimen/_16ssp"
                         android:textStyle="italic"
-                        android:visibility='@{isEditAccount?View.VISIBLE:View.GONE,default = gone}'
                         app:layout_constraintTop_toBottomOf="@+id/view2" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/_8sdp"
-                        android:orientation="vertical"
-                        android:visibility='@{isChangPassword?View.VISIBLE:View.GONE,default = gone}'>
 
-                        <LinearLayout
-                            android:id="@+id/linearLayout10"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/_12sdp"
-                            android:layout_marginVertical="@dimen/_14sdp"
-                            android:orientation="vertical"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/card_toolbar"
-                            app:layout_constraintVertical_bias="0.23000002">
-
-                            <EditText
-                                android:id="@+id/old_password"
-                                android:layout_width="match_parent"
-                                android:layout_height="?actionBarSize"
-                                android:background="@drawable/custom_stork"
-                                android:hint="@string/old_password"
-                                android:paddingHorizontal="@dimen/_6sdp"
-                                android:textColor="@color/text_color" />
-
-                            <EditText
-                                android:id="@+id/new_password"
-                                android:layout_width="match_parent"
-                                android:layout_height="?actionBarSize"
-                                android:layout_marginVertical="@dimen/_8sdp"
-                                android:background="@drawable/custom_stork"
-                                android:hint="@string/new_password"
-                                android:paddingHorizontal="@dimen/_6sdp"
-                                android:textColor="@color/text_color" />
-
-                            <EditText
-                                android:id="@+id/confirm_password"
-                                android:layout_width="match_parent"
-                                android:layout_height="?actionBarSize"
-                                android:background="@drawable/custom_stork"
-                                android:hint="@string/config_password"
-                                android:paddingHorizontal="@dimen/_6sdp"
-                                android:textColor="@color/text_color" />
-
-                            <com.google.android.material.button.MaterialButton
-                                android:id="@+id/btn_down"
-                                android:layout_width="match_parent"
-                                android:layout_height="?actionBarSize"
-                                android:layout_marginTop="@dimen/_12sdp"
-                                android:text="@android:string/ok"
-                                app:backgroundTint="@color/text_color"
-                                app:cornerRadius="@dimen/_6sdp"
-                                app:strokeColor="@android:color/white"
-                                app:strokeWidth="@dimen/_1sdp" />
-                        </LinearLayout>
-
-                    </LinearLayout>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/txt_store"
@@ -209,7 +146,6 @@
                         android:textColor="@color/text_color"
                         android:textSize="@dimen/_16ssp"
                         android:textStyle="italic"
-                        android:visibility='@{isEditAccount?View.VISIBLE:View.GONE,default = gone}'
                         app:layout_constraintTop_toBottomOf="@+id/view2" />
 
 
@@ -348,7 +284,7 @@
                 </LinearLayout>
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_signout"
+                    android:id="@+id/btn_signout1"
                     android:layout_width="wrap_content"
                     android:layout_height="?actionBarSize"
                     android:layout_gravity="center"

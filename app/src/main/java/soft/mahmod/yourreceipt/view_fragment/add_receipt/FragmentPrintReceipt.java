@@ -141,6 +141,8 @@ public class FragmentPrintReceipt extends Fragment {
 //            document.add(tableTitle);
             ColumnText columnText = new ColumnText(writer.getDirectContent());
             addNewItem(columnText,ar, PdfPCell.ALIGN_RIGHT,fontSubject);
+            addNewItem(columnText,ar, PdfPCell.ALIGN_RIGHT,fontSubject);
+            addNewItem(columnText,ar, PdfPCell.ALIGN_RIGHT,fontSubject);
             document.close();
 
             printPDF();
@@ -175,10 +177,16 @@ public class FragmentPrintReceipt extends Fragment {
     private final static Rectangle TITLE_X_Y = new Rectangle(54, 800, 250, 500);
 
     private void addNewItem(ColumnText columnText, String text, int align, Font font) throws DocumentException {
+        PdfPCell cell = new PdfPCell();
         Paragraph paragraph = new Paragraph(text,font);
+        cell.addElement(paragraph);
+        cell.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
+        PdfPTable table = new PdfPTable(1);
+        table.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
+        table.addCell(cell);
         columnText.setSimpleColumn( 68, 750, 580, 250);
         columnText.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
-        columnText.addElement(paragraph);
+        columnText.addElement(table);
         columnText.setAlignment(align);
         columnText.go();
     }

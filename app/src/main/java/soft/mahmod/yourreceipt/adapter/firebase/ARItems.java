@@ -17,7 +17,7 @@ import soft.mahmod.yourreceipt.model.Products;
 
 public class ARItems extends FirebaseRecyclerAdapter<Items, ARItems.ViewHolder> {
     public interface OnCLickItem {
-        void clickItem(Products model,Items itemModel, int position);
+        void clickItemToCreateProduct(Products model, Items itemModel, int position);
 
         void editItem(Items model);
 
@@ -59,7 +59,7 @@ public class ARItems extends FirebaseRecyclerAdapter<Items, ARItems.ViewHolder> 
         public void bind(Items model) {
             binding.setModel(model);
             binding.goDetails.setOnClickListener(v -> {
-                listener.clickItem(getProducts(model),model, getBindingAdapterPosition());
+                listener.clickItemToCreateProduct(getProducts(model),model, getBindingAdapterPosition());
             });
             binding.goEdit.setOnClickListener(v -> {
                 listener.editItem(model);

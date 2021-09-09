@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item
-        android:id="@+id/menu_setting"
-        android:icon="@drawable/ic_outline_settings_24"
-        android:title="@string/setting" />
-
-    <item
-        android:id="@+id/menu_search"
-        android:icon="@drawable/ic_twotone_search_24"
-        android:title="@string/search" />
-<!--    <item-->
-<!--        android:id="@+id/menu_add"-->
-<!--        android:icon="@drawable/ic_baseline_add_24"-->
-<!--        android:title="@string/add" />-->
-
     <item
         android:id="@+id/menu_home"
-        android:icon="@drawable/ic_outline_home_24"
-        android:title="@string/home" />
+        android:icon="@drawable/ic_baseline_receipt_24"
+        android:title="@string/receipt" />
     <item
-        android:id="@+id/menu_profile"
+        android:id="@+id/menu_item"
+        android:icon="@drawable/ic_baseline_shopping_cart_24"
+        android:title="@string/items" />
+    <item
+        android:id="@+id/menu_client"
         android:icon="@drawable/ic_outline_account_circle_24"
-        android:title="@string/profile" />
+        android:title="@string/client" />
 
+    <group android:menuCategory="container">
+        <item
+            android:icon="@drawable/ic_outline_settings_24"
+            android:title="@string/setting">
+            <menu>
+                <item
+                    android:id="@+id/change_password"
+                    android:icon="@drawable/ic_baseline_lock_24"
+                    android:title="@string/change_password" />
+                <item
+                    android:id="@+id/edit_store"
+                    android:icon="@drawable/ic_baseline_edit_24"
+                    android:title="@string/edit_store" />
+            </menu>
+        </item>
+
+    </group>
 </menu>

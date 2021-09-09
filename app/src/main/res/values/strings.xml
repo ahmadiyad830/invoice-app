@@ -1,5 +1,6 @@
 <resources>
     <!--    TODO registration-->
+    <string name="app_name">Your Receipt</string>
     <string name="you_dont_have_account">you dont have account ?</string>
     <string name="sign_up">sign up</string>
     <string name="account">Account</string>
@@ -13,7 +14,7 @@
     <string name="phone_number">Phone Number</string>
     <string name="sotre_name">Store Name</string>
     <!--    TODO main-->
-    <string name="app_name">Your Receipt</string>
+
     <string name="home">Home</string>
     <string name="profile">profile</string>
     <string name="setting">Setting</string>
@@ -102,6 +103,7 @@
     <string name="sign_in_with_another_account">Sign In with another account</string>
     <string name="or">OR</string>
     <string name="create_store">create store</string>
+    <string name="edit_store">Edit Store</string>
     <string name="address_2">Address 2</string>
     <string name="address_1">Address 1</string>
     <string name="todo" translatable="false">TODO</string>

@@ -13,9 +13,8 @@ import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ViewPager2Adapter;
 import soft.mahmod.yourreceipt.databinding.ActivityDetailsBinding;
 import soft.mahmod.yourreceipt.model.Receipt;
-import soft.mahmod.yourreceipt.utils.IntentActivity;
 import soft.mahmod.yourreceipt.view_fragment.details.FragmentProducts;
-import soft.mahmod.yourreceipt.view_fragment.details.FragmentReceipt;
+import soft.mahmod.yourreceipt.view_fragment.details.FragmentDetailsReceipt;
 import soft.mahmod.yourreceipt.view_model.send.data.VMSendReceipt;
 
 public class ActivityDetails extends AppCompatActivity {
@@ -58,7 +57,7 @@ public class ActivityDetails extends AppCompatActivity {
     private void loadTabLayout() {
         binding.setToolbar(getResources().getString(R.string.receipt));
         viewPager2Adapter = new ViewPager2Adapter(this);
-        viewPager2Adapter.addFragment(new FragmentReceipt());
+        viewPager2Adapter.addFragment(new FragmentDetailsReceipt());
         viewPager2Adapter.addFragment(new FragmentProducts());
         binding.viewPager2.setAdapter(viewPager2Adapter);
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(binding.tableLayout,

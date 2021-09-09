@@ -20,16 +20,16 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.firebase.ARReceipt;
-import soft.mahmod.yourreceipt.databinding.FragmentHomeBinding;
+import soft.mahmod.yourreceipt.databinding.FragmentReceiptBinding;
 import soft.mahmod.yourreceipt.listeners.OnReceiptItemClick;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.view_activity.ActivityDetails;
 
 
-public class FragmentHome extends Fragment implements OnReceiptItemClick , DatabaseUrl{
+public class FragmentReceipt extends Fragment implements OnReceiptItemClick , DatabaseUrl{
     private static final String TAG = "FragmentHome";
-    private FragmentHomeBinding binding;
+    private FragmentReceiptBinding binding;
     private ARReceipt adapter;
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class FragmentHome extends Fragment implements OnReceiptItemClick , Datab
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment.
-        binding  = DataBindingUtil.inflate(inflater,R.layout.fragment_home, container, false);
+        binding  = DataBindingUtil.inflate(inflater,R.layout.fragment_receipt, container, false);
 
         init();
 

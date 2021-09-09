@@ -156,7 +156,7 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
 
     // TODO listener items
     @Override
-    public void clickItem(Products model, Items itemModel, int position) {
+    public void clickItemToCreateProduct(Products model, Items itemModel, int position) {
         model.setTaxClientNoReg(addItemArgs.getClientToItem().isTaxRegNo());
         addProduct.setArgsProduct(model);
         controller.navigate(addProduct);
@@ -198,11 +198,9 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
                 , R.layout.layout_items
                 , requireView().findViewById(R.id.container_items)
                 , false);
-        itemsBinding.setIsSearch(false);
         itemBottomDialog.setContentView(itemsBinding.getRoot());
         itemsBinding.recyclerItemsView.setAdapter(arItems);
         itemsBinding.btnSearch.setOnClickListener(v1 -> {
-            itemsBinding.setIsSearch(true);
             String search = itemsBinding.textSearch.getText().toString().trim();
             itemsBinding.textSearch.setFocusable(true);
             if (!search.isEmpty()) {

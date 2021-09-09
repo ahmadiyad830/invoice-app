@@ -37,10 +37,6 @@ public class FragmentEditAccount extends Fragment {
     private static final String TAG = "FragmentEditAccount";
     private FragmentEditAccountBinding binding;
     private VMStore vmStore;
-    private VMLogo vmLogo;
-    private Intent intent;
-    public final static int IMAGE_REQUEST = 200;
-    private Uri uri;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -48,11 +44,6 @@ public class FragmentEditAccount extends Fragment {
         vmStore = new ViewModelProvider
                 (getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
                 .get(VMStore.class);
-
-        vmLogo = new ViewModelProvider
-                (getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
-                .get(VMLogo.class);
-
     }
 
     @Override
@@ -61,38 +52,9 @@ public class FragmentEditAccount extends Fragment {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_account, container, false);
         loadStore();
-        binding.btnDown.setOnClickListener(v -> dialog());
-        binding.btnBack.setOnClickListener(v -> {
-            NavController controller = Navigation.findNavController(binding.getRoot());
-            controller.navigate(R.id.action_fragmentEditAccount_to_menu_setting);
-        });
+        binding.btnEditStore.setOnClickListener(v -> dialog());
 
         return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        binding.btnLogo.setOnClickListener(v -> {
-            openGallery();
-        });
-    }
-
-
-    public void openGallery() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, IMAGE_REQUEST);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
-            uri = data.getData();
-            binding.setLogo(uri.toString());
-        }
     }
 
     private void dialog() {
@@ -112,18 +74,13 @@ public class FragmentEditAccount extends Fragment {
     }
 
     private void createStore() {
-        vmLogo.postLogo(uri).observe(getViewLifecycleOwner(), cash -> {
-            if (!cash.getError()) {
-                Log.d(TAG, "createStore:getMessage" + cash.getMessage());
-                vmStore.postStore(getStore(cash.getMessage())).observe(getViewLifecycleOwner(), cash1 -> {
-                    if (cash1.getError())
-                        binding.setError(cash1.getMessage());
-                });
-            } else binding.setError(cash.getMessage());
+        vmStore.postStore(getStore()).observe(getViewLifecycleOwner(), cash1 -> {
+            if (cash1.getError())
+                binding.setError(cash1.getMessage());
         });
     }
 
-    private Store getStore(String url) {
+    private Store getStore() {
         Store store = new Store();
         String name = binding.edtName.getText().toString().trim();
         store.setName(name);
@@ -135,36 +92,14 @@ public class FragmentEditAccount extends Fragment {
         store.setAddress1(address1);
         String address2 = binding.edtAddress2.getText().toString().trim();
         store.setAddress2(address2);
-        try {
-            store.setLogo(getPath());
-        } catch (Exception e) {
-            store.setLogo("");
-            e.printStackTrace();
-        }
-        store.setLogo(url);
         return store;
     }
 
-
-    private String path;
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
 
     private void loadStore() {
         vmStore.getStore().observe(getViewLifecycleOwner(), store -> {
             if (!store.getError()){
                 binding.setModel(store);
-                try {
-                    binding.setLogo(store.getLogo());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
             }
             Log.d(TAG, "loadStore: "+store.getMessage());
         });

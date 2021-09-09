@@ -6,17 +6,6 @@
     app:startDestination="@id/menu_home">
 
     <fragment
-        android:id="@+id/menu_setting"
-        android:name="soft.mahmod.yourreceipt.view_fragment.main.FragmentSetting"
-        android:label="fragment_setting"
-        tools:layout="@layout/fragment_setting">
-        <action
-            android:id="@+id/action_menu_setting_to_fragmentEditAccount"
-            app:destination="@id/fragmentEditAccount"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
-    </fragment>
-    <fragment
         android:id="@+id/menu_search"
         android:name="soft.mahmod.yourreceipt.view_fragment.main.FragmentSearch"
         android:label="fragment_search"
@@ -28,16 +17,45 @@
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/menu_home"
-        android:name="soft.mahmod.yourreceipt.view_fragment.main.FragmentHome"
+        android:name="soft.mahmod.yourreceipt.view_fragment.main.FragmentReceipt"
         android:label="FragmentHome"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_receipt" />
     <fragment
-        android:id="@+id/fragmentEditAccount"
+        android:id="@+id/edit_store"
         android:name="soft.mahmod.yourreceipt.view_fragment.edit_account.FragmentEditAccount"
         android:label="fragment_edit_account"
-        tools:layout="@layout/fragment_edit_account" >
+        tools:layout="@layout/fragment_edit_account" />
+    <fragment
+        android:id="@+id/change_password"
+        android:name="soft.mahmod.yourreceipt.view_fragment.edit_account.FragmentChangePassword"
+        android:label="FragmentChangePassword"
+        tools:layout="@layout/fragment_change_password" />
+    <fragment
+        android:id="@+id/menu_item"
+        android:name="soft.mahmod.yourreceipt.view_fragment.main.FragmentItem"
+        android:label="FragmentItem"
+        tools:layout="@layout/layout_items">
         <action
-            android:id="@+id/action_fragmentEditAccount_to_menu_setting"
-            app:destination="@id/menu_setting" />
+            android:id="@+id/action_menu_item_to_fragmentCreateItem2"
+            app:destination="@id/fragmentCreateItem2" />
     </fragment>
+    <fragment
+        android:id="@+id/menu_client"
+        android:name="soft.mahmod.yourreceipt.view_fragment.main.FragmentClient"
+        android:label="FragmentClient"
+        tools:layout="@layout/fragment_add_client">
+        <action
+            android:id="@+id/action_menu_client_to_fragmentCreateClient2"
+            app:destination="@id/fragmentCreateClient2" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentCreateItem2"
+        android:name="soft.mahmod.yourreceipt.view_fragment.add_receipt.FragmentCreateItem"
+        android:label="FragmentCreateItem"
+        tools:layout="@layout/fragment_create_item" />
+    <fragment
+        android:id="@+id/fragmentCreateClient2"
+        android:name="soft.mahmod.yourreceipt.view_fragment.add_receipt.FragmentCreateClient"
+        android:label="FragmentCreateClient"
+        tools:layout="@layout/fragment_create_client" />
 </navigation>

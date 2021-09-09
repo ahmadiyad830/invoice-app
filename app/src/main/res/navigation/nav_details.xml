@@ -8,11 +8,11 @@
     <fragment
         android:id="@+id/fragmentReceipt"
         tools:layout="@layout/fragment_products"
-        android:name="soft.mahmod.yourreceipt.view_fragment.details.FragmentReceipt"
+        android:name="soft.mahmod.yourreceipt.view_fragment.details.FragmentDetailsReceipt"
         android:label="FragmentReceipt" />
     <fragment
         android:id="@+id/fragmentProducts"
-        tools:layout="@layout/fragment_receipt"
+        tools:layout="@layout/fragment_details_receipt"
         android:name="soft.mahmod.yourreceipt.view_fragment.details.FragmentProducts"
         android:label="FragmentProducts" />
 </navigation>
