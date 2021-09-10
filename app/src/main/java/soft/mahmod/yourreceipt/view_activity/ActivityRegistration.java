@@ -1,19 +1,16 @@
 package soft.mahmod.yourreceipt.view_activity;
 
+import android.content.DialogInterface;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.widget.Button;
-
 import soft.mahmod.yourreceipt.R;
-import soft.mahmod.yourreceipt.controller.SessionManager;
+import soft.mahmod.yourreceipt.controller.ActivityIntent;
 import soft.mahmod.yourreceipt.databinding.ActivityRegistrationBinding;
 import soft.mahmod.yourreceipt.utils.DialogConfirm;
 import soft.mahmod.yourreceipt.utils.DialogListener;
@@ -23,15 +20,15 @@ import soft.mahmod.yourreceipt.view_model.user_account.VMAuthReg;
 public class ActivityRegistration extends AppCompatActivity {
     private static final String TAG = "ActivityRegistration";
     private ActivityRegistrationBinding binding;
-    private SessionManager manager;
+    private ActivityIntent intent;
     private VMAuthReg vmAuthReg;
     private NavController controller;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_registration);
-        manager = SessionManager.getInstance(this);
-        controller = Navigation.findNavController(this,R.id.nav_reg);
+        intent = ActivityIntent.getInstance(this);
+        controller = Navigation.findNavController(this, R.id.nav_reg);
         controller.addOnDestinationChangedListener((controller1, destination, arguments) -> {
             binding.setName(destination.getLabel().toString());
         });
@@ -48,9 +45,9 @@ public class ActivityRegistration extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (vmAuthReg.hasCredential() && vmAuthReg.isVerified()) {
+        if (intent.isConnection() && vmAuthReg.hasCredential() && vmAuthReg.isVerified()) {
             binding.setHasReg(true);
-            manager.userSignIn(this);
+            intent.userSignIn(this);
         } else {
             binding.setHasReg(false);
             onResume();
@@ -93,7 +90,7 @@ public class ActivityRegistration extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         binding = null;
-        manager = null;
+        intent = null;
         getViewModelStore().clear();
         vmAuthReg.onCleared();
         vmAuthReg = null;

@@ -1,8 +1,12 @@
 package soft.mahmod.yourreceipt.view_activity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,7 +21,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import soft.mahmod.yourreceipt.R;
-import soft.mahmod.yourreceipt.controller.SessionManager;
+import soft.mahmod.yourreceipt.controller.ActivityIntent;
 import soft.mahmod.yourreceipt.databinding.ActivityMainBinding;
 import soft.mahmod.yourreceipt.utils.DialogConfirm;
 import soft.mahmod.yourreceipt.utils.DialogListener;
@@ -30,13 +34,12 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private VMUser vmUser;
     private VMAuthReg vmAuthReg;
-    private SessionManager manager;
-
+    private ActivityIntent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        manager = SessionManager.getInstance(this);
+        intent = ActivityIntent.getInstance(this);
         vmUser = new ViewModelProvider(
                 getViewModelStore(),
                 new ViewModelProvider.AndroidViewModelFactory(
@@ -46,11 +49,17 @@ public class MainActivity extends AppCompatActivity {
         vmAuthReg = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication()))
                 .get(VMAuthReg.class);
 
-        vmUser.getUser().observe(this, user -> {
-            if (!user.getError()) {
-                binding.setIsActive(user.isActive());
-            }
-        });
+        if (intent.isUserActive().isActive()){
+            Log.d(TAG, "onCreate: not active");
+            binding.setIsActive(intent.isUserActive().isActive());
+        }else {
+            vmUser.getUser().observe(this, user -> {
+                if (!user.getError()) {
+                    binding.setIsActive(user.isActive());
+                    intent.setUserIsActive(user.isActive());
+                }
+            });
+        }
     }
 
     @Override
@@ -96,14 +105,14 @@ public class MainActivity extends AppCompatActivity {
         });
         binding.txtAnotherAccount.setOnClickListener(v -> {
             vmAuthReg.signOut();
-            manager.userSignOut(MainActivity.this);
+            intent.userSignOut(MainActivity.this);
         });
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        manager = null;
+        intent = null;
         getViewModelStore().clear();
         vmAuthReg.onCleared();
         vmAuthReg = null;
@@ -118,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void clickOk(DialogInterface dialog) {
                 vmAuthReg.signOut();
-                manager.userSignOut(MainActivity.this);
+                intent.userSignOut(MainActivity.this);
                 dialog.dismiss();
             }
 

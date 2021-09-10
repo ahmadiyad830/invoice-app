@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.conditions.catch_registration.ConditionsSignIn;
-import soft.mahmod.yourreceipt.controller.SessionManager;
+import soft.mahmod.yourreceipt.controller.ActivityIntent;
 import soft.mahmod.yourreceipt.databinding.FragmentSignInBinding;
 import soft.mahmod.yourreceipt.view_model.user_account.VMAuthReg;
 import soft.mahmod.yourreceipt.view_model.database.VMUser;
@@ -33,7 +33,8 @@ public class FragmentSignIn extends Fragment {
     private VMAuthReg vmAuthReg;
     private VMUser vmDbUser;
     private NavController controller;
-    private SessionManager manager;
+    private ActivityIntent intent;
+
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +86,7 @@ public class FragmentSignIn extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        manager = SessionManager.getInstance(requireContext());
+        intent = ActivityIntent.getInstance(requireContext());
         controller = Navigation.findNavController(view);
         binding.txtGoSignup.setOnClickListener(v -> {
             controller.navigate(FragmentSignInDirections.actionFragmentSignInToFragmentSignUp());
@@ -108,7 +109,7 @@ public class FragmentSignIn extends Fragment {
                 .observe(getViewLifecycleOwner(),cash -> {
                     Log.d(TAG, "signIn: "+cash.toString());
                     if (!cash.getError()){
-                        manager.userSignIn(requireActivity());
+                        intent.userSignIn(requireActivity());
                     }else {
                         binding.setError(cash.getMessage());
                     }

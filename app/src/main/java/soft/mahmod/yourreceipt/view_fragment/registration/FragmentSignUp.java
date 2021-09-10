@@ -14,14 +14,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.conditions.catch_registration.ConditionsSignUp;
-import soft.mahmod.yourreceipt.controller.SessionManager;
+import soft.mahmod.yourreceipt.controller.ActivityIntent;
 import soft.mahmod.yourreceipt.databinding.FragmentSignUpBinding;
 import soft.mahmod.yourreceipt.model.User;
 import soft.mahmod.yourreceipt.statics.ApiURLS;
@@ -39,7 +34,9 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
     private VMUser vmUser;
     private VMAuthReg vmAuthReg;
     private NavController controller;
-    private SessionManager manager;
+    private ActivityIntent intent;
+
+
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -63,7 +60,7 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         controller = Navigation.findNavController(view);
-        manager = SessionManager.getInstance(requireContext());
+        intent = ActivityIntent.getInstance(requireContext());
         binding.txtGoSignin.setOnClickListener(v -> {
             controller.navigate(FragmentSignUpDirections.actionFragmentSignUpToFragmentSignIn());
         });

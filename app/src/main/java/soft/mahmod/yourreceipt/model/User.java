@@ -29,6 +29,10 @@ public class User extends Cash implements Serializable {
 
     }
 
+    public User(boolean active) {
+        this.active = active;
+    }
+
     public boolean isActive() {
         return active;
     }

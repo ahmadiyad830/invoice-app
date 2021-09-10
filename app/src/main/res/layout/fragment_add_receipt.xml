@@ -4,36 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <variable
-            name="checked"
-            type="Boolean" />
-
-        <variable
-            name="hasItem"
-            type="Boolean" />
-
-        <variable
-            name="time"
-            type="String" />
-
-        <variable
-            name="date"
-            type="String" />
-
-        <variable
-            name="totalAll"
-            type="String" />
-
-        <variable
-            name="invoice"
-            type="String" />
-
-        <variable
-            name="hasImage"
-            type="Boolean" />
-
-        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -56,33 +26,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_marginTop="@dimen/_35sdp"
+                android:layout_marginTop="@dimen/_12sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-                <!--receipt-->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/top_and_bottom_color"
-                    app:cardCornerRadius="@dimen/_6sdp"
-                    app:cardElevation="@dimen/_3sdp"
-                    app:cardUseCompatPadding="true">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="?actionBarSize"
-                        android:gravity="center_vertical"
-                        android:paddingHorizontal="@dimen/_8sdp"
-                        android:text="@string/receipt"
-                        android:textColor="@color/text_btn_color"
-                        android:textSize="@dimen/_14ssp"
-                        android:textStyle="italic" />
-
-                </androidx.cardview.widget.CardView>
-
                 <LinearLayout
                     android:id="@+id/layout_client_side"
                     android:layout_width="match_parent"
@@ -93,6 +41,7 @@
                         android:id="@+id/edt_subject"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:layout_marginHorizontal="@dimen/_8sdp"
                         android:layout_marginBottom="@dimen/_8sdp"
                         android:background="@drawable/custom_stork"

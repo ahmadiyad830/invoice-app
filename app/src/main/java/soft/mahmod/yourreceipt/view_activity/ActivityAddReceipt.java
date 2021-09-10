@@ -37,7 +37,6 @@ public class ActivityAddReceipt extends AppCompatActivity {
             binding.setNameFragment(destination.getLabel().toString());
             binding.progressHorizontalAddReceipt.setIndicatorColor();
             binding.progressHorizontalAddReceipt.setVisibility(View.VISIBLE);
-            binding.cardToolbar.setVisibility(View.VISIBLE);
             if (getResources().getString(R.string.receipt).trim().equals(destination.getLabel().toString())) {
                 binding.helpMessage.setVisibility(View.GONE);
                 binding.setProgress(35);
@@ -47,7 +46,7 @@ public class ActivityAddReceipt extends AppCompatActivity {
                 binding.setProgress(90);
             } else {
                 if (destination.getLabel().toString().equals("FragmentZoomImage")) {
-                    binding.cardToolbar.setVisibility(View.GONE);
+
                 }
                 binding.progressHorizontalAddReceipt.setVisibility(View.GONE);
             }

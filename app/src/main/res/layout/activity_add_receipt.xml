@@ -19,70 +19,63 @@
         android:background="@color/background_page"
         tools:context=".view_activity.ActivityAddReceipt">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_toolbar"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/top_and_bottom_color"
-            app:cardCornerRadius="@dimen/_6sdp"
-            app:cardElevation="@dimen/_3sdp"
-            app:cardUseCompatPadding="true"
+            android:layout_height="?actionBarSize"
+            android:gravity="left"
+            android:background="@color/top_and_bottom_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/relativeLayout"
+            <ImageView
+                android:id="@+id/help_message"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:src="@drawable/ic_outline_help_outline_24"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/textView6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/textView6"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/text_btn_color" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_6sdp"
+                android:gravity="center"
+                android:text="@{nameFragment}"
+                android:textColor="@color/text_btn_color"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/progress_horizontal_add_receipt"
                 android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:layout_marginVertical="@dimen/_8sdp"
-                android:gravity="left">
-                <ImageView
-                    android:id="@+id/help_message"
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:layout_marginHorizontal="@dimen/_8sdp"
-                    android:visibility="gone"
-                    android:src="@drawable/ic_outline_help_outline_24"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView6"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/textView6"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/text_btn_color" />
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@{nameFragment}"
-                    android:textColor="@color/text_btn_color"
-                    android:textSize="@dimen/_14ssp"
-                    android:layout_marginBottom="@dimen/_6sdp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="@dimen/_3sdp"
+                android:layout_marginHorizontal="@dimen/_6sdp"
+                android:progress="@{progress}"
+                app:trackCornerRadius="@dimen/_12sdp"
+                app:indicatorColor="@color/icon_color"
+                app:trackColor="@color/white"
+                android:theme="@style/Widget.MaterialComponents.LinearProgressIndicator"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView6" />
 
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.google.android.material.progressindicator.LinearProgressIndicator
-                    android:id="@+id/progress_horizontal_add_receipt"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_3sdp"
-                    android:layout_marginHorizontal="@dimen/_6sdp"
-                    android:progress="@{progress}"
-                    android:progressTint="@color/white"
-                    app:indicatorColor="@color/text_btn_color"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textView6" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <fragment
             android:id="@+id/fragment_container_add_receipt"
@@ -94,7 +87,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_toolbar"
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
             app:navGraph="@navigation/nav_add_receipt" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
