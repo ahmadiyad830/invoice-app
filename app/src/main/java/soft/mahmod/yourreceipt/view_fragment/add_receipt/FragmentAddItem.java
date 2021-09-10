@@ -9,10 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -20,6 +24,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -86,12 +92,12 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_item, container, false);
 
-
         handleTimeCount = new HandleTimeCount();
         arProducts = new ARProducts(listProduct, this);
         init();
         return binding.getRoot();
     }
+
     private void init() {
         binding.recItem.setHasFixedSize(true);
         binding.recItem.setAdapter(arProducts);
@@ -99,6 +105,9 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
             controller.navigate(R.id.action_AddItem_to_AddReceipt);
         });
     }
+
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -106,9 +115,6 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
         addItemArgs = FragmentAddItemArgs.fromBundle(getArguments());
         addProduct = FragmentAddItemDirections.actionAddItemToCreateProducts4();
 
-        binding.txtMyItems.setOnClickListener(v -> {
-            loadItems();
-        });
         binding.fabToCreateItem.setOnClickListener(v -> {
             passReceipt();
         });
@@ -121,6 +127,7 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
                 setTotalAll(0.0);
             }
         });
+        loadItems(view);
     }
 
     private void passReceipt() {
@@ -155,7 +162,8 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
         model.setTaxClientNoReg(addItemArgs.getClientToAddItem().isTaxRegNo());
         addProduct.setItemToCreateProduct(model);
         controller.navigate(addProduct);
-        itemBottomDialog.dismiss();
+        // FIXME: 9/10/2021
+//        itemBottomDialog.dismiss();
     }
 
     @Override
@@ -164,7 +172,8 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
                 createItem = FragmentAddItemDirections.actionFragmentAddItemToFragmentCreateItem2();
         createItem.setItemToCreateItem(model);
         controller.navigate(createItem);
-        itemBottomDialog.dismiss();
+        // FIXME: 9/10/2021
+//        itemBottomDialog.dismiss();
     }
 
     // TODO listener products
@@ -184,32 +193,47 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
     public void setTotalAll(double total) {
         binding.setTotalAll(total);
     }
-
-    private BottomSheetDialog itemBottomDialog;
-    FragmentMainItemsBinding itemsBinding;
-    private void loadItems() {
-        itemBottomDialog = new BottomSheetDialog(requireContext());
-         itemsBinding = DataBindingUtil.inflate(
+    //    bottom sheet
+    private BottomAppBar bottomAppBar;
+    private ConstraintLayout bottomSheet;
+    private BottomSheetBehavior bottomSheetBehavior;
+    private ImageView stateBottomSheet;
+    private FragmentMainItemsBinding itemsBinding;
+    private void loadItems(View view) {
+        itemsBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(requireContext())
                 , R.layout.fragment_main_items
                 , requireView().findViewById(R.id.container_items)
                 , false);
-        itemBottomDialog.setContentView(itemsBinding.getRoot());
-        itemsBinding.recyclerItemsView.setAdapter(adapter);
-        if (itemBottomDialog.isShowing()){
-            itemsBinding.textSearch.addTextChangedListener(this);
-            spinnerInit(itemsBinding.spinnerSortList);
-        }
+        bottomSheet = view.findViewById(R.id.container_items);
+        stateBottomSheet = view.findViewById(R.id.btn_slide);
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+        stateBottomSheet.setOnClickListener(v -> {
+            if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            } else {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+        });
+        bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                stateBottomSheet.setRotation(slideOffset * 180);
+            }
+        });
+
+        itemsBinding.textSearch.addTextChangedListener(this);
+        spinnerInit(itemsBinding.spinnerSortList);
         itemsBinding.btnAdd.setOnClickListener(v -> {
             controller.navigate(FragmentAddItemDirections.actionFragmentAddItemToFragmentCreateItem2());
-            itemBottomDialog.dismiss();
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         });
-        itemBottomDialog.show();
-        if (itemBottomDialog.isShowing()) {
-            adapter.startListening();
-        } else {
-            adapter.stopListening();
-        }
+        adapter.startListening();
     }
 
     @Override
