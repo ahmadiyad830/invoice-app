@@ -2,18 +2,14 @@ package soft.mahmod.yourreceipt.adapter.firebase;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.OnRebindCallback;
-import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.firebase.ui.database.ObservableSnapshotArray;
 import com.google.firebase.database.DatabaseError;
 
 import soft.mahmod.yourreceipt.R;
@@ -86,15 +82,15 @@ public class ARProduct extends FirebaseRecyclerAdapter<Products, ARProduct.ViewH
             });
 
             binding.name.setOnClickListener(v -> {
-                onClickItem.editSingleProduct("name", "itemName", model.getItemName()
+                onClickItem.editSingleProduct("name", "itemName", model.getName()
                         ,false, getBindingAdapterPosition());
             });
             binding.price.setOnClickListener(v -> {
-                onClickItem.editSingleProduct("price", "productsPrice", model.getProductsPrice()
+                onClickItem.editSingleProduct("price", "productsPrice", model.getPrice()
                         , true, getBindingAdapterPosition());
             });
             binding.quantity.setOnClickListener(v -> {
-                onClickItem.editSingleProduct("quantity", "productsQuantity", model.getProductsQuantity()
+                onClickItem.editSingleProduct("quantity", "productsQuantity", model.getQuantity()
                         , true, getBindingAdapterPosition());
             });
             binding.total.setOnClickListener(v -> {

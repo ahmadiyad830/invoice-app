@@ -1,22 +1,13 @@
 package soft.mahmod.yourreceipt.view_fragment.main;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.net.NetworkRequest;
-import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.contract.ActivityResultContract;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,13 +16,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 
-import com.squareup.picasso.Picasso;
-
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.FragmentEditAccountBinding;
 import soft.mahmod.yourreceipt.model.Store;
 import soft.mahmod.yourreceipt.view_model.database.VMStore;
-import soft.mahmod.yourreceipt.view_model.storage.VMLogo;
 
 public class FragmentEditAccount extends Fragment {
     private static final String TAG = "FragmentEditAccount";
@@ -85,7 +73,7 @@ public class FragmentEditAccount extends Fragment {
         String name = binding.edtName.getText().toString().trim();
         store.setName(name);
         String number = binding.edtPhoneNum.getText().toString().trim();
-        store.setNumberPhone(Integer.parseInt(number));
+        store.setPhone(Integer.parseInt(number));
         String email = binding.edtEmail.getText().toString().trim();
         store.setEmail(email);
         String address1 = binding.edtAddress1.getText().toString().trim();

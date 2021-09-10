@@ -2,18 +2,16 @@ package soft.mahmod.yourreceipt.model;
 
 import androidx.annotation.NonNull;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 import java.util.List;
 
 public class Items implements Serializable {
-    private String itemName ;
-    private double itemPrice;
+    private String name;
+    private double price;
     private double discount;
-    private double itemTax;
-    private String itemNote;
-    private String itemId;
+    private double tax;
+    private String note;
+    private String itemId    ;
     private double quantity;
     private List<String> productId;
 
@@ -21,32 +19,32 @@ public class Items implements Serializable {
 
     }
 
-    public Items(String itemName, double itemPrice, double discount,
-                 double itemTax, String itemNote
+    public Items(String name, double price, double discount,
+                 double tax, String note
             , double quantity) {
-        this.itemName = itemName;
-        this.itemPrice = itemPrice;
+        this.name = name;
+        this.price = price;
         this.discount = discount;
-        this.itemTax = itemTax;
-        this.itemNote = itemNote;
+        this.tax = tax;
+        this.note = note;
         this.quantity = quantity;
         this.productId = productId;
     }
 
-    public String getItemName() {
-        return itemName;
+    public String getName() {
+        return name;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public double getItemPrice() {
-        return itemPrice;
+    public double getPrice() {
+        return price;
     }
 
-    public void setItemPrice(double itemPrice) {
-        this.itemPrice = itemPrice;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public double getDiscount() {
@@ -57,20 +55,20 @@ public class Items implements Serializable {
         this.discount = discount;
     }
 
-    public double getItemTax() {
-        return itemTax;
+    public double getTax() {
+        return tax;
     }
 
-    public void setItemTax(double itemTax) {
-        this.itemTax = itemTax;
+    public void setTax(double tax) {
+        this.tax = tax;
     }
 
-    public String getItemNote() {
-        return itemNote;
+    public String getNote() {
+        return note;
     }
 
-    public void setItemNote(String itemNote) {
-        this.itemNote = itemNote;
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public String getItemId() {
@@ -101,11 +99,11 @@ public class Items implements Serializable {
     @Override
     public String toString() {
         return "Items{" +
-                "itemName='" + itemName + '\'' +
-                ", itemPrice='" + itemPrice + '\'' +
+                "itemName='" + name + '\'' +
+                ", itemPrice='" + price + '\'' +
                 ", discount='" + discount + '\'' +
-                ", itemTax='" + itemTax + '\'' +
-                ", itemNote='" + itemNote + '\'' +
+                ", itemTax='" + tax + '\'' +
+                ", itemNote='" + note + '\'' +
                 ", itemId='" + itemId + '\'' +
                 ", quantity='" + quantity + '\'' +
                 '}';

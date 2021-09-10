@@ -68,10 +68,10 @@ public class ARItems extends FirebaseRecyclerAdapter<Items, ARItems.ViewHolder> 
 
         private Products getProducts(Items model) {
             Products products = new Products();
-            products.setItemName(model.getItemName());
-            products.setProductsPrice(model.getItemPrice());
-            products.setProductsQuantity(model.getQuantity());
-            products.setTotal(products.getProductsPrice() * products.getProductsQuantity());
+            products.setName(model.getName());
+            products.setPrice(model.getPrice());
+            products.setQuantity(model.getQuantity());
+            products.setTotal(products.getPrice() * products.getQuantity());
             return products;
         }
     }

@@ -111,10 +111,10 @@ public class FragmentCreateItem extends Fragment {
     }
 
     private boolean warning() {
-        if (getModel().getItemName().equals("")) {
+        if (getModel().getName().equals("")) {
             listWarning.add(getResources().getString(R.string.name));
         }
-        if (getModel().getItemPrice() == 0.0) {
+        if (getModel().getPrice() == 0.0) {
             listWarning.add(getResources().getString(R.string.price));
         }
         if (getModel().getQuantity() == 0.0) {

@@ -11,12 +11,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.text.InputType;
-import android.text.SpannableStringBuilder;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -25,12 +23,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import soft.mahmod.yourreceipt.R;
-import soft.mahmod.yourreceipt.adapter.ARProducts;
 import soft.mahmod.yourreceipt.adapter.firebase.ARProduct;
 import soft.mahmod.yourreceipt.databinding.FragmentProductsBinding;
 import soft.mahmod.yourreceipt.model.Products;
@@ -111,10 +107,10 @@ public class FragmentProducts extends Fragment implements ARProduct.OnClickItem,
     @Override
     public void editProduct(Products model, int position) {
         Products products = new Products();
-        products.setItemName("حليبنا");
-        products.setProductsPrice(0.5);
-        products.setProductsQuantity(100);
-        products.setTotal(products.getProductsPrice() * products.getProductsQuantity());
+        products.setName("حليبنا");
+        products.setPrice(0.5);
+        products.setQuantity(100);
+        products.setTotal(products.getPrice() * products.getQuantity());
         adapter.getRef(position).setValue(products);
     }
 

@@ -50,7 +50,7 @@
     <string name="add_item">اضافة عنصر</string>
     <string name="client_phone">رقم العميل</string>
     <string name="discount">خصم</string>
-    <string name="add_new_client">اضافة عميل</string>
+    <string name="add_new_client">اضافة عميل جديد</string>
     <string name="add_new_item">اضافة عنصر جديد</string>
     <string name="more">اخرى</string>
     <string name="note">تذكير</string>
@@ -59,7 +59,7 @@
     <string name="products">منتج</string>
     <string name="discount_total_all">خصم كلي</string>
     <string name="items">عناصر</string>
-    <string name="client">العميل</string>
+    <string name="client">العملاء</string>
     <string name="tax">ضريبة</string>
     <string name="add_info">معلومات اخرى</string>
     <string name="tax_reg_no">رقم التسجيل الضريبي</string>

@@ -8,7 +8,6 @@ public class Receipt extends Cash  {
 
     private String receiptId;
     private String subject;
-    private String receiptDate;
     private String date, time;
     private String clientName;
     private List<Products> products;
@@ -91,13 +90,7 @@ public class Receipt extends Cash  {
         this.subject = subject;
     }
 
-    public String getReceiptDate() {
-        return receiptDate;
-    }
 
-    public void setReceiptDate(String receiptDate) {
-        this.receiptDate = receiptDate;
-    }
 
     public String getClientName() {
         return clientName;
@@ -135,7 +128,6 @@ public class Receipt extends Cash  {
                 "receiptId='" + receiptId + '\'' +
                 ", subject='" + subject + '\'' +
                 ", note='" + note + '\'' +
-                ", receiptDate='" + receiptDate + '\'' +
                 ", clientName='" + clientName + '\'' +
                 "\n" + ", itemId=" + products + "\n" +
                 ", clientId='" + clientId + '\'' +

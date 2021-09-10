@@ -15,9 +15,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.FragmentCreateProductsBinding;
 import soft.mahmod.yourreceipt.model.Products;
@@ -83,11 +80,11 @@ public class FragmentCreateProducts extends Fragment implements TextWatcher {
         double tax = Double.parseDouble(binding.edtTax.getText().toString().trim());
         String name = binding.edtName.getText().toString().trim();
         String note = binding.edtNote.getText().toString().trim();
-        model.setProductsPrice(price);
-        model.setProductsQuantity(quantity);
+        model.setPrice(price);
+        model.setQuantity(quantity);
         model.setDiscount(discount);
         model.setTax(tax);
-        model.setItemName(name);
+        model.setName(name);
         model.setNotes(note);
         model.setTotal(total(price, discount, quantity, tax, model.isTaxClientNoReg()));
         Log.d(TAG, "onCreateView: " + model.getTotal());

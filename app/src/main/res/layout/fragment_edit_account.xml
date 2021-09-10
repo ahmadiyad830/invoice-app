@@ -71,7 +71,7 @@
                         android:inputType="numberDecimal"
                         android:padding="@dimen/_8sdp"
                         android:paddingHorizontal="@dimen/_8sdp"
-                        android:text="@{String.valueOf(model.numberPhone)}"
+                        android:text="@{String.valueOf(model.phone)}"
                         android:textColor="@color/text_color" />
 
                     <EditText

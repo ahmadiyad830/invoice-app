@@ -37,22 +37,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         manager = SessionManager.getInstance(this);
-
-
-        setSupportActionBar(binding.linearLayout4);
-
-        NavController controller = Navigation.findNavController(this, R.id.nav_host);
-        AppBarConfiguration configuration = new AppBarConfiguration.Builder(controller.getGraph())
-                .setOpenableLayout(binding.drawer)
-                .build();
-
-        controller.addOnDestinationChangedListener((controller1, destination, arguments) -> {
-            binding.setName(destination.getLabel().toString());
-        });
-        NavigationUI.setupWithNavController(binding.navigationView, controller);
-        NavigationUI.setupWithNavController(binding.linearLayout4, controller, configuration);
-
-
         vmUser = new ViewModelProvider(
                 getViewModelStore(),
                 new ViewModelProvider.AndroidViewModelFactory(
@@ -63,9 +47,9 @@ public class MainActivity extends AppCompatActivity {
                 .get(VMAuthReg.class);
 
         vmUser.getUser().observe(this, user -> {
-//            if (!user.getError()) {
-//                binding.setIsActive(user.isActive());
-//            }
+            if (!user.getError()) {
+                binding.setIsActive(user.isActive());
+            }
         });
     }
 
@@ -82,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         super.onOptionsItemSelected(item);
         int id = item.getItemId();
         if (id == R.id.btn_signout) {
-            changePassword();
+            signOut();
             return true;
         }
         return true;
@@ -91,21 +75,29 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        binding.setIsActive(true);
+        setSupportActionBar(binding.linearLayout4);
+        NavController controller = Navigation.findNavController(this, R.id.nav_host);
+        AppBarConfiguration configuration = new AppBarConfiguration.Builder(controller.getGraph())
+                .setOpenableLayout(binding.drawer)
+                .build();
+
+        controller.addOnDestinationChangedListener((controller1, destination, arguments) -> {
+            binding.setName(destination.getLabel().toString());
+        });
+        NavigationUI.setupWithNavController(binding.navigationView, controller);
+        NavigationUI.setupWithNavController(binding.linearLayout4, controller, configuration);
 
         binding.fab.setOnClickListener(v -> {
             Intent intent = new Intent(this, ActivityAddReceipt.class);
             startActivity(intent);
         });
-        if (binding.getIsActive()) {
-            binding.txtActive.setOnClickListener(v -> {
-                IntentActivity.startWhatsApp(this);
-            });
-            binding.txtAnotherAccount.setOnClickListener(v -> {
-                vmAuthReg.signOut();
-                manager.userSignOut(MainActivity.this);
-            });
-        }
+        binding.txtActive.setOnClickListener(v -> {
+            IntentActivity.startWhatsApp(this);
+        });
+        binding.txtAnotherAccount.setOnClickListener(v -> {
+            vmAuthReg.signOut();
+            manager.userSignOut(MainActivity.this);
+        });
     }
 
     @Override
@@ -119,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         vmUser = null;
     }
 
-    private void changePassword() {
+    private void signOut() {
         DialogConfirm dialog = new DialogConfirm(this);
         dialog.listenerDialog();
         dialog.setDialogListener(new DialogListener() {

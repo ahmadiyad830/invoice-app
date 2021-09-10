@@ -52,8 +52,8 @@ public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ARProducts.ViewHolder holder, int position) {
         holder.bind(listModel.get(position));
-        double total = DoubleStream.of(listModel.get(position).getProductsPrice()).sum() *
-                DoubleStream.of(listModel.get(position).getProductsQuantity()).sum();
+        double total = DoubleStream.of(listModel.get(position).getPrice()).sum() *
+                DoubleStream.of(listModel.get(position).getQuantity()).sum();
         totalAll = total;
     }
 
@@ -87,7 +87,7 @@ public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
             double quantity = 0.0;
             double total = price * quantity;
             for (Products model : listModel) {
-                total = total + model.getProductsPrice() * model.getProductsQuantity();
+                total = total + model.getPrice() * model.getQuantity();
             }
             return total;
         }

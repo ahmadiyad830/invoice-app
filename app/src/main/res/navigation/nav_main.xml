@@ -32,7 +32,7 @@
     <fragment
         android:id="@+id/menu_client"
         android:name="soft.mahmod.yourreceipt.view_fragment.main.FragmentClient"
-        android:label="FragmentClient"
+        android:label="@string/client"
         tools:layout="@layout/fragment_add_client">
         <action
             android:id="@+id/action_menu_client_to_fragmentCreateClient2"

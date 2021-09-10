@@ -108,7 +108,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text='@{@string/name+": "+model.itemName}'
+                        android:text='@{@string/name+": "+model.name}'
                         android:textColor="@color/text_color"
                         android:textSize="@dimen/_12ssp" />
 
@@ -121,7 +121,7 @@
                         android:hint="@string/name"
                         android:inputType="text"
                         android:padding="@dimen/_12sdp"
-                        android:text="@{model.itemName}" />
+                        android:text="@{model.name}" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -134,7 +134,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text='@{@string/price+": "+model.productsPrice}'
+                        android:text='@{@string/price+": "+model.price}'
                         android:textColor="@color/text_color"
                         android:textSize="@dimen/_12ssp" />
 
@@ -145,7 +145,7 @@
                         android:background="@drawable/custom_stork"
                         android:textColor="@color/text_color"
                         android:hint="@string/price"
-                        android:text="@{String.valueOf(model.productsPrice)}"
+                        android:text="@{String.valueOf(model.price)}"
                         android:inputType="numberDecimal"
                         android:padding="@dimen/_12sdp" />
                 </LinearLayout>
@@ -160,7 +160,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text='@{@string/quantity+": " + model.productsQuantity}'
+                        android:text='@{@string/quantity+": " + model.quantity}'
                         android:textColor="@color/text_color"
                         android:textSize="@dimen/_12ssp" />
 
@@ -171,7 +171,7 @@
                         android:background="@drawable/custom_stork"
                         android:textColor="@color/text_color"
                         android:hint="@string/quantity"
-                        android:text="@{String.valueOf(model.productsQuantity)}"
+                        android:text="@{String.valueOf(model.quantity)}"
                         android:inputType="numberDecimal"
                         android:padding="@dimen/_12sdp" />
                 </LinearLayout>

@@ -10,16 +10,16 @@ import java.util.List;
 public class Products extends Cash {
     private String productId;
 
-    private double productsPrice;
+    private double price;
 
-    private double productsQuantity;
+    private double quantity;
 
     private double total;
 
     private String notes;
 
 
-    private String itemName;
+    private String name;
     private double discount;
     //    TODO insert default value
     private double tax;
@@ -40,9 +40,9 @@ public class Products extends Cash {
 
     }
 
-    public Products(double productsPrice, double productsQuantity, double total, double discount, double tax) {
-        this.productsPrice = productsPrice;
-        this.productsQuantity = productsQuantity;
+    public Products(double price, double quantity, double total, double discount, double tax) {
+        this.price = price;
+        this.quantity = quantity;
         this.total = total;
         this.discount = discount;
         this.tax = tax;
@@ -57,20 +57,20 @@ public class Products extends Cash {
         this.productId = productId;
     }
 
-    public double getProductsPrice() {
-        return productsPrice;
+    public double getPrice() {
+        return price;
     }
 
-    public void setProductsPrice(double productsPrice) {
-        this.productsPrice = productsPrice;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
-    public double getProductsQuantity() {
-        return productsQuantity;
+    public double getQuantity() {
+        return quantity;
     }
 
-    public void setProductsQuantity(double productsQuantity) {
-        this.productsQuantity = productsQuantity;
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
     }
 
     public double getTotal() {
@@ -89,12 +89,12 @@ public class Products extends Cash {
         this.notes = notes;
     }
 
-    public String getItemName() {
-        return itemName;
+    public String getName() {
+        return name;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public double getDiscount() {
@@ -126,11 +126,11 @@ public class Products extends Cash {
     public String toString() {
         return "Products{" +
                 "productId='" + productId + '\'' +
-                ", productsPrice=" + productsPrice +
-                ", productsQuantity=" + productsQuantity +
+                ", productsPrice=" + price +
+                ", productsQuantity=" + quantity +
                 ", total=" + total +
                 ", notes='" + notes + '\'' +
-                ", itemName='" + itemName + '\'' +
+                ", itemName='" + name + '\'' +
                 ", discount=" + discount +
                 ", tax=" + tax +
                 ", receiptId=" + receiptId +

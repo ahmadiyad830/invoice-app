@@ -1,20 +1,19 @@
 package soft.mahmod.yourreceipt.model;
 
-import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 
 public class Store extends Cash implements Serializable {
     private String name, address1, address2, email;
-    private int numberPhone;
+    private int phone;
     private String storeId;
     private String logo;
-    public Store(String name, String address1, String address2, int numberPhone, String email) {
+    public Store(String name, String address1, String address2, int phone, String email) {
         this.name = name;
         this.address1 = address1;
         this.address2 = address2;
-        this.numberPhone = numberPhone;
+        this.phone = phone;
         this.email = email;
     }
 
@@ -62,12 +61,12 @@ public class Store extends Cash implements Serializable {
         this.address2 = address2;
     }
 
-    public int getNumberPhone() {
-        return numberPhone;
+    public int getPhone() {
+        return phone;
     }
 
-    public void setNumberPhone(int numberPhone) {
-        this.numberPhone = numberPhone;
+    public void setPhone(int phone) {
+        this.phone = phone;
     }
 
     public String getEmail() {
@@ -86,7 +85,7 @@ public class Store extends Cash implements Serializable {
                 "name='" + name + '\'' +
                 ", address1='" + address1 + '\'' +
                 ", address2='" + address2 + '\'' +
-                ", numberPhone='" + numberPhone + '\'' +
+                ", numberPhone='" + phone + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }

@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class CreateReceipt implements Serializable {
+
     private List<Client> listClient;
     private List<Products> listProducts;
     private String subject;
