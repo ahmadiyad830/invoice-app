@@ -24,12 +24,8 @@ import soft.mahmod.yourreceipt.utils.DialogConfirm;
 import soft.mahmod.yourreceipt.utils.DialogListener;
 import soft.mahmod.yourreceipt.view_model.database.VMItems;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentCreateItem#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class FragmentCreateItem extends Fragment {
+public class MainCreateItem extends Fragment {
+
     private static final String TAG = "FragmentCreateItem";
     private FragmentCreateItemBinding binding;
     private VMItems vmItems;
@@ -61,8 +57,8 @@ public class FragmentCreateItem extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         controller = Navigation.findNavController(view);
-        FragmentCreateItemArgs passItem = FragmentCreateItemArgs.fromBundle(getArguments());
-        binding.setModel(passItem.getItemToCreateItem());
+        MainCreateItemArgs itemArgs = MainCreateItemArgs.fromBundle(getArguments());
+        binding.setModel(itemArgs.getMainItemToCreateItem());
         binding.btnDown.setOnClickListener(v -> {
             if (warning()){
                 dialogWarning();
@@ -150,5 +146,4 @@ public class FragmentCreateItem extends Fragment {
         );
         dialogConfirm.showDialog();
     }
-
 }

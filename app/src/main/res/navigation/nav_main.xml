@@ -24,7 +24,7 @@
         android:id="@+id/menu_item"
         android:name="soft.mahmod.yourreceipt.view_fragment.main.FragmentItems"
         android:label="@string/items"
-        tools:layout="@layout/fragment_items">
+        tools:layout="@layout/fragment_main_items">
         <action
             android:id="@+id/action_menu_item_to_fragmentCreateItem2"
             app:destination="@id/fragmentCreateItem2" />
@@ -33,16 +33,17 @@
         android:id="@+id/menu_client"
         android:name="soft.mahmod.yourreceipt.view_fragment.main.FragmentClient"
         android:label="@string/client"
-        tools:layout="@layout/fragment_add_client">
+        tools:layout="@layout/fragment_main_client">
         <action
             android:id="@+id/action_menu_client_to_fragmentCreateClient2"
             app:destination="@id/fragmentCreateClient2" />
     </fragment>
     <fragment
         android:id="@+id/fragmentCreateItem2"
-        android:name="soft.mahmod.yourreceipt.view_fragment.create.FragmentCreateItem"
+        android:name="soft.mahmod.yourreceipt.view_fragment.create.MainCreateItem"
         android:label="@string/add_new_item"
         tools:layout="@layout/fragment_create_item" >
+
         <argument
             android:name="mainItemToCreateItem"
             app:argType="soft.mahmod.yourreceipt.model.Items"
@@ -51,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentCreateClient2"
-        android:name="soft.mahmod.yourreceipt.view_fragment.create.FragmentCreateClient"
+        android:name="soft.mahmod.yourreceipt.view_fragment.create.MainCreateClient"
         android:label="@string/add_new_client"
         tools:layout="@layout/fragment_create_client" >
         <argument android:name="mainClientToCreateClient"

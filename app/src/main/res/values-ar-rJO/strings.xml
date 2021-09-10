@@ -28,6 +28,7 @@
     <string name="sale">مبيعات</string>
     <string name="no_result_found">لا يوجد نتيجة</string>
     <string name="quantity">الكمية</string>
+    <string name="choice_items">اختيار المنتجات</string>
     <string name="phone_number">رقم الهاتف</string>
     <string name="sotre_name">اسم المتجر</string>
     <string name="store_address">عنوان المتجر</string>
@@ -68,6 +69,7 @@
     <string name="total_all">المجموع الكلي</string>
     <string name="old_password">كلمة السر القديمة</string>
     <string name="new_password">كلمة السر الجديدة</string>
+    <string name="client_chice">اختيار العميل</string>
     <string name="delete">حذف</string>
     <string name="skip">اختصار</string>
     <string name="create_item">انشاء عنصر جديد</string>

@@ -52,7 +52,7 @@ public class FragmentCreateProducts extends Fragment implements TextWatcher {
         controller = Navigation.findNavController(view);
         FragmentCreateProductsArgs argsProduct = FragmentCreateProductsArgs.fromBundle(getArguments());
         if (getArguments()!=null){
-            binding.setModel(argsProduct.getArgsProduct());
+            binding.setModel(argsProduct.getItemToCreateProduct());
         }
     }
 

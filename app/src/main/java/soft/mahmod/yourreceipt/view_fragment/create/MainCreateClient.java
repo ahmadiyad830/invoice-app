@@ -13,23 +13,22 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.FragmentCreateClientBinding;
+import soft.mahmod.yourreceipt.databinding.FragmentCreateItemBinding;
 import soft.mahmod.yourreceipt.model.Client;
+import soft.mahmod.yourreceipt.model.Items;
 import soft.mahmod.yourreceipt.utils.DialogConfirm;
 import soft.mahmod.yourreceipt.utils.DialogListener;
 import soft.mahmod.yourreceipt.view_model.database.VMClient;
+import soft.mahmod.yourreceipt.view_model.database.VMItems;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentCreateClient#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class FragmentCreateClient extends Fragment {
+public class MainCreateClient extends Fragment {
     private static final String TAG = "FragmentCreateClient";
     private FragmentCreateClientBinding binding;
     private VMClient vmClient;
@@ -59,9 +58,9 @@ public class FragmentCreateClient extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        FragmentCreateClientArgs addClientArgs = FragmentCreateClientArgs.fromBundle(getArguments());
+        MainCreateClientArgs addClientArgs = MainCreateClientArgs.fromBundle(getArguments());
         if (addClientArgs != null){
-            binding.setModel(addClientArgs.getClientToCreateClient());
+            binding.setModel(addClientArgs.getMainClientToCreateClient());
         }
         binding.btnDown.setOnClickListener(v -> {
             postClient();

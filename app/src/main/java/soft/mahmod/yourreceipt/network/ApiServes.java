@@ -101,13 +101,13 @@ public interface ApiServes extends ApiURLS {
     @FormUrlEncoded
     @POST(INSERT_PRODUCTS)
     Call<Cash> createProducts(
-            @Field("num_loop")           int numLoop,
-            @Field("product_receipt_id") String[]receiptId,
-            @Field("products_price")     String[] price,
-            @Field("product_quantity")   String[] quantity,
-            @Field("total")                String[] total,
-            @Field("notes")                String[] notes,
-            @Field("item_name")             String[] name
+            @Field("num_loop") int numLoop,
+            @Field("product_receipt_id") String[] receiptId,
+            @Field("products_price") String[] price,
+            @Field("product_quantity") String[] quantity,
+            @Field("total") String[] total,
+            @Field("notes") String[] notes,
+            @Field("item_name") String[] name
     );
 
 }

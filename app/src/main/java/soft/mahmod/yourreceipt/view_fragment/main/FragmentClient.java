@@ -27,12 +27,13 @@ import com.google.firebase.database.Query;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.firebase.ARClients;
 import soft.mahmod.yourreceipt.databinding.FragmentAddClientBinding;
+import soft.mahmod.yourreceipt.databinding.FragmentMainClientBinding;
 import soft.mahmod.yourreceipt.model.Client;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 
 public class FragmentClient extends Fragment implements DatabaseUrl, ARClients.OnClickClient, TextWatcher, AdapterView.OnItemSelectedListener {
     private static final String TAG = "FragmentClient";
-    private FragmentAddClientBinding binding;
+    private FragmentMainClientBinding binding;
     private ARClients adapter;
     private String[] sortClients = {"name", "email", "phone"};
     private String key = sortClients[0];
@@ -55,7 +56,7 @@ public class FragmentClient extends Fragment implements DatabaseUrl, ARClients.O
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable
             ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_client, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main_client, container, false);
         return binding.getRoot();
     }
 

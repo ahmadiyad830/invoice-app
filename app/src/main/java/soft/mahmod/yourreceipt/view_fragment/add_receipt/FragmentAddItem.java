@@ -1,6 +1,5 @@
 package soft.mahmod.yourreceipt.view_fragment.add_receipt;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -8,6 +7,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,53 +33,45 @@ import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ARProducts;
 import soft.mahmod.yourreceipt.adapter.firebase.ARItems;
 import soft.mahmod.yourreceipt.databinding.FragmentAddItemBinding;
-import soft.mahmod.yourreceipt.databinding.FragmentItemsBinding;
+import soft.mahmod.yourreceipt.databinding.FragmentMainItemsBinding;
+import soft.mahmod.yourreceipt.model.Client;
 import soft.mahmod.yourreceipt.model.Items;
 import soft.mahmod.yourreceipt.model.Products;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.utils.DialogConfirm;
-import soft.mahmod.yourreceipt.utils.DialogListener;
 import soft.mahmod.yourreceipt.utils.HandleTimeCount;
 import soft.mahmod.yourreceipt.view_model.database.VMReceipt;
 import soft.mahmod.yourreceipt.view_model.storage.VMInvoice;
 
-public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, ARProducts.OnClickItem, DatabaseUrl, TextWatcher {
+public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, ARProducts.OnClickItem, DatabaseUrl, TextWatcher, AdapterView.OnItemSelectedListener {
     private static final String TAG = "FragmentAddItem";
     private FragmentAddItemBinding binding;
-    private ARItems arItems;
     private NavController controller;
     private HandleTimeCount handleTimeCount;
     public final static List<Products> listProduct = new ArrayList<>();
     private final List<String> listWarning = new ArrayList<>();
     private int sizeProduct = 0;
     private ARProducts arProducts;
-    private DatabaseReference reference;
-    private Query query;
     private VMReceipt vmReceipt;
     private VMInvoice vmInvoice;
     private FragmentAddItemArgs addItemArgs;
-    private FragmentAddItemDirections.ActionFragmentAddItemToFragmentCreateProducts4 addProduct;
+    private FragmentAddItemDirections.ActionAddItemToCreateProducts4 addProduct;
     private String date;
-    public void setQuery(Query query) {
-        this.query = query;
-    }
 
-    public Query getQuery() {
-        return query;
-    }
+    private Query query;
+    private ARItems adapter;
+    private String[] sortItems = {"itemName", "itemPrice", "quantity"};
+    private String key = sortItems[0];
+    private FirebaseRecyclerOptions<Items> options;
+    private DatabaseReference reference;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (reference == null) {
-            reference = FirebaseDatabase.getInstance().getReference();
-            setQuery(reference.child(ITEMS + FirebaseAuth.getInstance().getUid()));
-        }
-        FirebaseRecyclerOptions<Items> options = new FirebaseRecyclerOptions.Builder<Items>()
-                .setQuery(getQuery(), Items.class)
-                .build();
-        arItems = new ARItems(options, this);
+        reference = FirebaseDatabase.getInstance().getReference()
+                .child(ITEMS + FirebaseAuth.getInstance().getUid());
+        withoutSearch();
         vmReceipt = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
                 .get(VMReceipt.class);
         vmInvoice = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
@@ -102,7 +96,7 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
         binding.recItem.setHasFixedSize(true);
         binding.recItem.setAdapter(arProducts);
         binding.total.setOnClickListener(v -> {
-            controller.navigate(R.id.action_fragmentAddItem_to_fragmentPrintReceipt);
+            controller.navigate(R.id.action_AddItem_to_AddReceipt);
         });
     }
     @Override
@@ -110,13 +104,13 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
         super.onViewCreated(view, savedInstanceState);
         controller = Navigation.findNavController(view);
         addItemArgs = FragmentAddItemArgs.fromBundle(getArguments());
-        addProduct = FragmentAddItemDirections.actionFragmentAddItemToFragmentCreateProducts4();
+        addProduct = FragmentAddItemDirections.actionAddItemToCreateProducts4();
 
         binding.txtMyItems.setOnClickListener(v -> {
             loadItems();
         });
         binding.fabToCreateItem.setOnClickListener(v -> {
-            setReceipt();
+            passReceipt();
         });
         binding.txtDeleteAll.setOnClickListener(v -> {
             sizeProduct = listProduct.size();
@@ -129,28 +123,28 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
         });
     }
 
-    private void setReceipt() {
+    private void passReceipt() {
         DialogConfirm confirm = new DialogConfirm(requireContext());
         confirm.setIcon(R.mipmap.ic_launcher)
                 .setTitle(getResources().getString(R.string.app_name))
                 .setCancel(true);
-        FragmentAddItemDirections.ActionFragmentAddItemToFragmentPrintReceipt printReceipt
-                = FragmentAddItemDirections.actionFragmentAddItemToFragmentPrintReceipt();
-        printReceipt.setArgsReceiptPrint(getReceipt());
-        controller.navigate(printReceipt);
-//        vmReceipt.postReceipt(getReceipt()).observe(getViewLifecycleOwner(), cashReceipt -> {
-//
-//        });
+        FragmentAddItemDirections.ActionAddItemToAddReceipt toReceipt
+                = FragmentAddItemDirections.actionAddItemToAddReceipt();
+        toReceipt.setReceiptToAddReceipt(getReceipt());
+        controller.navigate(toReceipt);
     }
 
     private Receipt getReceipt() {
-        Receipt model = addItemArgs.getReceiptToItems();
+        Client client = addItemArgs.getClientToAddItem();
+        Receipt model = new Receipt();
+        model.setClientName(client.getName());
+        model.setClientId(client.getClientId());
+        model.setClientPhone(model.getClientPhone());
         model.setDate(handleTimeCount.getDate());
-        Log.d(TAG, "getReceipt: "+handleTimeCount.getDate());
         model.setProducts(listProduct);
-        model.setClientId(addItemArgs.getClientToItem().getClientId());
-        model.setClientPhone(addItemArgs.getClientToItem().getPhone());
-        model.setClientName(addItemArgs.getClientToItem().getName());
+        model.setClientId(client.getClientId());
+        model.setClientPhone(client.getPhone());
+        model.setClientName(client.getName());
         return model;
     }
 
@@ -158,17 +152,17 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
     // TODO listener items
     @Override
     public void clickItemToCreateProduct(Products model, Items itemModel, int position) {
-        model.setTaxClientNoReg(addItemArgs.getClientToItem().isTaxRegNo());
-        addProduct.setArgsProduct(model);
+        model.setTaxClientNoReg(addItemArgs.getClientToAddItem().isTaxRegNo());
+        addProduct.setItemToCreateProduct(model);
         controller.navigate(addProduct);
         itemBottomDialog.dismiss();
     }
 
     @Override
     public void editItem(Items model) {
-        FragmentAddItemDirections.ActionFragmentAddItemToFragmentCreateItem5
-                createItem = FragmentAddItemDirections.actionFragmentAddItemToFragmentCreateItem5();
-        createItem.setEditItem(model);
+        FragmentAddItemDirections.ActionFragmentAddItemToFragmentCreateItem2
+                createItem = FragmentAddItemDirections.actionFragmentAddItemToFragmentCreateItem2();
+        createItem.setItemToCreateItem(model);
         controller.navigate(createItem);
         itemBottomDialog.dismiss();
     }
@@ -192,56 +186,30 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
     }
 
     private BottomSheetDialog itemBottomDialog;
+    FragmentMainItemsBinding itemsBinding;
     private void loadItems() {
         itemBottomDialog = new BottomSheetDialog(requireContext());
-        FragmentItemsBinding itemsBinding = DataBindingUtil.inflate(
+         itemsBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(requireContext())
-                , R.layout.fragment_items
+                , R.layout.fragment_main_items
                 , requireView().findViewById(R.id.container_items)
                 , false);
         itemBottomDialog.setContentView(itemsBinding.getRoot());
-        itemsBinding.recyclerItemsView.setAdapter(arItems);
-        itemsBinding.textSearch.addTextChangedListener(this);
-
+        itemsBinding.recyclerItemsView.setAdapter(adapter);
+        if (itemBottomDialog.isShowing()){
+            itemsBinding.textSearch.addTextChangedListener(this);
+            spinnerInit(itemsBinding.spinnerSortList);
+        }
         itemsBinding.btnAdd.setOnClickListener(v -> {
-            controller.navigate(FragmentAddItemDirections.actionFragmentAddItemToFragmentCreateItem5());
+            controller.navigate(FragmentAddItemDirections.actionFragmentAddItemToFragmentCreateItem2());
             itemBottomDialog.dismiss();
         });
         itemBottomDialog.show();
         if (itemBottomDialog.isShowing()) {
-            arItems.startListening();
+            adapter.startListening();
         } else {
-            arItems.stopListening();
+            adapter.stopListening();
         }
-    }
-
-    private void dialogWarning() {
-        DialogConfirm dialogConfirm = new DialogConfirm(requireContext());
-        dialogConfirm.setDialogListener(new DialogListener() {
-            @Override
-            public void clickOk(DialogInterface dialog) {
-                listWarning.clear();
-                getReceipt();
-            }
-
-            @Override
-            public void clickCancel(DialogInterface dialog) {
-                dialog.dismiss();
-                listWarning.clear();
-            }
-        });
-        dialogConfirm.setIcon(R.drawable.ic_twotone_warning_24);
-        dialogConfirm.listenerDialog();
-//        TODO translate
-        StringBuilder warning = new StringBuilder("\n");
-        for (int i = 0; i < listWarning.size(); i++) {
-            warning.append(listWarning.get(i)).append("\n");
-        }
-        dialogConfirm.createDialog(getResources().getString(R.string.warning),
-                getResources().getString(R.string.warning_not_add)
-                        + warning.toString()
-        );
-        dialogConfirm.showDialog();
     }
 
     @Override
@@ -271,9 +239,61 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
     @Override
     public void afterTextChanged(Editable s) {
         String search = s.toString().trim();
-        if (!search.isEmpty()) {
-            setQuery(reference.child(RECEIPT + FirebaseAuth.getInstance().getUid())
-                    .orderByChild("itemName").startAt(search).endAt(search + "\uf8ff"));
+        if (!search.isEmpty()){
+            if (!key.equals(sortItems[0])) {
+                itemsBinding.recyclerItemsView.setAdapter(searchNumber(Double.parseDouble(search)));
+            } else {
+                itemsBinding.recyclerItemsView.setAdapter(search(search));
+            }
+            itemsBinding.setHasValue(true);
+        }else {
+            itemsBinding.recyclerItemsView.setAdapter(withoutSearch());
         }
+        itemsBinding.setHasValue(!search.isEmpty());
+    }
+    private void spinnerInit(Spinner spinner) {
+        spinner.setOnItemSelectedListener(this);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, sortItems);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+    }
+    private ARItems searchNumber(double search) {
+        query = reference;
+        options = new FirebaseRecyclerOptions.Builder<Items>()
+                .setQuery(query.orderByChild(key).startAt(search).endAt(search + "\uf8ff"), Items.class)
+                .build();
+        adapter = new ARItems(options, this);
+        adapter.startListening();
+        return adapter;
+    }
+
+    private ARItems search(String search) {
+        query = reference;
+        options = new FirebaseRecyclerOptions.Builder<Items>()
+                .setQuery(query.orderByChild(key).startAt(search).endAt(search + "\uf8ff"), Items.class)
+                .build();
+        adapter = new ARItems(options, this);
+        adapter.startListening();
+        return adapter;
+    }
+
+    private ARItems withoutSearch() {
+        options = new FirebaseRecyclerOptions.Builder<Items>()
+                .setQuery(reference, Items.class)
+                .build();
+        adapter = new ARItems(options, this);
+        adapter.startListening();
+        return adapter;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        key = (String) parent.getItemAtPosition(position);
+        Log.d(TAG, "onItemSelected: " + key);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        key = (String) parent.getItemAtPosition(0);
     }
 }

@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         ).get(VMUser.class);
         vmAuthReg = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication()))
                 .get(VMAuthReg.class);
-
         if (intent.isUserActive().isActive()){
             Log.d(TAG, "onCreate: not active");
             binding.setIsActive(intent.isUserActive().isActive());

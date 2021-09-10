@@ -37,6 +37,9 @@ public class ActivityAddReceipt extends AppCompatActivity {
             binding.setNameFragment(destination.getLabel().toString());
             binding.progressHorizontalAddReceipt.setIndicatorColor();
             binding.progressHorizontalAddReceipt.setVisibility(View.VISIBLE);
+            switch (destination.getLabel().toString()){
+
+            }
             if (getResources().getString(R.string.receipt).trim().equals(destination.getLabel().toString())) {
                 binding.helpMessage.setVisibility(View.GONE);
                 binding.setProgress(35);

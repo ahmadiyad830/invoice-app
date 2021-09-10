@@ -66,7 +66,7 @@ public class FragmentPrintReceipt extends Fragment {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_print_receipt, container, false);
         FragmentPrintReceiptArgs args = FragmentPrintReceiptArgs.fromBundle(getArguments());
-        model = args.getArgsReceiptPrint();
+        model = args.getReceiptToPrint();
 
 //        model = new Receipt();
 //        listProducts = new ArrayList<>();

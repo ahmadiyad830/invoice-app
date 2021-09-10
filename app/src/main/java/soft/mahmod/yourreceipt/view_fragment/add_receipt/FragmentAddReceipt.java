@@ -47,11 +47,11 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl {
 
 
     private void setReceipt() {
-        FragmentAddReceiptDirections.ActionFragmentAddReceiptToFragmentAddClient5 argsToClient
-                = FragmentAddReceiptDirections.actionFragmentAddReceiptToFragmentAddClient5();
-        argsToClient.setReceiptToClient(getReceipt());
+        FragmentAddReceiptDirections.ActionAddReceiptToPrintReceipt argsToClient
+                = FragmentAddReceiptDirections.actionAddReceiptToPrintReceipt();
+        argsToClient.setReceiptToPrint(getReceipt());
         Navigation.findNavController(requireView()).navigate(argsToClient);
-        Log.d(TAG, "onViewCreated: " + argsToClient.getReceiptToClient().toString());
+//        Log.d(TAG, "onViewCreated: " + argsToClient.getReceiptToClient().toString());
     }
 
     private Receipt getReceipt() {

@@ -25,14 +25,14 @@ import com.google.firebase.database.Query;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.firebase.ARItems;
-import soft.mahmod.yourreceipt.databinding.FragmentItemsBinding;
+import soft.mahmod.yourreceipt.databinding.FragmentMainItemsBinding;
 import soft.mahmod.yourreceipt.model.Items;
 import soft.mahmod.yourreceipt.model.Products;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 
 public class FragmentItems extends Fragment implements ARItems.OnCLickItem, DatabaseUrl, TextWatcher, AdapterView.OnItemSelectedListener {
     private static final String TAG = "FragmentItem";
-    private FragmentItemsBinding binding;
+    private FragmentMainItemsBinding binding;
     private Query query;
     private ARItems adapter;
     private String[] sortItems = {"itemName", "itemPrice", "quantity"};
@@ -52,7 +52,7 @@ public class FragmentItems extends Fragment implements ARItems.OnCLickItem, Data
     @org.jetbrains.annotations.Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_items, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main_items, container, false);
 
         return binding.getRoot();
     }
