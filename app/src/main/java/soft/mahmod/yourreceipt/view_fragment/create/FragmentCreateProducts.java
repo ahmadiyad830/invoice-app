@@ -29,7 +29,6 @@ public class FragmentCreateProducts extends Fragment implements TextWatcher {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_products, container, false);
-        inti();
         cleanEdit();
         binding.btnDown.setOnClickListener(v -> {
             FragmentAddItem.listProduct.add(model());
@@ -40,10 +39,6 @@ public class FragmentCreateProducts extends Fragment implements TextWatcher {
         binding.edtTax.addTextChangedListener(this);
         binding.edtQuantity.addTextChangedListener(this);
         return binding.getRoot();
-    }
-
-    private void inti() {
-
     }
 
     @Override

@@ -1,5 +1,6 @@
 package soft.mahmod.yourreceipt.adapter.firebase;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DatabaseError;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.ItemItemsBinding;
@@ -16,6 +18,8 @@ import soft.mahmod.yourreceipt.model.Items;
 import soft.mahmod.yourreceipt.model.Products;
 
 public class ARItems extends FirebaseRecyclerAdapter<Items, ARItems.ViewHolder> {
+    private static final String TAG = "ARItems";
+
     public interface OnCLickItem {
         void clickItemToCreateProduct(Products model, Items itemModel, int position);
 
@@ -31,6 +35,12 @@ public class ARItems extends FirebaseRecyclerAdapter<Items, ARItems.ViewHolder> 
         this.listener = listener;
     }
 
+
+    @Override
+    public void onError(@NonNull DatabaseError error) {
+        super.onError(error);
+        Log.d(TAG, "onError: "+error.getMessage()+"\n"+error.getCode()+"\n"+error.getDetails());
+    }
 
     @NonNull
     @Override

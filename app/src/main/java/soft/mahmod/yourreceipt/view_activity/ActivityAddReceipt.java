@@ -37,20 +37,15 @@ public class ActivityAddReceipt extends AppCompatActivity {
             binding.setNameFragment(destination.getLabel().toString());
             binding.progressHorizontalAddReceipt.setIndicatorColor();
             binding.progressHorizontalAddReceipt.setVisibility(View.VISIBLE);
-            switch (destination.getLabel().toString()){
 
-            }
-            if (getResources().getString(R.string.receipt).trim().equals(destination.getLabel().toString())) {
+            if (getResources().getString(R.string.client).trim().equals(destination.getLabel().toString())) {
                 binding.helpMessage.setVisibility(View.GONE);
                 binding.setProgress(35);
-            } else if (getResources().getString(R.string.client).trim().equals(destination.getLabel().toString())) {
-                binding.setProgress(65);
             } else if (getResources().getString(R.string.items).trim().equals(destination.getLabel().toString())) {
+                binding.setProgress(65);
+            } else if (getResources().getString(R.string.receipt).trim().equals(destination.getLabel().toString())) {
                 binding.setProgress(90);
             } else {
-                if (destination.getLabel().toString().equals("FragmentZoomImage")) {
-
-                }
                 binding.progressHorizontalAddReceipt.setVisibility(View.GONE);
             }
         });

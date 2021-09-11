@@ -85,7 +85,7 @@ public class FragmentItems extends Fragment implements ARItems.OnCLickItem, Data
         binding.recyclerItemsView.setHasFixedSize(true);
         binding.recyclerItemsView.setAdapter(adapter);
         spinnerInit();
-        binding.btnDelete.setOnClickListener(v -> {
+        binding.btnClean.setOnClickListener(v -> {
             binding.textSearch.setText("");
         });
 

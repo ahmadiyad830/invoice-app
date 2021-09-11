@@ -5,12 +5,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import java.util.ArrayList;
@@ -20,6 +20,7 @@ import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.FragmentAddReceiptBinding;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
+import soft.mahmod.yourreceipt.view_model.database.VMReceipt;
 
 public class FragmentAddReceipt extends Fragment implements DatabaseUrl {
 
@@ -27,6 +28,14 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl {
     private FragmentAddReceiptBinding binding;
     public static final int REQUEST_CAMERA = 0x82317354;
     private final List<String> listWarning = new ArrayList<>();
+    private VMReceipt vmReceipt;
+
+    @Override
+    public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        vmReceipt = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
+                .get(VMReceipt.class);
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -47,11 +56,21 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl {
 
 
     private void setReceipt() {
-        FragmentAddReceiptDirections.ActionAddReceiptToPrintReceipt argsToClient
-                = FragmentAddReceiptDirections.actionAddReceiptToPrintReceipt();
-        argsToClient.setReceiptToPrint(getReceipt());
-        Navigation.findNavController(requireView()).navigate(argsToClient);
-//        Log.d(TAG, "onViewCreated: " + argsToClient.getReceiptToClient().toString());
+        FragmentAddReceiptArgs argsReceipt = FragmentAddReceiptArgs.fromBundle(getArguments());
+        Receipt model = argsReceipt.getReceiptToAddReceipt();
+        model.setSubject(getReceipt().getSubject());
+        model.setNote(getReceipt().getNote());
+        model.setType(getReceipt().getType());
+        vmReceipt.postReceipt(model).observe(getViewLifecycleOwner(),cash -> {
+            if (!cash.getError()){
+                FragmentAddReceiptDirections.ActionAddReceiptToPrintReceipt argsToClient
+                        = FragmentAddReceiptDirections.actionAddReceiptToPrintReceipt();
+                argsToClient.setReceiptToPrint(model);
+                Navigation.findNavController(requireView()).navigate(argsToClient);
+            }
+            Log.d(TAG, "setReceipt: "+cash.getMessage());
+            Log.d(TAG, "setReceipt: \n"+model.toString());
+        });
     }
 
     private Receipt getReceipt() {

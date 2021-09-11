@@ -22,11 +22,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -77,7 +79,6 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
         super.onCreate(savedInstanceState);
         reference = FirebaseDatabase.getInstance().getReference()
                 .child(ITEMS + FirebaseAuth.getInstance().getUid());
-        withoutSearch();
         vmReceipt = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
                 .get(VMReceipt.class);
         vmInvoice = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
@@ -106,15 +107,12 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
         });
     }
 
-
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         controller = Navigation.findNavController(view);
         addItemArgs = FragmentAddItemArgs.fromBundle(getArguments());
         addProduct = FragmentAddItemDirections.actionAddItemToCreateProducts4();
-
         binding.fabToCreateItem.setOnClickListener(v -> {
             passReceipt();
         });
@@ -127,7 +125,6 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
                 setTotalAll(0.0);
             }
         });
-        loadItems(view);
     }
 
     private void passReceipt() {
@@ -194,20 +191,41 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
         binding.setTotalAll(total);
     }
     //    bottom sheet
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadItems(requireView());
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
+        spinnerInit(spinnerSort);
+        btnCleanText.setOnClickListener(v -> {
+            searchEdit.setText("");
+        });
+
+        searchEdit.addTextChangedListener(this);
+        adapter.startListening();
+    }
+    private EditText searchEdit;
+    private ImageView btnCleanText;
+    private Spinner spinnerSort;
+    private MaterialButton btnNewItem;
+    private RecyclerView recyclerView;
     private BottomAppBar bottomAppBar;
     private ConstraintLayout bottomSheet;
     private BottomSheetBehavior bottomSheetBehavior;
     private ImageView stateBottomSheet;
-    private FragmentMainItemsBinding itemsBinding;
     private void loadItems(View view) {
-        itemsBinding = DataBindingUtil.inflate(
-                LayoutInflater.from(requireContext())
-                , R.layout.fragment_main_items
-                , requireView().findViewById(R.id.container_items)
-                , false);
+        btnCleanText = view.findViewById(R.id.btn_clean);
+        searchEdit = view.findViewById(R.id.text_search);
+        spinnerSort = view.findViewById(R.id.spinner_sort_list);
+        btnNewItem = view.findViewById(R.id.btn_add);
+        btnNewItem = view.findViewById(R.id.btn_add);
+        recyclerView = view.findViewById(R.id.recycler_items_view);
         bottomSheet = view.findViewById(R.id.container_items);
         stateBottomSheet = view.findViewById(R.id.btn_slide);
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(withoutSearch());
         stateBottomSheet.setOnClickListener(v -> {
             if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -215,6 +233,7 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             }
         });
+        searchEdit.addTextChangedListener(this);
         bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
@@ -227,9 +246,8 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
             }
         });
 
-        itemsBinding.textSearch.addTextChangedListener(this);
-        spinnerInit(itemsBinding.spinnerSortList);
-        itemsBinding.btnAdd.setOnClickListener(v -> {
+        spinnerInit(spinnerSort);
+        btnNewItem.setOnClickListener(v -> {
             controller.navigate(FragmentAddItemDirections.actionFragmentAddItemToFragmentCreateItem2());
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         });
@@ -263,17 +281,19 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
     @Override
     public void afterTextChanged(Editable s) {
         String search = s.toString().trim();
+        recyclerView.setHasFixedSize(true);
         if (!search.isEmpty()){
             if (!key.equals(sortItems[0])) {
-                itemsBinding.recyclerItemsView.setAdapter(searchNumber(Double.parseDouble(search)));
+                recyclerView.setAdapter(searchNumber(Double.parseDouble(search)));
             } else {
-                itemsBinding.recyclerItemsView.setAdapter(search(search));
+                recyclerView.setAdapter(search(search));
+
             }
-            itemsBinding.setHasValue(true);
+//            itemsBinding.setHasValue(true);
         }else {
-            itemsBinding.recyclerItemsView.setAdapter(withoutSearch());
+            recyclerView.setAdapter(withoutSearch());
         }
-        itemsBinding.setHasValue(!search.isEmpty());
+//        itemsBinding.setHasValue(!search.isEmpty());
     }
     private void spinnerInit(Spinner spinner) {
         spinner.setOnItemSelectedListener(this);

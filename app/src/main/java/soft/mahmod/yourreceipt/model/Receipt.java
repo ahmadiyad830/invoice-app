@@ -124,16 +124,18 @@ public class Receipt extends Cash  {
     @Override
     public String toString() {
         return "Receipt{" +
-                "invoice='" + invoice + '\'' +
                 "receiptId='" + receiptId + '\'' +
                 ", subject='" + subject + '\'' +
-                ", note='" + note + '\'' +
+                ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
                 ", clientName='" + clientName + '\'' +
-                "\n" + ", itemId=" + products + "\n" +
+                ", products=" + products +
                 ", clientId='" + clientId + '\'' +
                 ", totalAll=" + totalAll +
                 ", clientPhone=" + clientPhone +
                 ", type='" + type + '\'' +
+                ", invoice='" + invoice + '\'' +
+                ", note='" + note + '\'' +
                 '}';
     }
 }
