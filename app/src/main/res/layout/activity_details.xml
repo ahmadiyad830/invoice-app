@@ -48,19 +48,6 @@
                     app:tint="@color/text_btn_color" />
 
                 <ImageView
-                    android:id="@+id/btnEdit"
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:layout_marginHorizontal="@dimen/_12sdp"
-                    android:src="@drawable/ic_baseline_edit_24"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/scan_barcode"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/text_btn_color" />
-
-                <ImageView
                     android:id="@+id/btnBack"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"

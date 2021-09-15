@@ -25,6 +25,8 @@ public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
         void setTotalAll(double total);
     }
 
+
+
     public interface OnTotalProducts {
         double totalAll();
     }
@@ -33,7 +35,7 @@ public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
     private final List<Products> listModel;
     private OnClickItem onClickItem;
     public double totalAll = 0.0;
-
+    public boolean isCreate = false;
     public ARProducts(List<Products> listModel, OnClickItem onClickItem) {
         this.listModel = listModel;
         this.onClickItem = onClickItem;
@@ -42,10 +44,12 @@ public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         if (inflater == null) {
             inflater = LayoutInflater.from(parent.getContext());
         }
         ItemProductBinding binding = DataBindingUtil.inflate(inflater, R.layout.item_product, parent, false);
+        binding.setIsCreate(isCreate);
         return new ViewHolder(binding);
     }
 

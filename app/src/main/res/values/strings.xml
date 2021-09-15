@@ -60,6 +60,7 @@
     <string name="receipt_details">Receipt Details</string>
     <string name="products_receipt">Products Receipt</string>
     <string name="receipt">Receipt</string>
+    <string name="number_baylening">number payments</string>
     <!--    TODO client-->
     <string name="client_name">Client Name</string>
     <string name="client_chice">client choice</string>

@@ -1,35 +1,36 @@
 package soft.mahmod.yourreceipt.model.billing;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Payment {
-    private List<String> date;
-    private List<String> price;
-    private List<String> listBayment;
-    private TypeBayment typePayment;
+    private String date;
+    private double price;
 
-    public List<String> listBill() {
-        listBayment = new ArrayList<>();
-        listBayment.addAll(date);
-        listBayment.addAll(price);
-        setListBayment(listBayment);
-        return listBayment;
+    public String getDate() {
+        return date;
     }
 
-    public void setListBayment(List<String> listBayment) {
-        this.listBayment = listBayment;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public List<String> getListBayment() {
-        return listBayment;
+    public double getPrice() {
+        return price;
     }
 
-    public TypeBayment getTypePayment() {
-        return typePayment;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
-    public void setTypePayment(TypeBayment typePayment) {
-        this.typePayment = typePayment;
+    @NonNull
+    @Override
+    public String toString() {
+        return "Payment{" +
+                "date='" + date + '\'' +
+                ", price=" + price +
+                '}';
     }
 }

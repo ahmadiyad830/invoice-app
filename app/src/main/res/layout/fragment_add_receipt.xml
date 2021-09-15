@@ -4,6 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+            name="isBayment"
+            type="Boolean" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,20 +27,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/linearLayout4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
                 android:layout_marginTop="@dimen/_12sdp"
+                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
+
                 <LinearLayout
                     android:id="@+id/layout_client_side"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -45,10 +52,10 @@
                         android:layout_marginHorizontal="@dimen/_8sdp"
                         android:layout_marginBottom="@dimen/_8sdp"
                         android:background="@drawable/custom_stork"
-                        android:padding="@dimen/_12sdp"
-                        android:textColor="@color/text_color"
                         android:hint="@string/subject"
                         android:inputType="text"
+                        android:padding="@dimen/_12sdp"
+                        android:textColor="@color/text_color"
 
                         android:textColorHint="@color/hint_color" />
 
@@ -59,10 +66,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_8sdp"
                         android:layout_marginBottom="@dimen/_8sdp"
-                        android:maxLength="500"
-                        android:maxLines="15"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/note"
+                        android:maxLength="500"
+                        android:maxLines="15"
                         android:padding="@dimen/_12sdp"
                         android:textColor="@color/text_color"
                         android:textColorHint="@color/hint_color" />
@@ -74,19 +81,152 @@
                         android:layout_marginHorizontal="@dimen/_8sdp"
                         android:layout_marginVertical="@dimen/_12sdp"
                         android:text="@string/type_receipt"
-                        app:thumbTint="@color/top_and_bottom_color"
-                        app:trackTint="@color/hint_color"
                         android:textColor="@color/text_color"
                         android:textColorHint="@color/hint_color"
                         android:textOff="@string/take"
                         android:textOn="@string/dues"
                         android:textSize="@dimen/_12ssp"
-                        app:showText="true" />
+                        app:showText="true"
+                        app:thumbTint="@color/top_and_bottom_color"
+                        app:trackTint="@color/hint_color" />
 
                 </LinearLayout>
 
-            </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/linearLayout17"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_client_side">
 
+                    <Spinner
+                        android:id="@+id/spinner_type_receipt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?actionBarSize"
+                        android:layout_marginHorizontal="@dimen/_8sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/editText2"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_client_side" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout19"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:visibility='@{isBayment?View.VISIBLE:View.GONE,default = visible}'
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout17">
+
+                    <EditText
+                        android:id="@+id/edit_price"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="9"
+                        android:hint="@string/price"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        android:minEms="1"
+                        android:minLines="1"
+                        android:textAlignment="center"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.769"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_client_side" />
+
+                    <EditText
+                        android:id="@+id/edit_date"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="@dimen/_8sdp"
+                        android:layout_weight="9"
+                        android:hint="@string/date"
+                        android:inputType="date"
+                        android:maxLines="1"
+                        android:minEms="1"
+                        android:minLines="1"
+                        android:textAlignment="center"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.769"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_client_side" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/top_and_bottom_color"
+                        android:text="@string/add"
+                        android:textColor="@color/text_btn_color"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout20"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility='@{isBayment?View.VISIBLE:View.GONE,default = visible}'
+                    android:layout_margin="@dimen/_8sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout19">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="start|center_vertical"
+                        android:text="@string/price"
+                        android:textColor="@color/text_color" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="start|center_vertical"
+                        android:text="@string/date"
+                        android:textColor="@color/text_color" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/btn_delete"
+                        android:layout_width="wrap_content"
+                        android:drawableEnd="@drawable/ic_baseline_delete_outline_24"
+                        android:drawableTint="@android:color/holo_red_dark"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="end|center_vertical"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:background="?selectableItemBackground"
+                        android:paddingHorizontal="@dimen/_8sdp"
+                        android:text="@string/delete_all"
+                        android:textColor="@color/text_color" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rec_items_beyment"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_450sdp"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:visibility='@{isBayment?View.VISIBLE:View.GONE,default = visible}'
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout20" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
         <com.google.android.material.floatingactionbutton.FloatingActionButton

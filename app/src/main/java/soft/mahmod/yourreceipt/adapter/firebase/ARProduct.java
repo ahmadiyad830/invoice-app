@@ -18,7 +18,7 @@ import soft.mahmod.yourreceipt.model.Products;
 
 public class ARProduct extends FirebaseRecyclerAdapter<Products, ARProduct.ViewHolder> {
     private static final String TAG = "ARProduct";
-
+    public boolean isCreate = false;
     public interface OnClickItem {
         void editProduct(Products model, int position);
 
@@ -51,6 +51,7 @@ public class ARProduct extends FirebaseRecyclerAdapter<Products, ARProduct.ViewH
             inflater = LayoutInflater.from(parent.getContext());
         }
         ItemProductBinding binding = DataBindingUtil.inflate(inflater, R.layout.item_product, parent, false);
+        binding.setIsCreate(isCreate);
         return new ARProduct.ViewHolder(binding);
     }
 

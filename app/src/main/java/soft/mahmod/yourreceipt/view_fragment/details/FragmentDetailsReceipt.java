@@ -48,7 +48,6 @@ public class FragmentDetailsReceipt extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         vmSendReceipt = new ViewModelProvider(requireActivity()).get(VMSendReceipt.class);
-
         vmSendReceipt.getModel().observe(getViewLifecycleOwner(), receipt -> {
             binding.setModel(receipt);
         });

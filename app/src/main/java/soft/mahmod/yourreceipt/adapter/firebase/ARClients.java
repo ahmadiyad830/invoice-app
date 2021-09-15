@@ -23,6 +23,7 @@ public class ARClients extends FirebaseRecyclerAdapter<Client, ARClients.ViewHol
 
     private OnClickClient listener;
 
+
     public ARClients(@NonNull FirebaseRecyclerOptions<Client> options, OnClickClient listener) {
         super(options);
         this.listener = listener;

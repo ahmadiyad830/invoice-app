@@ -34,11 +34,6 @@ public class ActivityDetails extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
-        binding.btnEdit.setOnClickListener(v -> {
-            Intent intent = new Intent(this,ActivityEdit.class);
-            startActivity(intent);
-            finish();
-        });
         binding.btnPrint.setOnClickListener(v -> {
 
         });

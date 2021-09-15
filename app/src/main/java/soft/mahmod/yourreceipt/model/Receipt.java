@@ -4,22 +4,36 @@ import androidx.annotation.NonNull;
 
 import java.util.List;
 
+import soft.mahmod.yourreceipt.model.billing.Payment;
+
 public class Receipt extends Cash  {
 
     private String receiptId;
     private String subject;
+
     private String date, time;
+
     private String clientName;
+    private int clientPhone;
     private List<Products> products;
+    private List<Payment> listPayment;
     private String clientId;
     private double totalAll;
-    private int clientPhone;
+
     private String type;
     private String invoice;
     private String note;
 
     public Receipt() {
 
+    }
+
+    public List<Payment> getListPayment() {
+        return listPayment;
+    }
+
+    public void setListPayment(List<Payment> listPayment) {
+        this.listPayment = listPayment;
     }
 
     public String getNote() {
