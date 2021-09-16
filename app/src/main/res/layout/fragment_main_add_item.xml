@@ -17,18 +17,31 @@
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:layout_gravity="bottom"
-            android:backgroundTint="@color/text_btn_color"
+            android:backgroundTint="@color/top_and_bottom_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tabIndicatorColor="@color/top_and_bottom_color"
+            app:tabIndicatorColor="@color/text_btn_color"
             app:tabIndicatorFullWidth="true"
             app:tabInlineLabel="true"
-            app:tabSelectedTextColor="@color/top_and_bottom_color"
+            app:tabSelectedTextColor="@color/text_btn_color"
             app:tabTextColor="@android:color/darker_gray" />
 
-
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/ic_baseline_check_24"
+            app:backgroundTint="@color/top_and_bottom_color"
+            app:tint="@color/text_btn_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.90"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.8" />
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager2"
             android:layout_width="match_parent"

@@ -57,9 +57,10 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
     private FragmentAddItemBinding binding;
     private NavController controller;
     private HandleTimeCount handleTimeCount;
-    public final static List<Products> listProduct = new ArrayList<>();
+
     private final List<String> listWarning = new ArrayList<>();
     private int sizeProduct = 0;
+    public final static List<Products> listProduct = new ArrayList<>();
     private ARProducts arProducts;
     private VMReceipt vmReceipt;
     private VMInvoice vmInvoice;

@@ -105,11 +105,14 @@
         android:id="@+id/fragmentMainAddItem"
         tools:layout="@layout/fragment_main_add_item"
         android:name="soft.mahmod.yourreceipt.view_fragment.add_receipt.add_products.FragmentMainAddItem"
-        android:label="FragmentMainAddItem" >
+        android:label="@string/items" >
         <argument
             android:name="clientToAddItem"
             app:argType="soft.mahmod.yourreceipt.model.Client"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_MainAddItem_to_AddReceipt"
+            app:destination="@id/fragmentAddReceipt" />
     </fragment>
 </navigation>

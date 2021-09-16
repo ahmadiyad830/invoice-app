@@ -67,6 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/todo"
+            android:visibility="gone"
             android:src="@drawable/ic_baseline_check_24"
             app:backgroundTint="@color/top_and_bottom_color"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -79,6 +80,7 @@
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="match_parent">
 
             <include
