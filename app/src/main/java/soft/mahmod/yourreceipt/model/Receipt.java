@@ -2,12 +2,16 @@ package soft.mahmod.yourreceipt.model;
 
 import androidx.annotation.NonNull;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.List;
 
 import soft.mahmod.yourreceipt.model.billing.Payment;
 
-public class Receipt extends Cash  {
-
+public class Receipt extends Cash {
+    @Exclude
+    private boolean expandedPayment = false;
+    private boolean expandedDeptReceipt = false;
     private String receiptId;
     private String subject;
 
@@ -16,20 +20,65 @@ public class Receipt extends Cash  {
     private String clientName;
     private int clientPhone;
     private List<Products> products;
-    private List<Payment> listPayment;
+
     private String clientId;
     private double totalAll;
 
     private String type;
     private String invoice;
     private String note;
+    //    dept
+    private String dateReceipt;
+    private Payment payment;
+    //    payment
+    private List<Payment> listPayment;
+
+    public Receipt(String date) {
+        this.dateReceipt = date;
+    }
+
+    public Receipt(List<Payment> listPayment) {
+        this.listPayment = listPayment;
+    }
 
     public Receipt() {
 
     }
 
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
+
+    public boolean isExpandedPayment() {
+        return expandedPayment;
+    }
+
+    public void setExpandedPayment(boolean expandedPayment) {
+        this.expandedPayment = expandedPayment;
+    }
+
+    public boolean isExpandedDeptReceipt() {
+        return expandedDeptReceipt;
+    }
+
+    public void setExpandedDeptReceipt(boolean expandedDeptReceipt) {
+        this.expandedDeptReceipt = expandedDeptReceipt;
+    }
+
     public List<Payment> getListPayment() {
         return listPayment;
+    }
+
+    public String getDateReceipt() {
+        return dateReceipt;
+    }
+
+    public void setDateReceipt(String dateReceipt) {
+        this.dateReceipt = dateReceipt;
     }
 
     public void setListPayment(List<Payment> listPayment) {

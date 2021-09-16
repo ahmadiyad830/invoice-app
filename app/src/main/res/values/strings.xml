@@ -61,6 +61,7 @@
     <string name="products_receipt">Products Receipt</string>
     <string name="receipt">Receipt</string>
     <string name="number_baylening">number payments</string>
+    <string name="date_of_payment">date of payment</string>
     <!--    TODO client-->
     <string name="client_name">Client Name</string>
     <string name="client_chice">client choice</string>
@@ -129,4 +130,7 @@ Click on the pen to edit the customer</string>
 
 Or add all items</string>
     <string name="add_new_receipt">add new receipt</string>
+    <string name="paid">paid</string>
+    <string name="debt">debt</string>
+    <string name="bayment">bayment</string>
 </resources>

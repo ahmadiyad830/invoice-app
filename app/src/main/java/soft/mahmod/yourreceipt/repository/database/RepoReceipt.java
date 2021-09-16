@@ -24,7 +24,7 @@ public class RepoReceipt extends Repo<Receipt>{
     }
 
     @RequiresApi(api = Build.VERSION_CODES.P)
-    public LiveData<Cash> postReceipt(Receipt model) {
+    public synchronized LiveData<Cash> postReceipt(Receipt model) {
         model.setReceiptId(getReference().push().getKey());
         getReference().child(RECEIPT).child(getfUser().getUid()).child(model.getReceiptId())
                 .setValue(model)
@@ -46,7 +46,7 @@ public class RepoReceipt extends Repo<Receipt>{
         return getErrorDate();
     }
 
-    public LiveData<Cash> postClientTLow(Receipt model) {
+    public synchronized LiveData<Cash> postClientTLow(Receipt model) {
         model.setClientId(getReference().push().getKey());
         getReference().child(RECEIPT).child(getfUser().getUid()).push()
                 .setValue(model)
@@ -69,7 +69,7 @@ public class RepoReceipt extends Repo<Receipt>{
     }
 
     @RequiresApi(api = Build.VERSION_CODES.P)
-    public LiveData<Cash> putEditValue(double editValue, String pushKey, String editKey){
+    public synchronized LiveData<Cash> putEditValue(double editValue, String pushKey, String editKey){
         Map<String, Object> result = new HashMap<>();
         result.put(editKey,editValue);
         getReference().child(RECEIPT).child(getfUser().getUid()).child(pushKey)
@@ -88,7 +88,7 @@ public class RepoReceipt extends Repo<Receipt>{
                 });
         return getErrorDate();
     }
-    public LiveData<Cash> putEditValueTLow(double editValue, String pushKey, String editKey){
+    public synchronized LiveData<Cash> putEditValueTLow(double editValue, String pushKey, String editKey){
         Map<String, Object> result = new HashMap<>();
         result.put(editKey,editValue);
         getReference().child(RECEIPT).child(getfUser().getUid()).child(pushKey)
@@ -109,11 +109,11 @@ public class RepoReceipt extends Repo<Receipt>{
     }
 
 
-    public LiveData<Cash> deleteReceipt(Receipt model){
+    public synchronized LiveData<Cash> deleteReceipt(Receipt model){
         return getErrorDate();
     }
 
-    public LiveData<Cash> deleteReceiptTLow(Receipt model){
+    public synchronized LiveData<Cash> deleteReceiptTLow(Receipt model){
         return getErrorDate();
     }
 
@@ -123,7 +123,7 @@ public class RepoReceipt extends Repo<Receipt>{
         return getData();
     }
 
-    ValueEventListener getReceipt = new ValueEventListener() {
+    ValueEventListener  getReceipt = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             User user = new User();

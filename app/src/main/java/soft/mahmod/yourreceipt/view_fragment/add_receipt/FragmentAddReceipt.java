@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,14 +28,12 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
 
     private static final String TAG = "FragmentAddReceipt";
     private FragmentAddReceiptBinding binding;
-    public static final int REQUEST_CAMERA = 0x82317354;
-    private final List<String> listWarning = new ArrayList<>();
     private final List<Payment> listPayment = new ArrayList<>();
     private VMReceipt vmReceipt;
-    private final String[] typeReceipt = {"paid", "debt", "bayment"};
-    private String key = typeReceipt[0];
+    private String[] typeReceipt;
     private ARPayment adapter;
-    private String receiptType ;
+    private String receiptType;
+
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,13 +47,16 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_receipt, container, false);
+
+        typeReceipt = new String[]{getResources().getString(R.string.paid)
+                , getResources().getString(R.string.debt), getResources().getString(R.string.bayment)};
+
         adapter = new ARPayment(listPayment, this);
         init();
         binding.btnAdd.setOnClickListener(this::onClickAdd);
         binding.btnDelete.setOnClickListener(this::onClickDeleteAll);
         binding.btnNext.setOnClickListener(v -> {
-//            setReceipt();
-
+            setReceipt();
         });
         return binding.getRoot();
     }
@@ -85,13 +85,14 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
         Receipt model = argsReceipt.getReceiptToAddReceipt();
         model.setSubject(getReceipt().getSubject());
         model.setNote(getReceipt().getNote());
-        model.setType(getReceipt().getType());
+        model.setPayment(getPayment());
         vmReceipt.postReceipt(model).observe(getViewLifecycleOwner(), cash -> {
             if (!cash.getError()) {
-                FragmentAddReceiptDirections.ActionAddReceiptToPrintReceipt argsToClient
-                        = FragmentAddReceiptDirections.actionAddReceiptToPrintReceipt();
-                argsToClient.setReceiptToPrint(model);
-                Navigation.findNavController(requireView()).navigate(argsToClient);
+//                FragmentAddReceiptDirections.ActionAddReceiptToPrintReceipt argsToClient
+//                        = FragmentAddReceiptDirections.actionAddReceiptToPrintReceipt();
+//                argsToClient.setReceiptToPrint(model);
+//                Navigation.findNavController(requireView()).navigate(argsToClient);
+                requireActivity().finish();
             }
         });
     }
@@ -100,9 +101,21 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
         Receipt model = new Receipt();
         model.setSubject(binding.edtSubject.getText().toString().trim());
         model.setNote(binding.edtNote.getText().toString().trim());
-        model.setType(binding.switchMaterial.isChecked() ? binding.switchMaterial.getTextOff().toString()
-                : binding.switchMaterial.getTextOn().toString());
         return model;
+    }
+
+    private Payment getPayment() {
+        Payment payment = new Payment();
+        if (receiptType.equals(typeReceipt[0])) {
+            payment.setTypePayment(typeReceipt[0]);
+        } else if (receiptType.equals(typeReceipt[1])) {
+            payment = new Payment("2021/9/16");
+            payment.setTypePayment(typeReceipt[1]);
+        } else if (receiptType.equals(typeReceipt[2])) {
+            payment = new Payment(listPayment);
+            payment.setTypePayment(typeReceipt[2]);
+        }
+        return payment;
     }
 
 
@@ -119,17 +132,20 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
         receiptType = (String) parent.getItemAtPosition(position);
         if (receiptType.equals(typeReceipt[0])){
             binding.setIsBayment(false);
+            binding.setIsDept(false);
         }else if (receiptType.equals(typeReceipt[1])){
             binding.setIsBayment(false);
+            binding.setIsDept(true);
         }else if (receiptType.equals(typeReceipt[2])){
             binding.setIsBayment(true);
+            binding.setIsDept(false);
         }
 
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
+        receiptType = typeReceipt[0];
     }
 
 
@@ -160,7 +176,7 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
 
     private void onClickDeleteAll(View v) {
         if (listPayment.size() > 0) {
-            adapter.notifyItemRangeRemoved(0, listWarning.size());
+            adapter.notifyItemRangeRemoved(0, listPayment.size());
             listPayment.clear();
         }
     }

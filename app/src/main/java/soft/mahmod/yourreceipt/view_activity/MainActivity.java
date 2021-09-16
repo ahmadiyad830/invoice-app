@@ -1,10 +1,7 @@
 package soft.mahmod.yourreceipt.view_activity;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -20,16 +17,24 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.controller.ActivityIntent;
 import soft.mahmod.yourreceipt.databinding.ActivityMainBinding;
+import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.utils.DialogConfirm;
 import soft.mahmod.yourreceipt.utils.DialogListener;
 import soft.mahmod.yourreceipt.utils.IntentActivity;
 import soft.mahmod.yourreceipt.view_model.database.VMUser;
 import soft.mahmod.yourreceipt.view_model.user_account.VMAuthReg;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DatabaseUrl {
     private static final String TAG = "MainActivity";
     private ActivityMainBinding binding;
     private VMUser vmUser;
@@ -91,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
         controller.addOnDestinationChangedListener((controller1, destination, arguments) -> {
             binding.setName(destination.getLabel().toString());
+
         });
         NavigationUI.setupWithNavController(binding.navigationView, controller);
         NavigationUI.setupWithNavController(binding.linearLayout4, controller, configuration);

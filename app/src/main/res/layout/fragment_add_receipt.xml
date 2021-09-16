@@ -9,6 +9,14 @@
             name="isBayment"
             type="Boolean" />
 
+        <variable
+            name="isDept"
+            type="Boolean" />
+
+        <variable
+            name="dateDept"
+            type="String" />
+
         <import type="android.view.View" />
     </data>
 
@@ -42,7 +50,11 @@
                     android:id="@+id/layout_client_side"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edt_subject"
@@ -74,22 +86,6 @@
                         android:textColor="@color/text_color"
                         android:textColorHint="@color/hint_color" />
 
-                    <com.google.android.material.switchmaterial.SwitchMaterial
-                        android:id="@+id/switchMaterial"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_8sdp"
-                        android:layout_marginVertical="@dimen/_12sdp"
-                        android:text="@string/type_receipt"
-                        android:textColor="@color/text_color"
-                        android:textColorHint="@color/hint_color"
-                        android:textOff="@string/take"
-                        android:textOn="@string/dues"
-                        android:textSize="@dimen/_12ssp"
-                        app:showText="true"
-                        app:thumbTint="@color/top_and_bottom_color"
-                        app:trackTint="@color/hint_color" />
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -114,13 +110,13 @@
                         app:layout_constraintTop_toBottomOf="@+id/layout_client_side" />
 
                 </LinearLayout>
-
+                <!--payment-->
                 <LinearLayout
                     android:id="@+id/linearLayout19"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_8sdp"
-                    android:visibility='@{isBayment?View.VISIBLE:View.GONE,default = visible}'
+                    android:visibility='@{isBayment?View.VISIBLE:View.GONE,default = gone}'
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -176,8 +172,8 @@
                     android:id="@+id/linearLayout20"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility='@{isBayment?View.VISIBLE:View.GONE,default = visible}'
                     android:layout_margin="@dimen/_8sdp"
+                    android:visibility='@{isBayment?View.VISIBLE:View.GONE,default = gone}'
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -198,16 +194,17 @@
                         android:gravity="start|center_vertical"
                         android:text="@string/date"
                         android:textColor="@color/text_color" />
+
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/btn_delete"
                         android:layout_width="wrap_content"
-                        android:drawableEnd="@drawable/ic_baseline_delete_outline_24"
-                        android:drawableTint="@android:color/holo_red_dark"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:gravity="end|center_vertical"
-                        android:drawablePadding="@dimen/_8sdp"
                         android:background="?selectableItemBackground"
+                        android:drawableEnd="@drawable/ic_baseline_delete_outline_24"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:drawableTint="@android:color/holo_red_dark"
+                        android:gravity="end|center_vertical"
                         android:paddingHorizontal="@dimen/_8sdp"
                         android:text="@string/delete_all"
                         android:textColor="@color/text_color" />
@@ -218,7 +215,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_450sdp"
                     android:layout_margin="@dimen/_8sdp"
-                    android:visibility='@{isBayment?View.VISIBLE:View.GONE,default = visible}'
+                    android:visibility='@{isBayment?View.VISIBLE:View.GONE,default = gone}'
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -226,6 +223,36 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout20" />
 
+                <!--dept-->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/materialButton2"
+                    android:layout_width="@dimen/_85sdp"
+                    android:layout_height="?actionBarSize"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_marginTop="4dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/top_and_bottom_color"
+                    android:text="@string/date"
+                    android:textColor="@color/text_btn_color"
+                    android:visibility='@{isDept?View.VISIBLE:View.GONE,default = gone}'
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout17" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{dateDept}"
+                    android:textColor="@color/top_and_bottom_color"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold"
+                    android:visibility='@{isDept?View.VISIBLE:View.GONE,default = gone}'
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/materialButton2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout17" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>

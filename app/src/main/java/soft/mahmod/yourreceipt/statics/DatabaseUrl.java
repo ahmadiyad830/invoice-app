@@ -11,6 +11,10 @@ public interface DatabaseUrl extends ErrorCode {
     String RECEIPT = "receipt/";
     String USER = "users/";
     String PRODUCTS = "products/";
+//    paymnet
+    String PAYMENT = "payment/";
+    String LIST_PAYMENT = "listPayment/";
+    String TYPE_PAYMENT = "typePayment/";
 
     String ACTIVE_USER = "users/active";
     String ACTIVE = "/active";

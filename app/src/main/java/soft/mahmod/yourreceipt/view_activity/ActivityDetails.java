@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -13,6 +14,7 @@ import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ViewPager2Adapter;
 import soft.mahmod.yourreceipt.databinding.ActivityDetailsBinding;
 import soft.mahmod.yourreceipt.model.Receipt;
+import soft.mahmod.yourreceipt.view_fragment.details.FragmentPayment;
 import soft.mahmod.yourreceipt.view_fragment.details.FragmentProducts;
 import soft.mahmod.yourreceipt.view_fragment.details.FragmentDetailsReceipt;
 import soft.mahmod.yourreceipt.view_model.send.data.VMSendReceipt;
@@ -53,12 +55,16 @@ public class ActivityDetails extends AppCompatActivity {
         binding.setToolbar(getResources().getString(R.string.receipt));
         viewPager2Adapter = new ViewPager2Adapter(this);
         viewPager2Adapter.addFragment(new FragmentDetailsReceipt());
+        viewPager2Adapter.addFragment(new FragmentPayment());
         viewPager2Adapter.addFragment(new FragmentProducts());
         binding.viewPager2.setAdapter(viewPager2Adapter);
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(binding.tableLayout,
                 binding.viewPager2, (tab, position) -> {
             switch (position) {
                 case 1:
+                    tab.setText(getResources().getString(R.string.bayment));
+                    break;
+                case 2:
                     tab.setText(getResources().getString(R.string.products));
                     break;
                 case 0:
@@ -66,7 +72,9 @@ public class ActivityDetails extends AppCompatActivity {
                     tab.setText(binding.getToolbar());
                     break;
 
+
             }
+            Log.d(TAG, "loadTabLayout: "+position);
         });
         tabLayoutMediator.attach();
     }
