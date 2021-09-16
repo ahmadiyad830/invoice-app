@@ -29,7 +29,7 @@ public class FragmentCreateProducts extends Fragment implements TextWatcher {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_products, container, false);
-        cleanEdit();
+
         binding.btnDown.setOnClickListener(v -> {
             FragmentAddItem.listProduct.add(model());
             requireActivity().onBackPressed();
@@ -51,15 +51,6 @@ public class FragmentCreateProducts extends Fragment implements TextWatcher {
         }
     }
 
-    private void cleanEdit() {
-        binding.btnClean.setOnClickListener(v -> {
-            binding.edtPrice.setText("");
-            binding.edtQuantity.setText("");
-            binding.edtDiscount.setText("");
-            binding.edtTax.setText("");
-//
-        });
-    }
 
     private double total(double price, double discount, double quantity, double tax, boolean isClientTaxNoReg) {
         if (isClientTaxNoReg) {

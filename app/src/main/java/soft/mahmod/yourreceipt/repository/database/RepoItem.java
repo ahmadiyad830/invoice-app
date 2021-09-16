@@ -56,16 +56,54 @@ public class RepoItem extends Repo<Items> {
                 });
         return getErrorDate();
     }
-    public LiveData<Cash> putItems(Items model){
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    public LiveData<Cash> putItem(Items model){
+        getReference()
+                .child(ITEMS)
+                .child(getfUser().getUid())
+                .child(model.getItemId())
+                .setValue(model)
+                .addOnCompleteListener(getApplication().getMainExecutor(), task -> {
+                    if (task.isSuccessful()) {
+                        getCash().setError(false);
+                        getCash().setMessage("success");
+                        getCash().setCode(SUCCESS);
+                        getErrorDate().setValue(getCash());
+                    }
+
+                })
+                .addOnFailureListener(getApplication().getMainExecutor(), e -> {
+                    getCash().setError(true);
+                    getCash().setMessage(e.getMessage());
+                    getCash().setCode(TRY_AGAIN);
+                    getErrorDate().setValue(getCash());
+                });
         return getErrorDate();
     }
-    public LiveData<Cash> putItemsTLow(Items model){
+    public LiveData<Cash> putItemTLow(Items model){
+        getReference().child(ITEMS).child(getfUser().getUid()).child(model.getItemId())
+                .setValue(model)
+                .addOnCompleteListener( task -> {
+                    if (task.isSuccessful()) {
+                        getCash().setError(false);
+                        getCash().setMessage("success");
+                        getCash().setCode(SUCCESS);
+                        getErrorDate().setValue(getCash());
+                    }
+
+                })
+                .addOnFailureListener( e -> {
+                    getCash().setError(true);
+                    getCash().setMessage(e.getMessage());
+                    getCash().setCode(TRY_AGAIN);
+                    getErrorDate().setValue(getCash());
+                });
         return getErrorDate();
     }
-    public LiveData<Cash> deleteItems(Items model){
+    public LiveData<Cash> deleteItem(Items model){
         return getErrorDate();
     }
-    public LiveData<Cash> deleteItemsTLow(Items model){
+    public LiveData<Cash> deleteItemTLow(Items model){
         return getErrorDate();
     }
     public LiveData<Items> getItems(){

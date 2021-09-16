@@ -53,7 +53,7 @@ public class FragmentItems extends Fragment implements ARItems.OnCLickItem, Data
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main_items, container, false);
-
+        binding.setInDialog(false);
         return binding.getRoot();
     }
 

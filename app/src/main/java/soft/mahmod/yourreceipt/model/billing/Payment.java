@@ -1,8 +1,5 @@
 package soft.mahmod.yourreceipt.model.billing;
 
-import androidx.annotation.NonNull;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import soft.mahmod.yourreceipt.model.Cash;
@@ -11,7 +8,8 @@ public class Payment  extends Cash {
     private String date;
     private double price;
     private List<Payment> listPayment;
-    private  String typePayment ;
+    private String typePayment;
+    private boolean isPaid;
     public String getDate() {
         return date;
     }
@@ -36,6 +34,14 @@ public class Payment  extends Cash {
 
     public List<Payment> getListPayment() {
         return listPayment;
+    }
+
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(boolean paid) {
+        isPaid = paid;
     }
 
     public void setListPayment(List<Payment> listPayment) {

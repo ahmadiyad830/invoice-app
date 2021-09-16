@@ -17,76 +17,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/products_container"
-        android:background="@color/background_page"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background_page"
         tools:context=".view_fragment.create.FragmentCreateProducts">
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_toolbar"
+        <ScrollView
+            android:id="@+id/scrollView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/_6sdp"
-            app:cardElevation="@dimen/_3sdp"
-            app:cardUseCompatPadding="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/relativeLayout"
-                android:background="@color/background_page"
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:gravity="left">
-
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/products"
-                    android:textColor="@color/text_color"
-                    android:textSize="@dimen/_14ssp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.425"
-
-                    app:layout_constraintStart_toEndOf="@+id/btn_down"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.516" />
-
-                <ImageView
-                    android:id="@+id/btn_down"
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:src="@drawable/ic_baseline_check_24"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/icon_color" />
-
-                <ImageView
-                    android:id="@+id/btn_clean"
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:layout_marginEnd="@dimen/_8sdp"
-                    android:src="@drawable/ic_baseline_delete_outline_24"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/textView5"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/icon_color" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -117,11 +55,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
-                        android:textColor="@color/text_color"
                         android:hint="@string/name"
                         android:inputType="text"
                         android:padding="@dimen/_12sdp"
-                        android:text="@{model.name}" />
+                        android:text="@{model.name}"
+                        android:textColor="@color/text_color" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -143,11 +81,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
-                        android:textColor="@color/text_color"
                         android:hint="@string/price"
-                        android:text="@{String.valueOf(model.price)}"
                         android:inputType="numberDecimal"
-                        android:padding="@dimen/_12sdp" />
+                        android:padding="@dimen/_12sdp"
+                        android:text="@{String.valueOf(model.price)}"
+                        android:textColor="@color/text_color" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -169,11 +107,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
-                        android:textColor="@color/text_color"
                         android:hint="@string/quantity"
-                        android:text="@{String.valueOf(model.quantity)}"
                         android:inputType="numberDecimal"
-                        android:padding="@dimen/_12sdp" />
+                        android:padding="@dimen/_12sdp"
+                        android:text="@{String.valueOf(model.quantity)}"
+                        android:textColor="@color/text_color" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -195,19 +133,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
-                        android:textColor="@color/text_color"
                         android:hint="@string/discount"
-                        android:text="@{String.valueOf(model.discount)}"
                         android:inputType="numberDecimal"
-                        android:padding="@dimen/_12sdp" />
+                        android:padding="@dimen/_12sdp"
+                        android:text="@{String.valueOf(model.discount)}"
+                        android:textColor="@color/text_color" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/linearLayout9"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility='@{model.taxClientNoReg?View.GONE:View.VISIBLE}'
                     android:layout_marginHorizontal="@dimen/_8sdp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility='@{model.taxClientNoReg?View.GONE:View.VISIBLE}'>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -220,13 +159,12 @@
                         android:id="@+id/edt_tax"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/text_color"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/tax"
-                        android:text="@{String.valueOf(model.tax)}"
                         android:inputType="numberDecimal"
                         android:padding="@dimen/_12sdp"
-                        />
+                        android:text="@{String.valueOf(model.tax)}"
+                        android:textColor="@color/text_color" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -245,16 +183,29 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edt_note"
                         android:layout_width="match_parent"
-                        android:textColor="@color/text_color"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/note"
                         android:inputType="text"
                         android:padding="@dimen/_12sdp"
-                        android:text='@{model.notes,default = ""}' />
+                        android:text='@{model.notes,default = ""}'
+                        android:textColor="@color/text_color" />
                 </LinearLayout>
 
             </LinearLayout>
         </ScrollView>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_down"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:layout_marginHorizontal="@dimen/_12sdp"
+            android:backgroundTint="@color/top_and_bottom_color"
+            android:text="@string/ok"
+            android:textColor="@color/text_btn_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

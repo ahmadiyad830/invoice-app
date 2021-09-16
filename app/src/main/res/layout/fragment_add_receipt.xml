@@ -167,7 +167,6 @@
                         android:textColor="@color/text_btn_color"
                         android:textStyle="bold" />
                 </LinearLayout>
-
                 <LinearLayout
                     android:id="@+id/linearLayout20"
                     android:layout_width="match_parent"
@@ -182,7 +181,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight="3"
                         android:gravity="start|center_vertical"
                         android:text="@string/price"
                         android:textColor="@color/text_color" />
@@ -190,9 +189,17 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight="3"
                         android:gravity="start|center_vertical"
                         android:text="@string/date"
+                        android:textColor="@color/text_color" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:gravity="start|center_vertical"
+                        android:text="@string/state"
                         android:textColor="@color/text_color" />
 
                     <com.google.android.material.textview.MaterialTextView
@@ -206,7 +213,6 @@
                         android:drawableTint="@android:color/holo_red_dark"
                         android:gravity="end|center_vertical"
                         android:paddingHorizontal="@dimen/_8sdp"
-                        android:text="@string/delete_all"
                         android:textColor="@color/text_color" />
                 </LinearLayout>
 

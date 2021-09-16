@@ -1,7 +1,7 @@
 package soft.mahmod.yourreceipt.view_fragment.create;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +20,6 @@ import java.util.List;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.FragmentCreateItemBinding;
 import soft.mahmod.yourreceipt.model.Items;
-import soft.mahmod.yourreceipt.utils.DialogConfirm;
-import soft.mahmod.yourreceipt.utils.DialogListener;
 import soft.mahmod.yourreceipt.view_model.database.VMItems;
 
 public class MainCreateItem extends Fragment {
@@ -31,6 +29,7 @@ public class MainCreateItem extends Fragment {
     private VMItems vmItems;
     private NavController controller;
     private final List<String> listWarning = new ArrayList<>();
+    private boolean isEdit = false;
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,12 +57,25 @@ public class MainCreateItem extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         controller = Navigation.findNavController(view);
         MainCreateItemArgs itemArgs = MainCreateItemArgs.fromBundle(getArguments());
+        if (itemArgs.getMainItemToCreateItem() != null) {
+            isEdit = true;
+        }
         binding.setModel(itemArgs.getMainItemToCreateItem());
         binding.btnDown.setOnClickListener(v -> {
-            if (warning()){
-                dialogWarning();
-            }else postItem();
+            if (isEdit) {
+                putItem(itemArgs.getMainItemToCreateItem().getItemId());
+            } else
+                postItem();
         });
+    }
+
+    private void putItem(String id) {
+        Items items = getModel();
+        items.setItemId(id);
+        vmItems.putItem(items)
+                .observe(getViewLifecycleOwner(), cash -> {
+                    Log.d(TAG, "postItem: " + cash.toString());
+                });
     }
 
     private void postItem() {
@@ -71,7 +83,6 @@ public class MainCreateItem extends Fragment {
                 .observe(getViewLifecycleOwner(), cash -> {
                     if (!cash.getError()) {
                         requireActivity().onBackPressed();
-//                        controller.navigate(FragmentCreateClientDirections.actionFragmentCreateClientToFragmentAddClient());
                     }
                 });
     }
@@ -104,46 +115,5 @@ public class MainCreateItem extends Fragment {
         String itemName = binding.edtName.getText().toString().trim();
         String itemNote = binding.edtSubject.getText().toString().trim();
         return new Items(itemName, itemPrice, discount, itemTax, itemNote, quantity);
-    }
-
-    private boolean warning() {
-        if (getModel().getName().equals("")) {
-            listWarning.add(getResources().getString(R.string.name));
-        }
-        if (getModel().getPrice() == 0.0) {
-            listWarning.add(getResources().getString(R.string.price));
-        }
-        if (getModel().getQuantity() == 0.0) {
-            listWarning.add(getResources().getString(R.string.quantity));
-        }
-        return listWarning.size() > 0;
-    }
-    private void dialogWarning() {
-        DialogConfirm dialogConfirm = new DialogConfirm(requireContext());
-        dialogConfirm.setDialogListener(new DialogListener() {
-            @Override
-            public void clickOk(DialogInterface dialog) {
-                listWarning.clear();
-                postItem();
-            }
-
-            @Override
-            public void clickCancel(DialogInterface dialog) {
-                dialog.dismiss();
-                listWarning.clear();
-            }
-        });
-        dialogConfirm.setIcon(R.drawable.ic_twotone_warning_24);
-        dialogConfirm.listenerDialog();
-//        TODO translate
-        StringBuilder warning = new StringBuilder("\n");
-        for (int i = 0; i < listWarning.size(); i++) {
-            warning.append(listWarning.get(i)).append("\n");
-        }
-        dialogConfirm.createDialog(getResources().getString(R.string.warning),
-                getResources().getString(R.string.warning_not_add)
-                        + warning.toString()
-        );
-        dialogConfirm.showDialog();
     }
 }

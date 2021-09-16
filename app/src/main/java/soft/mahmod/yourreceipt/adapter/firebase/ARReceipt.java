@@ -23,8 +23,9 @@ import soft.mahmod.yourreceipt.databinding.ItemReceiptBinding;
 import soft.mahmod.yourreceipt.listeners.OnReceiptItemClick;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.model.billing.Payment;
+import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 
-public class ARReceipt extends FirebaseRecyclerAdapter<Receipt,ARReceipt.ViewHolder> {
+public class ARReceipt extends FirebaseRecyclerAdapter<Receipt,ARReceipt.ViewHolder> implements DatabaseUrl {
     private static final String TAG = "ARReceipt";
     private LayoutInflater inflater;
     private OnReceiptItemClick itemClick;
@@ -116,6 +117,17 @@ public class ARReceipt extends FirebaseRecyclerAdapter<Receipt,ARReceipt.ViewHol
         public void deletePayment(int position) {
 
         }
+
+        @Override
+        public void paid(boolean isChecked, int position) {
+            getRef(getAbsoluteAdapterPosition())
+                    .child(PAYMENT)
+                    .child(LIST_PAYMENT)
+                    .child(String.valueOf(position))
+                    .child(PAID)
+                    .setValue(isChecked);
+        }
+
         private void typePayment(Receipt model){
             if (model.getPayment().getTypePayment().equals(context.getResources().getString(R.string.debt))){
                 model.setExpandedDeptReceipt(!model.isExpandedDeptReceipt());

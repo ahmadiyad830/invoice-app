@@ -1,6 +1,5 @@
 package soft.mahmod.yourreceipt.view_fragment.create;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,20 +12,14 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.FragmentCreateClientBinding;
-import soft.mahmod.yourreceipt.databinding.FragmentCreateItemBinding;
 import soft.mahmod.yourreceipt.model.Client;
-import soft.mahmod.yourreceipt.model.Items;
-import soft.mahmod.yourreceipt.utils.DialogConfirm;
-import soft.mahmod.yourreceipt.utils.DialogListener;
 import soft.mahmod.yourreceipt.view_model.database.VMClient;
-import soft.mahmod.yourreceipt.view_model.database.VMItems;
 
 public class MainCreateClient extends Fragment {
     private static final String TAG = "FragmentCreateClient";
@@ -34,6 +27,7 @@ public class MainCreateClient extends Fragment {
     private VMClient vmClient;
     private NavController controller;
     private final List<String> listWarning = new ArrayList<>();
+    private boolean isEdit = false;
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,11 +53,16 @@ public class MainCreateClient extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         MainCreateClientArgs addClientArgs = MainCreateClientArgs.fromBundle(getArguments());
-        if (addClientArgs != null){
+        if (addClientArgs.getMainClientToCreateClient() != null){
+            isEdit = true;
             binding.setModel(addClientArgs.getMainClientToCreateClient());
         }
         binding.btnDown.setOnClickListener(v -> {
-            postClient();
+            if (isEdit) {
+                putClient(addClientArgs.getMainClientToCreateClient().getClientId());
+            } else {
+                postClient();
+            }
             requireActivity().onBackPressed();
         });
     }
@@ -77,62 +76,14 @@ public class MainCreateClient extends Fragment {
         });
     }
 
-    private void client(boolean edit) {
-        if (edit) {
-            putClient();
-        } else {
-            postClient();
-        }
-    }
-
-    private void putClient() {
+    private void putClient(String id) {
+        Client client = getClient();
+        client.setClientId(id);
         vmClient.putClient(getClient()).observe(getViewLifecycleOwner(), cash -> {
             if (!cash.getError()) {
                 requireActivity().onBackPressed();
             } else Toast.makeText(requireContext(), cash.getMessage(), Toast.LENGTH_SHORT).show();
         });
-    }
-
-    private boolean warningClient() {
-        if (getClient().getName().equals("")) {
-            listWarning.add(getResources().getString(R.string.client_name));
-        }
-        if (getClient().getPhone() == 0) {
-            listWarning.add(getResources().getString(R.string.client_phone));
-        }
-        if (getClient().getStoreAddress().equals("")) {
-            listWarning.add(getResources().getString(R.string.store_address));
-        }
-        return listWarning.size() > 0;
-    }
-
-    private void dialogWarning(boolean edit) {
-        DialogConfirm dialogConfirm = new DialogConfirm(requireContext());
-        dialogConfirm.setDialogListener(new DialogListener() {
-            @Override
-            public void clickOk(DialogInterface dialog) {
-                listWarning.clear();
-                client(edit);
-            }
-
-            @Override
-            public void clickCancel(DialogInterface dialog) {
-                dialog.dismiss();
-                listWarning.clear();
-            }
-        });
-        dialogConfirm.setIcon(R.drawable.ic_twotone_warning_24);
-        dialogConfirm.listenerDialog();
-//        TODO translate
-        StringBuilder warning = new StringBuilder("\n");
-        for (int i = 0; i < listWarning.size(); i++) {
-            warning.append(listWarning.get(i)).append("\n");
-        }
-        dialogConfirm.createDialog(getResources().getString(R.string.warning),
-                getResources().getString(R.string.warning_not_add)
-                        + warning.toString()
-        );
-        dialogConfirm.showDialog();
     }
 
     private Client getClient() {

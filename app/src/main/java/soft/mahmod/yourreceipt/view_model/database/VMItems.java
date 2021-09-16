@@ -29,4 +29,9 @@ public class VMItems extends AndroidViewModel {
             return repoItem.postItem(model);
         else return repoItem.postItemTLow(model);
     }
+    public LiveData<Cash> putItem(Items model) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
+            return repoItem.putItem(model);
+        else return repoItem.putItemTLow(model);
+    }
 }

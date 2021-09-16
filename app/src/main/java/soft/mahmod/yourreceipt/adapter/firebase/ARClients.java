@@ -23,6 +23,15 @@ public class ARClients extends FirebaseRecyclerAdapter<Client, ARClients.ViewHol
 
     private OnClickClient listener;
 
+    private boolean inMain = false;
+
+    public boolean isInMain() {
+        return inMain;
+    }
+
+    public void setInMain(boolean inMain) {
+        this.inMain = inMain;
+    }
 
     public ARClients(@NonNull FirebaseRecyclerOptions<Client> options, OnClickClient listener) {
         super(options);
@@ -41,6 +50,7 @@ public class ARClients extends FirebaseRecyclerAdapter<Client, ARClients.ViewHol
             inflater = LayoutInflater.from(parent.getContext());
         }
         ItemClientBinding binding = DataBindingUtil.inflate(inflater,R.layout.item_client,parent,false);
+        binding.setInMain(isInMain());
         return new ViewHolder(binding);
     }
 

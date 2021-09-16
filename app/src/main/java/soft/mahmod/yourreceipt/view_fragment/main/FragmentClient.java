@@ -75,6 +75,7 @@ public class FragmentClient extends Fragment implements DatabaseUrl, ARClients.O
         super.onStart();
         binding.recItem.setHasFixedSize(true);
         binding.recItem.setAdapter(adapter);
+        adapter.setInMain(true);
         spinnerInit();
         binding.btnDelete.setOnClickListener(v -> {
             binding.textSearch.setText("");

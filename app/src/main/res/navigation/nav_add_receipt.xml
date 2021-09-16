@@ -63,8 +63,11 @@
             android:id="@+id/action_AddClient_to_AddItem3"
             app:destination="@id/fragmentAddItem" />
         <action
-            android:id="@+id/action_fragmentAddClient_to_fragmentCreateClient"
+            android:id="@+id/action_AddClient_to_CreateClient"
             app:destination="@id/fragmentCreateClient" />
+        <action
+            android:id="@+id/action_AddClient_to_MainAddItem2"
+            app:destination="@id/fragmentMainAddItem" />
     </fragment>
     <fragment
         android:id="@+id/fragmentAddItem"
@@ -95,6 +98,17 @@
         <argument
             android:name="receiptToPrint"
             app:argType="soft.mahmod.yourreceipt.model.Receipt"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentMainAddItem"
+        tools:layout="@layout/fragment_main_add_item"
+        android:name="soft.mahmod.yourreceipt.view_fragment.add_receipt.add_products.FragmentMainAddItem"
+        android:label="FragmentMainAddItem" >
+        <argument
+            android:name="clientToAddItem"
+            app:argType="soft.mahmod.yourreceipt.model.Client"
             app:nullable="true"
             android:defaultValue="@null" />
     </fragment>

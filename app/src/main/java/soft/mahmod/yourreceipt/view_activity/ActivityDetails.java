@@ -1,12 +1,12 @@
 package soft.mahmod.yourreceipt.view_activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -14,16 +14,14 @@ import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ViewPager2Adapter;
 import soft.mahmod.yourreceipt.databinding.ActivityDetailsBinding;
 import soft.mahmod.yourreceipt.model.Receipt;
+import soft.mahmod.yourreceipt.view_fragment.details.FragmentDetailsReceipt;
 import soft.mahmod.yourreceipt.view_fragment.details.FragmentPayment;
 import soft.mahmod.yourreceipt.view_fragment.details.FragmentProducts;
-import soft.mahmod.yourreceipt.view_fragment.details.FragmentDetailsReceipt;
 import soft.mahmod.yourreceipt.view_model.send.data.VMSendReceipt;
 
 public class ActivityDetails extends AppCompatActivity {
     private static final String TAG = "ActivityDetails";
     private ActivityDetailsBinding binding;
-    private ViewPager2Adapter viewPager2Adapter;
-    private VMSendReceipt vmSendReceipt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +39,10 @@ public class ActivityDetails extends AppCompatActivity {
         });
     }
 
+    private Receipt model;
     private void sendData() {
-        vmSendReceipt = new ViewModelProvider(this).get(VMSendReceipt.class);
-        Receipt model = (Receipt) getIntent().getSerializableExtra("model");
+        VMSendReceipt vmSendReceipt = new ViewModelProvider(this).get(VMSendReceipt.class);
+        model = (Receipt) getIntent().getSerializableExtra("model");
         vmSendReceipt.setModel(model);
 //        TODO delete just used to test send with view mode
         vmSendReceipt.getModel().observe(this, receipt1 -> {
@@ -53,9 +52,13 @@ public class ActivityDetails extends AppCompatActivity {
 
     private void loadTabLayout() {
         binding.setToolbar(getResources().getString(R.string.receipt));
-        viewPager2Adapter = new ViewPager2Adapter(this);
+        ViewPager2Adapter viewPager2Adapter = new ViewPager2Adapter(this);
         viewPager2Adapter.addFragment(new FragmentDetailsReceipt());
-        viewPager2Adapter.addFragment(new FragmentPayment());
+        if (
+                model.getPayment().getTypePayment().equals(getResources().getString(R.string.bayment))
+                ||  model.getPayment().getTypePayment().equals(getResources().getString(R.string.debt))
+        )
+            viewPager2Adapter.addFragment(new FragmentPayment());
         viewPager2Adapter.addFragment(new FragmentProducts());
         binding.viewPager2.setAdapter(viewPager2Adapter);
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(binding.tableLayout,

@@ -22,6 +22,8 @@ public class ARPayment extends RecyclerView.Adapter<ARPayment.ViewHolder> {
         void payment(Payment model);
 
         void deletePayment(int position);
+
+        void paid (boolean isChecked,int position);
     }
 
     public void setListPayment(List<Payment> listPayment) {
@@ -32,7 +34,6 @@ public class ARPayment extends RecyclerView.Adapter<ARPayment.ViewHolder> {
     private List<Payment> listPayment;
     private ListenerOnClick listener;
     private int isCreate = View.VISIBLE;
-    private int indexColor = 000000;
     public ARPayment(List<Payment> listPayment, ListenerOnClick listener) {
         this.listPayment = listPayment;
         this.listener = listener;
@@ -96,6 +97,9 @@ public class ARPayment extends RecyclerView.Adapter<ARPayment.ViewHolder> {
             listener.payment(model);
             binding.btnDelete.setOnClickListener(v -> {
                 listener.deletePayment(getBindingAdapterPosition());
+            });
+            binding.switchPaid.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                listener.paid(isChecked,position);
             });
         }
     }

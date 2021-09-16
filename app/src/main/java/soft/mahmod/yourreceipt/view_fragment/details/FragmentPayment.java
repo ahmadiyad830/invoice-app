@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ARPayment;
@@ -62,6 +63,11 @@ public class FragmentPayment extends Fragment implements ARPayment.ListenerOnCli
 
     @Override
     public void deletePayment(int position) {
+
+    }
+
+    @Override
+    public void paid( boolean isChecked, int position) {
 
     }
 }

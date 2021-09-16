@@ -60,8 +60,8 @@
                         android:hint="@string/name"
                         android:inputType="text"
                         android:padding="@dimen/_12sdp"
-                        android:textColor="@color/text_color"
                         android:text="@{model.name}"
+                        android:textColor="@color/text_color"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -94,10 +94,10 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/price"
-                        android:inputType="text"
-                        android:textColor="@color/text_color"
+                        android:inputType="numberDecimal"
                         android:padding="@dimen/_12sdp"
                         android:text="@{String.valueOf(model.price)}"
+                        android:textColor="@color/text_color"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -130,7 +130,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/quantity"
-                        android:inputType="text"
+                        android:inputType="numberDecimal"
                         android:padding="@dimen/_12sdp"
                         android:text="@{String.valueOf(model.quantity)}"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -165,10 +165,10 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/discount"
-                        android:inputType="text"
+                        android:inputType="numberDecimal"
                         android:padding="@dimen/_12sdp"
-                        android:textColor="@color/text_color"
                         android:text="@{String.valueOf(model.discount)}"
+                        android:textColor="@color/text_color"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -201,10 +201,10 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/tax"
-                        android:inputType="text"
-                        android:textColor="@color/text_color"
+                        android:inputType="numberDecimal"
                         android:padding="@dimen/_12sdp"
                         android:text="@{String.valueOf(model.tax)}"
+                        android:textColor="@color/text_color"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -212,6 +212,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linearLayout21"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_8sdp"
@@ -237,35 +238,33 @@
                         android:background="@drawable/custom_stork"
                         android:hint="@string/note"
                         android:inputType="text"
-                        android:textColor="@color/text_color"
                         android:padding="@dimen/_12sdp"
                         android:text="@{String.valueOf(model.note)}"
+                        android:textColor="@color/text_color"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/cardView" />
                 </LinearLayout>
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_down"
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    android:layout_margin="@dimen/_12sdp"
+                    android:backgroundTint="@color/top_and_bottom_color"
+                    android:text="@string/ok"
+                    android:textColor="@color/text_btn_color"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout21" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </ScrollView>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_down"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:layout_marginHorizontal="@dimen/_12sdp"
-            android:text="@string/ok"
-            android:backgroundTint="@color/top_and_bottom_color"
-            android:textColor="@color/text_btn_color"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.516"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scrollView2"
-            app:layout_constraintVertical_bias="0.50" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

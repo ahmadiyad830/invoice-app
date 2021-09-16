@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,6 +53,7 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
                 , getResources().getString(R.string.debt), getResources().getString(R.string.bayment)};
 
         adapter = new ARPayment(listPayment, this);
+
         init();
         binding.btnAdd.setOnClickListener(this::onClickAdd);
         binding.btnDelete.setOnClickListener(this::onClickDeleteAll);
@@ -158,6 +160,11 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
     public void deletePayment(int position) {
         listPayment.remove(position);
         adapter.notifyItemRemoved(position);
+    }
+
+    @Override
+    public void paid(boolean isChecked, int position) {
+        listPayment.get(position).setPaid(isChecked);
     }
 
     private void onClickAdd(View v) {

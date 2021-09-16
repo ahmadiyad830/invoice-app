@@ -11,7 +11,7 @@ public class Items implements Serializable {
     private double discount;
     private double tax;
     private String note;
-    private String itemId    ;
+    private String itemId;
     private double quantity;
     private List<String> productId;
 

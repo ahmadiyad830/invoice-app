@@ -32,24 +32,38 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/btn_delete"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/_8sdp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_baseline_delete_outline_24"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout18"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.954"
+            app:layout_constraintStart_toEndOf="@+id/textView2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@android:color/holo_red_dark" />
+
         <LinearLayout
             android:id="@+id/linearLayout18"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/_8sdp"
-            android:layout_margin="@dimen/_8sdp"
+            android:layout_margin="@dimen/_4sdp"
             android:background="@drawable/custom_stork"
             android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2">
 
             <TextView
                 android:id="@+id/edit_price"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="6"
                 android:text="@{String.valueOf(model.price)}"
                 android:textColor="@color/text_color"
                 android:gravity="center_vertical"
@@ -58,9 +72,9 @@
 
             <TextView
                 android:id="@+id/edit_date"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="6"
                 android:paddingHorizontal="@dimen/_8sdp"
                 android:text="@{model.date}"
                 android:gravity="center_vertical"
@@ -68,12 +82,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editText" />
 
-            <ImageView
-                android:id="@+id/btn_delete"
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_25sdp"
-                android:src="@drawable/ic_baseline_delete_outline_24"
-                app:tint="@android:color/holo_red_dark" />
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switch_paid"
+                android:layout_width="wrap_content"
+                android:checked='@{model.paid}'
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/_3sdp"
+                android:layout_weight="2"
+                android:textOff="@string/paid"
+                android:textOn="@string/not_paid" />
         </LinearLayout>
 
 
