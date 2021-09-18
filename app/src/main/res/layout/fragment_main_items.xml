@@ -20,11 +20,11 @@
         android:id="@+id/container_items"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background_page"
+        android:orientation="vertical"
         app:behavior_hideable="true"
         app:behavior_peekHeight="@dimen/_32sdp"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-        android:background="@color/background_page"
-        android:orientation="vertical">
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutHeader"
@@ -44,26 +44,27 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="?selectableItemBackground"
+                android:drawablePadding="@dimen/_8sdp"
                 android:gravity="center"
                 android:text='@string/add_item'
-                android:visibility='@{inDialog?View.VISIBLE:View.GONE,default=visible}'
                 android:textColor="@color/text_btn_color"
                 android:textSize="@dimen/_13sdp"
-                android:drawablePadding="@dimen/_8sdp"
+                android:visibility='@{inDialog?View.VISIBLE:View.GONE,default=visible}'
                 app:drawableEndCompat="@drawable/ic_baseline_format_list_bulleted_24"
                 app:drawableTint="@color/text_btn_color"
                 app:layout_constraintBottom_toBottomOf="@+id/btn_slide"
                 app:layout_constraintEnd_toStartOf="@+id/btn_slide"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/btn_slide" />
+
             <ImageView
                 android:id="@+id/btn_slide"
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="?actionBarSize"
                 android:layout_marginHorizontal="@dimen/_8sdp"
-                android:visibility='@{inDialog?View.VISIBLE:View.GONE,default=visible}'
                 android:contentDescription="@string/todo"
                 android:src="@drawable/ic_baseline_arrow_drop_up_24"
+                android:visibility='@{inDialog?View.VISIBLE:View.GONE,default=visible}'
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -140,20 +141,20 @@
                 android:id="@+id/btn_add"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_margin="@dimen/_8sdp"
+                android:layout_weight="0"
+                android:background="?selectableItemBackground"
                 android:backgroundTint="@android:color/transparent"
-                android:text="@string/add_item"
-                android:textColor="@color/text_color"
+                android:contentDescription="@string/todo"
+                android:outlineSpotShadowColor="@color/white"
                 android:shadowColor="@color/white"
                 android:shadowRadius="0"
-                android:outlineSpotShadowColor="@color/white"
-                android:background="?selectableItemBackground"
+                android:src="@drawable/ic_baseline_add_24"
+                android:text="@string/add_item"
+                android:textColor="@color/text_color"
                 app:icon="@drawable/ic_baseline_add_24"
                 app:iconSize="@dimen/_12sdp"
                 app:iconTint="@color/icon_color"
-                android:layout_margin="@dimen/_8sdp"
-                android:layout_weight="0"
-                android:contentDescription="@string/todo"
-                android:src="@drawable/ic_baseline_add_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"

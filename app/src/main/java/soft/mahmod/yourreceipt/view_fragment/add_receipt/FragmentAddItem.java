@@ -156,19 +156,10 @@ public class FragmentAddItem extends Fragment implements ARItems.OnCLickItem, AR
 
     // TODO listener items
     @Override
-    public void clickItemToCreateProduct(Products model, Items itemModel, int position) {
-        model.setTaxClientNoReg(addItemArgs.getClientToAddItem().isTaxRegNo());
-        addProduct.setItemToCreateProduct(model);
-        controller.navigate(addProduct);
-        // FIXME: 9/10/2021
-//        itemBottomDialog.dismiss();
-    }
-
-    @Override
-    public void editItem(Items model) {
+    public void clickItem(Products model, Items itemModel, int position) {
         FragmentAddItemDirections.ActionFragmentAddItemToFragmentCreateItem2
                 createItem = FragmentAddItemDirections.actionFragmentAddItemToFragmentCreateItem2();
-        createItem.setItemToCreateItem(model);
+        createItem.setItemToCreateItem(itemModel);
         controller.navigate(createItem);
         // FIXME: 9/10/2021
 //        itemBottomDialog.dismiss();

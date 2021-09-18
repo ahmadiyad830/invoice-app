@@ -67,15 +67,10 @@ public class FragmentItems extends Fragment implements ARItems.OnCLickItem, Data
     }
 
     @Override
-    public void clickItemToCreateProduct(Products model, Items itemModel, int position) {
-
-    }
-
-    @Override
-    public void editItem(Items model) {
+    public void clickItem(Products model, Items itemModel, int position) {
         FragmentItemsDirections.ActionMenuItemToFragmentCreateItem2
                 detailsItem = FragmentItemsDirections.actionMenuItemToFragmentCreateItem2();
-        detailsItem.setMainItemToCreateItem(model);
+        detailsItem.setMainItemToCreateItem(itemModel);
         controller.navigate(detailsItem);
     }
 

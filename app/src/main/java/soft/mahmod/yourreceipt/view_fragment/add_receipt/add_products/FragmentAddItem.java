@@ -1,11 +1,7 @@
 package soft.mahmod.yourreceipt.view_fragment.add_receipt.add_products;
 
+import android.app.Dialog;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -15,6 +11,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +24,7 @@ import com.google.firebase.database.Query;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.firebase.ARItems;
+import soft.mahmod.yourreceipt.databinding.FragmentAddProductsBinding;
 import soft.mahmod.yourreceipt.databinding.FragmentMainItemsBinding;
 import soft.mahmod.yourreceipt.model.Items;
 import soft.mahmod.yourreceipt.model.Products;
@@ -146,6 +148,7 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
         }
         binding.setHasValue(!search.isEmpty());
     }
+
     @Override
     public void onStop() {
         super.onStop();
@@ -153,12 +156,60 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
     }
 
     @Override
-    public void clickItemToCreateProduct(Products model, Items itemModel, int position) {
-        FragmentAddProducts.listProduct.add(model);
+    public void clickItem(Products model, Items itemModel, int position) {
+//        FragmentAddProducts.listProduct.add(model);
+        loadDialogCreateProduct(model);
     }
 
-    @Override
-    public void editItem(Items model) {
 
+    private void loadDialogCreateProduct(Products model) {
+        Dialog dialog = new Dialog(requireContext());
+        FragmentAddProductsBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_add_products
+                , null, false);
+        binding.setModel(model);
+        dialog.setContentView(binding.getRoot());
+        dialog.getWindow().setBackgroundDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.custom_back_icon));
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setCancelable(true);
+        binding.btnDown.setOnClickListener(v -> {
+            FragmentAddProducts.listProduct.add(getProduct(binding));
+            dialog.dismiss();
+        });
+        dialog.show();
+    }
+
+
+
+    private Products getProduct(FragmentAddProductsBinding binding) {
+        Products model = new Products();
+        double price ;
+        try {
+            price = Double.parseDouble(binding.edtPrice.getText().toString().trim());
+        } catch (NumberFormatException e) {
+            price = 0;
+        }
+        double quantity ;
+        try {
+            quantity = Double.parseDouble(binding.edtQuantity.getText().toString().trim());
+        } catch (NumberFormatException e) {
+            quantity = 0;
+        }
+        double discount ;
+        try {
+            discount = Double.parseDouble(binding.edtDiscount.getText().toString().trim());
+        } catch (NumberFormatException e) {
+            discount = 0;
+        }
+        double tax ;
+        try {
+            tax = Double.parseDouble(binding.edtTax.getText().toString().trim());
+        } catch (NumberFormatException e) {
+            tax = 0;
+        }
+        model.setPrice(price);
+        model.setQuantity(quantity);
+        model.setDiscount(discount);
+        model.setTax(tax);
+        return model;
     }
 }

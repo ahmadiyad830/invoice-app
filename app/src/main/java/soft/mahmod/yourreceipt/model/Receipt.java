@@ -11,6 +11,7 @@ import soft.mahmod.yourreceipt.model.billing.Payment;
 public class Receipt extends Cash {
     @Exclude
     private boolean expandedPayment = false;
+    @Exclude
     private boolean expandedDeptReceipt = false;
     private String receiptId;
     private String subject;
@@ -60,11 +61,11 @@ public class Receipt extends Cash {
     public void setExpandedPayment(boolean expandedPayment) {
         this.expandedPayment = expandedPayment;
     }
-
+    @Exclude
     public boolean isExpandedDeptReceipt() {
         return expandedDeptReceipt;
     }
-
+    @Exclude
     public void setExpandedDeptReceipt(boolean expandedDeptReceipt) {
         this.expandedDeptReceipt = expandedDeptReceipt;
     }

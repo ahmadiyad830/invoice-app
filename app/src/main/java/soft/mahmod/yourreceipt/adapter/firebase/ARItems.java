@@ -21,10 +21,7 @@ public class ARItems extends FirebaseRecyclerAdapter<Items, ARItems.ViewHolder> 
     private static final String TAG = "ARItems";
 
     public interface OnCLickItem {
-        void clickItemToCreateProduct(Products model, Items itemModel, int position);
-
-        void editItem(Items model);
-
+        void clickItem(Products model, Items itemModel, int position);
     }
 
     private LayoutInflater inflater;
@@ -69,11 +66,7 @@ public class ARItems extends FirebaseRecyclerAdapter<Items, ARItems.ViewHolder> 
         public void bind(Items model) {
             binding.setModel(model);
             binding.getRoot().setOnClickListener(v -> {
-                listener.editItem(model);
-            });
-            binding.goDetails.setOnClickListener(v -> {
-                listener.clickItemToCreateProduct(getProducts(model),model, getBindingAdapterPosition());
-
+                listener.clickItem(getProducts(model),model, getBindingAdapterPosition());
             });
         }
 
@@ -82,6 +75,7 @@ public class ARItems extends FirebaseRecyclerAdapter<Items, ARItems.ViewHolder> 
             products.setName(model.getName());
             products.setPrice(model.getPrice());
             products.setQuantity(model.getQuantity());
+            products.setTax(model.getTax());
             products.setTotal(products.getPrice() * products.getQuantity());
             return products;
         }

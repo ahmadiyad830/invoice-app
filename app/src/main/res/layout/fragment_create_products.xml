@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="model"
             type="soft.mahmod.yourreceipt.model.Products" />
@@ -18,9 +17,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/products_container"
         android:layout_width="match_parent"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="@dimen/_32sdp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         android:layout_height="match_parent"
         android:background="@color/background_page"
         tools:context=".view_fragment.create.FragmentCreateProducts">
+
+
         <ScrollView
             android:id="@+id/scrollView3"
             android:layout_width="match_parent"
@@ -28,7 +32,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_toolbar">
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -193,7 +197,9 @@
                 </LinearLayout>
 
             </LinearLayout>
+
         </ScrollView>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_down"
             android:layout_width="match_parent"
@@ -207,5 +213,6 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
