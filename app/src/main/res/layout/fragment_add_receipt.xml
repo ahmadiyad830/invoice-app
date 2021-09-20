@@ -116,7 +116,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_8sdp"
-                    android:visibility='@{isBayment?View.VISIBLE:View.GONE,default = gone}'
+                    android:visibility='@{isBayment?View.VISIBLE:View.GONE,default = visible}'
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -139,18 +139,19 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/layout_client_side" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/edit_date"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="@dimen/_8sdp"
                         android:layout_weight="9"
-                        android:hint="@string/date"
-                        android:inputType="date"
                         android:maxLines="1"
+                        android:gravity="center"
                         android:minEms="1"
                         android:minLines="1"
-                        android:textAlignment="center"
+                        android:text="@string/date"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/_12ssp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.769"

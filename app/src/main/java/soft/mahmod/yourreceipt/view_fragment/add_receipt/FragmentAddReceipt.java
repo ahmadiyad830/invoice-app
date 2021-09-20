@@ -1,12 +1,17 @@
 package soft.mahmod.yourreceipt.view_fragment.add_receipt;
 
+import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
+import android.widget.CalendarView;
+import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import soft.mahmod.yourreceipt.R;
@@ -23,9 +29,11 @@ import soft.mahmod.yourreceipt.databinding.FragmentAddReceiptBinding;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.model.billing.Payment;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
+import soft.mahmod.yourreceipt.utils.DialogConfirm;
+import soft.mahmod.yourreceipt.utils.DialogListener;
 import soft.mahmod.yourreceipt.view_model.database.VMReceipt;
 
-public class FragmentAddReceipt extends Fragment implements DatabaseUrl, AdapterView.OnItemSelectedListener, ARPayment.ListenerOnClick {
+public class FragmentAddReceipt extends Fragment implements DatabaseUrl, AdapterView.OnItemSelectedListener, ARPayment.ListenerOnClick, DialogListener {
 
     private static final String TAG = "FragmentAddReceipt";
     private FragmentAddReceiptBinding binding;
@@ -72,6 +80,28 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         spinnerInit();
+        binding.editDate.setOnClickListener(v -> {
+            loadCalenderDialog();
+        });
+    }
+
+    private void loadCalenderDialog() {
+        DialogConfirm dialog = new DialogConfirm(requireContext(), this);
+        dialog.addView(createCalendar(dialog.context()));
+        dialog.listenerDialog();
+        dialog.showDialog();
+    }
+
+
+    private CalendarView createCalendar(Context context) {
+        CalendarView calendarView = new CalendarView(context);
+        calendarView.setMinDate(System.currentTimeMillis());
+        calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
+            month = month + 1;
+            String date = dayOfMonth + "/" + month + "/" + year;
+            binding.editDate.setText(date);
+        });
+        return calendarView;
     }
 
     private void spinnerInit() {
@@ -122,14 +152,6 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
 
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        binding = null;
-        getViewModelStore().clear();
-    }
-
-
-    @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         receiptType = (String) parent.getItemAtPosition(position);
         if (receiptType.equals(typeReceipt[0])){
@@ -175,7 +197,7 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
             price = 0;
         }
         Payment payment = new Payment();
-        payment.setDate(binding.editPrice.getText().toString().trim());
+        payment.setDate(binding.editDate.getText().toString().trim());
         payment.setPrice(price);
         listPayment.add(payment);
         adapter.notifyItemInserted(listPayment.size() - 1);
@@ -186,5 +208,22 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
             adapter.notifyItemRangeRemoved(0, listPayment.size());
             listPayment.clear();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        binding = null;
+        getViewModelStore().clear();
+    }
+
+    @Override
+    public void clickOk(DialogInterface dialog) {
+
+    }
+
+    @Override
+    public void clickCancel(DialogInterface dialog) {
+        dialog.dismiss();
     }
 }
