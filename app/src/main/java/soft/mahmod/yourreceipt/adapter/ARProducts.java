@@ -20,7 +20,7 @@ public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
     public interface OnClickItem {
         void editProduct(Products model, int position);
 
-        void deleteProduct(Products model, int position);
+        void    deleteProduct(Products model, int position);
 
         void setTotalAll(double total);
     }

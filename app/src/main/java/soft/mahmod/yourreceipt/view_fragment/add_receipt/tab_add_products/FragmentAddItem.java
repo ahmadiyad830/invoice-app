@@ -26,6 +26,7 @@ import com.google.firebase.database.Query;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.firebase.ARItems;
+import soft.mahmod.yourreceipt.common.Common;
 import soft.mahmod.yourreceipt.databinding.FragmentAddProductsBinding;
 import soft.mahmod.yourreceipt.databinding.FragmentMainItemsBinding;
 import soft.mahmod.yourreceipt.model.Client;
@@ -190,17 +191,25 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
         binding.btnDown.setOnClickListener(v -> {
             Products products = getProduct(binding);
             products.setName(model.getName());
-            FragmentAddProducts.listProduct.add(products);
+            Common.listProduct.add(products);
+            totalAll();
             dialog.dismiss();
         });
         dialog.show();
     }
 
+    private void totalAll() {
+        double total = 0.0;
+        for (int i = 0; i < Common.listProduct.size(); i++) {
+            total = total + Common.listProduct.get(i).getTotal();
+        }
+        Common.totlaAll = total;
+    }
 
 
     private Products getProduct(FragmentAddProductsBinding binding) {
         Products model = new Products();
-        double price ;
+        double price;
         try {
             price = Double.parseDouble(binding.edtPrice.getText().toString().trim());
         } catch (NumberFormatException e) {
@@ -246,4 +255,5 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
         double price = model.getPrice() - model.getDiscount();
         return price * model.getQuantity();
     }
+
 }

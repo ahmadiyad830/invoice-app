@@ -25,6 +25,7 @@ import java.util.List;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ARPayment;
+import soft.mahmod.yourreceipt.common.Common;
 import soft.mahmod.yourreceipt.databinding.FragmentAddReceiptBinding;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.model.billing.Payment;
@@ -48,7 +49,7 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
         super.onCreate(savedInstanceState);
         vmReceipt = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
                 .get(VMReceipt.class);
-
+        Log.d(TAG, "onCreate: "+ Common.totlaAll);
     }
 
     @Override

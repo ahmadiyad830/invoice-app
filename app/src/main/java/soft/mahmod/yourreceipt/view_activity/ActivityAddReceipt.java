@@ -9,6 +9,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import soft.mahmod.yourreceipt.R;
+import soft.mahmod.yourreceipt.common.Common;
 import soft.mahmod.yourreceipt.databinding.ActivityAddReceiptBinding;
 import soft.mahmod.yourreceipt.view_fragment.add_receipt.tab_add_products.FragmentAddProducts;
 
@@ -44,7 +45,7 @@ public class ActivityAddReceipt extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        FragmentAddProducts.listProduct.clear();
+        Common.listProduct.clear();
         binding = null;
         getViewModelStore().clear();
     }

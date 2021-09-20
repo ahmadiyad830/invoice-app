@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +19,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ViewPager2Adapter;
+import soft.mahmod.yourreceipt.common.Common;
 import soft.mahmod.yourreceipt.databinding.FragmentMainAddItemBinding;
 import soft.mahmod.yourreceipt.model.Client;
 import soft.mahmod.yourreceipt.model.Receipt;
@@ -83,7 +85,6 @@ public class FragmentMainAddItem extends Fragment {
                     tab.setText(getResources().getString(R.string.items));
                     break;
             }
-            Log.d(TAG, "loadTabLayout: " + position);
         });
         tabLayoutMediator.attach();
     }
@@ -93,8 +94,9 @@ public class FragmentMainAddItem extends Fragment {
         receipt.setClientName(clientToAddItem.getName());
         receipt.setClientId(clientToAddItem.getClientId());
         receipt.setClientPhone(clientToAddItem.getPhone());
-        if (FragmentAddProducts.listProduct.size() > 0)
-            receipt.setProducts(FragmentAddProducts.listProduct);
+        if (Common.listProduct.size() > 0)
+            receipt.setProducts(Common.listProduct);
+        receipt.setTotalAll(Common.totlaAll);
         return receipt;
     }
 

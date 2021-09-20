@@ -11,11 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ARProducts;
+import soft.mahmod.yourreceipt.common.Common;
 import soft.mahmod.yourreceipt.databinding.FragmentAddItemBinding;
 import soft.mahmod.yourreceipt.model.Products;
 
@@ -27,7 +25,7 @@ import soft.mahmod.yourreceipt.model.Products;
 public class FragmentAddProducts extends Fragment implements ARProducts.OnClickItem {
     public static final String TAG = "FragmentAddProducts";
     private FragmentAddItemBinding binding;
-    public final static List<Products> listProduct = new ArrayList<>();
+
     private ARProducts adapter;
 
     @Override
@@ -54,14 +52,15 @@ public class FragmentAddProducts extends Fragment implements ARProducts.OnClickI
     @Override
     public void onStart() {
         super.onStart();
-        adapter = new ARProducts(listProduct, this);
+        adapter = new ARProducts(Common.listProduct, this);
         adapter.setCreate(true);
         binding.recItem.setHasFixedSize(true);
         binding.recItem.setAdapter(adapter);
         binding.txtDeleteAll.setOnClickListener(v -> {
-            if (listProduct.size() > 0) {
+            if (Common.listProduct.size() > 0) {
                 adapter.notifyItemRangeRemoved(0, adapter.getItemCount());
-                listProduct.clear();
+                Common.listProduct.clear();
+                Common.totlaAll = 0.0;
             }
             binding.setTotalAll(0.0);
         });
@@ -84,8 +83,9 @@ public class FragmentAddProducts extends Fragment implements ARProducts.OnClickI
         double price = model.getPrice();
         double newTotal = oldTotal - price;
         binding.total.setText(String.valueOf(newTotal));
+        Common.totlaAll = newTotal;
         adapter.notifyItemRemoved(position);
-        listProduct.remove(position);
+        Common.listProduct.remove(position);
 
     }
 
