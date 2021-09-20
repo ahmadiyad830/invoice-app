@@ -20,6 +20,13 @@
         android:layout_margin="@dimen/_8sdp"
         tools:context=".view_fragment.add_receipt.tab_add_products.FragmentAddProducts">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:text="@string/price"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"/>
         <EditText
             android:id="@+id/edt_price"
             android:layout_width="match_parent"
@@ -30,7 +37,13 @@
             android:padding="@dimen/_12sdp"
             android:text="@{String.valueOf(model.price)}"
             android:textColor="@color/text_color" />
-
+        <TextView
+            android:layout_width="match_parent"
+            android:text="@string/quantity"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"/>
         <EditText
             android:id="@+id/edt_quantity"
             android:layout_width="match_parent"
@@ -42,7 +55,13 @@
             android:padding="@dimen/_12sdp"
             android:text="@{String.valueOf(model.quantity)}"
             android:textColor="@color/text_color" />
-
+        <TextView
+            android:layout_width="match_parent"
+            android:text="@string/discount"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"/>
         <EditText
             android:id="@+id/edt_discount"
             android:layout_width="match_parent"
@@ -54,7 +73,14 @@
             android:padding="@dimen/_12sdp"
             android:text="@{String.valueOf(model.discount)}"
             android:textColor="@color/text_color" />
-
+        <TextView
+            android:layout_width="match_parent"
+            android:text="@string/tax"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
+            android:visibility='@{isTaxNoReg?View.VISIBLE:View.GONE,default = visible}'
+            android:layout_height="wrap_content"/>
         <EditText
             android:id="@+id/edt_tax"
             android:layout_width="match_parent"

@@ -78,9 +78,9 @@ public class ARProduct extends FirebaseRecyclerAdapter<Products, ARProduct.ViewH
             binding.getRoot().setOnClickListener(v -> {
                 onClickItem.clickProduct(model, getBindingAdapterPosition());
             });
-            binding.btnEdit.setOnClickListener(v -> {
-                onClickItem.editProduct(model, getBindingAdapterPosition());
-            });
+//            binding.btnEdit.setOnClickListener(v -> {
+//                onClickItem.editProduct(model, getBindingAdapterPosition());
+//            });
 
             binding.name.setOnClickListener(v -> {
                 onClickItem.editSingleProduct("name", "itemName", model.getName()

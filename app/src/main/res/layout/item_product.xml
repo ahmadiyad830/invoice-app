@@ -101,20 +101,13 @@
                 android:orientation="vertical"
                 android:visibility='@{isCreate?View.VISIBLE:View.GONE,default = gone}'
                 android:layout_marginVertical="@dimen/_6sdp"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
                 <ImageView
                     android:id="@+id/btn_delete"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
                     android:src="@drawable/ic_baseline_delete_outline_24"
                     app:tint="@android:color/holo_red_dark" />
-
-                <ImageView
-                    android:id="@+id/btn_edit"
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:src="@drawable/ic_baseline_edit_24"
-                    app:tint="@color/icon_color" />
             </LinearLayout>
         </LinearLayout>
 

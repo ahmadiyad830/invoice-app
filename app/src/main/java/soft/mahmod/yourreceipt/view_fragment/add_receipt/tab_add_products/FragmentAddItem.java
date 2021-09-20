@@ -188,7 +188,9 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.setCancelable(true);
         binding.btnDown.setOnClickListener(v -> {
-            FragmentAddProducts.listProduct.add(getProduct(binding));
+            Products products = getProduct(binding);
+            products.setName(model.getName());
+            FragmentAddProducts.listProduct.add(products);
             dialog.dismiss();
         });
         dialog.show();
@@ -225,8 +227,23 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
         model.setPrice(price);
         model.setQuantity(quantity);
         model.setDiscount(discount);
-        if (client.isTaxRegNo())
+        if (client.isTaxRegNo()) {
             model.setTax(tax);
+            model.setTotal(withTax(model));
+        }
+        model.setTotal(withoutTax(model));
         return model;
+    }
+
+    private double withTax(Products model) {
+        // FIXME: 9/20/2021 Add Tax
+        double price = model.getPrice() - model.getDiscount();
+        
+        return price;
+    }
+
+    private double withoutTax(Products model) {
+        double price = model.getPrice() - model.getDiscount();
+        return price * model.getQuantity();
     }
 }

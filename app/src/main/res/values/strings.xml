@@ -97,7 +97,7 @@
     <string name="tax_reg_no">Tax Reg No</string>
     <string name="address">Address</string>
     <string name="hide">Hide</string>
-    <string name="total_all">Total All</string>
+    <string name="total_all">Total All: </string>
     <string name="old_password">Old Password</string>
     <string name="new_password">New Password</string>
     <string name="delete">Delete</string>

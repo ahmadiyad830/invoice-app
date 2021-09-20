@@ -36,9 +36,18 @@ public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
     private OnClickItem onClickItem;
     public double totalAll = 0.0;
     public boolean isCreate = false;
+
     public ARProducts(List<Products> listModel, OnClickItem onClickItem) {
         this.listModel = listModel;
         this.onClickItem = onClickItem;
+    }
+
+    public boolean isCreate() {
+        return isCreate;
+    }
+
+    public void setCreate(boolean create) {
+        isCreate = create;
     }
 
     @NonNull
@@ -49,7 +58,7 @@ public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
             inflater = LayoutInflater.from(parent.getContext());
         }
         ItemProductBinding binding = DataBindingUtil.inflate(inflater, R.layout.item_product, parent, false);
-        binding.setIsCreate(isCreate);
+        binding.setIsCreate(isCreate());
         return new ViewHolder(binding);
     }
 
@@ -68,7 +77,7 @@ public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder implements ARProducts.OnTotalProducts {
         private final ItemProductBinding binding;
-
+        private double total;
         public ViewHolder(ItemProductBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
@@ -77,6 +86,7 @@ public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
         public synchronized void bind(Products model) {
             binding.setModel(model);
             binding.btnDelete.setOnClickListener(v -> {
+                total = total - model.getPrice();
                 onClickItem.deleteProduct(model, getBindingAdapterPosition());
             });
             binding.getRoot().setOnClickListener(v -> {
@@ -89,7 +99,7 @@ public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
         public double totalAll() {
             double price = 0.0;
             double quantity = 0.0;
-            double total = price * quantity;
+            total = price * quantity;
             for (Products model : listModel) {
                 total = total + model.getPrice() * model.getQuantity();
             }

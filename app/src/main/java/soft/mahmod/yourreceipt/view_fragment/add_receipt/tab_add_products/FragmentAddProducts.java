@@ -55,12 +55,16 @@ public class FragmentAddProducts extends Fragment implements ARProducts.OnClickI
     public void onStart() {
         super.onStart();
         adapter = new ARProducts(listProduct, this);
+        adapter.setCreate(true);
         binding.recItem.setHasFixedSize(true);
         binding.recItem.setAdapter(adapter);
         binding.txtDeleteAll.setOnClickListener(v -> {
-            // FIXME: 9/16/2021 clean list products
+            if (listProduct.size() > 0) {
+                adapter.notifyItemRangeRemoved(0, adapter.getItemCount());
+                listProduct.clear();
+            }
+            binding.setTotalAll(0.0);
         });
-        Log.d(TAG, "onStart: ");
     }
 
     @Override
@@ -76,12 +80,18 @@ public class FragmentAddProducts extends Fragment implements ARProducts.OnClickI
 
     @Override
     public void deleteProduct(Products model, int position) {
+        double oldTotal = Double.parseDouble(binding.total.getText().toString().trim());
+        double price = model.getPrice();
+        double newTotal = oldTotal - price;
+        binding.total.setText(String.valueOf(newTotal));
+        adapter.notifyItemRemoved(position);
+        listProduct.remove(position);
 
     }
 
     @Override
     public void setTotalAll(double total) {
-
+        binding.setTotalAll(total);
     }
 
 }

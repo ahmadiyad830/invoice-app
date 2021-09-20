@@ -27,12 +27,21 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:id="@+id/txttotal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="9"
+                android:gravity="end|center_vertical"
+                android:text='@string/total_all'
+                android:textColor="@color/mony_color"
+                android:textSize="@dimen/_14ssp" />
+            <TextView
                 android:id="@+id/total"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="9"
-                android:gravity="center"
-                android:text='@{@string/total_all+": "+String.valueOf(totalAll)}'
+                android:gravity="start|center_vertical"
+                android:text='@{String.valueOf(totalAll)}'
                 android:textColor="@color/mony_color"
                 android:textSize="@dimen/_14ssp" />
 
@@ -50,6 +59,73 @@
                 app:drawableTint="@android:color/holo_red_light" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_8sdp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout12">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:maxLength="10"
+                android:singleLine="true"
+                android:text="@string/name"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:maxLength="10"
+                android:singleLine="true"
+                android:text="@string/quantity"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:maxLength="10"
+                android:singleLine="true"
+                android:text="@string/price"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:maxLength="10"
+                android:singleLine="true"
+                android:text="@string/total"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rec_item"
@@ -58,9 +134,10 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/_6sdp"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout12" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_to_create_item"
@@ -82,11 +159,8 @@
             android:layout_width="match_parent"
             android:visibility="gone"
             android:layout_height="match_parent">
-
             <include
                 layout="@layout/fragment_main_items"/>
-
-
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

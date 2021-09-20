@@ -44,10 +44,6 @@ public class ActivityDetails extends AppCompatActivity {
         VMSendReceipt vmSendReceipt = new ViewModelProvider(this).get(VMSendReceipt.class);
         model = (Receipt) getIntent().getSerializableExtra("model");
         vmSendReceipt.setModel(model);
-//        TODO delete just used to test send with view mode
-        vmSendReceipt.getModel().observe(this, receipt1 -> {
-
-        });
     }
 
     private void loadTabLayout() {
