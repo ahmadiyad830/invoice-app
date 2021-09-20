@@ -81,12 +81,11 @@ public class FragmentAddProducts extends Fragment implements ARProducts.OnClickI
     public void deleteProduct(Products model, int position) {
         double oldTotal = Double.parseDouble(binding.total.getText().toString().trim());
         double price = model.getPrice();
-        double newTotal = oldTotal - price;
+        double newTotal = oldTotal - price * model.getQuantity();
         binding.total.setText(String.valueOf(newTotal));
         Common.totlaAll = newTotal;
         adapter.notifyItemRemoved(position);
         Common.listProduct.remove(position);
-
     }
 
     @Override

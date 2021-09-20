@@ -174,11 +174,11 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
     @Override
     public void clickItem(Products model, Items itemModel, int position) {
 //        FragmentAddProducts.listProduct.add(model);
-        loadDialogCreateProduct(model);
+        loadDialogCreateProduct(model,itemModel);
     }
 
 
-    private void loadDialogCreateProduct(Products model) {
+    private void loadDialogCreateProduct(Products model, Items itemModel) {
         Dialog dialog = new Dialog(requireContext());
         FragmentAddProductsBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_add_products
                 , null, false);
@@ -190,6 +190,8 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
         dialog.setCancelable(true);
         binding.btnDown.setOnClickListener(v -> {
             Products products = getProduct(binding);
+            products.setItemQuantity(itemModel.getQuantity());
+            products.setItemId(itemModel.getItemId());
             products.setName(model.getName());
             Common.listProduct.add(products);
             totalAll();
@@ -247,7 +249,6 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
     private double withTax(Products model) {
         // FIXME: 9/20/2021 Add Tax
         double price = model.getPrice() - model.getDiscount();
-        
         return price;
     }
 

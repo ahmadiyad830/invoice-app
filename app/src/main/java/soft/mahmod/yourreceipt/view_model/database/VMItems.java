@@ -6,8 +6,6 @@ import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
@@ -33,5 +31,8 @@ public class VMItems extends AndroidViewModel {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
             return repoItem.putItem(model);
         else return repoItem.putItemTLow(model);
+    }
+    public LiveData<Cash> updatesQuantity(List<String> ids,List<Double> itemQuantity,List<Double> quantity){
+        return repoItem.updatsQuantity(ids, itemQuantity,quantity);
     }
 }

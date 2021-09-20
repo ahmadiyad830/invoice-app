@@ -100,4 +100,5 @@ public class FragmentMainAddItem extends Fragment {
         return receipt;
     }
 
+
 }

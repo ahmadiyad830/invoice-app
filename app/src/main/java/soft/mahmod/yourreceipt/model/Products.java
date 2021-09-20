@@ -9,7 +9,9 @@ import java.util.List;
 
 public class Products extends Cash {
     private String productId;
-
+    private String itemId;
+    @Exclude
+    private double itemQuantity;
     private double price;
 
     private double quantity;
@@ -46,6 +48,22 @@ public class Products extends Cash {
         this.total = total;
         this.discount = discount;
         this.tax = tax;
+    }
+    @Exclude
+    public double getItemQuantity() {
+        return itemQuantity;
+    }
+    @Exclude
+    public void setItemQuantity(double itemQuantity) {
+        this.itemQuantity = itemQuantity;
+    }
+
+    public String getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
     }
 
     public String getProductId() {

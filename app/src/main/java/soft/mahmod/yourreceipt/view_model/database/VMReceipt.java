@@ -37,4 +37,5 @@ public class VMReceipt extends AndroidViewModel {
                 : repoReceipt.putEditValueTLow(editValue, pushKey, keyEdit);
     }
 
+
 }

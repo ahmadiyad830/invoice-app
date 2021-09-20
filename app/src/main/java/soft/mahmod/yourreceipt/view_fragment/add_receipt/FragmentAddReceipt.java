@@ -1,6 +1,5 @@
 package soft.mahmod.yourreceipt.view_fragment.add_receipt;
 
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
-import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,18 +18,18 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ARPayment;
-import soft.mahmod.yourreceipt.common.Common;
 import soft.mahmod.yourreceipt.databinding.FragmentAddReceiptBinding;
+import soft.mahmod.yourreceipt.model.Products;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.model.billing.Payment;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.utils.DialogConfirm;
 import soft.mahmod.yourreceipt.utils.DialogListener;
+import soft.mahmod.yourreceipt.view_model.database.VMItems;
 import soft.mahmod.yourreceipt.view_model.database.VMReceipt;
 
 public class FragmentAddReceipt extends Fragment implements DatabaseUrl, AdapterView.OnItemSelectedListener, ARPayment.ListenerOnClick, DialogListener {
@@ -43,13 +41,14 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
     private String[] typeReceipt;
     private ARPayment adapter;
     private String receiptType;
-
+    private VMItems vmItems;
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         vmReceipt = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
                 .get(VMReceipt.class);
-        Log.d(TAG, "onCreate: "+ Common.totlaAll);
+        vmItems = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
+                .get(VMItems.class);
     }
 
     @Override
@@ -121,15 +120,34 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
         model.setPayment(getPayment());
         vmReceipt.postReceipt(model).observe(getViewLifecycleOwner(), cash -> {
             if (!cash.getError()) {
-//                FragmentAddReceiptDirections.ActionAddReceiptToPrintReceipt argsToClient
-//                        = FragmentAddReceiptDirections.actionAddReceiptToPrintReceipt();
-//                argsToClient.setReceiptToPrint(model);
-//                Navigation.findNavController(requireView()).navigate(argsToClient);
+                vmItems.updatesQuantity(getIds(model.getProducts())
+                        ,getItemQuantitys(model.getProducts()),getQuantitys(model.getProducts()));
                 requireActivity().finish();
             }
         });
     }
+    private List<Double> getItemQuantitys(List<Products> products) {
+        List<Double> quantits = new ArrayList<>();
+        for (Products model : products) {
+            quantits.add(model.getItemQuantity());
+        }
+        return quantits;
+    }
+    private List<Double> getQuantitys(List<Products> products) {
+        List<Double> quantits = new ArrayList<>();
+        for (Products model : products) {
+            quantits.add(model.getQuantity());
+        }
+        return quantits;
+    }
 
+    private List<String> getIds(List<Products> products) {
+        List<String> ids = new ArrayList<>();
+        for (Products model : products) {
+            ids.add(model.getItemId());
+        }
+        return ids;
+    }
     private Receipt getReceipt() {
         Receipt model = new Receipt();
         model.setSubject(binding.edtSubject.getText().toString().trim());
