@@ -53,11 +53,11 @@ public class Receipt extends Cash {
     public void setPayment(Payment payment) {
         this.payment = payment;
     }
-
+    @Exclude
     public boolean isExpandedPayment() {
         return expandedPayment;
     }
-
+    @Exclude
     public void setExpandedPayment(boolean expandedPayment) {
         this.expandedPayment = expandedPayment;
     }

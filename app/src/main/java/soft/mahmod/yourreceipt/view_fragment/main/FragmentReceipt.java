@@ -2,6 +2,13 @@ package soft.mahmod.yourreceipt.view_fragment.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,39 +18,27 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
-
 import soft.mahmod.yourreceipt.R;
-import soft.mahmod.yourreceipt.adapter.firebase.ARClients;
 import soft.mahmod.yourreceipt.adapter.firebase.ARReceipt;
 import soft.mahmod.yourreceipt.databinding.FragmentReceiptBinding;
 import soft.mahmod.yourreceipt.listeners.OnReceiptItemClick;
-import soft.mahmod.yourreceipt.model.Client;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.view_activity.ActivityDetails;
+import soft.mahmod.yourreceipt.view_activity.MainActivity;
 
 
 public class FragmentReceipt extends Fragment implements OnReceiptItemClick, DatabaseUrl, AdapterView.OnItemSelectedListener, TextWatcher {
     private static final String TAG = "FragmentHome";
     private FragmentReceiptBinding binding;
     private ARReceipt adapter;
-
-    private String[] sortReceipt = {"clientName", "clientPhone", "date",
-                            "subject","totalAll","totalAll"};
+    private String[] sortReceipt = {"clientName", "subject", "clientPhone", "totalAll"};
     private String key = sortReceipt[0];
     private Query query;
     private FirebaseRecyclerOptions<Receipt> options;
@@ -114,12 +109,12 @@ public class FragmentReceipt extends Fragment implements OnReceiptItemClick, Dat
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+        key = ((String) parent.getItemAtPosition(position));
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
+        key = sortReceipt[0];
     }
     private ARReceipt searchNumber(double search) {
         query = reference;
@@ -164,7 +159,7 @@ public class FragmentReceipt extends Fragment implements OnReceiptItemClick, Dat
     public void afterTextChanged(Editable s) {
         String search = s.toString().trim();
         if (!search.isEmpty()) {
-            if (!key.equals(sortReceipt[0])) {
+            if (!key.equals(sortReceipt[0]) && !key.equals(sortReceipt[1])) {
                 binding.mainRecycler.setAdapter(searchNumber(Double.parseDouble(search)));
             } else {
                 binding.mainRecycler.setAdapter(search(search));

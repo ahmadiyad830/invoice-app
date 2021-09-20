@@ -11,10 +11,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,9 +28,11 @@ import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.firebase.ARItems;
 import soft.mahmod.yourreceipt.databinding.FragmentAddProductsBinding;
 import soft.mahmod.yourreceipt.databinding.FragmentMainItemsBinding;
+import soft.mahmod.yourreceipt.model.Client;
 import soft.mahmod.yourreceipt.model.Items;
 import soft.mahmod.yourreceipt.model.Products;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
+import soft.mahmod.yourreceipt.view_model.send.data.VMSendClient;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,7 +42,7 @@ import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatcher, ARItems.OnCLickItem, AdapterView.OnItemSelectedListener {
     private static final String TAG = "FragmentAddItem";
     private FragmentMainItemsBinding binding;
-
+    private Client client;
     private Query query;
     private ARItems adapter;
     private String[] sortItems = {"name", "price", "quantity"};
@@ -56,11 +60,23 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_main_items, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main_items, container, false);
         binding.setInDialog(false);
 
         return binding.getRoot();
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        VMSendClient vmSendClient = new ViewModelProvider(requireActivity()).get(VMSendClient.class);
+        vmSendClient.getModel().observe(getViewLifecycleOwner(), client -> {
+            if (client != null)
+                this.client = client;
+            Log.d(TAG, "onViewCreated: "+client.toString());
+        });
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -70,7 +86,6 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
         binding.btnClean.setOnClickListener(v -> {
             binding.textSearch.setText("");
         });
-
         binding.textSearch.addTextChangedListener(this);
         adapter.startListening();
     }
@@ -166,6 +181,7 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
         Dialog dialog = new Dialog(requireContext());
         FragmentAddProductsBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_add_products
                 , null, false);
+        binding.setIsTaxNoReg(client.isTaxRegNo());
         binding.setModel(model);
         dialog.setContentView(binding.getRoot());
         dialog.getWindow().setBackgroundDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.custom_back_icon));
@@ -209,7 +225,8 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
         model.setPrice(price);
         model.setQuantity(quantity);
         model.setDiscount(discount);
-        model.setTax(tax);
+        if (client.isTaxRegNo())
+            model.setTax(tax);
         return model;
     }
 }

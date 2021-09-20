@@ -60,6 +60,7 @@ public class FragmentAddClient extends Fragment implements ARClients.OnClickClie
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_add_client, container, false);
+        binding.setIsCreateReceipt(true);
         init();
         return binding.getRoot();
     }

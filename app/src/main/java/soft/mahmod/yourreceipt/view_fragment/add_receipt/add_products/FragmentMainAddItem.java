@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -20,6 +21,7 @@ import soft.mahmod.yourreceipt.adapter.ViewPager2Adapter;
 import soft.mahmod.yourreceipt.databinding.FragmentMainAddItemBinding;
 import soft.mahmod.yourreceipt.model.Client;
 import soft.mahmod.yourreceipt.model.Receipt;
+import soft.mahmod.yourreceipt.view_model.send.data.VMSendClient;
 
 
 public class FragmentMainAddItem extends Fragment {
@@ -39,21 +41,33 @@ public class FragmentMainAddItem extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         controller = Navigation.findNavController(view);
+        getPassArgs();
+
         binding.btnNext.setOnClickListener(v -> {
             passReceipt();
         });
         loadTabLayout();
     }
 
-    private void passReceipt() {
+    private Client getPassArgs() {
         FragmentMainAddItemArgs args = FragmentMainAddItemArgs.fromBundle(getArguments());
+        return args.getClientToAddItem();
+    }
+
+    private void sendClientModel() {
+        VMSendClient vmSendClient = new ViewModelProvider(requireActivity()).get(VMSendClient.class);
+        vmSendClient.setModel(getPassArgs());
+    }
+
+    private void passReceipt() {
         FragmentMainAddItemDirections.ActionMainAddItemToAddReceipt
                 receiptToReceipt = FragmentMainAddItemDirections.actionMainAddItemToAddReceipt();
-        receiptToReceipt.setReceiptToAddReceipt(getReceipt(args.getClientToAddItem()));
+        receiptToReceipt.setReceiptToAddReceipt(getReceipt(getPassArgs()));
         controller.navigate(receiptToReceipt);
     }
 
     private void loadTabLayout() {
+        sendClientModel();
         ViewPager2Adapter viewPager2Adapter = new ViewPager2Adapter(requireActivity());
         viewPager2Adapter.addFragment(new FragmentAddItem());
         viewPager2Adapter.addFragment(new FragmentAddProducts());

@@ -7,7 +7,9 @@
         <variable
             name="hasValue"
             type="Boolean" />
-
+        <variable
+            name="isCreateReceipt"
+            type="Boolean" />
         <import type="android.view.View" />
     </data>
 
@@ -44,6 +46,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/_8sdp"
                 android:layout_weight="0"
+                android:visibility='@{isCreateReceipt?View.GONE:View.VISIBLE,default = visible}'
                 android:background="?selectableItemBackground"
                 android:backgroundTint="@android:color/transparent"
                 android:contentDescription="@string/todo"

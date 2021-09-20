@@ -7,6 +7,10 @@
         <variable
             name="model"
             type="soft.mahmod.yourreceipt.model.Products" />
+        <variable
+            name="isTaxNoReg"
+            type="Boolean" />
+        <import type="android.view.View"/>
     </data>
 
     <LinearLayout
@@ -58,6 +62,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/custom_stork"
             android:hint="@string/tax"
+            android:visibility='@{isTaxNoReg?View.VISIBLE:View.GONE,default = visible}'
             android:inputType="numberDecimal"
             android:padding="@dimen/_12sdp"
             android:text="@{String.valueOf(model.tax)}"
