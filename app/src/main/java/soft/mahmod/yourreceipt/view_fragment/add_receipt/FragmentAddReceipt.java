@@ -83,6 +83,9 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
         binding.editDate.setOnClickListener(v -> {
             loadCalenderDialog();
         });
+        binding.materialButton2.setOnClickListener(v -> {
+            loadCalenderDialog();
+        });
     }
 
     private void loadCalenderDialog() {
@@ -100,6 +103,7 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
             month = month + 1;
             String date = dayOfMonth + "/" + month + "/" + year;
             binding.editDate.setText(date);
+            binding.setDateDept(date);
         });
         return calendarView;
     }
