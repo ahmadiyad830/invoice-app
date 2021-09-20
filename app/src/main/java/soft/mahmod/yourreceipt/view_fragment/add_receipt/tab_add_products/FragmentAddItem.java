@@ -1,4 +1,4 @@
-package soft.mahmod.yourreceipt.view_fragment.add_receipt.add_products;
+package soft.mahmod.yourreceipt.view_fragment.add_receipt.tab_add_products;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -62,7 +62,7 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main_items, container, false);
         binding.setInDialog(false);
-
+        binding.setIsCreateReceipt(true);
         return binding.getRoot();
     }
 

@@ -18,77 +18,13 @@
             android:defaultValue="@null" />
     </fragment>
     <fragment
-        android:id="@+id/fragmentCreateItem"
-        android:name="soft.mahmod.yourreceipt.view_fragment.create.FragmentCreateItem"
-        android:label="@string/add_new_item"
-        tools:layout="@layout/fragment_create_item">
-        <argument
-            android:name="itemToCreateItem"
-            app:argType="soft.mahmod.yourreceipt.model.Items"
-            app:nullable="true"
-            android:defaultValue="@null" />
-    </fragment>
-    <fragment
-        android:id="@+id/fragmentCreateClient"
-        android:name="soft.mahmod.yourreceipt.view_fragment.create.FragmentCreateClient"
-        android:label="@string/add_client"
-        tools:layout="@layout/fragment_create_client" >
-        <argument
-            android:name="clientToCreateClient"
-            app:argType="soft.mahmod.yourreceipt.model.Client"
-            app:nullable="true"
-            android:defaultValue="@null" />
-        <argument
-            android:name="isEdit"
-            app:argType="boolean"
-            android:defaultValue="false" />
-    </fragment>
-    <fragment
-        android:id="@+id/fragmentCreateProducts"
-        android:name="soft.mahmod.yourreceipt.view_fragment.create.FragmentCreateProducts"
-        android:label="@string/create_product"
-        tools:layout="@layout/fragment_create_products">
-        <argument
-            android:name="itemToCreateProduct"
-            android:defaultValue="@null"
-            app:argType="soft.mahmod.yourreceipt.model.Products"
-            app:nullable="true" />
-    </fragment>
-    <fragment
         android:id="@+id/fragmentAddClient"
         android:name="soft.mahmod.yourreceipt.view_fragment.add_receipt.FragmentAddClient"
         android:label="@string/client"
         tools:layout="@layout/fragment_add_client">
         <action
-            android:id="@+id/action_AddClient_to_AddItem3"
-            app:destination="@id/fragmentAddItem" />
-        <action
-            android:id="@+id/action_AddClient_to_CreateClient"
-            app:destination="@id/fragmentCreateClient" />
-        <action
             android:id="@+id/action_AddClient_to_MainAddItem2"
             app:destination="@id/fragmentMainAddItem" />
-    </fragment>
-    <fragment
-        android:id="@+id/fragmentAddItem"
-        android:name="soft.mahmod.yourreceipt.view_fragment.add_receipt.FragmentAddItem"
-        android:label="@string/items"
-
-        tools:layout="@layout/fragment_add_item">
-        <argument
-            android:name="clientToAddItem"
-            android:defaultValue="@null"
-            app:argType="soft.mahmod.yourreceipt.model.Client"
-            app:nullable="true" />
-        <action
-            android:id="@+id/action_AddItem_to_CreateProducts4"
-            app:destination="@id/fragmentCreateProducts" />
-        <action
-            android:id="@+id/action_AddItem_to_AddReceipt"
-            app:destination="@id/fragmentAddReceipt" />
-        <action
-            android:id="@+id/action_fragmentAddItem_to_fragmentCreateItem2"
-            app:destination="@id/fragmentCreateItem" />
     </fragment>
     <fragment
         android:id="@+id/fragmentPrintReceipt"
@@ -104,7 +40,7 @@
     <fragment
         android:id="@+id/fragmentMainAddItem"
         tools:layout="@layout/fragment_main_add_item"
-        android:name="soft.mahmod.yourreceipt.view_fragment.add_receipt.add_products.FragmentMainAddItem"
+        android:name="soft.mahmod.yourreceipt.view_fragment.add_receipt.tab_add_products.FragmentMainAddItem"
         android:label="@string/items" >
         <argument
             android:name="clientToAddItem"

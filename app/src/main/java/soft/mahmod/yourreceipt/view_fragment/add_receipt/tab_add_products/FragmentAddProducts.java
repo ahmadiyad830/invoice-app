@@ -1,4 +1,4 @@
-package soft.mahmod.yourreceipt.view_fragment.add_receipt.add_products;
+package soft.mahmod.yourreceipt.view_fragment.add_receipt.tab_add_products;
 
 import android.os.Bundle;
 import android.util.Log;

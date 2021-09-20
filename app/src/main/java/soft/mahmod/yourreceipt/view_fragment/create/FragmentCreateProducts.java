@@ -18,7 +18,7 @@ import androidx.navigation.Navigation;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.FragmentCreateProductsBinding;
 import soft.mahmod.yourreceipt.model.Products;
-import soft.mahmod.yourreceipt.view_fragment.add_receipt.FragmentAddItem;
+import soft.mahmod.yourreceipt.view_fragment.add_receipt.tab_add_products.FragmentAddProducts;
 
 public class FragmentCreateProducts extends Fragment implements TextWatcher {
     private static final String TAG = "FragmentCreateProducts";
@@ -31,7 +31,7 @@ public class FragmentCreateProducts extends Fragment implements TextWatcher {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_products, container, false);
 
         binding.btnDown.setOnClickListener(v -> {
-            FragmentAddItem.listProduct.add(model());
+            FragmentAddProducts.listProduct.add(model());
             requireActivity().onBackPressed();
         });
         binding.edtPrice.addTextChangedListener(this);
@@ -45,10 +45,6 @@ public class FragmentCreateProducts extends Fragment implements TextWatcher {
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         controller = Navigation.findNavController(view);
-        FragmentCreateProductsArgs argsProduct = FragmentCreateProductsArgs.fromBundle(getArguments());
-        if (getArguments()!=null){
-            binding.setModel(argsProduct.getItemToCreateProduct());
-        }
     }
 
 

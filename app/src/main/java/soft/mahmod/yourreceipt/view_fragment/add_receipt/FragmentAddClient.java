@@ -38,7 +38,6 @@ public class FragmentAddClient extends Fragment implements ARClients.OnClickClie
     private static final String TAG = "FragmentAddClient";
     private FragmentAddClientBinding binding;
     private NavController controller;
-    private FragmentAddClientDirections.ActionAddClientToCreateClient editClient;
     private static Client client;
     private ARClients adapter;
     private String[] sortClients = {"name", "email", "phone"};
@@ -74,7 +73,6 @@ public class FragmentAddClient extends Fragment implements ARClients.OnClickClie
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
          controller = Navigation.findNavController(view);
-        editClient = FragmentAddClientDirections.actionAddClientToCreateClient();
     }
 
     @Override
@@ -113,9 +111,7 @@ public class FragmentAddClient extends Fragment implements ARClients.OnClickClie
 
     @Override
     public void editClient(Client model) {
-        editClient.setClientToCreateClient(model);
-        editClient.setIsEdit(true);
-        controller.navigate(editClient);
+
     }
 
     @Override

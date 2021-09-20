@@ -11,6 +11,10 @@
         <variable
             name="inDialog"
             type="Boolean" />
+        <variable
+            name="isCreateReceipt"
+            type="Boolean" />
+
 
         <import type="android.view.View" />
 
@@ -144,6 +148,7 @@
                 android:layout_margin="@dimen/_8sdp"
                 android:layout_weight="0"
                 android:background="?selectableItemBackground"
+                android:visibility='@{isCreateReceipt?View.GONE:View.VISIBLE,default = visible}'
                 android:backgroundTint="@android:color/transparent"
                 android:contentDescription="@string/todo"
                 android:outlineSpotShadowColor="@color/white"

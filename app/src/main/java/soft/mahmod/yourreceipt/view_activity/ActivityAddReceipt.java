@@ -1,28 +1,16 @@
 package soft.mahmod.yourreceipt.view_activity;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.Scroller;
-import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.dialog.MaterialDialogs;
-
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.ActivityAddReceiptBinding;
-import soft.mahmod.yourreceipt.utils.DialogConfirm;
-import soft.mahmod.yourreceipt.view_fragment.add_receipt.FragmentAddItem;
-import soft.mahmod.yourreceipt.view_model.ui.VMHelpMessage;
+import soft.mahmod.yourreceipt.view_fragment.add_receipt.tab_add_products.FragmentAddProducts;
 
 public class ActivityAddReceipt extends AppCompatActivity {
     private static final String TAG = "ActivityAddReceipt";
@@ -56,7 +44,7 @@ public class ActivityAddReceipt extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        FragmentAddItem.listProduct.clear();
+        FragmentAddProducts.listProduct.clear();
         binding = null;
         getViewModelStore().clear();
     }
