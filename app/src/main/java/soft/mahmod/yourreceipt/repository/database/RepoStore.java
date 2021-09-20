@@ -84,22 +84,25 @@ public class RepoStore extends Repo<Store> {
                .addListenerForSingleValueEvent(new ValueEventListener() {
                    @Override
                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                       Store store = new Store();
                        if (snapshot.exists()){
-                           getT().setError(false);
-                           getT().setMessage("success");
-                           getData().setValue(snapshot.getValue(Store.class));
+                           store = snapshot.getValue(Store.class);
+                           store.setError(false);
+                           store.setMessage("success");
+                           store.setCode(SUCCESS);
                        }else {
-                           getT().setError(true);
-                           getT().setMessage("path not exists");
-                           getT().setCode(404);
+                           store.setError(true);
+                           store.setMessage("path not exists");
+                           store.setCode(NOT_FOUND);
                        }
+                       getData().setValue(store);
 
                    }
-
                    @Override
                    public void onCancelled(@NonNull DatabaseError error) {
                        getT().setMessage(error.getMessage());
                        getT().setError(true);
+                       getT().setCode(TRY_AGAIN);
                        getData().setValue(getT());
                    }
                });

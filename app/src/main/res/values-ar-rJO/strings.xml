@@ -110,4 +110,5 @@
     <string name="state">الحالة</string>
     <string name="date_of_payment">تاريخ الدفع</string>
     <string name="not_paid">غير مدفوع</string>
+    <string name="store">المتجر</string>
 </resources>

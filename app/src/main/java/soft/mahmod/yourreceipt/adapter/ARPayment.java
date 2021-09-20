@@ -78,7 +78,6 @@ public class ARPayment extends RecyclerView.Adapter<ARPayment.ViewHolder> {
             size = listPayment.size();
         } catch (NullPointerException e){
             size = 0;
-            e.printStackTrace();
         }
         return size;
     }

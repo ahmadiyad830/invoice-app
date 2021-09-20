@@ -13,7 +13,7 @@
     <fragment
         android:id="@+id/edit_store"
         android:name="soft.mahmod.yourreceipt.view_fragment.main.FragmentEditAccount"
-        android:label="@string/edit_store"
+        android:label="@string/store"
         tools:layout="@layout/fragment_edit_account" />
     <fragment
         android:id="@+id/change_password"

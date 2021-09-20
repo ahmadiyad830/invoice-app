@@ -93,7 +93,7 @@ public class FragmentClient extends Fragment implements DatabaseUrl, ARClients.O
 
     private void spinnerInit() {
         binding.spinnerSortList.setOnItemSelectedListener(this);
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, sortClients);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(requireContext(), R.layout.spinner_style, sortClients);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerSortList.setAdapter(adapter);
     }

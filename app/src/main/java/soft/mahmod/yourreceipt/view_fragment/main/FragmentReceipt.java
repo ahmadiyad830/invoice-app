@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -89,7 +90,7 @@ public class FragmentReceipt extends Fragment implements OnReceiptItemClick, Dat
     private void spinnerInit() {
         binding.spinnerSortList.setOnItemSelectedListener(this);
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>
-                (requireContext(), android.R.layout.simple_spinner_item, sortReceipt);
+                (requireContext(), R.layout.spinner_style, sortReceipt);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerSortList.setAdapter(adapter);
     }

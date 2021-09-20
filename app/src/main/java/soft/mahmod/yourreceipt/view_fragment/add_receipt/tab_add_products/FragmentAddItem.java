@@ -94,7 +94,7 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
 
     private void spinnerInit() {
         binding.spinnerSortList.setOnItemSelectedListener(this);
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, sortItems);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(requireContext(), R.layout.spinner_style, sortItems);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerSortList.setAdapter(adapter);
     }

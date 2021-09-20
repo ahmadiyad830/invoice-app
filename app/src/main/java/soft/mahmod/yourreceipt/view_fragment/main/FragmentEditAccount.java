@@ -89,7 +89,7 @@ public class FragmentEditAccount extends Fragment {
             if (!store.getError()){
                 binding.setModel(store);
             }
-            Log.d(TAG, "loadStore: "+store.getMessage());
+            Log.d(TAG, "loadStore: "+store.getCode());
         });
     }
 

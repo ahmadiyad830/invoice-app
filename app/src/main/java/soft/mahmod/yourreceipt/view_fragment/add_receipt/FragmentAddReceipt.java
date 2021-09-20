@@ -107,7 +107,7 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
     private void spinnerInit() {
         binding.spinnerTypeReceipt.setOnItemSelectedListener(this);
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>
-                (requireContext(), android.R.layout.simple_spinner_item, typeReceipt);
+                (requireContext(), R.layout.spinner_style, typeReceipt);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerTypeReceipt.setAdapter(adapter);
     }
