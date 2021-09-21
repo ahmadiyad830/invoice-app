@@ -1,5 +1,7 @@
 package soft.mahmod.yourreceipt.model.billing;
 
+import androidx.annotation.NonNull;
+
 import java.util.List;
 
 import soft.mahmod.yourreceipt.model.Cash;
@@ -61,12 +63,16 @@ public class Payment  extends Cash {
     }
 
 
+    @NonNull
     @Override
     public String toString() {
         return "Payment{" +
+                super.toString() + '\'' +
                 "date='" + date + '\'' +
                 ", price=" + price +
                 ", listPayment=" + listPayment +
+                ", typePayment='" + typePayment + '\'' +
+                ", isPaid=" + isPaid +
                 '}';
     }
 }

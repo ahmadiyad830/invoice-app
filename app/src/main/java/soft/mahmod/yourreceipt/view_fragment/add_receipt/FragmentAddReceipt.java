@@ -224,7 +224,10 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
             price = 0;
         }
         Payment payment = new Payment();
-        payment.setDate(binding.editDate.getText().toString().trim());
+        String date = binding.editDate.getText().toString().trim();
+        if (date.isEmpty() || date.equals(getResources().getString(R.string.date)))
+            date = handleTimeCount.getDate();
+        payment.setDate(date);
         payment.setPrice(price);
         listPayment.add(payment);
         adapter.notifyItemInserted(listPayment.size() - 1);

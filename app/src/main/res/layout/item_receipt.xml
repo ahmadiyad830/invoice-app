@@ -88,12 +88,14 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/container_payment"
                     android:layout_width="match_parent"
+
                     android:layout_height="wrap_content"
                     android:visibility="gone">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rec_payment"
                         android:layout_width="match_parent"
+                        android:background="@color/background_page"
                         android:layout_height="wrap_content"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
                 </androidx.cardview.widget.CardView>

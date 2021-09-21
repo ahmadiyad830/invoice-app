@@ -21,37 +21,92 @@ public class RepoPayment extends Repo<Payment>{
     public RepoPayment(Application application) {
         super(application);
     }
+
     @RequiresApi(api = Build.VERSION_CODES.P)
     public LiveData<Cash> postPayment(Payment model) {
 
         return getErrorDate();
     }
+
     public LiveData<Cash> postPaymentTLow(Payment model) {
         return getErrorDate();
     }
-    public LiveData<Cash> putPayment(Payment model){
+
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    public LiveData<Payment> putPaid(String receiptId, int index, boolean isPaid) {
+        Payment payment = new Payment();
+        getReference()
+                .child(RECEIPT)
+                .child(getfUser().getUid())
+                .child(receiptId)
+                .child(PAYMENT)
+                .child(LIST_PAYMENT)
+                .child(String.valueOf(index))
+                .child(PAID)
+                .setValue(isPaid)
+                .addOnCompleteListener(getApplication().getMainExecutor(), task -> {
+                    if (task.isSuccessful()) {
+                        payment.setError(false);
+                        payment.setCode(SUCCESS);
+                        payment.setMessage("success");
+                        getData().setValue(payment);
+                    }
+                })
+                .addOnFailureListener(getApplication().getMainExecutor(), e -> {
+                    payment.setError(true);
+                    payment.setCode(TRY_AGAIN);
+                    payment.setMessage(e.getLocalizedMessage());
+                });
+        return getData();
+    }
+
+    public LiveData<Payment> putPaidTLow(String receiptId, int index, boolean isPaid) {
+        Payment payment = new Payment();
+        getReference()
+                .child(RECEIPT)
+                .child(getfUser().getUid())
+                .child(receiptId)
+                .child(PAYMENT)
+                .child(LIST_PAYMENT)
+                .child(String.valueOf(index))
+                .child(PAID)
+                .setValue(isPaid)
+                .addOnCompleteListener( task -> {
+                    if (task.isSuccessful()) {
+                        payment.setError(false);
+                        payment.setCode(SUCCESS);
+                        payment.setMessage("success");
+                        getData().setValue(payment);
+                    }
+                })
+                .addOnFailureListener( e -> {
+                    payment.setError(true);
+                    payment.setCode(TRY_AGAIN);
+                    payment.setMessage(e.getLocalizedMessage());
+                });
+        return getData();
+    }
+
+    public LiveData<Cash> deletePayment(Payment model) {
         return getErrorDate();
     }
-    public LiveData<Cash> putPaymentTLow(Payment model){
+
+    public LiveData<Cash> deletePaymentTLow(Payment model) {
         return getErrorDate();
     }
-    public LiveData<Cash> deletePayment(Payment model){
-        return getErrorDate();
-    }
-    public LiveData<Cash> deletePaymentTLow(Payment model){
-        return getErrorDate();
-    }
-    public LiveData<Payment> getPayment(){
+
+    public LiveData<Payment> getPayment() {
 
         return getData();
     }
+
     ValueEventListener getReceipt = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             Iterable<DataSnapshot> children = snapshot.child(RECEIPT).child(getfUser().getUid()).getChildren();
-            while (children.iterator().hasNext()){
+            while (children.iterator().hasNext()) {
                 String type = children.iterator().next().child(PAYMENT).child(TYPE_PAYMENT).getValue(String.class);
-                Log.d(TAG, "onDataChange: "+type);
+                Log.d(TAG, "onDataChange: " + type);
                 children.iterator().next().child(PAYMENT).child(LIST_PAYMENT).getValue(Payment.class);
             }
         }

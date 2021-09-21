@@ -129,6 +129,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="9"
                         android:hint="@string/price"
+                        android:textColor="@color/text_color"
                         android:inputType="numberDecimal"
                         android:maxLines="1"
                         android:textColorHint="@color/hint_color"

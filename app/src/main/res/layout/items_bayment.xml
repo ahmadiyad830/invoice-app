@@ -16,6 +16,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/background_page"
         android:layout_marginVertical="@dimen/_8sdp">
 
         <TextView
@@ -51,6 +52,7 @@
             android:id="@+id/linearLayout18"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:padding="@dimen/_8sdp"
             android:layout_margin="@dimen/_4sdp"
             android:background="@drawable/custom_stork"
