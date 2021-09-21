@@ -50,21 +50,19 @@ public class ActivityDetails extends AppCompatActivity {
         binding.setToolbar(getResources().getString(R.string.receipt));
         ViewPager2Adapter viewPager2Adapter = new ViewPager2Adapter(this);
         viewPager2Adapter.addFragment(new FragmentDetailsReceipt());
-        if (
-                model.getPayment().getTypePayment().equals(getResources().getString(R.string.bayment))
-                ||  model.getPayment().getTypePayment().equals(getResources().getString(R.string.debt))
-        )
-            viewPager2Adapter.addFragment(new FragmentPayment());
         viewPager2Adapter.addFragment(new FragmentProducts());
+        if (model.getPayment().getTypePayment().equals(getResources().getString(R.string.bayment))
+                        || model.getPayment().getTypePayment().equals(getResources().getString(R.string.debt)))
+            viewPager2Adapter.addFragment(new FragmentPayment());
         binding.viewPager2.setAdapter(viewPager2Adapter);
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(binding.tableLayout,
                 binding.viewPager2, (tab, position) -> {
             switch (position) {
                 case 1:
-                    tab.setText(getResources().getString(R.string.bayment));
+                    tab.setText(getResources().getString(R.string.products));
                     break;
                 case 2:
-                    tab.setText(getResources().getString(R.string.products));
+                    tab.setText(getResources().getString(R.string.bayment));
                     break;
                 case 0:
                 default:

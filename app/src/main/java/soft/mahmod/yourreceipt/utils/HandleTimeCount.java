@@ -13,7 +13,7 @@ public class HandleTimeCount {
     private String tv_time;
     private Handler handler = new Handler();
     private Runnable runnable;
-    private final String date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
+    private final String date = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(new Date());
 
 
     public String getDate() {

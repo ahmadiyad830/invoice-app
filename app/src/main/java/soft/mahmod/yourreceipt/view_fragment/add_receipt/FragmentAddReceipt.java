@@ -3,7 +3,6 @@ package soft.mahmod.yourreceipt.view_fragment.add_receipt;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +28,7 @@ import soft.mahmod.yourreceipt.model.billing.Payment;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.utils.DialogConfirm;
 import soft.mahmod.yourreceipt.utils.DialogListener;
+import soft.mahmod.yourreceipt.utils.HandleTimeCount;
 import soft.mahmod.yourreceipt.view_model.database.VMItems;
 import soft.mahmod.yourreceipt.view_model.database.VMReceipt;
 
@@ -42,6 +42,7 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
     private ARPayment adapter;
     private String receiptType;
     private VMItems vmItems;
+    private HandleTimeCount handleTimeCount;
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +50,7 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
                 .get(VMReceipt.class);
         vmItems = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
                 .get(VMItems.class);
+        handleTimeCount = new HandleTimeCount();
     }
 
     @Override
@@ -122,10 +124,12 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
         model.setSubject(getReceipt().getSubject());
         model.setNote(getReceipt().getNote());
         model.setPayment(getPayment());
+        model.setDateReceipt(handleTimeCount.getDate());
         vmReceipt.postReceipt(model).observe(getViewLifecycleOwner(), cash -> {
             if (!cash.getError()) {
-                vmItems.updatesQuantity(getIds(model.getProducts())
-                        ,getItemQuantitys(model.getProducts()),getQuantitys(model.getProducts()));
+                if (model.getProducts() != null && model.getProducts().size() > 0)
+                    vmItems.updatesQuantity(getIds(model.getProducts())
+                            , getItemQuantitys(model.getProducts()), getQuantitys(model.getProducts()));
                 requireActivity().finish();
             }
         });

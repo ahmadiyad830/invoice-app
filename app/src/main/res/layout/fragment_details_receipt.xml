@@ -37,39 +37,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/type_receipt">
 
-            <View
-                android:id="@+id/view2"
-                android:layout_width="3dp"
-                android:layout_height="3dp"
-                app:layout_constraintBottom_toTopOf="@+id/txt_subject"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.347" />
-
             <TextView
                 android:id="@+id/type_receipt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
                 android:gravity="center"
-                android:text='@{@string/total_all+": "+model.totalAll}'
+                android:text='@{@string/subject+": "+model.subject}'
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/_14ssp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.13999999" />
+                tools:layout_editor_absoluteY="15dp" />
 
             <TextView
                 android:id="@+id/txt_subject"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_16sdp"
                 android:gravity="center"
-                android:text='@{@string/subject+": "+model.subject}'
+                android:text='@{@string/total_all+" "+model.totalAll}'
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/_14ssp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -81,11 +70,8 @@
                 android:id="@+id/linearLayout16"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginVertical="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_16sdp"
                 android:baselineAligned="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_subject">
 
                 <LinearLayout
@@ -118,11 +104,11 @@
                         android:id="@+id/client_phone_receipt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_3sdp"
                         android:gravity="start"
                         android:text='@{@string/client_phone+": "+model.clientPhone}'
                         android:textColor="@color/text_color"
                         android:textSize="@dimen/_12ssp"
-                        android:layout_margin="@dimen/_3sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -149,7 +135,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/_3sdp"
                         android:gravity="center_vertical"
-                        android:text='@{@string/date+": "+model.date}'
+                        android:text='@{@string/date+": "+model.dateReceipt}'
                         android:textColor="@color/text_color"
                         android:textSize="@dimen/_12ssp" />
 
@@ -170,8 +156,7 @@
                 android:id="@+id/layoutnote"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_32sdp"
+                android:layout_marginTop="@dimen/_22sdp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
