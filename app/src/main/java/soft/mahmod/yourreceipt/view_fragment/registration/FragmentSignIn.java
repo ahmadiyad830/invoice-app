@@ -2,6 +2,11 @@ package soft.mahmod.yourreceipt.view_fragment.registration;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,25 +17,18 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.Toast;
-
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.conditions.catch_registration.ConditionsSignIn;
 import soft.mahmod.yourreceipt.controller.ActivityIntent;
 import soft.mahmod.yourreceipt.databinding.FragmentSignInBinding;
-import soft.mahmod.yourreceipt.view_model.user_account.VMAuthReg;
+import soft.mahmod.yourreceipt.view_model.auth.SignIn;
 import soft.mahmod.yourreceipt.view_model.database.VMUser;
 
 
 public class FragmentSignIn extends Fragment {
     private static final String TAG = "FragmentSignIn";
     private FragmentSignInBinding binding;
-    private VMAuthReg vmAuthReg;
+    private SignIn signIn;
     private VMUser vmDbUser;
     private NavController controller;
     private ActivityIntent intent;
@@ -38,8 +36,9 @@ public class FragmentSignIn extends Fragment {
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        vmAuthReg = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
-                (requireActivity().getApplication())).get(VMAuthReg.class);
+        signIn = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
+                (requireActivity().getApplication())).get(SignIn.class);
+        // FIXME: 9/22/2021  reblace with repo database package
         vmDbUser = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
                 (requireActivity().getApplication())).get(VMUser.class);
 
@@ -72,14 +71,15 @@ public class FragmentSignIn extends Fragment {
     }
 
     private void sendEmail(DialogInterface dialog1, String email) {
-        vmAuthReg.forgetPassword(email);
-        vmAuthReg.getErrorData().observe(getViewLifecycleOwner(),cash -> {
-            if (!cash.getError()){
-                dialog1.dismiss();
-            }else {
-                Toast.makeText(requireContext(), cash.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        // FIXME: 9/22/2021 create method in setting repo forget password
+//        vmAuthReg.forgetPassword(email);
+//        vmAuthReg.getErrorData().observe(getViewLifecycleOwner(),cash -> {
+//            if (!cash.getError()){
+//                dialog1.dismiss();
+//            }else {
+//                Toast.makeText(requireContext(), cash.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
 
@@ -104,14 +104,16 @@ public class FragmentSignIn extends Fragment {
     }
 
     private void signIn(String email, String password) {
-        vmAuthReg.signIn(email, password);
-        vmAuthReg.getErrorData()
-                .observe(getViewLifecycleOwner(),cash -> {
-                    Log.d(TAG, "signIn: "+cash.toString());
-                    if (!cash.getError()){
-                        intent.userSignIn(requireActivity());
-                    }else {
-                        binding.setError(cash.getMessage());
+        signIn.signIn(email, password)
+                .observe(getViewLifecycleOwner(), user -> {
+                    Log.d(TAG, "signIn: " + user.toString());
+                    Log.d(TAG, "\n getError: "+user.getError());
+                    Log.d(TAG, "\n getMessage: "+user.getMessage());
+                    Log.d(TAG, "\n getCode: "+user.getCode());
+                    if (!user.getError()) {
+//                        intent.userSignIn(requireActivity());
+                    } else /*if (user.getCode() == 500)*/ {
+                        binding.setError(user.getMessage());
                     }
                 });
     }

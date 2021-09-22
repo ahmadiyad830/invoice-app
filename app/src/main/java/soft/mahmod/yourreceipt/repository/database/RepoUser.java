@@ -75,7 +75,6 @@ public class RepoUser extends Repo<User> {
     }
     //    read
     public LiveData<User> getUser(){
-
         getReference().child(USER).child(getfUser().getUid())
                 .addValueEventListener(new ValueEventListener() {
                     @Override

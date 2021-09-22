@@ -3,26 +3,16 @@ package soft.mahmod.yourreceipt.repository.User;
 import android.app.Application;
 import android.os.Build;
 
-import androidx.annotation.CallSuper;
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.core.view.ActionProvider;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import soft.mahmod.yourreceipt.model.Cash;
 import soft.mahmod.yourreceipt.model.User;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
-import soft.mahmod.yourreceipt.statics.ErrorCode;
 
 
 public class RepoRegistration implements DatabaseUrl {

@@ -53,7 +53,6 @@ public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         if (inflater == null) {
             inflater = LayoutInflater.from(parent.getContext());
         }

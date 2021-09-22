@@ -4,6 +4,7 @@
     <string name="you_dont_have_account">you dont have account ?</string>
     <string name="sign_up">sign up</string>
     <string name="account">Account</string>
+    <string name="maype_password_or_email_wrong">Password or email not found</string>
     <!--    TODO account-->
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -103,7 +104,7 @@
 
     <string name="delete">Delete</string>
     <string name="skip">skip</string>
-    <string name="active_your_account">active your account</string>
+
     <string name="contact_by_whatsapp_or_call">Contact by WhatsApp or call</string>
     <string name="sign_in_with_another_account">Sign In with another account</string>
     <string name="or">OR</string>
@@ -137,4 +138,9 @@ Or add all items</string>
     <string name="debt">debt</string>
     <string name="bayment">bayment</string>
     <string name="store">store</string>
+
+    <!--handle message-->
+    <string name="success">Success</string>
+    <string name="try_again">Try Again</string>
+    <string name="active_your_account">active your account</string>
 </resources>

@@ -111,4 +111,7 @@
     <string name="date_of_payment">تاريخ الدفع</string>
     <string name="not_paid">غير مدفوع</string>
     <string name="store">المتجر</string>
+    <string name="maype_password_or_email_wrong">كلمة المرور او البريد غير موجود</string>
+    <string name="try_again">حاول مرة اخرى</string>
+    <string name="success">نجحة العملية</string>
 </resources>

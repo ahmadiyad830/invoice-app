@@ -73,9 +73,11 @@ public class User extends Cash implements Serializable {
         this.uid = uid;
     }
 
+
     @NonNull
     @Override
     public String toString() {
+        super.toString();
         return "User{" +
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +

@@ -1,6 +1,10 @@
 package soft.mahmod.yourreceipt.view_fragment.registration;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,17 +14,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.conditions.catch_registration.ConditionsSignUp;
 import soft.mahmod.yourreceipt.controller.ActivityIntent;
 import soft.mahmod.yourreceipt.databinding.FragmentSignUpBinding;
 import soft.mahmod.yourreceipt.model.User;
 import soft.mahmod.yourreceipt.statics.ApiURLS;
-import soft.mahmod.yourreceipt.view_model.user_account.VMAuthReg;
+import soft.mahmod.yourreceipt.view_model.auth.SignUp;
 import soft.mahmod.yourreceipt.view_model.database.VMUser;
 
 /**
@@ -32,10 +32,10 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
     private static final String TAG = "FragmentSignUp";
     private FragmentSignUpBinding binding;
     private VMUser vmUser;
-    private VMAuthReg vmAuthReg;
+    private SignUp signUp;
+
     private NavController controller;
     private ActivityIntent intent;
-
 
 
     @Override
@@ -43,8 +43,9 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
         super.onCreate(savedInstanceState);
         vmUser = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
                 (requireActivity().getApplication())).get(VMUser.class);
-        vmAuthReg = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
-                (requireActivity().getApplication())).get(VMAuthReg.class);
+
+        signUp = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
+                (requireActivity().getApplication())).get(SignUp.class);
     }
 
     @Override
@@ -78,20 +79,22 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
     }
 
     private void signUp(String email, String pass1) {
-        vmAuthReg.signUp(email, pass1);
-        vmAuthReg.getErrorData().observe(getViewLifecycleOwner(), cash -> {
-            if (!cash.getError()){
-                uploadUser(email,pass1);
-            }
-            Log.d(TAG, "signUp: "+cash.toString());
-            binding.setError(cash.getMessage());
-        });
+        signUp.signIn(email, pass1)
+                .observe(getViewLifecycleOwner(), user -> {
+                    if (!user.getError()) {
+                        uploadUser(email, pass1);
+                    }
+                    Log.d(TAG, "signUp: " + user.toString());
+                    binding.setError(user.getMessage());
+                });
     }
 
     private void uploadUser(String email, String pass1) {
         User user = new User();
         user.setEmail(email);
         user.setPassword(pass1);
-        vmUser.postUser(user);
+        vmUser.postUser(user).observe(getViewLifecycleOwner(), cash -> {
+
+        });
     }
 }

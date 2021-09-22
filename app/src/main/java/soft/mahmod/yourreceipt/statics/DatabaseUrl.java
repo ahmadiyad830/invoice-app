@@ -1,8 +1,6 @@
 package soft.mahmod.yourreceipt.statics;
 
-import com.google.firebase.auth.FirebaseAuth;
-
-public interface DatabaseUrl extends ErrorCode {
+public interface DatabaseUrl extends StateCode {
     // FIXME: 8/31/2021 maybe error because we add / after string path
     String ITEMS = "items/";
     String CLIENT = "client/";
