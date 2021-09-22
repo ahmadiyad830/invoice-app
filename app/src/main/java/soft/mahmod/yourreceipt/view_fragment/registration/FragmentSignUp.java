@@ -33,7 +33,6 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
     private VMUser vmUser;
     private VMSignUp VMSignUp;
     private NavController controller;
-    private ActivityIntent intent;
 
 
     @Override
@@ -59,7 +58,7 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         controller = Navigation.findNavController(view);
-        intent = ActivityIntent.getInstance(requireContext());
+        ActivityIntent intent = ActivityIntent.getInstance(requireContext());
         binding.txtGoSignin.setOnClickListener(v -> {
             controller.navigate(FragmentSignUpDirections.actionFragmentSignUpToFragmentSignIn());
         });

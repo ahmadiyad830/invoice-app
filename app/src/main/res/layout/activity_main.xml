@@ -111,7 +111,6 @@
                     android:text="@string/sign_in_with_another_account"
                     android:textColor="@color/top_and_bottom_color"
                     android:textSize="@dimen/_16ssp"
-
                     app:layout_anchor="@color/top_and_bottom_color"
                     app:layout_anchorGravity="bottom" />
             </LinearLayout>

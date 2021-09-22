@@ -11,6 +11,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.model.Cash;
 import soft.mahmod.yourreceipt.model.User;
 
@@ -79,11 +80,19 @@ public class RepoUser extends Repo<User> {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        User user = snapshot.getValue(User.class);
-                        user.setError(false);
-                        user.setMessage("success");
-                        user.setCode(SUCCESS);
+                        User user = new User();
+                        if (snapshot.exists()) {
+                            user = snapshot.getValue(User.class);
+                            user.setError(false);
+                            user.setMessage("success");
+                            user.setCode(SUCCESS);
+                        } else {
+                            user.setError(true);
+                            user.setCode(PATH_NOT_EXISTS);
+                            user.setMessage(getResources(R.string.not_exists));
+                        }
                         getData().setValue(user);
+
                     }
 
                     @Override
@@ -91,7 +100,7 @@ public class RepoUser extends Repo<User> {
                         User user = new User();
                         user.setError(true);
                         user.setMessage(error.getMessage());
-                        user.setCode(TRY_AGAIN);
+                        user.setCode(error.getCode());
                         getData().setValue(user);
                     }
                 });

@@ -142,6 +142,7 @@ Or add all items</string>
     <!--handle message-->
     <string name="success">Success</string>
     <string name="try_again">Try Again</string>
+    <string name="not_exists">Not exists</string>
     <string name="active_your_account">active your account</string>
     <string name="check_email">Check your email the to recover password in it</string>
 </resources>

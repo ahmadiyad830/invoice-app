@@ -2,6 +2,7 @@ package soft.mahmod.yourreceipt.repository.database;
 
 import android.app.Application;
 
+import androidx.annotation.StringRes;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -60,5 +61,9 @@ public class Repo<T> implements DatabaseUrl {
 
     public Cash getCash() {
         return cash;
+    }
+
+    public String getResources(@StringRes int res) {
+        return application.getResources().getString(res);
     }
 }

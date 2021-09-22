@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,14 +43,20 @@ public class MainActivity extends AppCompatActivity implements DatabaseUrl {
                 .get(VMUser.class);
         vmSettingAuth = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication()))
                 .get(SettingAuth.class);
+
         if (intent.isUserActive().isActive()){
             Log.d(TAG, "onCreate: not active");
             binding.setIsActive(intent.isUserActive().isActive());
         }else {
             vmUser.getUser().observe(this, user -> {
+                Log.d(TAG, "onCreate: " + user.getMessage());
                 if (!user.getError()) {
                     binding.setIsActive(user.isActive());
                     intent.setUserIsActive(user.isActive());
+                } else {
+                    vmSettingAuth.signOut();
+                    intent.userSignOut(MainActivity.this);
+                    Toast.makeText(MainActivity.this, getResources().getString(R.string.error), Toast.LENGTH_SHORT).show();
                 }
             });
         }
