@@ -10,10 +10,10 @@ import androidx.lifecycle.LiveData;
 import soft.mahmod.yourreceipt.model.User;
 import soft.mahmod.yourreceipt.repository.auth.sign_up.SignUpRepo;
 
-public class SignUp extends AndroidViewModel {
+public class VMSignUp extends AndroidViewModel {
     private SignUpRepo signUpRepo;
 
-    public SignUp(@NonNull Application application) {
+    public VMSignUp(@NonNull Application application) {
         super(application);
         signUpRepo = new SignUpRepo(application);
     }

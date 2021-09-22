@@ -17,13 +17,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.controller.ActivityIntent;
 import soft.mahmod.yourreceipt.databinding.ActivityMainBinding;
@@ -31,28 +24,24 @@ import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.utils.DialogConfirm;
 import soft.mahmod.yourreceipt.utils.DialogListener;
 import soft.mahmod.yourreceipt.utils.IntentActivity;
+import soft.mahmod.yourreceipt.view_model.auth.SettingAuth;
 import soft.mahmod.yourreceipt.view_model.database.VMUser;
-import soft.mahmod.yourreceipt.view_model.user_account.VMAuthReg;
 
 public class MainActivity extends AppCompatActivity implements DatabaseUrl {
     private static final String TAG = "MainActivity";
     private ActivityMainBinding binding;
     private VMUser vmUser;
-    private VMAuthReg vmAuthReg;
+    private SettingAuth vmSettingAuth;
     private ActivityIntent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         intent = ActivityIntent.getInstance(this);
-        vmUser = new ViewModelProvider(
-                getViewModelStore(),
-                new ViewModelProvider.AndroidViewModelFactory(
-                        getApplication()
-                )
-        ).get(VMUser.class);
-        vmAuthReg = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication()))
-                .get(VMAuthReg.class);
+        vmUser = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(getApplication()))
+                .get(VMUser.class);
+        vmSettingAuth = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication()))
+                .get(SettingAuth.class);
         if (intent.isUserActive().isActive()){
             Log.d(TAG, "onCreate: not active");
             binding.setIsActive(intent.isUserActive().isActive());
@@ -109,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseUrl {
             IntentActivity.startWhatsApp(this);
         });
         binding.txtAnotherAccount.setOnClickListener(v -> {
-            vmAuthReg.signOut();
+            vmSettingAuth.signOut();
             intent.userSignOut(MainActivity.this);
         });
     }
@@ -119,8 +108,8 @@ public class MainActivity extends AppCompatActivity implements DatabaseUrl {
         super.onDestroy();
         intent = null;
         getViewModelStore().clear();
-        vmAuthReg.onCleared();
-        vmAuthReg = null;
+        vmSettingAuth.onCleared();
+        vmSettingAuth = null;
         vmUser.onCleared();
         vmUser = null;
     }
@@ -131,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseUrl {
         dialog.setDialogListener(new DialogListener() {
             @Override
             public void clickOk(DialogInterface dialog) {
-                vmAuthReg.signOut();
+                vmSettingAuth.signOut();
                 intent.userSignOut(MainActivity.this);
                 dialog.dismiss();
             }

@@ -1,7 +1,6 @@
 package soft.mahmod.yourreceipt.view_fragment.registration;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,7 @@ import soft.mahmod.yourreceipt.controller.ActivityIntent;
 import soft.mahmod.yourreceipt.databinding.FragmentSignUpBinding;
 import soft.mahmod.yourreceipt.model.User;
 import soft.mahmod.yourreceipt.statics.ApiURLS;
-import soft.mahmod.yourreceipt.view_model.auth.SignUp;
+import soft.mahmod.yourreceipt.view_model.auth.VMSignUp;
 import soft.mahmod.yourreceipt.view_model.database.VMUser;
 
 /**
@@ -32,7 +31,7 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
     private static final String TAG = "FragmentSignUp";
     private FragmentSignUpBinding binding;
     private VMUser vmUser;
-    private SignUp signUp;
+    private VMSignUp VMSignUp;
     private NavController controller;
     private ActivityIntent intent;
 
@@ -43,8 +42,8 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
         vmUser = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
                 (requireActivity().getApplication())).get(VMUser.class);
 
-        signUp = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
-                (requireActivity().getApplication())).get(SignUp.class);
+        VMSignUp = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
+                (requireActivity().getApplication())).get(VMSignUp.class);
     }
 
     @Override
@@ -78,8 +77,8 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
     }
 
     private void signUp(String email, String pass1) {
-        if (signUp.isConnection()) {
-            signUp.signIn(email, pass1)
+        if (VMSignUp.isConnection()) {
+            VMSignUp.signIn(email, pass1)
                     .observe(getViewLifecycleOwner(), user -> {
                         if (!user.getError()) {
                             uploadUser(email, pass1);

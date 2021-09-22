@@ -15,13 +15,13 @@ import soft.mahmod.yourreceipt.databinding.ActivityRegistrationBinding;
 import soft.mahmod.yourreceipt.utils.DialogConfirm;
 import soft.mahmod.yourreceipt.utils.DialogListener;
 import soft.mahmod.yourreceipt.utils.IntentActivity;
-import soft.mahmod.yourreceipt.view_model.user_account.VMAuthReg;
+import soft.mahmod.yourreceipt.view_model.auth.SettingAuth;
 
 public class ActivityRegistration extends AppCompatActivity {
     private static final String TAG = "ActivityRegistration";
     private ActivityRegistrationBinding binding;
     private ActivityIntent intent;
-    private VMAuthReg vmAuthReg;
+    private SettingAuth vmSettingAuth;
     private NavController controller;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +32,8 @@ public class ActivityRegistration extends AppCompatActivity {
         controller.addOnDestinationChangedListener((controller1, destination, arguments) -> {
             binding.setName(destination.getLabel().toString());
         });
-        vmAuthReg = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
-                (getApplication())).get(VMAuthReg.class);
+        vmSettingAuth = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
+                (getApplication())).get(SettingAuth.class);
         binding.btnHelp.setOnClickListener(v -> {
             dialogHelp();
         });
@@ -45,7 +45,7 @@ public class ActivityRegistration extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (intent.isConnection() && vmAuthReg.hasCredential() && vmAuthReg.isVerified()) {
+        if (intent.isConnection() && vmSettingAuth.hasCredential() && vmSettingAuth.isVerified()) {
             binding.setHasReg(true);
             intent.userSignIn(this);
         } else {
@@ -92,8 +92,8 @@ public class ActivityRegistration extends AppCompatActivity {
         binding = null;
         intent = null;
         getViewModelStore().clear();
-        vmAuthReg.onCleared();
-        vmAuthReg = null;
+        vmSettingAuth.onCleared();
+        vmSettingAuth = null;
 
     }
 }
