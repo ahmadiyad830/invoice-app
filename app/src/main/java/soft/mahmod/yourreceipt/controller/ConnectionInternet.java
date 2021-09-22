@@ -12,7 +12,7 @@ public class ConnectionInternet {
     private ConnectionInternet() {
 
     }
-    protected ConnectionInternet(Context context){
+    public ConnectionInternet(Context context){
         mCtx = context;
     }
 

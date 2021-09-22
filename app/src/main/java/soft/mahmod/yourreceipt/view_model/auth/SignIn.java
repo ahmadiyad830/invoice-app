@@ -25,4 +25,8 @@ public class SignIn extends AndroidViewModel {
             return signInRepo.signInTLow(email, password);
         }
     }
+
+    public boolean isConnection() {
+        return signInRepo.isConnection();
+    }
 }

@@ -33,7 +33,6 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
     private FragmentSignUpBinding binding;
     private VMUser vmUser;
     private SignUp signUp;
-
     private NavController controller;
     private ActivityIntent intent;
 
@@ -79,14 +78,17 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
     }
 
     private void signUp(String email, String pass1) {
-        signUp.signIn(email, pass1)
-                .observe(getViewLifecycleOwner(), user -> {
-                    if (!user.getError()) {
-                        uploadUser(email, pass1);
-                    }
-                    Log.d(TAG, "signUp: " + user.toString());
-                    binding.setError(user.getMessage());
-                });
+        if (signUp.isConnection()) {
+            signUp.signIn(email, pass1)
+                    .observe(getViewLifecycleOwner(), user -> {
+                        if (!user.getError()) {
+                            uploadUser(email, pass1);
+                        }else {
+                            binding.setError(user.getMessage());
+                        }
+                    });
+        }
+
     }
 
     private void uploadUser(String email, String pass1) {
@@ -94,7 +96,9 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
         user.setEmail(email);
         user.setPassword(pass1);
         vmUser.postUser(user).observe(getViewLifecycleOwner(), cash -> {
-
+            if (cash.getError()){
+                binding.setError(cash.getMessage());
+            }
         });
     }
 }

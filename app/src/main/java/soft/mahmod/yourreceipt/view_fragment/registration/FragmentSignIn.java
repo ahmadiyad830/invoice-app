@@ -104,18 +104,17 @@ public class FragmentSignIn extends Fragment {
     }
 
     private void signIn(String email, String password) {
-        signIn.signIn(email, password)
-                .observe(getViewLifecycleOwner(), user -> {
-                    Log.d(TAG, "signIn: " + user.toString());
-                    Log.d(TAG, "\n getError: "+user.getError());
-                    Log.d(TAG, "\n getMessage: "+user.getMessage());
-                    Log.d(TAG, "\n getCode: "+user.getCode());
-                    if (!user.getError()) {
-//                        intent.userSignIn(requireActivity());
-                    } else /*if (user.getCode() == 500)*/ {
-                        binding.setError(user.getMessage());
-                    }
-                });
+        if (signIn.isConnection()) {
+            signIn.signIn(email, password)
+                    .observe(getViewLifecycleOwner(), user -> {
+                        Log.d(TAG, "signIn: " + user.toString());
+                        if (!user.getError()) {
+                        intent.userSignIn(requireActivity());
+                        } else {
+                            binding.setError(user.getMessage());
+                        }
+                    });
+        }
     }
 
 }

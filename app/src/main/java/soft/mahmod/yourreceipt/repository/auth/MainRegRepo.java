@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import soft.mahmod.yourreceipt.controller.ConnectionInternet;
 import soft.mahmod.yourreceipt.model.Cash;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.statics.StateCode;
@@ -61,7 +62,12 @@ public class MainRegRepo<T extends Cash> implements DatabaseUrl, StateCode, Stat
         return fAuth.getCurrentUser() != null;
     }
 
-    public String getResources (@StringRes int res){
+    public String getResources(@StringRes int res) {
         return application.getResources().getString(res);
+    }
+
+    public boolean isConnection() {
+        ConnectionInternet connectionInternet = new ConnectionInternet(application);
+        return connectionInternet.isConnection();
     }
 }
