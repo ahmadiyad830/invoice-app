@@ -6,6 +6,8 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 
+import com.google.firebase.auth.FirebaseUser;
+
 import soft.mahmod.yourreceipt.model.Cash;
 import soft.mahmod.yourreceipt.repository.auth.MainRegRepo;
 
@@ -23,8 +25,8 @@ public abstract class RepoSignUp<T extends Cash> extends MainRegRepo<T> {
     public abstract LiveData<T> signUpTLow(String email, String password);
 
     @RequiresApi(api = Build.VERSION_CODES.P)
-    public abstract void verified();
+    public abstract void verified(FirebaseUser user);
 
-    public abstract void verifiedTLow();
+    public abstract void verifiedTLow(FirebaseUser user);
 
 }

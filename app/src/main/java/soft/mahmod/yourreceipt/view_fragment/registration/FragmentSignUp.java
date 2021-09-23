@@ -80,7 +80,7 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
             VMSignUp.signIn(email, pass1)
                     .observe(getViewLifecycleOwner(), user -> {
                         if (!user.getError()) {
-                            uploadUser(email, pass1);
+                            uploadUser(email, pass1,user.getUid());
                         }else {
                             binding.setError(user.getMessage());
                         }
@@ -89,10 +89,11 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
 
     }
 
-    private void uploadUser(String email, String pass1) {
+    private void uploadUser(String email, String pass1,String uid) {
         User user = new User();
         user.setEmail(email);
         user.setPassword(pass1);
+        user.setUid(uid);
         vmUser.postUser(user).observe(getViewLifecycleOwner(), cash -> {
             if (cash.getError()){
                 binding.setError(cash.getMessage());

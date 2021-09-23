@@ -8,11 +8,11 @@ import androidx.lifecycle.LiveData;
 
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.model.User;
 import soft.mahmod.yourreceipt.statics.StateCode;
-import soft.mahmod.yourreceipt.statics.StateMessage;
 
 public class SignUpRepo extends RepoSignUp<User> {
     private final User user = new User();
@@ -44,7 +44,7 @@ public class SignUpRepo extends RepoSignUp<User> {
                             data.setValue(user);
                         }
                     } else {
-                        verified();
+                        verified(task.getResult().getUser());
                     }
                 })
                 .addOnFailureListener(getApplication().getMainExecutor(),e -> {
@@ -76,7 +76,7 @@ public class SignUpRepo extends RepoSignUp<User> {
                             data.setValue(user);
                         }
                     } else {
-                        verifiedTLow();
+                        verifiedTLow(task.getResult().getUser());
                     }
                 })
                 .addOnFailureListener(e -> {
@@ -90,40 +90,42 @@ public class SignUpRepo extends RepoSignUp<User> {
 
     @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
-    public void verified() {
+    public void verified(FirebaseUser user) {
         getfAuth().getCurrentUser().sendEmailVerification()
                 .addOnCompleteListener(getApplication().getMainExecutor(),task -> {
                     if (task.isSuccessful()) {
-                        user.setError(false);
-                        user.setCode(StateCode.SUCCESS);
-                        user.setMessage(getResources(R.string.success));
-                        data.setValue(user);
+                        this.user.setUid(user.getUid());
+                        this.user.setError(false);
+                        this.user.setCode(StateCode.SUCCESS);
+                        this.user.setMessage(getResources(R.string.success));
+                        data.setValue(this.user);
                     }
                 })
                 .addOnFailureListener(getApplication().getMainExecutor(),e -> {
-                    user.setError(true);
-                    user.setCode(StateCode.UNKNOWN);
-                    user.setMessage(e.getLocalizedMessage());
-                    data.setValue(user);
+                    this.user.setError(true);
+                    this.user.setCode(StateCode.UNKNOWN);
+                    this.user.setMessage(e.getLocalizedMessage());
+                    data.setValue(this.user);
                 });
     }
 
     @Override
-    public void verifiedTLow() {
+    public void verifiedTLow(FirebaseUser user) {
         getfAuth().getCurrentUser().sendEmailVerification()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        user.setError(false);
-                        user.setCode(StateCode.SUCCESS);
-                        user.setMessage(getResources(R.string.success));
-                        data.setValue(user);
+                        this.user.setError(false);
+                        this.user.setUid(user.getUid());
+                        this.user.setCode(StateCode.SUCCESS);
+                        this.user.setMessage(getResources(R.string.success));
+                        data.setValue(this.user);
                     }
                 })
                 .addOnFailureListener(e -> {
-                    user.setError(true);
-                    user.setCode(StateCode.UNKNOWN);
-                    user.setMessage(e.getLocalizedMessage());
-                    data.setValue(user);
+                    this.user.setError(true);
+                    this.user.setCode(StateCode.UNKNOWN);
+                    this.user.setMessage(e.getLocalizedMessage());
+                    data.setValue(this.user);
                 });
     }
 

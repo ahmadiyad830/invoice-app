@@ -23,7 +23,7 @@ public class RepoUser extends Repo<User> {
 //    write
     @RequiresApi(api = Build.VERSION_CODES.P)
     public LiveData<Cash> postUser(User model) {
-        getReference().child(USER).child(getfUser().getUid())
+        getReference().child(USER).child(model.getUid())
                 .setValue(model)
                 .addOnCompleteListener(getApplication().getMainExecutor(), task -> {
                     if (task.isSuccessful()) {
@@ -43,7 +43,7 @@ public class RepoUser extends Repo<User> {
         return getErrorDate();
     }
     public LiveData<Cash> postUserTLow(User model) {
-        getReference().child(USER).child(getfUser().getUid())
+        getReference().child(USER).child(model.getUid())
                 .setValue(model)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
