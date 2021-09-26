@@ -5,9 +5,7 @@
 
     <data>
 
-        <variable
-            name="hasValue"
-            type="Boolean" />
+
 
         <variable
             name="emptyTextSearch"
@@ -39,6 +37,7 @@
                 android:id="@+id/spinner_sort_list"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:visibility='@{emptyTextSearch?View.GONE:View.VISIBLE,default=visible}'
                 android:backgroundTint="@color/text_btn_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

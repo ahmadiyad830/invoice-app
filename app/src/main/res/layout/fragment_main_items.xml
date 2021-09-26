@@ -3,11 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
-            name="hasValue"
+            name="emptyTextSearch"
             type="Boolean" />
-
         <variable
             name="inDialog"
             type="Boolean" />
@@ -91,6 +89,7 @@
                     android:layout_height="@dimen/_25sdp"
                     android:layout_margin="@dimen/_8sdp"
                     android:layout_weight="0"
+                    android:visibility='@{emptyTextSearch?View.VISIBLE:View.GONE,default=gone}'
                     android:contentDescription="@string/todo"
                     android:src="@drawable/ic_baseline_close_24"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -116,9 +115,10 @@
 
                 <Spinner
                     android:id="@+id/spinner_sort_list"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:visibility='@{emptyTextSearch?View.GONE:View.VISIBLE,default=visible}'
                     android:backgroundTint="@color/icon_color"
                     android:gravity="start" />
             </LinearLayout>
@@ -138,7 +138,6 @@
             android:src="@drawable/ic_baseline_add_24"
             android:text="@string/add_item"
             android:textColor="@color/text_color"
-            android:visibility='@{isCreateReceipt?View.GONE:View.VISIBLE,default = visible}'
             app:icon="@drawable/ic_baseline_add_24"
             app:iconSize="@dimen/_12sdp"
             app:iconTint="@color/icon_color"

@@ -154,7 +154,6 @@ public class FragmentReceipt extends Fragment implements OnReceiptItemClick, Dat
             } else {
                 binding.mainRecycler.setAdapter(search(search));
             }
-            binding.setHasValue(true);
         } else {
             binding.mainRecycler.setAdapter(withoutSearch());
         }

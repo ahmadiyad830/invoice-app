@@ -65,6 +65,7 @@ public class FragmentItems extends Fragment implements ARItems.OnCLickItem, Data
         binding.btnAdd.setOnClickListener(v -> {
             controller.navigate(FragmentItemsDirections.actionMenuItemToFragmentCreateItem2());
         });
+        spinnerInit();
     }
 
     @Override
@@ -80,7 +81,7 @@ public class FragmentItems extends Fragment implements ARItems.OnCLickItem, Data
         super.onStart();
         binding.recyclerItemsView.setHasFixedSize(true);
         binding.recyclerItemsView.setAdapter(adapter);
-        spinnerInit();
+
         binding.btnClean.setOnClickListener(v -> {
             binding.textSearch.setText("");
         });
@@ -109,6 +110,7 @@ public class FragmentItems extends Fragment implements ARItems.OnCLickItem, Data
     @Override
     public void afterTextChanged(Editable s) {
         String search = s.toString().trim();
+        binding.setEmptyTextSearch(!search.isEmpty());
         if (!search.isEmpty()){
             if (!key.equals(sortItems[0])) {
                 try {
@@ -119,11 +121,9 @@ public class FragmentItems extends Fragment implements ARItems.OnCLickItem, Data
             } else {
                 binding.recyclerItemsView.setAdapter(search(search));
             }
-            binding.setHasValue(true);
         }else {
             binding.recyclerItemsView.setAdapter(withoutSearch());
         }
-        binding.setHasValue(!search.isEmpty());
     }
 
     private ARItems searchNumber(double search) {
@@ -170,6 +170,6 @@ public class FragmentItems extends Fragment implements ARItems.OnCLickItem, Data
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        key = (String) parent.getItemAtPosition(0);
+        key = sortItems[0];
     }
 }

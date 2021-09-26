@@ -30,10 +30,12 @@ import soft.mahmod.yourreceipt.adapter.firebase.ARItems;
 import soft.mahmod.yourreceipt.common.Common;
 import soft.mahmod.yourreceipt.databinding.FragmentAddProductsBinding;
 import soft.mahmod.yourreceipt.databinding.FragmentMainItemsBinding;
+import soft.mahmod.yourreceipt.databinding.LayoutDialogCreateItemBinding;
 import soft.mahmod.yourreceipt.model.Client;
 import soft.mahmod.yourreceipt.model.Items;
 import soft.mahmod.yourreceipt.model.Products;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
+import soft.mahmod.yourreceipt.view_model.database.VMItems;
 import soft.mahmod.yourreceipt.view_model.send.data.VMSendClient;
 
 /**
@@ -51,9 +53,12 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
     private String key = sortItems[0];
     private FirebaseRecyclerOptions<Items> options;
     private DatabaseReference reference;
+    private VMItems vmItems;
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        vmItems = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
+                .get(VMItems.class);
         reference = FirebaseDatabase.getInstance().getReference()
                 .child(ITEMS + FirebaseAuth.getInstance().getUid());
         withoutSearch();
@@ -75,8 +80,54 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
         vmSendClient.getModel().observe(getViewLifecycleOwner(), client -> {
             if (client != null)
                 this.client = client;
-            Log.d(TAG, "onViewCreated: "+client.toString());
         });
+        binding.btnAdd.setText(getResources().getString(R.string.speed_add));
+        binding.btnAdd.setOnClickListener(v -> {
+            dialogCreateItem();
+        });
+    }
+
+    private void dialogCreateItem() {
+        Dialog dialog = new Dialog(requireContext());
+        LayoutDialogCreateItemBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.layout_dialog_create_item
+                , null, false);
+        dialog.setContentView(binding.getRoot());
+        dialog.getWindow().setBackgroundDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.custom_back_icon));
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setCancelable(true);
+        binding.btnDown.setOnClickListener(v -> {
+            vmItems.postItem(getItem(binding)).observe(getViewLifecycleOwner(), cash -> {
+                Log.d(TAG, "dialogCreateItem: " + cash.toString());
+            });
+            dialog.dismiss();
+        });
+        dialog.show();
+    }
+
+    private Items getItem(LayoutDialogCreateItemBinding binding) {
+        Items items = new Items();
+        String name = binding.edtName.getText().toString().trim();
+        double price, quantity, tax;
+        try {
+            price = Double.parseDouble(binding.edtPrice.getText().toString().trim());
+        } catch (Exception e) {
+            price = 0;
+        }
+        try {
+            quantity = Double.parseDouble(binding.edtQuantity.getText().toString().trim());
+        } catch (NumberFormatException e) {
+            quantity = 0;
+        }
+        try {
+            tax = Double.parseDouble(binding.edtTax.getText().toString().trim());
+        } catch (NumberFormatException e) {
+            tax = 0;
+        }
+        items.setName(name);
+        items.setPrice(price);
+        items.setQuantity(quantity);
+        items.setTax(tax);
+        return items;
     }
 
     @Override
@@ -153,6 +204,7 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
     @Override
     public void afterTextChanged(Editable s) {
         String search = s.toString().trim();
+        binding.setEmptyTextSearch(!search.isEmpty());
         if (!search.isEmpty()){
             if (!key.equals(sortItems[0])) {
                 try {
@@ -163,11 +215,9 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
             } else {
                 binding.recyclerItemsView.setAdapter(search(search));
             }
-            binding.setHasValue(true);
         }else {
             binding.recyclerItemsView.setAdapter(withoutSearch());
         }
-        binding.setHasValue(!search.isEmpty());
     }
 
     @Override

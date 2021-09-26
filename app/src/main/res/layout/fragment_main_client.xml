@@ -5,9 +5,8 @@
 
     <data>
         <variable
-            name="hasValue"
+            name="emptyTextSearch"
             type="Boolean" />
-
         <import type="android.view.View" />
     </data>
 
@@ -73,7 +72,7 @@
                 android:layout_weight="0"
                 android:contentDescription="@string/todo"
                 android:src="@drawable/ic_baseline_close_24"
-                android:visibility='@{hasValue?View.VISIBLE:View.GONE,default=gone}'
+                android:visibility='@{emptyTextSearch?View.VISIBLE:View.GONE,default=gone}'
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -84,6 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:backgroundTint="@color/icon_color"
+                android:visibility='@{emptyTextSearch?View.GONE:View.VISIBLE,default=visible}'
                 android:gravity="start"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

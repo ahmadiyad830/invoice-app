@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="hasValue"
+            name="emptyTextSearch"
             type="Boolean" />
         <variable
             name="isCreateReceipt"
@@ -53,6 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:backgroundTint="@color/icon_color"
+                android:visibility='@{emptyTextSearch?View.GONE:View.VISIBLE,default=visible}'
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -62,7 +63,6 @@
                 android:id="@+id/text_search"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:autofillHints="name"
                 android:hint="@string/text_some_things"
                 android:inputType="text"
@@ -82,7 +82,7 @@
                 android:layout_weight="0"
                 android:contentDescription="@string/todo"
                 android:src="@drawable/ic_baseline_close_24"
-                android:visibility='@{hasValue?View.VISIBLE:View.GONE,default=gone}'
+                android:visibility='@{emptyTextSearch?View.VISIBLE:View.GONE,default=gone}'
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

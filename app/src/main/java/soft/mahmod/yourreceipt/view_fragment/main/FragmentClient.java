@@ -164,6 +164,7 @@ public class FragmentClient extends Fragment implements DatabaseUrl, ARClients.O
     @Override
     public void afterTextChanged(Editable s) {
         String search = s.toString().trim();
+        binding.setEmptyTextSearch(!search.isEmpty());
         if (!search.isEmpty()) {
             if (key.equals(sortClients[2])) {
                 try {
@@ -174,10 +175,8 @@ public class FragmentClient extends Fragment implements DatabaseUrl, ARClients.O
             } else {
                 binding.recItem.setAdapter(search(search));
             }
-            binding.setHasValue(true);
         } else {
             binding.recItem.setAdapter(withoutSearch());
         }
-        binding.setHasValue(!search.isEmpty());
     }
 }
