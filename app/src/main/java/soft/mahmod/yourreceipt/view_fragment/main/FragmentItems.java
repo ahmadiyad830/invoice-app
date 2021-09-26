@@ -36,7 +36,7 @@ public class FragmentItems extends Fragment implements ARItems.OnCLickItem, Data
     private FragmentMainItemsBinding binding;
     private Query query;
     private ARItems adapter;
-    private String[] sortItems = {"itemName", "itemPrice", "quantity"};
+    private String[] sortItems = {"name", "price", "quantity"};
     private String key = sortItems[0];
     private FirebaseRecyclerOptions<Items> options;
     private DatabaseReference reference;

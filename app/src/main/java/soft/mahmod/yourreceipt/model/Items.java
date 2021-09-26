@@ -28,7 +28,6 @@ public class Items implements Serializable {
         this.tax = tax;
         this.note = note;
         this.quantity = quantity;
-        this.productId = productId;
     }
 
     public String getName() {
