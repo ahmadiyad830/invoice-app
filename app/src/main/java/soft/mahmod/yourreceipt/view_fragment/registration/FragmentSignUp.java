@@ -95,8 +95,10 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
         user.setPassword(pass1);
         user.setUid(uid);
         vmUser.postUser(user).observe(getViewLifecycleOwner(), cash -> {
-            if (cash.getError()){
+            if (cash.getError()) {
                 binding.setError(cash.getMessage());
+            } else {
+                controller.navigate(FragmentSignUpDirections.actionFragmentSignUpToFragmentActive());
             }
         });
     }

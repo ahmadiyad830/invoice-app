@@ -17,51 +17,24 @@
         android:background="@color/background_page"
         tools:context=".view_fragment.add_receipt.FragmentAddClient">
 
-        <LinearLayout
-            android:id="@+id/linear_main_item"
-            android:layout_width="match_parent"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_add"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="?selectableItemBackground"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="@string/todo"
+            android:shadowColor="@color/white"
+            android:shadowRadius="0"
+            android:src="@drawable/ic_baseline_add_24"
+            android:text="@string/add_new_client"
+            android:textColor="@color/text_color"
+            app:icon="@drawable/ic_baseline_add_24"
+            app:iconSize="@dimen/_12sdp"
+            app:iconTint="@color/icon_color"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.044"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layoutHeader"
-            app:layout_constraintVertical_bias="0.0">
-
-            <Spinner
-                android:id="@+id/spinner_sort_list"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/_8sdp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/icon_color"
-                android:gravity="start" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_add"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/_8sdp"
-                android:layout_weight="0"
-                android:background="?selectableItemBackground"
-                android:backgroundTint="@android:color/transparent"
-                android:contentDescription="@string/todo"
-                android:outlineSpotShadowColor="@color/white"
-                android:shadowColor="@color/white"
-                android:shadowRadius="0"
-                android:src="@drawable/ic_baseline_add_24"
-                android:text="@string/add_new_client"
-                android:textColor="@color/text_color"
-                app:icon="@drawable/ic_baseline_add_24"
-                app:iconSize="@dimen/_12sdp"
-                app:iconTint="@color/icon_color"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/icon_color" />
-        </LinearLayout>
+            app:tint="@color/icon_color" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutHeader"
@@ -88,7 +61,7 @@
                 android:textColor="@color/text_btn_color"
                 android:textColorHint="@color/item_background"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/spinner_sort_list"
                 app:layout_constraintStart_toEndOf="@+id/btn_delete"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -106,6 +79,16 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="@color/text_btn_color" />
 
+            <Spinner
+                android:id="@+id/spinner_sort_list"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/icon_color"
+                android:gravity="start"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -118,7 +101,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linear_main_item" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_add" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

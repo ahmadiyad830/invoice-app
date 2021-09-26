@@ -9,6 +9,10 @@
             name="hasValue"
             type="Boolean" />
 
+        <variable
+            name="emptyTextSearch"
+            type="Boolean" />
+
         <import type="android.view.View" />
 
     </data>
@@ -18,28 +22,6 @@
         android:layout_height="match_parent"
         android:background="@color/background_page"
         tools:context=".view_fragment.main.FragmentReceipt">
-
-        <LinearLayout
-            android:id="@+id/linear_main_item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.044"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layoutHeader"
-            app:layout_constraintVertical_bias="0.0">
-
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/spinner_sort_list"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_8sdp"
-                android:backgroundTint="@color/icon_color"
-                android:gravity="start" />
-
-        </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutHeader"
@@ -53,6 +35,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spinner_sort_list"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/text_btn_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
             <!-- -->
             <EditText
                 android:id="@+id/text_search"
@@ -66,7 +56,7 @@
                 android:textColor="@color/text_btn_color"
                 android:textColorHint="@color/item_background"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/spinner_sort_list"
                 app:layout_constraintStart_toEndOf="@+id/btn_delete"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -78,7 +68,7 @@
                 android:layout_weight="0"
                 android:contentDescription="@string/todo"
                 android:src="@drawable/ic_baseline_close_24"
-                android:visibility='@{hasValue?View.VISIBLE:View.GONE,default=gone}'
+                android:visibility='@{emptyTextSearch?View.VISIBLE:View.GONE,default=gone}'
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -87,7 +77,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+        <!---->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/main_recycler"
             android:layout_width="match_parent"
@@ -96,7 +86,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linear_main_item" />
+            app:layout_constraintTop_toBottomOf="@+id/layoutHeader" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

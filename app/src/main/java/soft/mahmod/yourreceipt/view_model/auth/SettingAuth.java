@@ -8,14 +8,14 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import soft.mahmod.yourreceipt.model.Cash;
-import soft.mahmod.yourreceipt.repository.auth.setting.EditAccount;
+import soft.mahmod.yourreceipt.repository.auth.setting.RepoSettingAuth;
 
 public class SettingAuth extends AndroidViewModel {
-    private final EditAccount repo;
+    private final RepoSettingAuth repo;
 
     public SettingAuth(@NonNull Application application) {
         super(application);
-        repo = new EditAccount(application);
+        repo = new RepoSettingAuth(application);
     }
 
     public LiveData<Cash> changePassword(String pass1, String pass2) {

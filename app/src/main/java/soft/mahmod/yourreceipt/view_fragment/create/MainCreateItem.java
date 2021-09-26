@@ -59,13 +59,16 @@ public class MainCreateItem extends Fragment {
         MainCreateItemArgs itemArgs = MainCreateItemArgs.fromBundle(getArguments());
         if (itemArgs.getMainItemToCreateItem() != null) {
             isEdit = true;
+            binding.setModel(itemArgs.getMainItemToCreateItem());
+
         }
-        binding.setModel(itemArgs.getMainItemToCreateItem());
         binding.btnDown.setOnClickListener(v -> {
             if (isEdit) {
                 putItem(itemArgs.getMainItemToCreateItem().getItemId());
-            } else
+            } else{
                 postItem();
+            }
+            requireActivity().onBackPressed();
         });
     }
 

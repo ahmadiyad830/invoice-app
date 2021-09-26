@@ -56,6 +56,4 @@ public class IntentActivity {
         Intent intent= new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         activity.startActivityForResult(intent, REQUEST_CAMERA);
     }
-
-
 }

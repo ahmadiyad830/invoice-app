@@ -4,12 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,7 +32,6 @@ import soft.mahmod.yourreceipt.listeners.OnReceiptItemClick;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.view_activity.ActivityDetails;
-import soft.mahmod.yourreceipt.view_activity.MainActivity;
 
 
 public class FragmentReceipt extends Fragment implements OnReceiptItemClick, DatabaseUrl, AdapterView.OnItemSelectedListener, TextWatcher {
@@ -57,7 +56,8 @@ public class FragmentReceipt extends Fragment implements OnReceiptItemClick, Dat
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment.
-        binding  = DataBindingUtil.inflate(inflater,R.layout.fragment_receipt, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_receipt, container, false);
+
         return binding.getRoot();
     }
 
@@ -85,22 +85,6 @@ public class FragmentReceipt extends Fragment implements OnReceiptItemClick, Dat
         binding.mainRecycler.setAdapter(adapter);
     }
 
-
-
-    private void spinnerInit() {
-        binding.spinnerSortList.setOnItemSelectedListener(this);
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>
-                (requireContext(), R.layout.spinner_style, sortReceipt);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.spinnerSortList.setAdapter(adapter);
-    }
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        adapter.stopListening();
-    }
     @Override
     public void itemClick(Receipt model) {
         Intent intent = new Intent(requireContext(), ActivityDetails.class);
@@ -169,6 +153,19 @@ public class FragmentReceipt extends Fragment implements OnReceiptItemClick, Dat
         } else {
             binding.mainRecycler.setAdapter(withoutSearch());
         }
-        binding.setHasValue(!search.isEmpty());
+        binding.setEmptyTextSearch(!search.isEmpty());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        adapter.stopListening();
+    }
+    private void spinnerInit() {
+        binding.spinnerSortList.setOnItemSelectedListener(this);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>
+                (requireContext(), R.layout.spinner_style, sortReceipt);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.spinnerSortList.setAdapter(adapter);
     }
 }

@@ -72,6 +72,7 @@
     <string name="add_client">Add new Client</string>
     <string name="client_phone">Client Phone</string>
     <string name="add_new_client">Add Client</string>
+    <string name="speed_add">Quick add</string>
     <string name="create_client">Create new Client</string>
     <string name="client">Client</string>
     <!--    TODO items-->

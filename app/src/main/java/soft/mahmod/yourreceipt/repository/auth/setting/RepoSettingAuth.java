@@ -14,10 +14,10 @@ import soft.mahmod.yourreceipt.model.Cash;
 import soft.mahmod.yourreceipt.statics.StateCode;
 
 
-public class EditAccount extends RepoEditAccount {
+public class RepoSettingAuth extends RepoEditAccount {
     private final Cash cash = new Cash();
 
-    public EditAccount(Application application) {
+    public RepoSettingAuth(Application application) {
         super(application);
     }
 
@@ -165,5 +165,6 @@ public class EditAccount extends RepoEditAccount {
                 });
         return data;
     }
+
 
 }

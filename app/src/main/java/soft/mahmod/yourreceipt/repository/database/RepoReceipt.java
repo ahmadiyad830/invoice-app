@@ -23,6 +23,7 @@ public class RepoReceipt extends Repo<Receipt>{
         super(application);
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.P)
     public synchronized LiveData<Cash> postReceipt(Receipt model) {
         model.setReceiptId(getReference().push().getKey());

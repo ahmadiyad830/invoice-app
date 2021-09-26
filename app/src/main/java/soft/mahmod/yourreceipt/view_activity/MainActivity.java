@@ -26,6 +26,7 @@ import soft.mahmod.yourreceipt.utils.DialogConfirm;
 import soft.mahmod.yourreceipt.utils.DialogListener;
 import soft.mahmod.yourreceipt.utils.IntentActivity;
 import soft.mahmod.yourreceipt.view_model.auth.SettingAuth;
+import soft.mahmod.yourreceipt.view_model.database.VMReceipt;
 import soft.mahmod.yourreceipt.view_model.database.VMUser;
 
 public class MainActivity extends AppCompatActivity implements DatabaseUrl {
@@ -34,6 +35,9 @@ public class MainActivity extends AppCompatActivity implements DatabaseUrl {
     private VMUser vmUser;
     private SettingAuth vmSettingAuth;
     private ActivityIntent intent;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +48,11 @@ public class MainActivity extends AppCompatActivity implements DatabaseUrl {
         vmSettingAuth = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication()))
                 .get(SettingAuth.class);
 
-        if (intent.isUserActive().isActive()){
+
+        if (intent.isUserActive().isActive()) {
             Log.d(TAG, "onCreate: not active");
             binding.setIsActive(intent.isUserActive().isActive());
-        }else {
+        } else {
             vmUser.getUser().observe(this, user -> {
                 Log.d(TAG, "onCreate: " + user.getMessage());
                 if (!user.getError()) {
@@ -109,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseUrl {
             intent.userSignOut(MainActivity.this);
         });
     }
+
 
     @Override
     protected void onDestroy() {
