@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -164,8 +165,12 @@ public class FragmentClient extends Fragment implements DatabaseUrl, ARClients.O
     public void afterTextChanged(Editable s) {
         String search = s.toString().trim();
         if (!search.isEmpty()) {
-            if (!key.equals(sortClients[0])) {
-                binding.recItem.setAdapter(searchNumber(Double.parseDouble(search)));
+            if (key.equals(sortClients[2])) {
+                try {
+                    binding.recItem.setAdapter(searchNumber(Double.parseDouble(search)));
+                }catch (NumberFormatException exception){
+                    Toast.makeText(requireContext(), getResources().getString(R.string.error_input_charcter), Toast.LENGTH_SHORT).show();
+                }
             } else {
                 binding.recItem.setAdapter(search(search));
             }

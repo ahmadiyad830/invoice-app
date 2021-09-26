@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -110,7 +111,11 @@ public class FragmentItems extends Fragment implements ARItems.OnCLickItem, Data
         String search = s.toString().trim();
         if (!search.isEmpty()){
             if (!key.equals(sortItems[0])) {
-                binding.recyclerItemsView.setAdapter(searchNumber(Double.parseDouble(search)));
+                try {
+                    binding.recyclerItemsView.setAdapter(searchNumber(Double.parseDouble(search)));
+                }catch (NumberFormatException exception){
+                    Toast.makeText(requireContext(), getResources().getString(R.string.error_input_charcter), Toast.LENGTH_SHORT).show();
+                }
             } else {
                 binding.recyclerItemsView.setAdapter(search(search));
             }

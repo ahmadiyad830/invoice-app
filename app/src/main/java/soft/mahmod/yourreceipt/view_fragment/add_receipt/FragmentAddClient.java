@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,14 +29,10 @@ import com.google.firebase.database.Query;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.firebase.ARClients;
-import soft.mahmod.yourreceipt.common.Common;
 import soft.mahmod.yourreceipt.databinding.FragmentAddClientBinding;
-import soft.mahmod.yourreceipt.databinding.FragmentAddProductsBinding;
-import soft.mahmod.yourreceipt.databinding.FragmentCreateClientBinding;
+import soft.mahmod.yourreceipt.databinding.LayoutClientBinding;
 import soft.mahmod.yourreceipt.model.Client;
-import soft.mahmod.yourreceipt.model.Products;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
-import soft.mahmod.yourreceipt.view_fragment.create.MainCreateClient;
 import soft.mahmod.yourreceipt.view_model.database.VMClient;
 
 /**
@@ -92,18 +89,36 @@ public class FragmentAddClient extends Fragment implements ARClients.OnClickClie
 
     private void dialogCreateClient() {
         Dialog dialog = new Dialog(requireContext());
-        FragmentCreateClientBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_create_client
+        LayoutClientBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.layout_client
                 , null, false);
         dialog.setContentView(binding.getRoot());
-//        dialog.getWindow().setBackgroundDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.custom_back_icon));
-//        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.custom_back_icon));
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.setCancelable(true);
         binding.btnDown.setOnClickListener(v -> {
-
+            vmClient.postClient(getClient(binding)).observe(getViewLifecycleOwner(), cash -> {
+                Log.d(TAG, "dialogCreateClient: "+cash.toString());
+            });
             dialog.dismiss();
         });
 
         dialog.show();
+    }
+
+    private Client getClient(LayoutClientBinding binding) {
+        Client client = new Client();
+        String name = binding.edtName.getText().toString().trim();
+        int phone ;
+        try {
+            phone = Integer.parseInt(binding.edtPhoneNum.getText().toString().trim());
+        } catch (NumberFormatException e) {
+            phone = 0;
+        }
+        boolean tax = binding.switchTax.isChecked();
+        client.setPhone(phone);
+        client.setName(name);
+        client.setTaxRegNo(tax);
+        return client;
     }
 
     @Override
@@ -159,8 +174,12 @@ public class FragmentAddClient extends Fragment implements ARClients.OnClickClie
     public void afterTextChanged(Editable s) {
         String search = s.toString().trim();
         if (!search.isEmpty()) {
-            if (!key.equals(sortClients[0])) {
-                binding.recItem.setAdapter(searchNumber(Double.parseDouble(search)));
+            if (key.equals(sortClients[2])) {
+                try {
+                    binding.recItem.setAdapter(searchNumber(Double.parseDouble(search)));
+                }catch (NumberFormatException exception){
+                    Toast.makeText(requireContext(), getResources().getString(R.string.error_input_charcter), Toast.LENGTH_SHORT).show();
+                }
             } else {
                 binding.recItem.setAdapter(search(search));
             }

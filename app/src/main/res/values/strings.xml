@@ -139,7 +139,8 @@ Or add all items</string>
     <string name="debt">debt</string>
     <string name="bayment">bayment</string>
     <string name="store">store</string>
-
+<!--error-->
+    <string name="error_input_charcter">Enter numbers only</string>
     <!--handle message-->
     <string name="success">Success</string>
     <string name="try_again">Try Again</string>
