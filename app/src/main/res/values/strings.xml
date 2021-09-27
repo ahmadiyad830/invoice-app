@@ -153,4 +153,5 @@ Or add all items</string>
     <string name="check_email">Check your email the to recover password in it</string>
     <string name="exempt">exempt</string>
     <string name="unexempt">Unexempt</string>
+    <string name="increase_quntity">Do you want to increase the quantity ?</string>
 </resources>

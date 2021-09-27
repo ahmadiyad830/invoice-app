@@ -1,8 +1,10 @@
 package soft.mahmod.yourreceipt.view_fragment.add_receipt.tab_add_products;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -159,71 +162,6 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
         key = (String) parent.getItemAtPosition(0);
     }
 
-
-    private ARItems searchNumber(double search) {
-        query = reference;
-        options = new FirebaseRecyclerOptions.Builder<Items>()
-                .setQuery(query.orderByChild(key).startAt(search).endAt(search + "\uf8ff"), Items.class)
-                .build();
-        adapter = new ARItems(options, this);
-        adapter.startListening();
-        return adapter;
-    }
-
-    private ARItems search(String search) {
-        query = reference;
-        options = new FirebaseRecyclerOptions.Builder<Items>()
-                .setQuery(query.orderByChild(key).startAt(search).endAt(search + "\uf8ff"), Items.class)
-                .build();
-        adapter = new ARItems(options, this);
-        adapter.startListening();
-        return adapter;
-    }
-
-    private ARItems withoutSearch() {
-        options = new FirebaseRecyclerOptions.Builder<Items>()
-                .setQuery(reference, Items.class)
-                .build();
-        adapter = new ARItems(options, this);
-        adapter.startListening();
-        return adapter;
-    }
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-        String search = s.toString().trim();
-        binding.setEmptyTextSearch(!search.isEmpty());
-        if (!search.isEmpty()){
-            if (!key.equals(sortItems[0])) {
-                try {
-                    binding.recyclerItemsView.setAdapter(searchNumber(Double.parseDouble(search)));
-                }catch (NumberFormatException exception){
-                    Toast.makeText(requireContext(), getResources().getString(R.string.error_input_charcter), Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                binding.recyclerItemsView.setAdapter(search(search));
-            }
-        }else {
-            binding.recyclerItemsView.setAdapter(withoutSearch());
-        }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        adapter.stopListening();
-    }
-
-
     private void loadDialogCreateProduct(Products model, Items itemModel) {
         Dialog dialog = new Dialog(requireContext());
         FragmentAddProductsBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_add_products
@@ -310,11 +248,97 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
 
     @Override
     public void onClick(Products products, Items model) {
-        loadDialogCreateProduct(products,model);
+        if (model.getQuantity() > 0) {
+            loadDialogCreateProduct(products, model);
+        } else {
+            loadDialogZeroQuantity(model);
+        }
+
+    }
+
+    private void loadDialogZeroQuantity(Items model) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        EditText editText = new EditText(builder.getContext());
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        builder.setView(editText);
+        builder.setPositiveButton(getResources().getString(R.string.ok), (dialog, which) -> {
+            double quantity = Double.parseDouble(editText.getText().toString().trim());
+            vmItems.updatesQuantity(model.getItemId(), quantity).observe(getViewLifecycleOwner(), cash -> {
+                Log.d(TAG, "loadDialogZeroQuantity: " + cash.toString());
+            });
+        }).setNegativeButton(getResources().getString(R.string.cancel), (dialog, which) -> {
+            dialog.dismiss();
+        });
+        builder.setMessage(getResources().getString(R.string.increase_quntity));
+        builder.show();
     }
 
     @Override
     public void onDelete(Items mode, int position) {
 
+    }
+
+    private ARItems searchNumber(double search) {
+        query = reference;
+        options = new FirebaseRecyclerOptions.Builder<Items>()
+                .setQuery(query.orderByChild(key).startAt(search).endAt(search + "\uf8ff"), Items.class)
+                .build();
+        adapter = new ARItems(options, this);
+        adapter.startListening();
+        return adapter;
+    }
+
+    private ARItems search(String search) {
+        query = reference;
+        options = new FirebaseRecyclerOptions.Builder<Items>()
+                .setQuery(query.orderByChild(key).startAt(search).endAt(search + "\uf8ff"), Items.class)
+                .build();
+        adapter = new ARItems(options, this);
+        adapter.startListening();
+        return adapter;
+    }
+
+    private ARItems withoutSearch() {
+        options = new FirebaseRecyclerOptions.Builder<Items>()
+                .setQuery(reference, Items.class)
+                .build();
+        adapter = new ARItems(options, this);
+        adapter.startListening();
+        return adapter;
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        String search = s.toString().trim();
+        binding.setEmptyTextSearch(!search.isEmpty());
+        if (!search.isEmpty()) {
+            if (!key.equals(sortItems[0])) {
+                try {
+                    binding.recyclerItemsView.setAdapter(searchNumber(Double.parseDouble(search)));
+                } catch (NumberFormatException exception) {
+                    Toast.makeText(requireContext(), getResources().getString(R.string.error_input_charcter), Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                binding.recyclerItemsView.setAdapter(search(search));
+            }
+        } else {
+            binding.recyclerItemsView.setAdapter(withoutSearch());
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 }
