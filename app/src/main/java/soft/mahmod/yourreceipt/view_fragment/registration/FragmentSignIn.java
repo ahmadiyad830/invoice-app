@@ -2,7 +2,6 @@ package soft.mahmod.yourreceipt.view_fragment.registration;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +29,7 @@ import soft.mahmod.yourreceipt.view_model.database.VMUser;
 public class FragmentSignIn extends Fragment {
     private static final String TAG = "FragmentSignIn";
     private FragmentSignInBinding binding;
-    private VMSignIn VMSignIn;
+    private VMSignIn vmSignIn;
     private VMUser vmDbUser;
     private SettingAuth vmSettingAuth;
     private NavController controller;
@@ -39,7 +38,7 @@ public class FragmentSignIn extends Fragment {
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        VMSignIn = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
+        vmSignIn = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
                 (requireActivity().getApplication())).get(VMSignIn.class);
         // FIXME: 9/22/2021  reblace with repo database package
         vmDbUser = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
@@ -102,24 +101,26 @@ public class FragmentSignIn extends Fragment {
             ConditionsSignIn conditionsSignIn = new ConditionsSignIn(email, password);
             if (conditionsSignIn.getError()) {
                 binding.setError(conditionsSignIn.getMessage());
-                return;
+            } else if (vmSignIn.isConnection()) {
+                signIn(email, password);
+            } else {
+                binding.setError(getResources().getString(R.string.items));
             }
-            signIn(email, password);
+
         });
     }
 
     private void signIn(String email, String password) {
-        if (VMSignIn.isConnection()) {
-            VMSignIn.signIn(email, password)
-                    .observe(getViewLifecycleOwner(), user -> {
-                        Log.d(TAG, "signIn: " + user.toString());
-                        if (!user.getError()) {
+        binding.setProgress(true);
+        vmSignIn.signIn(email, password)
+                .observe(getViewLifecycleOwner(), user -> {
+                    if (!user.getError()) {
                         intent.userSignIn(requireActivity());
-                        } else {
-                            binding.setError(user.getMessage());
-                        }
-                    });
-        }
+                    } else {
+                        binding.setError(user.getMessage());
+                    }
+                    binding.setProgress(false);
+                });
     }
 
 }

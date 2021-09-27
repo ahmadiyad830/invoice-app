@@ -31,7 +31,7 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
     private static final String TAG = "FragmentSignUp";
     private FragmentSignUpBinding binding;
     private VMUser vmUser;
-    private VMSignUp VMSignUp;
+    private VMSignUp vmSignUp;
     private NavController controller;
 
 
@@ -41,7 +41,7 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
         vmUser = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
                 (requireActivity().getApplication())).get(VMUser.class);
 
-        VMSignUp = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
+        vmSignUp = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
                 (requireActivity().getApplication())).get(VMSignUp.class);
     }
 
@@ -69,23 +69,26 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
             ConditionsSignUp conditionsSignUp = new ConditionsSignUp(email, pass1, pass2);
             if (conditionsSignUp.getError()) {
                 binding.setError(conditionsSignUp.getMessage());
-                return;
+            } else if (vmSignUp.isConnection()) {
+                signUp(email, pass1);
+            }else {
+                binding.setError(getResources().getString(R.string.network_conecction));
             }
-            signUp(email, pass1);
+
         });
     }
 
     private void signUp(String email, String pass1) {
-        if (VMSignUp.isConnection()) {
-            VMSignUp.signIn(email, pass1)
-                    .observe(getViewLifecycleOwner(), user -> {
-                        if (!user.getError()) {
-                            uploadUser(email, pass1,user.getUid());
-                        }else {
-                            binding.setError(user.getMessage());
-                        }
-                    });
-        }
+        binding.setProgress(true);
+        vmSignUp.signIn(email, pass1)
+                .observe(getViewLifecycleOwner(), user -> {
+                    if (!user.getError()) {
+                        uploadUser(email, pass1, user.getUid());
+                    } else {
+                        binding.setProgress(false);
+                        binding.setError(user.getMessage());
+                    }
+                });
 
     }
 
@@ -100,6 +103,7 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
             } else {
                 controller.navigate(FragmentSignUpDirections.actionFragmentSignUpToFragmentActive());
             }
+            binding.setProgress(false);
         });
     }
 }

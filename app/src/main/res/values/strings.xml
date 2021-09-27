@@ -141,6 +141,7 @@ Or add all items</string>
     <string name="store">store</string>
 <!--error-->
     <string name="error_input_charcter">Enter numbers only</string>
+    <string name="network_conecction">Check if network connect</string>
     <!--handle message-->
     <string name="success">Success</string>
     <string name="try_again">Try Again</string>

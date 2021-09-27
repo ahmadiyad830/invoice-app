@@ -118,4 +118,5 @@
     <string name="check_email">تحقق من بريدك الإلكتروني لاستعادة كلمة المرور فيه</string>
     <string name="speed_add">اضافة سريعة</string>
     <string name="error_input_charcter">ادخل ارقام فقط</string>
+    <string name="network_conecction">تحقق مما إذا كان اتصال الشبكة</string>
 </resources>

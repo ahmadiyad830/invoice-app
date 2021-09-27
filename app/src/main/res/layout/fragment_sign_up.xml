@@ -3,15 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="error"
             type="String" />
+
+        <variable
+            name="progress"
+            type="Boolean" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@color/background_page"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/background_page">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,16 +32,15 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textview.MaterialTextView
-                android:drawableEnd="@mipmap/ic_launcher"
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/app_name"
+                android:drawableEnd="@mipmap/ic_launcher"
                 android:gravity="center"
+                android:text="@string/app_name"
                 android:textColor="@color/top_and_bottom_color"
-                android:textSize="@dimen/_18ssp"/>
+                android:textSize="@dimen/_18ssp" />
         </LinearLayout>
-
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -69,14 +76,14 @@
                         android:id="@+id/email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="@color/text_btn_color"
                         android:background="@drawable/custom_stork"
-                        android:textColorHint="@color/hint_color"
-                        android:padding="@dimen/_12sdp"
+                        android:backgroundTint="@color/text_btn_color"
                         android:hint="@string/email"
                         android:inputType="textEmailAddress"
+                        android:padding="@dimen/_12sdp"
                         android:singleLine="true"
                         android:textColor="@color/text_color"
+                        android:textColorHint="@color/hint_color"
                         android:textSize="@dimen/_14ssp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -105,15 +112,15 @@
                         android:id="@+id/password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/password"
-                        android:backgroundTint="@color/text_btn_color"
                         android:background="@drawable/custom_stork"
-                        android:textColorHint="@color/hint_color"
+                        android:backgroundTint="@color/text_btn_color"
+                        android:hint="@string/password"
+                        android:inputType="textPassword"
                         android:padding="@dimen/_12sdp"
 
-                        android:inputType="textPassword"
                         android:singleLine="true"
                         android:textColor="@color/text_color"
+                        android:textColorHint="@color/hint_color"
                         android:textSize="@dimen/_14ssp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -131,22 +138,24 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="@dimen/_3sdp">
+
                     <EditText
                         android:id="@+id/password_config"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/custom_stork"
+                        android:backgroundTint="@color/text_btn_color"
                         android:hint="@string/config_password"
                         android:inputType="textPassword"
-                        android:backgroundTint="@color/text_btn_color"
-                        android:background="@drawable/custom_stork"
-                        android:textColorHint="@color/hint_color"
                         android:padding="@dimen/_12sdp"
                         android:singleLine="true"
                         android:textColor="@color/text_color"
+                        android:textColorHint="@color/hint_color"
                         android:textSize="@dimen/_14ssp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -161,6 +170,7 @@
             android:layout_marginTop="@dimen/_30sdp"
             android:backgroundTint="@color/main_color"
             android:text="@string/sign_up"
+            android:enabled="@{progress?false:true,default =true}"
             android:textColor="@color/top_and_bottom_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.516"
@@ -173,8 +183,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginHorizontal="@dimen/_12sdp"
-            android:text="@{error}"
             android:gravity="center"
+            android:text="@{error}"
             android:textColor="@android:color/holo_red_dark"
             android:textSize="@dimen/_14ssp"
             android:textStyle="italic"
@@ -186,9 +196,9 @@
         <View
             android:id="@+id/view"
             android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
             android:layout_marginHorizontal="@dimen/_14sdp"
             android:background="@color/hint_color"
-            android:layout_height="@dimen/_1sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.516"
@@ -213,6 +223,17 @@
             app:layout_constraintTop_toBottomOf="@+id/view"
             app:layout_constraintVertical_bias="0.50" />
 
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/top_and_bottom_color"
+            android:visibility="@{progress?View.VISIBLE:View.GONE,default = gone}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
