@@ -38,11 +38,7 @@ import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.view_model.database.VMItems;
 import soft.mahmod.yourreceipt.view_model.send.data.VMSendClient;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentAddItem#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatcher, ARItems.OnCLickItem, AdapterView.OnItemSelectedListener {
     private static final String TAG = "FragmentAddItem";
     private FragmentMainItemsBinding binding;
@@ -302,9 +298,9 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
     }
 
     private double withTax(Products model) {
-        // FIXME: 9/20/2021 Add Tax
         double price = model.getPrice() - model.getDiscount();
-        return price;
+        double pTax = price * model.getTax();
+        return pTax * model.getQuantity();
     }
 
     private double withoutTax(Products model) {
