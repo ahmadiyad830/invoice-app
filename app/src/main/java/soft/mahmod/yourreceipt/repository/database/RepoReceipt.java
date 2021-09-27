@@ -39,6 +39,7 @@ public class RepoReceipt extends Repo<Receipt>{
 
                 })
                 .addOnFailureListener(getApplication().getMainExecutor(), e -> {
+                    postError(e.getLocalizedMessage());
                     getCash().setError(true);
                     getCash().setMessage(e.getMessage());
                     getCash().setCode(TRY_AGAIN);
@@ -61,6 +62,7 @@ public class RepoReceipt extends Repo<Receipt>{
 
                 })
                 .addOnFailureListener(e -> {
+                    postError(e.getLocalizedMessage());
                     getCash().setError(true);
                     getCash().setMessage(e.getMessage());
                     getCash().setCode(TRY_AGAIN);
@@ -82,6 +84,7 @@ public class RepoReceipt extends Repo<Receipt>{
                     getErrorDate().setValue(getCash());
                 })
                 .addOnFailureListener(getApplication().getMainExecutor(),e -> {
+                    postError(e.getLocalizedMessage());
                     getCash().setMessage(e.getMessage());
                     getCash().setCode(404);
                     getCash().setError(true);
@@ -101,6 +104,7 @@ public class RepoReceipt extends Repo<Receipt>{
                     getErrorDate().setValue(getCash());
                 })
                 .addOnFailureListener(e -> {
+                    postError(e.getLocalizedMessage());
                     getCash().setMessage(e.getMessage());
                     getCash().setCode(404);
                     getCash().setError(true);

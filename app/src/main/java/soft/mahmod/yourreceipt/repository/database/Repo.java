@@ -64,6 +64,12 @@ public class Repo<T> implements DatabaseUrl {
         return dataSize;
     }
 
+    public void postError(String error) {
+        getReference().child(ERROR)
+                .child(fUser.getUid())
+                .setValue(error);
+    }
+
     public DatabaseReference getReference() {
         return reference;
     }

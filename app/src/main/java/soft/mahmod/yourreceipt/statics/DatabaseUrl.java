@@ -10,6 +10,7 @@ public interface DatabaseUrl extends StateCode {
     String USER = "users/";
     String PRODUCTS = "products/";
     String QUANTITY = "/quantity";
+    String ERROR = "/error";
 //    paymnet
     String PAYMENT = "payment/";
     String LIST_PAYMENT = "listPayment/";

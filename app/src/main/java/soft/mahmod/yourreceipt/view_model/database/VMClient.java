@@ -12,30 +12,28 @@ import soft.mahmod.yourreceipt.model.Client;
 import soft.mahmod.yourreceipt.repository.database.RepoClient;
 
 public class VMClient extends AndroidViewModel {
-    private RepoClient repoClient;
+    private RepoClient repo;
 
     public VMClient(@NonNull Application application) {
         super(application);
-        repoClient = new RepoClient(application);
+        repo = new RepoClient(application);
     }
 
     public LiveData<Cash> postClient(Client model){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            return repoClient.postClient(model);
+            return repo.postClient(model);
         }else {
-            return repoClient.postClientTLow(model);
+            return repo.postClientTLow(model);
         }
     }
     public LiveData<Cash> putClient(Client model){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            return repoClient.putClient(model);
+            return repo.putClient(model);
         }else {
-            return repoClient.putClientTLow(model);
+            return repo.putClientTLow(model);
         }
     }
     public LiveData<Client> getClient(String pushKey){
-        return repoClient.getClient(pushKey);
+        return repo.getClient(pushKey);
     }
-
-
 }

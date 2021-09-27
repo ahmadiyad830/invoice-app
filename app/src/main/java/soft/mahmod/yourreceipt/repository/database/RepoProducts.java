@@ -29,6 +29,7 @@ public class RepoProducts extends Repo<Products>{
 
                 })
                 .addOnFailureListener(getApplication().getMainExecutor(), e -> {
+                    postError(e.getLocalizedMessage());
                     getCash().setError(true);
                     getCash().setMessage(e.getMessage());
                     getCash().setCode(TRY_AGAIN);
@@ -50,6 +51,7 @@ public class RepoProducts extends Repo<Products>{
 
                 })
                 .addOnFailureListener(e -> {
+                    postError(e.getLocalizedMessage());
                     getCash().setError(true);
                     getCash().setMessage(e.getMessage());
                     getCash().setCode(TRY_AGAIN);

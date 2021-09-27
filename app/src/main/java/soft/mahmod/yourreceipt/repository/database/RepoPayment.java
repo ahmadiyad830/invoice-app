@@ -53,6 +53,7 @@ public class RepoPayment extends Repo<Payment>{
                     }
                 })
                 .addOnFailureListener(getApplication().getMainExecutor(), e -> {
+                    postError(e.getLocalizedMessage());
                     payment.setError(true);
                     payment.setCode(TRY_AGAIN);
                     payment.setMessage(e.getLocalizedMessage());
@@ -80,6 +81,7 @@ public class RepoPayment extends Repo<Payment>{
                     }
                 })
                 .addOnFailureListener( e -> {
+                    postError(e.getLocalizedMessage());
                     payment.setError(true);
                     payment.setCode(TRY_AGAIN);
                     payment.setMessage(e.getLocalizedMessage());
@@ -113,7 +115,7 @@ public class RepoPayment extends Repo<Payment>{
 
         @Override
         public void onCancelled(@NonNull DatabaseError error) {
-
+            postError(error.getMessage());
         }
     };
 }

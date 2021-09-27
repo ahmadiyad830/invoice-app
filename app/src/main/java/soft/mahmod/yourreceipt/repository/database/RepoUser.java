@@ -35,6 +35,7 @@ public class RepoUser extends Repo<User> {
 
                 })
                 .addOnFailureListener(getApplication().getMainExecutor(), e -> {
+                    postError(e.getLocalizedMessage());
                     getCash().setError(true);
                     getCash().setMessage(e.getMessage());
                     getCash().setCode(TRY_AGAIN);
@@ -55,6 +56,7 @@ public class RepoUser extends Repo<User> {
 
                 })
                 .addOnFailureListener(e -> {
+                    postError(e.getLocalizedMessage());
                     getCash().setError(true);
                     getCash().setMessage(e.getMessage());
                     getCash().setCode(TRY_AGAIN);
@@ -97,6 +99,7 @@ public class RepoUser extends Repo<User> {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
+                        postError(error.getMessage());
                         User user = new User();
                         user.setError(true);
                         user.setMessage(error.getMessage());
