@@ -18,15 +18,9 @@ import soft.mahmod.yourreceipt.model.billing.Payment;
 
 public class ARPayment extends RecyclerView.Adapter<ARPayment.ViewHolder> {
     public static final String TAG = "ARPayment";
-
-    public void setListPayment(List<Payment> listPayment) {
-        this.listPayment = listPayment;
-    }
-
     private LayoutInflater inflater;
     private List<Payment> listPayment;
     private ListenerPayment listener;
-    private int isCreate = View.VISIBLE;
     public ARPayment(List<Payment> listPayment, ListenerPayment listener) {
         this.listPayment = listPayment;
         this.listener = listener;
@@ -34,14 +28,6 @@ public class ARPayment extends RecyclerView.Adapter<ARPayment.ViewHolder> {
 
     public ARPayment(List<Payment> listPayment) {
         this.listPayment = listPayment;
-    }
-
-    public int getIsCreate() {
-        return isCreate;
-    }
-
-    public void setIsCreate(int isCreate) {
-        this.isCreate = isCreate;
     }
 
     @NonNull
@@ -52,7 +38,6 @@ public class ARPayment extends RecyclerView.Adapter<ARPayment.ViewHolder> {
             inflater = LayoutInflater.from(context);
         }
         ItemsBaymentBinding binding = DataBindingUtil.inflate(inflater, R.layout.items_bayment, parent, false);
-        binding.btnDelete.setVisibility(getIsCreate());
         return new ViewHolder(binding);
     }
 

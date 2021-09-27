@@ -1,6 +1,11 @@
 package soft.mahmod.yourreceipt.view_fragment.main;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,13 +13,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.FragmentEditAccountBinding;
@@ -73,7 +71,14 @@ public class FragmentEditAccount extends Fragment {
         String name = binding.edtName.getText().toString().trim();
         store.setName(name);
         String number = binding.edtPhoneNum.getText().toString().trim();
-        store.setPhone(Integer.parseInt(number));
+        try {
+            store.setPhone(Integer.parseInt(number));
+        } catch (NumberFormatException e) {
+            store.setPhone(0);
+            e.printStackTrace();
+        }
+        String securitynumber = binding.edtSecurity.getText().toString().trim();
+        store.setSecurity(createSecuritynumber(securitynumber));
         String email = binding.edtEmail.getText().toString().trim();
         store.setEmail(email);
         String address1 = binding.edtAddress1.getText().toString().trim();
@@ -83,13 +88,17 @@ public class FragmentEditAccount extends Fragment {
         return store;
     }
 
+    private String createSecuritynumber(String number) {
+        return number;
+    }
+
 
     private void loadStore() {
         vmStore.getStore().observe(getViewLifecycleOwner(), store -> {
-            if (!store.getError()){
+            if (!store.getError()) {
                 binding.setModel(store);
             }
-            Log.d(TAG, "loadStore: "+store.getCode());
+            Log.d(TAG, "loadStore: " + store.getCode());
         });
     }
 

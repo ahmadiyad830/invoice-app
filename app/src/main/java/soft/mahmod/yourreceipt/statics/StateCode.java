@@ -7,6 +7,7 @@ public interface StateCode  {
     int SUCCESS = 200;
     int ACTIVE = 202;
     int WEAK_PASSWORD = 203;
+    int NUMBER_SECURITY = 204;
 
     int TRY_AGAIN = 400;
     int NOT_FOUND = 404;

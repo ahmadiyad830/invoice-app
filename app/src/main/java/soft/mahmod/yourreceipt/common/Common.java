@@ -13,12 +13,10 @@ public class Common {
     public static double quantity = 0.0;
 
     public static double getTotalAll() {
-        String formatTotal = String.format(Locale.getDefault(),"%.2f",Common.totalAll);
-        return Double.parseDouble(formatTotal);
+        return totalAll;
     }
 
     public static void setTotalAll(double totalAll) {
-        String formatTotal = String.format(Locale.getDefault(),"%.2f",totalAll);
-        Common.totalAll = Double.parseDouble(formatTotal);
+        Common.totalAll = totalAll;
     }
 }

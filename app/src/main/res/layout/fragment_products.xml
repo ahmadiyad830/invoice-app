@@ -5,6 +5,11 @@
 
     <data>
 
+        <variable
+            name="emptyList"
+            type="Boolean" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,6 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_8sdp"
             android:orientation="horizontal"
+            android:visibility="@{emptyList?View.GONE:View.VISIBLE,default = visible}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -86,11 +92,26 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="@dimen/_8sdp"
+            android:visibility="@{emptyList?View.GONE:View.VISIBLE,default = visible}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_result_found"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            android:visibility="@{emptyList?View.VISIBLE:View.GONE,default = gone}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

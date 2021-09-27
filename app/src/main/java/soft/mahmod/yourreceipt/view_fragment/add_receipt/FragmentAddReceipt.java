@@ -45,6 +45,7 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
     private String receiptType;
     private VMItems vmItems;
     private HandleTimeCount handleTimeCount;
+    private FragmentAddReceiptArgs argsReceipt;
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +91,10 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
         binding.materialButton2.setOnClickListener(v -> {
             loadCalenderDialog();
         });
+        argsReceipt = FragmentAddReceiptArgs.fromBundle(getArguments());
+        if (argsReceipt != null) {
+            binding.setTotalAll(argsReceipt.getReceiptToAddReceipt().getTotalAll());
+        }
     }
 
     private void loadCalenderDialog() {
@@ -120,7 +125,7 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
     }
 
     private void setReceipt() {
-        FragmentAddReceiptArgs argsReceipt = FragmentAddReceiptArgs.fromBundle(getArguments());
+
         Receipt model = argsReceipt.getReceiptToAddReceipt();
         model.setSubject(getReceipt().getSubject());
         model.setNote(getReceipt().getNote());

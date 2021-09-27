@@ -57,6 +57,7 @@
     <string name="details">Details</string>
     <string name="name">Name</string>
     <string name="price">Price</string>
+    <string name="payment_value">Payment value</string>
 
     <!--    TODO receipt-->
     <string name="type_receipt">Type Receipt</string>
@@ -150,8 +151,13 @@ Or add all items</string>
     <string name="try_again">Try Again</string>
     <string name="not_exists">Not exists</string>
     <string name="active_your_account">Please active your account</string>
+    <string name="we_send_email">We have sent you a confirmation email</string>
+
     <string name="check_email">Check your email the to recover password in it</string>
     <string name="exempt">exempt</string>
     <string name="unexempt">Unexempt</string>
     <string name="increase_quntity">Do you want to increase the quantity ?</string>
+    <string name="security">Security number</string>
+    <string name="dont_have_number_security">You don\'t have Security number</string>
+    <string name="dont_show">Don\'t show again</string>
 </resources>

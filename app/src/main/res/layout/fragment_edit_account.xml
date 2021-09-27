@@ -89,11 +89,33 @@
                         android:text="@{model.email}"
                         android:textColor="@color/text_color" />
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="?actionBarSize"
+                        android:layout_marginVertical="@dimen/_8sdp"
+                        app:passwordToggleEnabled="true"
+                        android:maxLength="4"
+                        app:passwordToggleTint="@color/top_and_bottom_color">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_security"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/custom_stork"
+                            android:hint="@string/security"
+                            android:maxLength="4"
+                            android:maxLines="1"
+                            android:maxEms="4"
+                            android:minEms="4"
+                            android:minLines="1"
+                            android:inputType="numberPassword"
+                            android:text="@{model.security}" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
                     <EditText
                         android:id="@+id/edt_address1"
                         android:layout_width="match_parent"
                         android:layout_height="?actionBarSize"
-                        android:layout_marginVertical="@dimen/_8sdp"
                         android:background="@drawable/custom_stork"
                         android:textColorHint="@color/hint_color"
                         android:hint="@string/address_1"
@@ -110,6 +132,7 @@
                         android:background="@drawable/custom_stork"
                         android:hint="@string/address_2"
                         android:inputType="text"
+                        android:layout_marginVertical="@dimen/_8sdp"
                         android:textColorHint="@color/hint_color"
                         android:padding="@dimen/_8sdp"
                         android:paddingHorizontal="@dimen/_8sdp"

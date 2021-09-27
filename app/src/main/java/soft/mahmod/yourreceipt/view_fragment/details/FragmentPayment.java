@@ -1,10 +1,12 @@
 package soft.mahmod.yourreceipt.view_fragment.details;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,10 +17,15 @@ import androidx.lifecycle.ViewModelProvider;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ARPayment;
 import soft.mahmod.yourreceipt.databinding.FragmentPaymentBinding;
+import soft.mahmod.yourreceipt.databinding.LayoutSecurityBinding;
 import soft.mahmod.yourreceipt.listeners.ListenerPayment;
+import soft.mahmod.yourreceipt.listeners.ListenerSecurityDialog;
 import soft.mahmod.yourreceipt.model.Receipt;
+import soft.mahmod.yourreceipt.model.Store;
 import soft.mahmod.yourreceipt.model.billing.Payment;
+import soft.mahmod.yourreceipt.statics.AlertDialogConfirm;
 import soft.mahmod.yourreceipt.view_model.database.VMPayment;
+import soft.mahmod.yourreceipt.view_model.database.VMStore;
 import soft.mahmod.yourreceipt.view_model.send.data.VMSendReceipt;
 
 /**
@@ -56,12 +63,12 @@ public class FragmentPayment extends Fragment implements ListenerPayment {
         vmSendReceipt = new ViewModelProvider(requireActivity()).get(VMSendReceipt.class);
         binding.recPayment.setHasFixedSize(true);
         vmSendReceipt.getModel().observe(getViewLifecycleOwner(),receipt -> {
-            if (receipt != null) {
+            if (receipt != null && receipt.getPayment() != null && receipt.getPayment().getListPayment() != null) {
                 this.receipt = receipt;
+                binding.setEmptyList(receipt.getPayment().getListPayment().isEmpty());
+                adapter = new ARPayment(receipt.getPayment().getListPayment(), this);
+                binding.recPayment.setAdapter(adapter);
             }
-            adapter = new ARPayment(receipt.getPayment().getListPayment(), this);
-            adapter.setIsCreate(View.GONE);
-            binding.recPayment.setAdapter(adapter);
         });
 
     }
@@ -78,7 +85,30 @@ public class FragmentPayment extends Fragment implements ListenerPayment {
 
     @Override
     public void onDelete(int position) {
+        VMStore vmStore = new ViewModelProvider(getViewModelStore(),new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
+                .get(VMStore.class);
+        vmStore.getStore().observe(getViewLifecycleOwner(),store -> {
+            if (store.getError()){
+                Log.d(TAG, "onDelete: "+);
+            }else {
+                createDialogSecurity(store);
+            }
+        });
 
+    }
+
+    private void createDialogSecurity(Store store) {
+        AlertDialogConfirm.securityDialog(getLayoutInflater(), requireContext(), new ListenerSecurityDialog() {
+            @Override
+            public void onOk(Dialog dialog, LayoutSecurityBinding binding) {
+
+            }
+
+            @Override
+            public void dontShowAgain(CompoundButton buttonView, boolean show) {
+                Log.d(TAG, "dontShowAgain: ");
+            }
+        });
     }
 
     @Override

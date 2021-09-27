@@ -17,6 +17,10 @@
             name="dateDept"
             type="String" />
 
+        <variable
+            name="totalAll"
+            type="Double" />
+
         <import type="android.view.View" />
     </data>
 
@@ -88,22 +92,36 @@
 
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_12sdp"
+                    android:text='@{@string/total_all+" "+String.valueOf(totalAll)}'
+                    android:textColor="@color/mony_color"
+                    android:textSize="@dimen/_16ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/layout_client_side"
+                    app:layout_constraintStart_toStartOf="@+id/layout_client_side"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_client_side" />
+
                 <LinearLayout
                     android:id="@+id/linearLayout17"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/_8sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_client_side">
+                    app:layout_constraintTop_toBottomOf="@+id/textView5">
 
                     <Spinner
                         android:id="@+id/spinner_type_receipt"
                         android:layout_width="wrap_content"
                         android:layout_height="?actionBarSize"
-                        android:backgroundTint="@color/icon_color"
                         android:layout_marginHorizontal="@dimen/_8sdp"
+                        android:backgroundTint="@color/icon_color"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/editText2"
                         app:layout_constraintHorizontal_bias="0.0"
@@ -128,7 +146,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="9"
-                        android:hint="@string/price"
+                        android:hint="@string/payment_value"
                         android:textColor="@color/text_color"
                         android:inputType="numberDecimal"
                         android:maxLines="1"

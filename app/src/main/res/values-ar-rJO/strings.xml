@@ -123,4 +123,10 @@
     <string name="tax_exempt">إعفاء ضريبي</string>
     <string name="exempt">معفى</string>
     <string name="unexempt">غير معفى</string>
+    <string name="we_send_email">لقد ارسلنا اليك ايميل تاكيد</string>
+    <string name="increase_quntity">هل تريد زيادة الكمية؟</string>
+    <string name="payment_value">قيمة الدفعة</string>
+    <string name="security">رقم الحماية</string>
+    <string name="dont_show">لا تظهر مرة أخرى</string>
+    <string name="dont_have_number_security">ليس لديك رقم أمان</string>
 </resources>

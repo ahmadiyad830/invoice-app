@@ -103,7 +103,7 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
             if (cash.getError()) {
                 binding.setError(cash.getMessage());
             } else {
-                Toast.makeText(requireContext(), getResources().getString(R.string.check_email), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), getResources().getString(R.string.we_send_email), Toast.LENGTH_SHORT).show();
                 requireActivity().onBackPressed();
 //                controller.navigate(FragmentSignUpDirections.actionFragmentSignUpToFragmentActive());
             }

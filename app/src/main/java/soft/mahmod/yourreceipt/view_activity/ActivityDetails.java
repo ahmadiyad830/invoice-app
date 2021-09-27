@@ -47,31 +47,19 @@ public class ActivityDetails extends AppCompatActivity {
     }
 
     private void loadTabLayout() {
-        binding.setToolbar(getResources().getString(R.string.receipt));
         ViewPager2Adapter viewPager2Adapter = new ViewPager2Adapter(this);
         viewPager2Adapter.addFragment(new FragmentDetailsReceipt());
         viewPager2Adapter.addFragment(new FragmentProducts());
-        if (model.getPayment().getTypePayment().equals(getResources().getString(R.string.bayment))
-                        || model.getPayment().getTypePayment().equals(getResources().getString(R.string.debt)))
-            viewPager2Adapter.addFragment(new FragmentPayment());
+        viewPager2Adapter.addFragment(new FragmentPayment());
         binding.viewPager2.setAdapter(viewPager2Adapter);
-        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(binding.tableLayout,
-                binding.viewPager2, (tab, position) -> {
-            switch (position) {
-                case 1:
-                    tab.setText(getResources().getString(R.string.products));
-                    break;
-                case 2:
-                    tab.setText(getResources().getString(R.string.bayment));
-                    break;
-                case 0:
-                default:
-                    tab.setText(binding.getToolbar());
-                    break;
-
-
+        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(binding.tableLayout, binding.viewPager2, (tab, position) -> {
+            if (position == 0) {
+                tab.setText(getResources().getString(R.string.receipt));
+            } else if (position == 1) {
+                tab.setText(getResources().getString(R.string.products));
+            } else if (position == 2) {
+                tab.setText(getResources().getString(R.string.bayment));
             }
-            Log.d(TAG, "loadTabLayout: "+position);
         });
         tabLayoutMediator.attach();
     }

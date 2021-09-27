@@ -102,7 +102,6 @@ public class ARReceipt extends FirebaseRecyclerAdapter<Receipt,ARReceipt.ViewHol
             binding.recPayment.setHasFixedSize(true);
             arPayment = new ARPayment(model.getPayment().getListPayment(),this);
             binding.recPayment.setAdapter(arPayment);
-            arPayment.setIsCreate(View.GONE);
         }
 
         private void typePayment(Receipt model){

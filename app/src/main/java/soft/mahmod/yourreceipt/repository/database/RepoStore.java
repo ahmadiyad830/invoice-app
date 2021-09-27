@@ -11,6 +11,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.model.Cash;
 import soft.mahmod.yourreceipt.model.Store;
 
@@ -87,11 +88,16 @@ public class RepoStore extends Repo<Store> {
                    @Override
                    public void onDataChange(@NonNull DataSnapshot snapshot) {
                        Store store = new Store();
-                       if (snapshot.exists()){
+                       if (snapshot.exists()) {
                            store = snapshot.getValue(Store.class);
                            store.setError(false);
-                           store.setMessage("success");
-                           store.setCode(SUCCESS);
+                           if (store.getSecurity() != null && store.getSecurity().isEmpty()) {
+                               store.setCode(SUCCESS);
+                               store.setMessage("success");
+                           } else {
+                               store.setCode(NUMBER_SECURITY);
+                               store.setMessage(getApplication().getResources().getString(R.string.dont_have_number_security));
+                           }
                        }else {
                            store.setError(true);
                            store.setMessage("path not exists");
@@ -111,4 +117,5 @@ public class RepoStore extends Repo<Store> {
                });
         return getData();
     }
+
 }
