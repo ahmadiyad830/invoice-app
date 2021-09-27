@@ -171,6 +171,7 @@ public class FragmentReceipt extends Fragment implements ListenerReceipt, Databa
         Intent intent = new Intent(requireContext(), ActivityDetails.class);
         intent.putExtra("model",model);
         startActivity(intent);
+        requireActivity().finish();
     }
 
     @Override
