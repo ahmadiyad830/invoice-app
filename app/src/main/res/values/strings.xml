@@ -98,7 +98,7 @@
     <string name="discount_total_all">Discount Total All</string>
     <string name="tax">Tax</string>
     <string name="add_info">Additional Information</string>
-    <string name="tax_reg_no">Tax Reg No</string>
+    <string name="tax_exempt">Tax Exempt</string>
     <string name="address">Address</string>
     <string name="hide">Hide</string>
     <string name="total_all">Total All: </string>
@@ -106,15 +106,18 @@
     <string name="delete">Delete</string>
     <string name="skip">skip</string>
 
-    <string name="contact_by_whatsapp_or_call">Contact by WhatsApp or call</string>
+    <string name="contact_by_whatsapp_or_call">To active your account contact us by whats app or phone call</string>
     <string name="sign_in_with_another_account">Sign In with another account</string>
+    <string name="whats_app">Whats App</string>
+    <string name="phone_call">Phone Call</string>
+    <string name="my_phone_num" translatable="false">0782317354</string>
     <string name="or">OR</string>
     <string name="create_store">create store</string>
     <string name="edit_store">Edit Store</string>
     <string name="address_2">Address 2</string>
     <string name="address_1">Address 1</string>
     <string name="todo" translatable="false">TODO</string>
-    <string name="text_some_things">search some things</string>
+    <string name="text_some_things">search</string>
     <string name="camera">camera</string>
     <string name="phone_pictures">phone pictures</string>
     <string name="cancel" translatable="false">@android:string/cancel</string>
@@ -148,4 +151,6 @@ Or add all items</string>
     <string name="not_exists">Not exists</string>
     <string name="active_your_account">active your account</string>
     <string name="check_email">Check your email the to recover password in it</string>
+    <string name="exempt">exempt</string>
+    <string name="unexempt">Unexempt</string>
 </resources>

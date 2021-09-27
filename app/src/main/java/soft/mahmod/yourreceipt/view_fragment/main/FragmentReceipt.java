@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,13 +28,13 @@ import com.google.firebase.database.Query;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.firebase.ARReceipt;
 import soft.mahmod.yourreceipt.databinding.FragmentReceiptBinding;
-import soft.mahmod.yourreceipt.listeners.OnReceiptItemClick;
+import soft.mahmod.yourreceipt.listeners.ListenerReceipt;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.view_activity.ActivityDetails;
 
 
-public class FragmentReceipt extends Fragment implements OnReceiptItemClick, DatabaseUrl, AdapterView.OnItemSelectedListener, TextWatcher {
+public class FragmentReceipt extends Fragment implements ListenerReceipt, DatabaseUrl, AdapterView.OnItemSelectedListener, TextWatcher {
     private static final String TAG = "FragmentHome";
     private FragmentReceiptBinding binding;
     private ARReceipt adapter;
@@ -86,12 +85,6 @@ public class FragmentReceipt extends Fragment implements OnReceiptItemClick, Dat
         binding.mainRecycler.setAdapter(adapter);
     }
 
-    @Override
-    public void itemClick(Receipt model) {
-        Intent intent = new Intent(requireContext(), ActivityDetails.class);
-        intent.putExtra("model",model);
-        startActivity(intent);
-    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -171,5 +164,17 @@ public class FragmentReceipt extends Fragment implements OnReceiptItemClick, Dat
                 (requireContext(), R.layout.spinner_style, sortReceipt);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerSortList.setAdapter(adapter);
+    }
+
+    @Override
+    public void onClick(Receipt model) {
+        Intent intent = new Intent(requireContext(), ActivityDetails.class);
+        intent.putExtra("model",model);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onEdit(Receipt model, int position) {
+
     }
 }

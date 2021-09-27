@@ -1,11 +1,9 @@
 package soft.mahmod.yourreceipt.view_fragment.add_receipt.tab_add_products;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -96,7 +94,7 @@ public class FragmentMainAddItem extends Fragment {
         receipt.setClientPhone(clientToAddItem.getPhone());
         if (Common.listProduct.size() > 0)
             receipt.setProducts(Common.listProduct);
-        receipt.setTotalAll(Common.totlaAll);
+        receipt.setTotalAll(Common.getTotalAll());
         return receipt;
     }
 

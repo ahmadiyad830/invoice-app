@@ -31,6 +31,7 @@ import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.firebase.ARClients;
 import soft.mahmod.yourreceipt.databinding.FragmentAddClientBinding;
 import soft.mahmod.yourreceipt.databinding.LayoutClientBinding;
+import soft.mahmod.yourreceipt.listeners.ListenerClient;
 import soft.mahmod.yourreceipt.model.Client;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.view_model.database.VMClient;
@@ -40,7 +41,7 @@ import soft.mahmod.yourreceipt.view_model.database.VMClient;
  * Use the {@link FragmentAddClient#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentAddClient extends Fragment implements ARClients.OnClickClient, DatabaseUrl, TextWatcher, AdapterView.OnItemSelectedListener {
+public class FragmentAddClient extends Fragment implements ListenerClient, DatabaseUrl, TextWatcher, AdapterView.OnItemSelectedListener {
     private static final String TAG = "FragmentAddClient";
     private FragmentAddClientBinding binding;
     private NavController controller;
@@ -117,7 +118,7 @@ public class FragmentAddClient extends Fragment implements ARClients.OnClickClie
         boolean tax = binding.switchTax.isChecked();
         client.setPhone(phone);
         client.setName(name);
-        client.setTaxRegNo(tax);
+        client.setTaxExempt(tax);
         return client;
     }
 
@@ -146,20 +147,6 @@ public class FragmentAddClient extends Fragment implements ARClients.OnClickClie
 
         getViewModelStore().clear();
     }
-
-    @Override
-    public void clickClient(Client model, int position) {
-        FragmentAddClientDirections.ActionAddClientToMainAddItem2 argsClient
-                = FragmentAddClientDirections.actionAddClientToMainAddItem2();
-        argsClient.setClientToAddItem(model);
-        controller.navigate(argsClient);
-    }
-
-    @Override
-    public void editClient(Client model) {
-
-    }
-
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -232,5 +219,18 @@ public class FragmentAddClient extends Fragment implements ARClients.OnClickClie
         adapter = new ARClients(options, this);
         adapter.startListening();
         return adapter;
+    }
+
+    @Override
+    public void onClick(Client model) {
+        FragmentAddClientDirections.ActionAddClientToMainAddItem2 argsClient
+                = FragmentAddClientDirections.actionAddClientToMainAddItem2();
+        argsClient.setClientToAddItem(model);
+        controller.navigate(argsClient);
+    }
+
+    @Override
+    public void onEdit(Client model, int position) {
+
     }
 }

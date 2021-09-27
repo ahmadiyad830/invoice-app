@@ -63,7 +63,6 @@
     <string name="client">العملاء</string>
     <string name="tax">ضريبة</string>
     <string name="add_info">معلومات اخرى</string>
-    <string name="tax_reg_no">رقم التسجيل الضريبي</string>
     <string name="address">العنوان</string>
     <string name="hide">اخفاء</string>
     <string name="total_all">المجموع الكلي</string>
@@ -75,14 +74,14 @@
     <string name="create_item">انشاء عنصر جديد</string>
     <string name="create_client">انشاء عميل جديد</string>
     <string name="active_your_account">تأكيد حسابك</string>
-    <string name="contact_by_whatsapp_or_call">تواصل معنا عبر الوتس أبب</string>
+    <string name="contact_by_whatsapp_or_call">لتنشيط حسابك ، اتصل بنا عن طريق واتس اب أو مكالمة هاتفية</string>
     <string name="sign_in_with_another_account">التسجيل بحساب اخر</string>
     <string name="or">أو</string>
     <string name="create_store">إنشاء متجر</string>
     <string name="address_2">العنوان 1</string>
     <string name="address_1">العنوان 2</string>
     <string name="forget_your_password">هل نسيت كلمة السر</string>
-    <string name="text_some_things">ابحث عن بعض الأشياء</string>
+    <string name="text_some_things">ابحث</string>
     <string name="camera">الكاميرا</string>
     <string name="invoice">صورة الفاتورة</string>
     <string name="warning">تحذير</string>
@@ -119,4 +118,9 @@
     <string name="speed_add">اضافة سريعة</string>
     <string name="error_input_charcter">ادخل ارقام فقط</string>
     <string name="network_conecction">تحقق مما إذا كان اتصال الشبكة</string>
+    <string name="whats_app">واتس اب</string>
+    <string name="phone_call">مكالمة هاتفية</string>
+    <string name="tax_exempt">إعفاء ضريبي</string>
+    <string name="exempt">معفى</string>
+    <string name="unexempt">غير معفى</string>
 </resources>

@@ -47,7 +47,7 @@ public class ActivityRegistration extends AppCompatActivity {
         super.onStart();
         if (intent.isConnection() && vmSettingAuth.hasCredential() && vmSettingAuth.isVerified()) {
             binding.setHasReg(true);
-            intent.userSignIn(this);
+            intent.userSign(this);
         } else {
             binding.setHasReg(false);
             onResume();

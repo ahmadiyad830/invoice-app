@@ -13,18 +13,11 @@ import java.util.List;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.ItemsBaymentBinding;
+import soft.mahmod.yourreceipt.listeners.ListenerPayment;
 import soft.mahmod.yourreceipt.model.billing.Payment;
 
 public class ARPayment extends RecyclerView.Adapter<ARPayment.ViewHolder> {
     public static final String TAG = "ARPayment";
-
-    public interface ListenerOnClick {
-        void payment(Payment model);
-
-        void deletePayment(int position);
-
-        void paid (boolean isChecked,int position);
-    }
 
     public void setListPayment(List<Payment> listPayment) {
         this.listPayment = listPayment;
@@ -32,9 +25,9 @@ public class ARPayment extends RecyclerView.Adapter<ARPayment.ViewHolder> {
 
     private LayoutInflater inflater;
     private List<Payment> listPayment;
-    private ListenerOnClick listener;
+    private ListenerPayment listener;
     private int isCreate = View.VISIBLE;
-    public ARPayment(List<Payment> listPayment, ListenerOnClick listener) {
+    public ARPayment(List<Payment> listPayment, ListenerPayment listener) {
         this.listPayment = listPayment;
         this.listener = listener;
     }
@@ -93,12 +86,12 @@ public class ARPayment extends RecyclerView.Adapter<ARPayment.ViewHolder> {
             int index = position + 1;
             binding.setIndex(index);
             binding.setModel(model);
-            listener.payment(model);
+            listener.onClick(model);
             binding.btnDelete.setOnClickListener(v -> {
-                listener.deletePayment(getBindingAdapterPosition());
+                listener.onDelete(getBindingAdapterPosition());
             });
             binding.switchPaid.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                listener.paid(isChecked,position);
+                listener.onPaid(isChecked,position);
             });
         }
     }

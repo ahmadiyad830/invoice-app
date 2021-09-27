@@ -13,31 +13,18 @@ import java.util.stream.DoubleStream;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.ItemProductBinding;
+import soft.mahmod.yourreceipt.listeners.ListenerProduct;
 import soft.mahmod.yourreceipt.model.Products;
 
 public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
 
-    public interface OnClickItem {
-        void editProduct(Products model, int position);
-
-        void    deleteProduct(Products model, int position);
-
-        void setTotalAll(double total);
-    }
-
-
-
-    public interface OnTotalProducts {
-        double totalAll();
-    }
-
     private LayoutInflater inflater;
     private final List<Products> listModel;
-    private OnClickItem onClickItem;
+    private ListenerProduct onClickItem;
     public double totalAll = 0.0;
     public boolean isCreate = false;
 
-    public ARProducts(List<Products> listModel, OnClickItem onClickItem) {
+    public ARProducts(List<Products> listModel, ListenerProduct onClickItem) {
         this.listModel = listModel;
         this.onClickItem = onClickItem;
     }
@@ -74,7 +61,7 @@ public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
         return listModel.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements ARProducts.OnTotalProducts {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private final ItemProductBinding binding;
         private double total;
         public ViewHolder(ItemProductBinding binding) {
@@ -86,23 +73,11 @@ public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
             binding.setModel(model);
             binding.btnDelete.setOnClickListener(v -> {
                 total = total - model.getPrice();
-                onClickItem.deleteProduct(model, getBindingAdapterPosition());
+                onClickItem.onDelete(model, getBindingAdapterPosition());
             });
             binding.getRoot().setOnClickListener(v -> {
-                onClickItem.editProduct(model, getBindingAdapterPosition());
+                onClickItem.onEdit(model, getBindingAdapterPosition());
             });
-            onClickItem.setTotalAll(totalAll());
-        }
-
-        @Override
-        public double totalAll() {
-            double price = 0.0;
-            double quantity = 0.0;
-            total = price * quantity;
-            for (Products model : listModel) {
-                total = total + model.getPrice() * model.getQuantity();
-            }
-            return total;
         }
     }
 }

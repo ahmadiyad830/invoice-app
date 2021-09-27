@@ -130,6 +130,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/quantity"
+                        android:textColor="@color/text_color"
                         android:inputType="numberDecimal"
                         android:padding="@dimen/_12sdp"
                         android:text="@{String.valueOf(model.quantity)}"

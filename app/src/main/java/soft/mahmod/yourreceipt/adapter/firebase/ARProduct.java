@@ -14,27 +14,17 @@ import com.google.firebase.database.DatabaseError;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.ItemProductBinding;
+import soft.mahmod.yourreceipt.listeners.ListenerProduct;
 import soft.mahmod.yourreceipt.model.Products;
 
 public class ARProduct extends FirebaseRecyclerAdapter<Products, ARProduct.ViewHolder> {
     private static final String TAG = "ARProduct";
     public boolean isCreate = false;
-    public interface OnClickItem {
-        void editProduct(Products model, int position);
-
-        <T> void editSingleProduct(String name, String key, T value, boolean type, int position);
-
-        void deleteProduct(Products model, int position);
-
-        void addProduct(Products model);
-
-        void clickProduct(Products model, int position);
-    }
 
     private LayoutInflater inflater;
-    private OnClickItem onClickItem;
+    private ListenerProduct onClickItem;
 
-    public ARProduct(@NonNull FirebaseRecyclerOptions<Products> options, OnClickItem onClickItem) {
+    public ARProduct(@NonNull FirebaseRecyclerOptions<Products> options, ListenerProduct onClickItem) {
         super(options);
         this.onClickItem = onClickItem;
     }
@@ -73,31 +63,31 @@ public class ARProduct extends FirebaseRecyclerAdapter<Products, ARProduct.ViewH
         public synchronized void bind(Products model) {
             binding.setModel(model);
             binding.btnDelete.setOnClickListener(v -> {
-                onClickItem.deleteProduct(model, getBindingAdapterPosition());
+                onClickItem.onDelete(model, getBindingAdapterPosition());
             });
             binding.getRoot().setOnClickListener(v -> {
-                onClickItem.clickProduct(model, getBindingAdapterPosition());
+                onClickItem.onClick(model);
             });
 //            binding.btnEdit.setOnClickListener(v -> {
 //                onClickItem.editProduct(model, getBindingAdapterPosition());
 //            });
 
-            binding.name.setOnClickListener(v -> {
-                onClickItem.editSingleProduct("name", "itemName", model.getName()
-                        ,false, getBindingAdapterPosition());
-            });
-            binding.price.setOnClickListener(v -> {
-                onClickItem.editSingleProduct("price", "productsPrice", model.getPrice()
-                        , true, getBindingAdapterPosition());
-            });
-            binding.quantity.setOnClickListener(v -> {
-                onClickItem.editSingleProduct("quantity", "productsQuantity", model.getQuantity()
-                        , true, getBindingAdapterPosition());
-            });
-            binding.total.setOnClickListener(v -> {
-                onClickItem.editSingleProduct("total", "total", model.getTotal()
-                        , true, getBindingAdapterPosition());
-            });
+//            binding.name.setOnClickListener(v -> {
+//                onClickItem.editSingleProduct("name", "itemName", model.getName()
+//                        ,false, getBindingAdapterPosition());
+//            });
+//            binding.price.setOnClickListener(v -> {
+//                onClickItem.editSingleProduct("price", "productsPrice", model.getPrice()
+//                        , true, getBindingAdapterPosition());
+//            });
+//            binding.quantity.setOnClickListener(v -> {
+//                onClickItem.editSingleProduct("quantity", "productsQuantity", model.getQuantity()
+//                        , true, getBindingAdapterPosition());
+//            });
+//            binding.total.setOnClickListener(v -> {
+//                onClickItem.editSingleProduct("total", "total", model.getTotal()
+//                        , true, getBindingAdapterPosition());
+//            });
         }
 
 

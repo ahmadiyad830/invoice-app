@@ -2,11 +2,7 @@ package soft.mahmod.yourreceipt.model;
 
 import androidx.annotation.NonNull;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
-
-import retrofit2.http.Field;
 
 public class Client extends Cash{
 
@@ -17,7 +13,7 @@ public class Client extends Cash{
 
     private String addInfo;
 
-    private boolean taxRegNo;
+    private boolean taxExempt;
 
     private String address;
 
@@ -64,12 +60,12 @@ public class Client extends Cash{
         this.addInfo = addInfo;
     }
 
-    public boolean isTaxRegNo() {
-        return taxRegNo;
+    public boolean isTaxExempt() {
+        return taxExempt;
     }
 
-    public void setTaxRegNo(boolean taxRegNo) {
-        this.taxRegNo = taxRegNo;
+    public void setTaxExempt(boolean taxExempt) {
+        this.taxExempt = taxExempt;
     }
 
     public String getAddress() {
@@ -127,7 +123,7 @@ public class Client extends Cash{
                 "email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", addInfo='" + addInfo + '\'' +
-                ", taxRegNo='" + taxRegNo + '\'' +
+                ", taxRegNo='" + taxExempt + '\'' +
                 ", address='" + address + '\'' +
                 ", storeAddress='" + storeAddress + '\'' +
                 ", note='" + note + '\'' +

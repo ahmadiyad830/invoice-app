@@ -41,6 +41,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="9"
                 android:gravity="start|center_vertical"
+                android:maxLines="1"
+                android:maxLength="6"
+                android:maxEms="6"
                 android:text='@{String.valueOf(totalAll)}'
                 android:textColor="@color/mony_color"
                 android:textSize="@dimen/_14ssp" />

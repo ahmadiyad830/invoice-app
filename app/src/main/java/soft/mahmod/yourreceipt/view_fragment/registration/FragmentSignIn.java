@@ -115,7 +115,7 @@ public class FragmentSignIn extends Fragment {
         vmSignIn.signIn(email, password)
                 .observe(getViewLifecycleOwner(), user -> {
                     if (!user.getError()) {
-                        intent.userSignIn(requireActivity());
+                        intent.userSign(requireActivity());
                     } else {
                         binding.setError(user.getMessage());
                     }

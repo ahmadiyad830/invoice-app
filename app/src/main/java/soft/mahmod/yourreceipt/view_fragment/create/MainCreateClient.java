@@ -100,7 +100,7 @@ public class MainCreateClient extends Fragment {
             client.setPhone(0);
         }
         client.setAddInfo(binding.edtAddInfo.getText().toString().trim());
-        client.setTaxRegNo(binding.switchTax.isChecked());
+        client.setTaxExempt(binding.switchTax.isChecked());
         client.setAddress(binding.edtAddress.getText().toString().trim());
         client.setStoreAddress(binding.edtStoreAddress.getText().toString().trim());
         client.setNote(binding.edtNote.getText().toString().trim());

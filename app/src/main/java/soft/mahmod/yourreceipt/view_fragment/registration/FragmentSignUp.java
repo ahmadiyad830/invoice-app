@@ -93,6 +93,7 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
     }
 
     private void uploadUser(String email, String pass1,String uid) {
+        ActivityIntent intent = ActivityIntent.getInstance(requireContext());
         User user = new User();
         user.setEmail(email);
         user.setPassword(pass1);
@@ -101,7 +102,8 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
             if (cash.getError()) {
                 binding.setError(cash.getMessage());
             } else {
-                controller.navigate(FragmentSignUpDirections.actionFragmentSignUpToFragmentActive());
+                intent.userSign(requireActivity());
+//                controller.navigate(FragmentSignUpDirections.actionFragmentSignUpToFragmentActive());
             }
             binding.setProgress(false);
         });

@@ -27,11 +27,12 @@ import com.google.firebase.database.Query;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.firebase.ARItems;
 import soft.mahmod.yourreceipt.databinding.FragmentMainItemsBinding;
+import soft.mahmod.yourreceipt.listeners.ListenerItems;
 import soft.mahmod.yourreceipt.model.Items;
 import soft.mahmod.yourreceipt.model.Products;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 
-public class FragmentItems extends Fragment implements ARItems.OnCLickItem, DatabaseUrl, TextWatcher, AdapterView.OnItemSelectedListener {
+public class FragmentItems extends Fragment implements ListenerItems, DatabaseUrl, TextWatcher, AdapterView.OnItemSelectedListener {
     private static final String TAG = "FragmentItem";
     private FragmentMainItemsBinding binding;
     private Query query;
@@ -66,14 +67,6 @@ public class FragmentItems extends Fragment implements ARItems.OnCLickItem, Data
             controller.navigate(FragmentItemsDirections.actionMenuItemToFragmentCreateItem2());
         });
         spinnerInit();
-    }
-
-    @Override
-    public void clickItem(Products model, Items itemModel, int position) {
-        FragmentItemsDirections.ActionMenuItemToFragmentCreateItem2
-                detailsItem = FragmentItemsDirections.actionMenuItemToFragmentCreateItem2();
-        detailsItem.setMainItemToCreateItem(itemModel);
-        controller.navigate(detailsItem);
     }
 
     @Override
@@ -171,5 +164,18 @@ public class FragmentItems extends Fragment implements ARItems.OnCLickItem, Data
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         key = sortItems[0];
+    }
+
+    @Override
+    public void onClick(Products products, Items modelItem) {
+        FragmentItemsDirections.ActionMenuItemToFragmentCreateItem2
+                detailsItem = FragmentItemsDirections.actionMenuItemToFragmentCreateItem2();
+        detailsItem.setMainItemToCreateItem(modelItem);
+        controller.navigate(detailsItem);
+    }
+
+    @Override
+    public void onDelete(Items mode, int position) {
+
     }
 }

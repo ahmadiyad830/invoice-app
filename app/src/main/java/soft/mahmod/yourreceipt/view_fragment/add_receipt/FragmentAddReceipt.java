@@ -22,6 +22,7 @@ import java.util.List;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ARPayment;
 import soft.mahmod.yourreceipt.databinding.FragmentAddReceiptBinding;
+import soft.mahmod.yourreceipt.listeners.ListenerPayment;
 import soft.mahmod.yourreceipt.model.Products;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.model.billing.Payment;
@@ -32,7 +33,8 @@ import soft.mahmod.yourreceipt.utils.HandleTimeCount;
 import soft.mahmod.yourreceipt.view_model.database.VMItems;
 import soft.mahmod.yourreceipt.view_model.database.VMReceipt;
 
-public class FragmentAddReceipt extends Fragment implements DatabaseUrl, AdapterView.OnItemSelectedListener, ARPayment.ListenerOnClick, DialogListener {
+public class FragmentAddReceipt extends Fragment implements DatabaseUrl, AdapterView.OnItemSelectedListener,
+        ListenerPayment, DialogListener {
 
     private static final String TAG = "FragmentAddReceipt";
     private FragmentAddReceiptBinding binding;
@@ -112,7 +114,7 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
 
     private void spinnerInit() {
         binding.spinnerTypeReceipt.setOnItemSelectedListener(this);
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(requireContext(), R.layout.spinner_style, typeReceipt);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(requireContext(), R.layout.spinner_style_add_receipt, typeReceipt);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerTypeReceipt.setAdapter(adapter);
     }
@@ -198,23 +200,6 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
         receiptType = typeReceipt[0];
     }
 
-
-    @Override
-    public void payment(Payment model) {
-
-    }
-
-    @Override
-    public void deletePayment(int position) {
-        listPayment.remove(position);
-        adapter.notifyItemRemoved(position);
-    }
-
-    @Override
-    public void paid(boolean isChecked, int position) {
-        listPayment.get(position).setPaid(isChecked);
-    }
-
     private void onClickAdd(View v) {
         double price = 0;
         try {
@@ -254,5 +239,36 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
     @Override
     public void clickCancel(DialogInterface dialog) {
         dialog.dismiss();
+    }
+
+    @Override
+    public void onClick(Payment model) {
+
+    }
+
+    @Override
+    public void onEdit(Payment model, int position) {
+
+    }
+
+    @Override
+    public void onDelete(int position) {
+        listPayment.remove(position);
+        adapter.notifyItemRemoved(position);
+    }
+
+    @Override
+    public void onPaid(boolean isChecked, int position) {
+        listPayment.get(position).setPaid(isChecked);
+    }
+
+    @Override
+    public void onChangeDate(String date, int position) {
+
+    }
+
+    @Override
+    public void onChangePrice(double price, int position) {
+
     }
 }

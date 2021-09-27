@@ -12,16 +12,14 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.ItemClientBinding;
+import soft.mahmod.yourreceipt.listeners.ListenerClient;
 import soft.mahmod.yourreceipt.model.Client;
 
 public class ARClients extends FirebaseRecyclerAdapter<Client, ARClients.ViewHolder> {
-    public interface OnClickClient{
-        void clickClient(Client model,int position);
-        void editClient(Client model);
-    }
-    private LayoutInflater inflater;
 
-    private OnClickClient listener;
+    private ListenerClient listener;
+
+    private LayoutInflater inflater;
 
     private boolean inMain = false;
 
@@ -33,7 +31,7 @@ public class ARClients extends FirebaseRecyclerAdapter<Client, ARClients.ViewHol
         this.inMain = inMain;
     }
 
-    public ARClients(@NonNull FirebaseRecyclerOptions<Client> options, OnClickClient listener) {
+    public ARClients(@NonNull FirebaseRecyclerOptions<Client> options, ListenerClient listener) {
         super(options);
         this.listener = listener;
     }
@@ -65,10 +63,10 @@ public class ARClients extends FirebaseRecyclerAdapter<Client, ARClients.ViewHol
         public void bind(Client model) {
             binding.setModel(model);
             binding.getRoot().setOnClickListener(v -> {
-                listener.clickClient(model,getBindingAdapterPosition());
+                listener.onClick(model);
             });
             binding.goEdit.setOnClickListener(v -> {
-                listener.editClient(model);
+                listener.onEdit(model,getBindingAdapterPosition());
             });
         }
     }

@@ -1,26 +1,23 @@
 package soft.mahmod.yourreceipt.adapter.firebase;
 
 import android.content.Context;
-import android.content.ContextWrapper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.material.internal.ContextUtils;
 import com.google.firebase.database.DatabaseError;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ARPayment;
 import soft.mahmod.yourreceipt.databinding.ItemReceiptBinding;
-import soft.mahmod.yourreceipt.listeners.OnReceiptItemClick;
+import soft.mahmod.yourreceipt.listeners.ListenerPayment;
+import soft.mahmod.yourreceipt.listeners.ListenerReceipt;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.model.billing.Payment;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
@@ -28,9 +25,9 @@ import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 public class ARReceipt extends FirebaseRecyclerAdapter<Receipt,ARReceipt.ViewHolder> implements DatabaseUrl {
     private static final String TAG = "ARReceipt";
     private LayoutInflater inflater;
-    private OnReceiptItemClick itemClick;
+    private ListenerReceipt itemClick;
     private Context context;
-    public ARReceipt(@NonNull FirebaseRecyclerOptions<Receipt> options,OnReceiptItemClick onReceiptItemClick) {
+    public ARReceipt(@NonNull FirebaseRecyclerOptions<Receipt> options,ListenerReceipt onReceiptItemClick) {
         super(options);
         this.itemClick = onReceiptItemClick;
 
@@ -68,7 +65,7 @@ public class ARReceipt extends FirebaseRecyclerAdapter<Receipt,ARReceipt.ViewHol
         super.onError(error);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements ARPayment.ListenerOnClick {
+    public class ViewHolder extends RecyclerView.ViewHolder implements ListenerPayment {
         private ItemReceiptBinding binding;
         ARPayment arPayment ;
         public ViewHolder(@NonNull ItemReceiptBinding binding) {
@@ -81,7 +78,7 @@ public class ARReceipt extends FirebaseRecyclerAdapter<Receipt,ARReceipt.ViewHol
             extracted(model);
             binding.setModel(model);
             binding.btnDetails.setOnClickListener(v -> {
-                itemClick.itemClick(model);
+                itemClick.onClick(model);
             });
             binding.constraintLayout.setOnClickListener(v -> {
                 typePayment(model);
@@ -108,18 +105,31 @@ public class ARReceipt extends FirebaseRecyclerAdapter<Receipt,ARReceipt.ViewHol
             arPayment.setIsCreate(View.GONE);
         }
 
+        private void typePayment(Receipt model){
+            if (model.getPayment().getTypePayment().equals(context.getResources().getString(R.string.debt))){
+                model.setExpandedDeptReceipt(!model.isExpandedDeptReceipt());
+            }else {
+                model.setExpandedPayment(!model.isExpandedPayment());
+            }
+        }
+
         @Override
-        public void payment(Payment model) {
+        public void onClick(Payment model) {
 
         }
 
         @Override
-        public void deletePayment(int position) {
+        public void onEdit(Payment model, int position) {
 
         }
 
         @Override
-        public void paid(boolean isChecked, int position) {
+        public void onDelete(int position) {
+
+        }
+
+        @Override
+        public void onPaid(boolean isChecked, int position) {
             getRef(getAbsoluteAdapterPosition())
                     .child(PAYMENT)
                     .child(LIST_PAYMENT)
@@ -128,12 +138,14 @@ public class ARReceipt extends FirebaseRecyclerAdapter<Receipt,ARReceipt.ViewHol
                     .setValue(isChecked);
         }
 
-        private void typePayment(Receipt model){
-            if (model.getPayment().getTypePayment().equals(context.getResources().getString(R.string.debt))){
-                model.setExpandedDeptReceipt(!model.isExpandedDeptReceipt());
-            }else {
-                model.setExpandedPayment(!model.isExpandedPayment());
-            }
+        @Override
+        public void onChangeDate(String date, int position) {
+
+        }
+
+        @Override
+        public void onChangePrice(double price, int position) {
+
         }
     }
 }

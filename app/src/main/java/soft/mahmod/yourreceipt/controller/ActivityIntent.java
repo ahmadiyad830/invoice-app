@@ -44,7 +44,7 @@ public class ActivityIntent extends ConnectionInternet{
         clearUser();
         activity.finish();
     }
-    public void userSignIn(Activity activity) {
+    public void userSign(Activity activity) {
         Intent intent = new Intent(mCtx, MainActivity.class);
         mCtx.startActivity(intent);
         activity.finish();

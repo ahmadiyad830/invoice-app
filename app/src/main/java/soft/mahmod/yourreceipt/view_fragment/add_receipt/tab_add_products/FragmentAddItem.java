@@ -31,6 +31,7 @@ import soft.mahmod.yourreceipt.common.Common;
 import soft.mahmod.yourreceipt.databinding.FragmentAddProductsBinding;
 import soft.mahmod.yourreceipt.databinding.FragmentMainItemsBinding;
 import soft.mahmod.yourreceipt.databinding.LayoutDialogCreateItemBinding;
+import soft.mahmod.yourreceipt.listeners.ListenerItems;
 import soft.mahmod.yourreceipt.model.Client;
 import soft.mahmod.yourreceipt.model.Items;
 import soft.mahmod.yourreceipt.model.Products;
@@ -39,7 +40,7 @@ import soft.mahmod.yourreceipt.view_model.database.VMItems;
 import soft.mahmod.yourreceipt.view_model.send.data.VMSendClient;
 
 
-public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatcher, ARItems.OnCLickItem, AdapterView.OnItemSelectedListener {
+public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatcher, ListenerItems, AdapterView.OnItemSelectedListener {
     private static final String TAG = "FragmentAddItem";
     private FragmentMainItemsBinding binding;
     private Client client;
@@ -222,18 +223,13 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
         adapter.stopListening();
     }
 
-    @Override
-    public void clickItem(Products model, Items itemModel, int position) {
-//        FragmentAddProducts.listProduct.add(model);
-        loadDialogCreateProduct(model,itemModel);
-    }
-
 
     private void loadDialogCreateProduct(Products model, Items itemModel) {
         Dialog dialog = new Dialog(requireContext());
         FragmentAddProductsBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_add_products
                 , null, false);
-        binding.setIsTaxNoReg(client.isTaxRegNo());
+        Log.d(TAG, "loadDialogCreateProduct: " + client.isTaxExempt());
+        binding.setIsTaxNoReg(client.isTaxExempt());
         binding.setModel(model);
         dialog.setContentView(binding.getRoot());
         dialog.getWindow().setBackgroundDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.custom_back_icon));
@@ -256,7 +252,7 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
         for (int i = 0; i < Common.listProduct.size(); i++) {
             total = total + Common.listProduct.get(i).getTotal();
         }
-        Common.totlaAll = total;
+        Common.setTotalAll(total);
     }
 
 
@@ -289,22 +285,36 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
         model.setPrice(price);
         model.setQuantity(quantity);
         model.setDiscount(discount);
-        if (client.isTaxRegNo()) {
+        if (!client.isTaxExempt()) {
             model.setTax(tax);
             model.setTotal(withTax(model));
+        }else {
+            model.setTotal(withoutTax(model));
         }
-        model.setTotal(withoutTax(model));
         return model;
     }
 
     private double withTax(Products model) {
         double price = model.getPrice() - model.getDiscount();
-        double pTax = price * model.getTax();
-        return pTax * model.getQuantity();
+        double tax = model.getTax();
+        double total = (price * tax) + price;
+        String sim = "( " + price * tax + " )" + "+" + price + "=" + total;
+        Log.d(TAG, "withTax: " + sim);
+        return total * model.getQuantity();
     }
 
     private double withoutTax(Products model) {
         double price = model.getPrice() - model.getDiscount();
         return price * model.getQuantity();
+    }
+
+    @Override
+    public void onClick(Products products, Items model) {
+        loadDialogCreateProduct(products,model);
+    }
+
+    @Override
+    public void onDelete(Items mode, int position) {
+
     }
 }

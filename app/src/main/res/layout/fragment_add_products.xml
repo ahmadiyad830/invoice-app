@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/custom_stork"
             android:hint="@string/price"
-            android:inputType="numberDecimal"
+            android:inputType="textPersonName"
             android:padding="@dimen/_12sdp"
             android:text="@{String.valueOf(model.price)}"
             android:textColor="@color/text_color" />
@@ -79,7 +79,7 @@
             android:textColor="@color/text_color"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
-            android:visibility='@{isTaxNoReg?View.VISIBLE:View.GONE,default = visible}'
+            android:visibility='@{isTaxNoReg?View.GONE:View.VISIBLE,default = visible}'
             android:layout_height="wrap_content"/>
         <EditText
             android:id="@+id/edt_tax"
@@ -88,7 +88,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/custom_stork"
             android:hint="@string/tax"
-            android:visibility='@{isTaxNoReg?View.VISIBLE:View.GONE,default = visible}'
+            android:visibility='@{isTaxNoReg?View.GONE:View.VISIBLE,default = visible}'
             android:inputType="numberDecimal"
             android:padding="@dimen/_12sdp"
             android:text="@{String.valueOf(model.tax)}"

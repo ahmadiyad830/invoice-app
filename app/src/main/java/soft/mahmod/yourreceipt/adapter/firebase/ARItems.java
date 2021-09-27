@@ -14,20 +14,17 @@ import com.google.firebase.database.DatabaseError;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.ItemItemsBinding;
+import soft.mahmod.yourreceipt.listeners.ListenerItems;
 import soft.mahmod.yourreceipt.model.Items;
 import soft.mahmod.yourreceipt.model.Products;
 
 public class ARItems extends FirebaseRecyclerAdapter<Items, ARItems.ViewHolder> {
     private static final String TAG = "ARItems";
 
-    public interface OnCLickItem {
-        void clickItem(Products model, Items itemModel, int position);
-    }
-
     private LayoutInflater inflater;
-    private OnCLickItem listener;
+    private ListenerItems listener;
 
-    public ARItems(@NonNull FirebaseRecyclerOptions<Items> options, OnCLickItem listener) {
+    public ARItems(@NonNull FirebaseRecyclerOptions<Items> options, ListenerItems listener) {
         super(options);
         this.listener = listener;
     }
@@ -66,7 +63,7 @@ public class ARItems extends FirebaseRecyclerAdapter<Items, ARItems.ViewHolder> 
         public void bind(Items model) {
             binding.setModel(model);
             binding.getRoot().setOnClickListener(v -> {
-                listener.clickItem(getProducts(model),model, getBindingAdapterPosition());
+                listener.onClick(getProducts(model), model);
             });
         }
 

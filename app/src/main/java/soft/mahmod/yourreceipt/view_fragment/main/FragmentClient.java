@@ -19,7 +19,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -27,12 +26,12 @@ import com.google.firebase.database.Query;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.firebase.ARClients;
-import soft.mahmod.yourreceipt.databinding.FragmentAddClientBinding;
 import soft.mahmod.yourreceipt.databinding.FragmentMainClientBinding;
+import soft.mahmod.yourreceipt.listeners.ListenerClient;
 import soft.mahmod.yourreceipt.model.Client;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 
-public class FragmentClient extends Fragment implements DatabaseUrl, ARClients.OnClickClient, TextWatcher, AdapterView.OnItemSelectedListener {
+public class FragmentClient extends Fragment implements DatabaseUrl, ListenerClient, TextWatcher, AdapterView.OnItemSelectedListener {
     private static final String TAG = "FragmentClient";
     private FragmentMainClientBinding binding;
     private ARClients adapter;
@@ -127,19 +126,6 @@ public class FragmentClient extends Fragment implements DatabaseUrl, ARClients.O
         adapter.startListening();
         return adapter;
     }
-
-    @Override
-    public void clickClient(Client model, int position) {
-
-    }
-
-    @Override
-    public void editClient(Client model) {
-        argsToCreateClient = FragmentClientDirections.actionMenuClientToFragmentCreateClient2();
-        argsToCreateClient.setMainClientToCreateClient(model);
-        controller.navigate(argsToCreateClient);
-    }
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         key = (String) parent.getItemAtPosition(position);
@@ -169,7 +155,7 @@ public class FragmentClient extends Fragment implements DatabaseUrl, ARClients.O
             if (key.equals(sortClients[2])) {
                 try {
                     binding.recItem.setAdapter(searchNumber(Double.parseDouble(search)));
-                }catch (NumberFormatException exception){
+                } catch (NumberFormatException exception) {
                     Toast.makeText(requireContext(), getResources().getString(R.string.error_input_charcter), Toast.LENGTH_SHORT).show();
                 }
             } else {
@@ -178,5 +164,21 @@ public class FragmentClient extends Fragment implements DatabaseUrl, ARClients.O
         } else {
             binding.recItem.setAdapter(withoutSearch());
         }
+    }
+
+    @Override
+    public void onClick(Client model) {
+        actionToEdit(model);
+    }
+
+    @Override
+    public void onEdit(Client model, int position) {
+        actionToEdit(model);
+    }
+
+    private void actionToEdit(Client model) {
+        argsToCreateClient = FragmentClientDirections.actionMenuClientToFragmentCreateClient2();
+        argsToCreateClient.setMainClientToCreateClient(model);
+        controller.navigate(argsToCreateClient);
     }
 }

@@ -6,8 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
@@ -15,6 +13,7 @@ import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ARProducts;
 import soft.mahmod.yourreceipt.common.Common;
 import soft.mahmod.yourreceipt.databinding.FragmentAddItemBinding;
+import soft.mahmod.yourreceipt.listeners.ListenerProduct;
 import soft.mahmod.yourreceipt.model.Products;
 
 /**
@@ -22,7 +21,7 @@ import soft.mahmod.yourreceipt.model.Products;
  * Use the {@link FragmentAddProducts#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentAddProducts extends Fragment implements ARProducts.OnClickItem {
+public class FragmentAddProducts extends Fragment implements ListenerProduct {
     public static final String TAG = "FragmentAddProducts";
     private FragmentAddItemBinding binding;
 
@@ -38,18 +37,6 @@ public class FragmentAddProducts extends Fragment implements ARProducts.OnClickI
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        Log.d(TAG, "onViewCreated: ");
-    }
-
-    @Override
-    public void onViewStateRestored(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        Log.d(TAG, "onViewStateRestored: ");
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
         adapter = new ARProducts(Common.listProduct, this);
@@ -60,37 +47,39 @@ public class FragmentAddProducts extends Fragment implements ARProducts.OnClickI
             if (Common.listProduct.size() > 0) {
                 adapter.notifyItemRangeRemoved(0, adapter.getItemCount());
                 Common.listProduct.clear();
-                Common.totlaAll = 0.0;
             }
-            binding.setTotalAll(0.0);
+            Common.setTotalAll(0.0);
+            binding.setTotalAll(Common.getTotalAll());
         });
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        binding.setTotalAll(Common.getTotalAll());
         adapter.notifyDataSetChanged();
     }
 
     @Override
-    public void editProduct(Products model, int position) {
+    public void onClick(Products model) {
 
     }
 
     @Override
-    public void deleteProduct(Products model, int position) {
+    public void onEdit(Products model, int position) {
+
+    }
+
+    @Override
+    public void onDelete(Products product, int position) {
         double oldTotal = Double.parseDouble(binding.total.getText().toString().trim());
-        double price = model.getPrice();
-        double newTotal = oldTotal - price * model.getQuantity();
-        binding.total.setText(String.valueOf(newTotal));
-        Common.totlaAll = newTotal;
+        double total = Common.listProduct.get(position).getTotal();
+
+        Common.setTotalAll(oldTotal - total);
+        binding.setTotalAll(Common.getTotalAll());
+
         adapter.notifyItemRemoved(position);
         Common.listProduct.remove(position);
-    }
-
-    @Override
-    public void setTotalAll(double total) {
-        binding.setTotalAll(total);
     }
 
 }

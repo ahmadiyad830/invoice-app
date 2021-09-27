@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ARPayment;
 import soft.mahmod.yourreceipt.databinding.FragmentPaymentBinding;
+import soft.mahmod.yourreceipt.listeners.ListenerPayment;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.model.billing.Payment;
 import soft.mahmod.yourreceipt.view_model.database.VMPayment;
@@ -25,7 +26,7 @@ import soft.mahmod.yourreceipt.view_model.send.data.VMSendReceipt;
  * Use the {@link FragmentPayment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentPayment extends Fragment implements ARPayment.ListenerOnClick {
+public class FragmentPayment extends Fragment implements ListenerPayment {
     private static final String TAG = "FragmentPayment";
     private FragmentPaymentBinding binding;
     private VMSendReceipt vmSendReceipt;
@@ -66,20 +67,35 @@ public class FragmentPayment extends Fragment implements ARPayment.ListenerOnCli
     }
 
     @Override
-    public void payment(Payment model) {
+    public void onClick(Payment model) {
 
     }
 
     @Override
-    public void deletePayment(int position) {
+    public void onEdit(Payment model, int position) {
 
     }
 
     @Override
-    public void paid( boolean isChecked, int position) {
+    public void onDelete(int position) {
+
+    }
+
+    @Override
+    public void onPaid(boolean isChecked, int position) {
         vmPayment.putPaid(receipt.getReceiptId(),position,isChecked)
                 .observe(getViewLifecycleOwner(),payment -> {
                     Log.d(TAG, "paid: "+payment.toString());
                 });
+    }
+
+    @Override
+    public void onChangeDate(String date, int position) {
+
+    }
+
+    @Override
+    public void onChangePrice(double price, int position) {
+
     }
 }

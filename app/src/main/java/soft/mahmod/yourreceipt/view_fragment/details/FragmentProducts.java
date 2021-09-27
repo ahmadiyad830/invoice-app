@@ -29,6 +29,7 @@ import java.util.List;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.firebase.ARProduct;
 import soft.mahmod.yourreceipt.databinding.FragmentProductsBinding;
+import soft.mahmod.yourreceipt.listeners.ListenerProduct;
 import soft.mahmod.yourreceipt.model.Products;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
@@ -42,7 +43,7 @@ import soft.mahmod.yourreceipt.view_model.send.data.VMSendReceipt;
  * Use the {@link FragmentProducts#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentProducts extends Fragment implements ARProduct.OnClickItem, DatabaseUrl {
+public class FragmentProducts extends Fragment implements ListenerProduct, DatabaseUrl {
     private static final String TAG = "FragmentProducts";
     private FragmentProductsBinding binding;
     private List<Products> listModel = new ArrayList<>();
@@ -58,6 +59,7 @@ public class FragmentProducts extends Fragment implements ARProduct.OnClickItem,
         reference = FirebaseDatabase.getInstance().getReference();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         vmReceipt = new ViewModelProvider(getViewModelStore(),new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())).get(VMReceipt.class);
+
 
     }
 
@@ -99,70 +101,25 @@ public class FragmentProducts extends Fragment implements ARProduct.OnClickItem,
 
     }
 
-    private void loadProducts(String id) {
+    @Override
+    public void onClick(Products model) {
 
     }
 
-
     @Override
-    public void editProduct(Products model, int position) {
-        Products products = new Products();
-        products.setName("حليبنا");
-        products.setPrice(0.5);
-        products.setQuantity(100);
-        products.setTotal(products.getPrice() * products.getQuantity());
-        adapter.getRef(position).setValue(products);
+    public void onEdit(Products model, int position) {
+
     }
 
     @Override
-    public <T> void editSingleProduct(String name, String key, T value, boolean type, int position) {
-        DialogConfirm dialogConfirm = new DialogConfirm(requireContext());
-        EditText input = new EditText(dialogConfirm.context());
-        MaterialCardView cardView = new MaterialCardView(dialogConfirm.context());
-        cardView.addView(input);
-        cardView.setRadius(3.0F);
-        cardView.setUseCompatPadding(true);
-        input.setInputType(type ? InputType.TYPE_TEXT_VARIATION_PERSON_NAME : InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        input.setText(String.valueOf(value));
-        dialogConfirm.setDialogListener(new DialogListener() {
-            @Override
-            public void clickOk(DialogInterface dialog) {
-                adapter.getRef(position).child(key).setValue(
-                        type ? Double.parseDouble(input.getText().toString().trim())
-                                : input.getText().toString()
-                );
-            }
-
-            @Override
-            public void clickCancel(DialogInterface dialog) {
-                dialog.dismiss();
-            }
-        });
-        dialogConfirm.addView(cardView);
-        dialogConfirm.listenerDialog();
-        dialogConfirm.createDialog(name, "edit " + name);
-        dialogConfirm.showDialog();
-    }
-
-    @Override
-    public void deleteProduct(Products model, int position) {
+    public void onDelete(Products product, int position) {
         double oldTotal = receiptModel.getTotalAll();
-        double totalRemove = model.getTotal();
+        double totalRemove = product.getTotal();
         double newTotal = oldTotal - totalRemove;
         adapter.getRef(position).removeValue();
         vmReceipt.editValue(newTotal,receiptModel.getReceiptId(),"totalAll")
                 .observe(getViewLifecycleOwner(),cash -> {
                     Log.d(TAG, "deleteProduct: "+cash.toString());
                 });
-    }
-
-    @Override
-    public void addProduct(Products model) {
-
-    }
-
-    @Override
-    public void clickProduct(Products model, int position) {
-
     }
 }
