@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -102,7 +103,8 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
             if (cash.getError()) {
                 binding.setError(cash.getMessage());
             } else {
-                intent.userSign(requireActivity());
+                Toast.makeText(requireContext(), getResources().getString(R.string.check_email), Toast.LENGTH_SHORT).show();
+                requireActivity().onBackPressed();
 //                controller.navigate(FragmentSignUpDirections.actionFragmentSignUpToFragmentActive());
             }
             binding.setProgress(false);
