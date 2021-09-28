@@ -68,13 +68,8 @@ public class RepoStore extends Repo<Store> implements OnCompleteListener<Void>, 
                        if (snapshot.exists()) {
                            store = snapshot.getValue(Store.class);
                            store.setError(false);
-                           if (store.getSecurity() != null && store.getSecurity().isEmpty()) {
-                               store.setCode(SUCCESS);
-                               store.setMessage("success");
-                           } else {
-                               store.setCode(NUMBER_SECURITY);
-                               store.setMessage(getApplication().getResources().getString(R.string.dont_have_number_security));
-                           }
+                           store.setCode(SUCCESS);
+                           store.setMessage("success");
                        }else {
                            store.setError(true);
                            store.setMessage("path not exists");

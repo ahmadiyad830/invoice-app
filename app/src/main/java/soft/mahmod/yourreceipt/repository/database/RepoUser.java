@@ -70,7 +70,6 @@ public class RepoUser extends Repo<User> implements OnCompleteListener<Void>, On
                             user.setMessage(getResources(R.string.not_exists));
                         }
                         getData().setValue(user);
-
                     }
 
                     @Override

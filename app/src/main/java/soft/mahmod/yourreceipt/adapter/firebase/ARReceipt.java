@@ -1,6 +1,7 @@
 package soft.mahmod.yourreceipt.adapter.firebase;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseError;
+
+import java.nio.file.ClosedFileSystemException;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ARPayment;
@@ -31,8 +34,8 @@ public class ARReceipt extends FirebaseRecyclerAdapter<Receipt,ARReceipt.ViewHol
     public ARReceipt(@NonNull FirebaseRecyclerOptions<Receipt> options,ListenerReceipt onReceiptItemClick) {
         super(options);
         this.itemClick = onReceiptItemClick;
-
     }
+
 
     @Override
     public int getItemCount() {
@@ -47,7 +50,6 @@ public class ARReceipt extends FirebaseRecyclerAdapter<Receipt,ARReceipt.ViewHol
             inflater = LayoutInflater.from(context);
             parent.getContext().getString(R.string.account);
         }
-
         ItemReceiptBinding binding = DataBindingUtil.inflate(inflater, R.layout.item_receipt, parent, false);
         return new ViewHolder(binding);
     }
@@ -130,6 +132,7 @@ public class ARReceipt extends FirebaseRecyclerAdapter<Receipt,ARReceipt.ViewHol
 
         @Override
         public void onPaid(CompoundButton buttonView, boolean isChecked, int position) {
+
             getRef(getAbsoluteAdapterPosition())
                     .child(PAYMENT)
                     .child(LIST_PAYMENT)

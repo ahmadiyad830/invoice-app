@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class SessionManager {
-    public static final String IBAN_SECYRTY = "iban_number";
+    public static final String NUMBER_SECYRTY = "iban_number";
     public static final String SECURITY_FILE = "file securtiy";
     public static final String DONT_SHOW_BOX = "dont show again";
     private Context context;
@@ -25,6 +25,13 @@ public class SessionManager {
         return inectance;
     }
 
+    public String keySecuirty(){
+        return sharedPreferences.getString(NUMBER_SECYRTY,"");
+    }
+    public void setKeySecuirty(String keySecuirty){
+        editor.putString(NUMBER_SECYRTY,keySecuirty);
+        editor.apply();
+    }
     public void dontShow(boolean isShow){
         editor.putBoolean(DONT_SHOW_BOX,isShow);
         editor.apply();

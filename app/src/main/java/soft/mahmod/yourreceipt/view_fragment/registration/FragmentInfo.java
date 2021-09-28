@@ -53,24 +53,11 @@ public class FragmentInfo extends Fragment {
         FragmentInfoArgs argsEmail = FragmentInfoArgs.fromBundle(getArguments());
         FragmentInfoDirections.ActionFragmentInfoToFragmentSignIn passEmail =
                 FragmentInfoDirections.actionFragmentInfoToFragmentSignIn();
-        binding.btnSignup.setOnClickListener(v -> {
+        binding.btnDown.setOnClickListener(v -> {
             binding.setProgress(true);
-            Store store = new Store();
-            String storeName = binding.storeName.getText().toString();
-            store.setName(storeName);
-            int phoneNum;
-            try {
-                phoneNum = Integer.parseInt(binding.phoneNum.getText().toString());
-            } catch (NumberFormatException e) {
-                phoneNum = 0;
-            }
-            store.setPhone(phoneNum);
-            String storeAddress = binding.storeAddress.getText().toString();
-            store.setAddress1(storeAddress);
-            String numberSecuirty = binding.storeAddress.getText().toString();
-            store.setSecurity(numberSecuirty);
-            vmStore.postStore(store).observe(getViewLifecycleOwner(), store1 -> {
-                if (!store.getError()) {
+
+            vmStore.postStore(getStore()).observe(getViewLifecycleOwner(), store1 -> {
+                if (!store1.getError()) {
                     passEmail.setArgsEmail(argsEmail.getArgsEmail());
                     controller.navigate(passEmail);
                 }
@@ -81,5 +68,22 @@ public class FragmentInfo extends Fragment {
             controller.navigate(FragmentInfoDirections.actionFragmentInfoToFragmentSignIn());
         });
 
+    }
+    private Store getStore() {
+        Store store = new Store();
+        String name = binding.storeName.getText().toString().trim();
+        store.setName(name);
+        String number = binding.phoneNum.getText().toString().trim();
+        try {
+            store.setPhone(Integer.parseInt(number));
+        } catch (NumberFormatException e) {
+            store.setPhone(0);
+            e.printStackTrace();
+        }
+        String email = binding.edtEmail.getText().toString().trim();
+        store.setEmail(email);
+        String address1 = binding.storeAddress.getText().toString().trim();
+        store.setAddress(address1);
+        return store;
     }
 }

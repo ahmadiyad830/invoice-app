@@ -20,6 +20,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.controller.ActivityIntent;
+import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.ActivityMainBinding;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.utils.DialogConfirm;
@@ -45,8 +46,13 @@ public class MainActivity extends AppCompatActivity implements DatabaseUrl {
                 .get(SettingAuth.class);
 
 
+        SessionManager manager = SessionManager.getInectance(this);
+        vmUser.getUser().observe(this,user -> {
+            manager.setKeySecuirty(user.getSecurity());
+        });
+
+
         if (intent.isUserActive().isActive()) {
-            Log.d(TAG, "onCreate: not active");
             binding.setIsActive(intent.isUserActive().isActive());
         } else {
             vmUser.getUser().observe(this, user -> {
@@ -93,7 +99,6 @@ public class MainActivity extends AppCompatActivity implements DatabaseUrl {
 
         controller.addOnDestinationChangedListener((controller1, destination, arguments) -> {
             binding.setName(destination.getLabel().toString());
-
         });
         NavigationUI.setupWithNavController(binding.navigationView, controller);
         NavigationUI.setupWithNavController(binding.linearLayout4, controller, configuration);

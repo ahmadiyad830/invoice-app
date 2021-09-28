@@ -143,6 +143,30 @@
                     android:textColor="@color/text_color" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:layout_marginVertical="@dimen/_8sdp"
+                android:maxLength="4"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/top_and_bottom_color">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_security"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/custom_stork"
+                    android:hint="@string/security"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:inputType="numberPassword"
+                    android:maxEms="4"
+                    android:maxLength="4"
+                    android:maxLines="1"
+                    android:minEms="4"
+                    android:minLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton

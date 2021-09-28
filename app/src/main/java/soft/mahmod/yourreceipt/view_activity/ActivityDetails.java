@@ -17,53 +17,27 @@ import soft.mahmod.yourreceipt.databinding.ActivityDetailsBinding;
 import soft.mahmod.yourreceipt.databinding.LayoutSecurityBinding;
 import soft.mahmod.yourreceipt.listeners.ListenerSecurityDialog;
 import soft.mahmod.yourreceipt.model.Receipt;
-import soft.mahmod.yourreceipt.statics.AlertDialogConfirm;
+import soft.mahmod.yourreceipt.statics.DialogSecurity;
 import soft.mahmod.yourreceipt.view_fragment.details.FragmentDetailsReceipt;
 import soft.mahmod.yourreceipt.view_fragment.details.FragmentPayment;
 import soft.mahmod.yourreceipt.view_fragment.details.FragmentProducts;
-import soft.mahmod.yourreceipt.view_model.database.VMStore;
 import soft.mahmod.yourreceipt.view_model.send.data.VMSendReceipt;
 
 public class ActivityDetails extends AppCompatActivity {
     private static final String TAG = "ActivityDetails";
     private ActivityDetailsBinding binding;
-    private VMStore vmStore;
-    private AlertDialogConfirm dialogConfirm;
+    private DialogSecurity dialogConfirm;
     private String keySec;
-
+    private Receipt model;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_details);
-        vmStore = new ViewModelProvider
-                (getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(getApplication()))
-                .get(VMStore.class);
+        dialogConfirm = new DialogSecurity(this, getLayoutInflater());
 
-        dialogConfirm = new AlertDialogConfirm(this, getLayoutInflater());
+        handllKeySeurity();
 
-        vmStore.getStore().observe(this, store -> {
-            if (!store.getError()) {
-                keySec = store.getSecurity();
-            }
-        });
-        SessionManager manager = SessionManager.getInectance(this);
-        if (manager.isShow()){
-            dialogConfirm.securityDialog(new ListenerSecurityDialog() {
-                @Override
-                public void onOk(Dialog dialog, LayoutSecurityBinding binding) {
-                    String num = binding.edtSecurity.getText().toString().trim();
-                    if (num.equals(keySec)) {
-                        dialog.dismiss();
-                    } else {
-                        binding.setError(getResources().getString(R.string.wrong_security_number));
-                    }
-                }
-                @Override
-                public void onCancel(Dialog dialog) {
-                    onBackPressed();
-                }
-            });
-        }
+
         sendData();
         loadTabLayout();
         binding.btnBack.setOnClickListener(v -> {
@@ -76,7 +50,38 @@ public class ActivityDetails extends AppCompatActivity {
         });
     }
 
-    private Receipt model;
+    private void handllKeySeurity() {
+        SessionManager manager = SessionManager.getInectance(this);
+        keySec = manager.keySecuirty();
+        if (keySec != null) {
+            if (!manager.isShow()){
+                dialogSecurity();
+            }
+        } else {
+            onBackPressed();
+        }
+    }
+
+    private void dialogSecurity() {
+        dialogConfirm.securityDialog(keySec, new ListenerSecurityDialog() {
+            @Override
+            public void onOk(Dialog dialog, LayoutSecurityBinding binding) {
+                String num = binding.edtSecurity.getText().toString().trim();
+                if (num.equals(keySec)) {
+                    dialog.dismiss();
+                } else {
+                    binding.setError(getResources().getString(R.string.wrong_security_number));
+                }
+            }
+
+            @Override
+            public void onCancel(Dialog dialog) {
+                onBackPressed();
+            }
+        });
+    }
+
+
     private void sendData() {
         VMSendReceipt vmSendReceipt = new ViewModelProvider(this).get(VMSendReceipt.class);
         model = (Receipt) getIntent().getSerializableExtra("model");

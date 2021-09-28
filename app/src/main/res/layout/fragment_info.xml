@@ -16,203 +16,113 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@color/background_page"
         android:layout_height="match_parent">
-        <com.google.android.material.progressindicator.CircularProgressIndicator
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:indeterminate="true"
-            android:indeterminateTint="@color/top_and_bottom_color"
-            android:visibility="@{progress?View.VISIBLE:View.GONE,default = gone}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{error}"
-            android:textColor="@android:color/holo_red_dark"
-            android:textSize="@dimen/_16ssp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/btn_signup"
-            app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
-            app:layout_constraintStart_toStartOf="@+id/linearLayout2"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout2"
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.26">
+            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_8sdp"
-                app:cardCornerRadius="@dimen/_6sdp"
-                app:cardElevation="@dimen/_3sdp"
-                app:cardUseCompatPadding="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_gravity="top"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/linearLayout10"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/_3sdp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginVertical="@dimen/_14sdp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card_toolbar">
 
                     <EditText
                         android:id="@+id/store_name"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@android:color/transparent"
+                        android:layout_height="?actionBarSize"
+                        android:background="@drawable/custom_stork"
+                        android:layout_marginVertical="@dimen/_8sdp"
                         android:hint="@string/sotre_name"
-                        android:inputType="text"
-                        android:singleLine="true"
-                        android:textColor="@color/text_color"
                         android:textColorHint="@color/hint_color"
-                        android:textSize="@dimen/_14ssp" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_margin="@dimen/_8sdp"
-                app:cardCornerRadius="@dimen/_6sdp"
-                app:cardElevation="@dimen/_3sdp"
-
-                app:cardUseCompatPadding="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/_3sdp">
+                        android:inputType="textPersonName"
+                        android:maxLines="1"
+                        android:padding="@dimen/_8sdp"
+                        android:paddingHorizontal="@dimen/_8sdp"
+                        android:textColor="@color/text_color" />
 
                     <EditText
                         android:id="@+id/phone_num"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@android:color/transparent"
-                        android:hint="@string/phone_number"
-                        android:inputType="phone"
-                        android:singleLine="true"
-                        android:textColor="@color/text_color"
+                        android:layout_height="?actionBarSize"
                         android:textColorHint="@color/hint_color"
-                        android:textSize="@dimen/_14ssp" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                        android:background="@drawable/custom_stork"
+                        android:hint="@string/phone_number"
+                        android:inputType="numberDecimal"
+                        android:padding="@dimen/_8sdp"
+                        android:paddingHorizontal="@dimen/_8sdp"
+                        android:textColor="@color/text_color" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_8sdp"
-                app:cardCornerRadius="@dimen/_6sdp"
-                app:cardElevation="@dimen/_3sdp"
-                app:cardUseCompatPadding="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/_3sdp">
+                    <EditText
+                        android:id="@+id/edt_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="?actionBarSize"
+                        android:background="@drawable/custom_stork"
+                        android:textColorHint="@color/hint_color"
+                        android:hint="@string/email"
+                        android:inputType="textEmailSubject"
+                        android:padding="@dimen/_8sdp"
+                        android:layout_marginVertical="@dimen/_8sdp"
+                        android:paddingHorizontal="@dimen/_8sdp"
+                        android:textColor="@color/text_color" />
 
                     <EditText
                         android:id="@+id/store_address"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@android:color/transparent"
-                        android:hint="@string/store_address"
+                        android:layout_height="?actionBarSize"
+                        android:background="@drawable/custom_stork"
+                        android:hint="@string/address"
                         android:inputType="text"
-                        android:singleLine="true"
+                        android:padding="@dimen/_8sdp"
+                        android:paddingHorizontal="@dimen/_8sdp"
                         android:textColor="@color/text_color"
-                        android:textColorHint="@color/hint_color"
-                        android:textSize="@dimen/_14ssp" />
+                        android:textColorHint="@color/hint_color" />
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:layout_marginVertical="@dimen/_8sdp"
-                android:maxLength="4"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/top_and_bottom_color">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_security"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="@dimen/_8sdp"
-                    android:background="@drawable/custom_stork"
+                <TextView
+                    android:id="@+id/btn_skip"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/_8sdp"
                     android:gravity="center"
-                    android:hint="@string/security"
-                    android:inputType="numberPassword"
-                    android:maxEms="4"
-                    android:maxLength="4"
-                    android:maxLines="1"
-                    android:minEms="4"
-                    android:minLines="1"
-                    android:textColor="@color/text_color" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:text="@{error}"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/_14ssp" />
 
-        </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_down"
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:backgroundTint="@color/top_and_bottom_color"
+                    android:text="@string/sign_up"
+                    android:textColor="@color/text_btn_color" />
+            </LinearLayout>
+        </ScrollView>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_signup"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_45sdp"
-            android:layout_marginHorizontal="@dimen/_12sdp"
-            android:backgroundTint="@color/main_color"
-            android:text="@string/sign_up"
-            android:textColor="@color/text_color"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.516"
-            android:enabled="@{progress?false:true,default =true}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-            app:strokeColor="@color/icon_color"
-            app:strokeWidth="@dimen/_2sdp" />
 
-        <TextView
-            android:id="@+id/btn_skip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/skip"
-            android:textColor="@color/top_and_bottom_color"
-            android:textSize="@dimen/_16ssp"
-            android:textStyle="normal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_signup"
-            app:layout_constraintVertical_bias="0.196" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

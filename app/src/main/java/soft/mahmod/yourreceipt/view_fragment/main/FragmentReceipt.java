@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,6 +33,7 @@ import soft.mahmod.yourreceipt.listeners.ListenerReceipt;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.view_activity.ActivityDetails;
+import soft.mahmod.yourreceipt.view_model.database.VMReceipt;
 
 
 public class FragmentReceipt extends Fragment implements ListenerReceipt, DatabaseUrl, AdapterView.OnItemSelectedListener, TextWatcher {
@@ -169,7 +171,7 @@ public class FragmentReceipt extends Fragment implements ListenerReceipt, Databa
     @Override
     public void onClick(Receipt model) {
         Intent intent = new Intent(requireContext(), ActivityDetails.class);
-        intent.putExtra("model",model);
+        intent.putExtra("model", model);
         startActivity(intent);
         requireActivity().finish();
     }

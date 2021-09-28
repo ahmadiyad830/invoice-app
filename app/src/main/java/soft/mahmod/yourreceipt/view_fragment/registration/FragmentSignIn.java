@@ -20,6 +20,7 @@ import androidx.navigation.Navigation;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.conditions.catch_registration.ConditionsSignIn;
 import soft.mahmod.yourreceipt.controller.ActivityIntent;
+import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.FragmentSignInBinding;
 import soft.mahmod.yourreceipt.view_model.auth.SettingAuth;
 import soft.mahmod.yourreceipt.view_model.auth.VMSignIn;

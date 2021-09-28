@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.model.User;
+import soft.mahmod.yourreceipt.repository.database.RepoUser;
 import soft.mahmod.yourreceipt.statics.StateCode;
 import soft.mahmod.yourreceipt.statics.StateMessage;
 
@@ -29,10 +30,10 @@ public class SignInRepo extends RepoSignIn<User> {
                         user.setCode(StateCode.TRY_AGAIN);
                     } else {
                         if (isVerified()) {
-                            user.setError(false);
-                            user.setMessage(getResources(R.string.success));
-//                            user.setMessage(StateMessage.SUCCESS);
-                            user.setCode(StateCode.SUCCESS);
+                            RepoUser repoUser = new RepoUser(getApplication());
+                            this.user.setError(false);
+                            this.user.setMessage(getResources(R.string.success));
+                            this.user.setCode(StateCode.SUCCESS);
                         } else {
                             user.setError(true);
                             user.setMessage(getResources(R.string.active_your_account));

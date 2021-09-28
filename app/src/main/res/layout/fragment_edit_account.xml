@@ -53,9 +53,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="?actionBarSize"
                         android:background="@drawable/custom_stork"
-                        android:hint="@string/name"
+                        android:hint="@string/sotre_name"
                         android:textColorHint="@color/hint_color"
                         android:inputType="textPersonName"
+                        android:layout_marginVertical="@dimen/_8sdp"
                         android:maxLines="1"
                         android:padding="@dimen/_8sdp"
                         android:paddingHorizontal="@dimen/_8sdp"
@@ -67,7 +68,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="?actionBarSize"
                         android:textColorHint="@color/hint_color"
-                        android:layout_marginVertical="@dimen/_8sdp"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/phone_number"
                         android:inputType="numberDecimal"
@@ -82,6 +82,7 @@
                         android:layout_height="?actionBarSize"
                         android:background="@drawable/custom_stork"
                         android:textColorHint="@color/hint_color"
+                        android:layout_marginVertical="@dimen/_8sdp"
                         android:hint="@string/email"
                         android:inputType="textEmailSubject"
                         android:padding="@dimen/_8sdp"
@@ -89,54 +90,17 @@
                         android:text="@{model.email}"
                         android:textColor="@color/text_color" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="?actionBarSize"
-                        android:layout_marginVertical="@dimen/_8sdp"
-                        app:passwordToggleEnabled="true"
-                        android:maxLength="4"
-                        app:passwordToggleTint="@color/top_and_bottom_color">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/edt_security"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/custom_stork"
-                            android:hint="@string/security"
-                            android:maxLength="4"
-                            android:maxLines="1"
-                            android:maxEms="4"
-                            android:minEms="4"
-                            android:minLines="1"
-                            android:inputType="numberPassword"
-                            android:text="@{model.security}" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
                     <EditText
-                        android:id="@+id/edt_address1"
+                        android:id="@+id/edt_address"
                         android:layout_width="match_parent"
                         android:layout_height="?actionBarSize"
                         android:background="@drawable/custom_stork"
                         android:textColorHint="@color/hint_color"
-                        android:hint="@string/address_1"
+                        android:hint="@string/address"
                         android:inputType="text"
                         android:padding="@dimen/_8sdp"
                         android:paddingHorizontal="@dimen/_8sdp"
-                        android:text="@{model.address1}"
-                        android:textColor="@color/text_color" />
-
-                    <EditText
-                        android:id="@+id/edt_address2"
-                        android:layout_width="match_parent"
-                        android:layout_height="?actionBarSize"
-                        android:background="@drawable/custom_stork"
-                        android:hint="@string/address_2"
-                        android:inputType="text"
-                        android:layout_marginVertical="@dimen/_8sdp"
-                        android:textColorHint="@color/hint_color"
-                        android:padding="@dimen/_8sdp"
-                        android:paddingHorizontal="@dimen/_8sdp"
-                        android:text="@{model.address2}"
+                        android:text="@{model.address}"
                         android:textColor="@color/text_color" />
 
                 </LinearLayout>
@@ -162,5 +126,7 @@
                     android:layout_marginHorizontal="@dimen/_8sdp"/>
             </LinearLayout>
         </ScrollView>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -10,6 +10,7 @@ public class User extends Cash implements Serializable {
     private String email;
     private String password;
     private String uid;
+    private String security;
     private boolean active = false, block = false;
 
     public User(String email, String password) {
@@ -31,6 +32,14 @@ public class User extends Cash implements Serializable {
 
     public User(boolean active) {
         this.active = active;
+    }
+
+    public String getSecurity() {
+        return security;
+    }
+
+    public void setSecurity(String security) {
+        this.security = security;
     }
 
     public boolean isActive() {
