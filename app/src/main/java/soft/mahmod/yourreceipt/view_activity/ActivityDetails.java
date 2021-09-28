@@ -54,7 +54,7 @@ public class ActivityDetails extends AppCompatActivity {
         SessionManager manager = SessionManager.getInectance(this);
         keySec = manager.keySecuirty();
         if (keySec != null) {
-            if (!manager.isShow()){
+            if (manager.isShow()){
                 dialogSecurity();
             }
         } else {

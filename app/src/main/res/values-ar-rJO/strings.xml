@@ -131,6 +131,16 @@
     <string name="dont_have_number_security">ليس لديك رقم أمان</string>
     <string name="wrong_security_number">رمز الحماية خطأ</string>
     <string name="edit_security_number">تعديل رقم الأمان</string>
-    <string name="cancel" translatable="false">إلغاء</string>
-    <string name="ok" translatable="false">حسنا</string>
+    <string name="show_box_security_number">ظهور كل مرة</string>
+    <string name="forget_security_number">انقر إذا نسيت رقم الأمان</string>
+    <string name="empty_password">كلمة مرور فارغة</string>
+    <string name="security_error">رقم الأمان قصير جدًا</string>
+    <string name="password_short">كلمة المرور قصيرة</string>
+    <string name="password_long">كلمة المرور طويلة</string>
+    <string name="email_unacceptable">بريد إلكتروني غير مقبول</string>
+    <string name="email_epty">بريد إلكتروني فارغ</string>
+    <string name="email_short">البريد الإلكتروني قصير</string>
+    <string name="email_long">البريد الإلكتروني طويل</string>
+    <string name="wrong_password">كلمة مرور خاطئة</string>
+    <string name="security_short">رقم الأمان قصير جدًا</string>
 </resources>

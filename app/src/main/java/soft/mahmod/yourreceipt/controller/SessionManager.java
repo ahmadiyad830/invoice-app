@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 public class SessionManager {
     public static final String NUMBER_SECYRTY = "iban_number";
     public static final String SECURITY_FILE = "file securtiy";
+    public static final String PASSWORD = "password";
     public static final String DONT_SHOW_BOX = "dont show again";
     private Context context;
     private static SessionManager inectance;
@@ -25,19 +26,31 @@ public class SessionManager {
         return inectance;
     }
 
-    public String keySecuirty(){
-        return sharedPreferences.getString(NUMBER_SECYRTY,"");
+    public String keySecuirty() {
+        return sharedPreferences.getString(NUMBER_SECYRTY, "");
     }
-    public void setKeySecuirty(String keySecuirty){
-        editor.putString(NUMBER_SECYRTY,keySecuirty);
+
+    public void setPassword(String password) {
+        editor.putString(PASSWORD, password);
         editor.apply();
     }
-    public void dontShow(boolean isShow){
-        editor.putBoolean(DONT_SHOW_BOX,isShow);
+
+    public String password() {
+       return sharedPreferences.getString(PASSWORD, "");
+    }
+
+    public void setKeySecuirty(String keySecuirty) {
+        editor.putString(NUMBER_SECYRTY, keySecuirty);
         editor.apply();
     }
-    public boolean isShow(){
-        return sharedPreferences.getBoolean(DONT_SHOW_BOX,true);
+
+    public void dontShow(boolean isShow) {
+        editor.putBoolean(DONT_SHOW_BOX, isShow);
+        editor.apply();
+    }
+
+    public boolean isShow() {
+        return sharedPreferences.getBoolean(DONT_SHOW_BOX, true);
     }
 
     // TODO: 9/27/2021  edit

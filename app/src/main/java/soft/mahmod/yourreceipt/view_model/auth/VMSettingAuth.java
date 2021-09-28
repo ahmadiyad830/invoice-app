@@ -10,10 +10,10 @@ import androidx.lifecycle.LiveData;
 import soft.mahmod.yourreceipt.model.Cash;
 import soft.mahmod.yourreceipt.repository.auth.setting.RepoSettingAuth;
 
-public class SettingAuth extends AndroidViewModel {
+public class VMSettingAuth extends AndroidViewModel {
     private final RepoSettingAuth repo;
 
-    public SettingAuth(@NonNull Application application) {
+    public VMSettingAuth(@NonNull Application application) {
         super(application);
         repo = new RepoSettingAuth(application);
     }

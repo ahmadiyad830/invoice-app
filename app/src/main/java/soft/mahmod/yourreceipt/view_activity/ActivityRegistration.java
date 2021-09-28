@@ -15,13 +15,13 @@ import soft.mahmod.yourreceipt.databinding.ActivityRegistrationBinding;
 import soft.mahmod.yourreceipt.utils.DialogConfirm;
 import soft.mahmod.yourreceipt.utils.DialogListener;
 import soft.mahmod.yourreceipt.utils.IntentActivity;
-import soft.mahmod.yourreceipt.view_model.auth.SettingAuth;
+import soft.mahmod.yourreceipt.view_model.auth.VMSettingAuth;
 
 public class ActivityRegistration extends AppCompatActivity {
     private static final String TAG = "ActivityRegistration";
     private ActivityRegistrationBinding binding;
     private ActivityIntent intent;
-    private SettingAuth vmSettingAuth;
+    private VMSettingAuth vmSettingAuth;
     private NavController controller;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class ActivityRegistration extends AppCompatActivity {
             binding.setName(destination.getLabel().toString());
         });
         vmSettingAuth = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
-                (getApplication())).get(SettingAuth.class);
+                (getApplication())).get(VMSettingAuth.class);
         binding.btnHelp.setOnClickListener(v -> {
             dialogHelp();
         });

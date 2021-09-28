@@ -20,9 +20,8 @@ import androidx.navigation.Navigation;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.conditions.catch_registration.ConditionsSignIn;
 import soft.mahmod.yourreceipt.controller.ActivityIntent;
-import soft.mahmod.yourreceipt.controller.SessionManager;
 import soft.mahmod.yourreceipt.databinding.FragmentSignInBinding;
-import soft.mahmod.yourreceipt.view_model.auth.SettingAuth;
+import soft.mahmod.yourreceipt.view_model.auth.VMSettingAuth;
 import soft.mahmod.yourreceipt.view_model.auth.VMSignIn;
 import soft.mahmod.yourreceipt.view_model.database.VMUser;
 
@@ -32,7 +31,7 @@ public class FragmentSignIn extends Fragment {
     private FragmentSignInBinding binding;
     private VMSignIn vmSignIn;
     private VMUser vmDbUser;
-    private SettingAuth vmSettingAuth;
+    private VMSettingAuth vmSettingAuth;
     private NavController controller;
     private ActivityIntent intent;
 
@@ -45,7 +44,7 @@ public class FragmentSignIn extends Fragment {
         vmDbUser = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
                 (requireActivity().getApplication())).get(VMUser.class);
         vmSettingAuth = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
-                (requireActivity().getApplication())).get(SettingAuth.class);
+                (requireActivity().getApplication())).get(VMSettingAuth.class);
 
 
     }

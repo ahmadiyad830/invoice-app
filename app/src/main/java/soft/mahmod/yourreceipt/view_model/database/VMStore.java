@@ -30,4 +30,9 @@ public class VMStore extends AndroidViewModel {
     public LiveData<Store> getStore(){
         return repoStore.getStore();
     }
+
+    @Override
+    public void onCleared() {
+        super.onCleared();
+    }
 }

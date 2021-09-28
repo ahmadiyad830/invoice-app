@@ -8,6 +8,8 @@ import androidx.lifecycle.LiveData;
 
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.model.Cash;
@@ -67,10 +69,12 @@ public class RepoSettingAuth extends RepoEditAccount {
         getfAuth().getCurrentUser().updatePassword(pass2)
                 .addOnCompleteListener(getApplication().getMainExecutor(), task1 -> {
                     if (task1.isSuccessful()) {
+
                         cash.setMessage(getResources(R.string.success));
                         cash.setError(false);
                         cash.setCode(StateCode.SUCCESS);
                         data.postValue(cash);
+                        updatePassword(pass2);
                     }
                 })
                 .addOnFailureListener(getApplication().getMainExecutor(), e -> {
@@ -80,6 +84,13 @@ public class RepoSettingAuth extends RepoEditAccount {
                     cash.setCode(StateCode.TRY_AGAIN);
                     data.postValue(cash);
                 });
+    }
+
+    private void updatePassword(String pass2) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.child(USER).child(getUid()).child(PASSWORD)
+                .setValue(pass2);
+
     }
 
     @Override

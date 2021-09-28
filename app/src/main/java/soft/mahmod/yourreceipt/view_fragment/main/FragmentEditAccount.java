@@ -60,10 +60,6 @@ public class FragmentEditAccount extends Fragment {
         VMStore vmStore = new ViewModelProvider
                 (getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
                 .get(VMStore.class);
-
-        vmStore.getStore().observe(getViewLifecycleOwner(), store -> {
-
-        });
     }
 
     private void dialogSecurity(String key) {
@@ -93,12 +89,6 @@ public class FragmentEditAccount extends Fragment {
         });
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        loadStore();
-    }
-
     private void dialog() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(requireContext());
         dialog.setIcon(R.mipmap.ic_launcher);
@@ -116,10 +106,7 @@ public class FragmentEditAccount extends Fragment {
     }
 
     private void createStore() {
-        vmStore.postStore(getStore()).observe(getViewLifecycleOwner(), cash1 -> {
-            if (cash1.getError())
-                binding.setError(cash1.getMessage());
-        });
+
     }
 
     private Store getStore() {
@@ -139,15 +126,4 @@ public class FragmentEditAccount extends Fragment {
         store.setAddress(address1);
         return store;
     }
-
-    private void loadStore() {
-        vmStore.getStore().observe(getViewLifecycleOwner(), store -> {
-            if (!store.getError()) {
-                binding.setModel(store);
-            }
-            Log.d(TAG, "loadStore: " + store.getCode());
-        });
-    }
-
-
 }

@@ -18,15 +18,16 @@ public class RepoSignUpConditions implements EmailPattern {
     private boolean password = false;
     public RepoSignUpConditions(Application application) {
         this.application = application;
-
+        dataCondition = new MutableLiveData<>();
+        user = new User();
     }
 
     public LiveData<User> signUpConditions(String email, String pass1, String pass2) {
-        user = new User();
-        dataCondition = new MutableLiveData<>();
+
+
         ConnectionInternet connectionInternet = new ConnectionInternet(application);
         if (connectionInternet.isConnection()) {
-            confirmPassword(pass1, pass2, email);
+            confirmPassword(pass1, pass2);
             if (password){
                 confirmEmail(email);
             }
@@ -40,9 +41,32 @@ public class RepoSignUpConditions implements EmailPattern {
         return dataCondition;
     }
 
+    public LiveData<User> changePassword(String pass1, String pass2, String pass3) {
+        confirmChangePassword(pass1, pass2, pass3);
+        return dataCondition;
+    }
+
+    private void confirmChangePassword(String pass1, String pass2, String pass3) {
+        boolean lengthPassword = pass2.length() >= 6 && pass3.length() >= 6;
+        boolean confirm = pass2.equals(pass3) && !pass1.equals(pass3) ;
+        if (lengthPassword){
+            if (confirm){
+                password = false;
+                user.setError(password);
+                user.setMessage("success");
+            }else {
+                user.setError(true);
+                user.setMessage(getString(R.string.error));
+            }
+        }else {
+            user.setError(true);
+            user.setMessage(getString(R.string.password_short));
+        }
+        dataCondition.setValue(user);
+    }
 
 
-    private void confirmPassword(String pass1, String pass2, String email) {
+    private void confirmPassword(String pass1, String pass2) {
         if (pass1 != null && pass2 != null) {
             if (pass1.isEmpty() || pass2.isEmpty()) {
                 user.setError(true);
@@ -50,7 +74,7 @@ public class RepoSignUpConditions implements EmailPattern {
             } else {
                 if (pass1.length() >= 6) {
                     if (pass1.equals(pass2)) {
-                        password = true;
+                        password = false;
                         user.setError(password);
                         user.setMessage("success");
                         dataCondition.setValue(user);

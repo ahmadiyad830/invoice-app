@@ -20,19 +20,19 @@ import soft.mahmod.yourreceipt.controller.ActivityIntent;
 import soft.mahmod.yourreceipt.databinding.FragmentChangePasswordBinding;
 import soft.mahmod.yourreceipt.utils.DialogConfirm;
 import soft.mahmod.yourreceipt.utils.DialogListener;
-import soft.mahmod.yourreceipt.view_model.auth.SettingAuth;
+import soft.mahmod.yourreceipt.view_model.auth.VMSettingAuth;
 
 public class FragmentChangePassword extends Fragment {
     private FragmentChangePasswordBinding binding;
     private static final String TAG = "FragmentChangePassword";
     private ActivityIntent intent;
-    private SettingAuth vmSetting;
+    private VMSettingAuth vmSetting;
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         intent = ActivityIntent.getInstance(requireContext());
         vmSetting = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
-                .get(SettingAuth.class);
+                .get(VMSettingAuth.class);
 
     }
 

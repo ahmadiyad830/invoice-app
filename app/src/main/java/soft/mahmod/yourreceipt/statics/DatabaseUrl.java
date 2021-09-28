@@ -8,6 +8,7 @@ public interface DatabaseUrl extends StateCode {
     String ORDER = "orders/";
     String RECEIPT = "receipt/";
     String USER = "users/";
+    String PASSWORD = "password/";
     String PRODUCTS = "products/";
     String QUANTITY = "/quantity";
     String ERROR = "/error";

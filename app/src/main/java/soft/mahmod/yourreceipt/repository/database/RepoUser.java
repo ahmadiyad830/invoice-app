@@ -15,7 +15,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import soft.mahmod.yourreceipt.R;
-import soft.mahmod.yourreceipt.model.Cash;
 import soft.mahmod.yourreceipt.model.User;
 
 public class RepoUser extends Repo<User> implements OnCompleteListener<Void>, OnFailureListener {
@@ -43,17 +42,40 @@ public class RepoUser extends Repo<User> implements OnCompleteListener<Void>, On
     public LiveData<User> putUser(User model){
         return getData();
     }
-    public LiveData<User> putUserTLow(User model){
+
+    public LiveData<User> putUserTLow(User model) {
         return getData();
     }
-    public LiveData<User> deleteUser(User model){
+
+    public LiveData<User> deleteUser(User model) {
         return getData();
     }
-    public LiveData<User> deleteUserTLow(User model){
+
+    public LiveData<User> deleteUserTLow(User model) {
         return getData();
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    public LiveData<User> putKeuSecurity(String key) {
+        getReference().child(USER).child(getfUser().getUid())
+                .child(SECURITY)
+                .setValue(key)
+                .addOnCompleteListener(getApplication().getMainExecutor(),this)
+                .addOnFailureListener(getApplication().getMainExecutor(),this);
+        return getData();
+    }
+
+    public LiveData<User> putKeuSecurityTLow(String key) {
+        getReference().child(USER).child(user.getId())
+                .child(SECURITY)
+                .setValue(key)
+                .addOnCompleteListener(this)
+                .addOnFailureListener(this);
+        return getData();
+    }
+
     //    read
-    public LiveData<User> getUser(){
+    public LiveData<User> getUser() {
         getReference().child(USER).child(getfUser().getUid())
                 .addValueEventListener(new ValueEventListener() {
                     @Override

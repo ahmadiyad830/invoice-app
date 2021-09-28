@@ -27,6 +27,13 @@ public class VMUser extends AndroidViewModel {
             return repoDbUser.postUserTLow(model);
         }
     }
+    public LiveData<User> putSecurityKey(String key) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            return repoDbUser.putKeuSecurity(key);
+        } else {
+            return repoDbUser.putKeuSecurityTLow(key);
+        }
+    }
     public LiveData<User> getUser(){
         return repoDbUser.getUser();
     }

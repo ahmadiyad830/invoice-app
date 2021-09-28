@@ -26,14 +26,14 @@ import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.utils.DialogConfirm;
 import soft.mahmod.yourreceipt.utils.DialogListener;
 import soft.mahmod.yourreceipt.utils.IntentActivity;
-import soft.mahmod.yourreceipt.view_model.auth.SettingAuth;
+import soft.mahmod.yourreceipt.view_model.auth.VMSettingAuth;
 import soft.mahmod.yourreceipt.view_model.database.VMUser;
 
 public class MainActivity extends AppCompatActivity implements DatabaseUrl {
     private static final String TAG = "MainActivity";
     private ActivityMainBinding binding;
     private VMUser vmUser;
-    private SettingAuth vmSettingAuth;
+    private VMSettingAuth vmSettingAuth;
     private ActivityIntent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +43,13 @@ public class MainActivity extends AppCompatActivity implements DatabaseUrl {
         vmUser = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(getApplication()))
                 .get(VMUser.class);
         vmSettingAuth = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication()))
-                .get(SettingAuth.class);
+                .get(VMSettingAuth.class);
 
 
         SessionManager manager = SessionManager.getInectance(this);
         vmUser.getUser().observe(this,user -> {
             manager.setKeySecuirty(user.getSecurity());
+            manager.setPassword(user.getPassword());
         });
 
 
@@ -104,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseUrl {
         NavigationUI.setupWithNavController(binding.linearLayout4, controller, configuration);
 
         binding.fab.setOnClickListener(v -> {
+
             Intent intent = new Intent(this, ActivityAddReceipt.class);
             startActivity(intent);
         });

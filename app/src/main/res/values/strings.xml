@@ -8,6 +8,7 @@
     <!--    TODO account-->
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="wrong_password">Wrong Password</string>
     <string name="forget_your_password">Forgot your Password ?</string>
     <string name="change_password">Change Password</string>
     <string name="user_name">user name</string>
@@ -156,6 +157,8 @@ Or add all items</string>
 
     <string name="password_long">Password is to long</string>
     <string name="password_short">Password is to short</string>
+    <string name="security_short">Security number is too short</string>
+    <string name="security_error">Security number is too short</string>
     <string name="empty_password">Empty password</string>
 
 
@@ -163,6 +166,7 @@ Or add all items</string>
     <string name="not_exists">Not exists</string>
     <string name="active_your_account">Please active your account</string>
     <string name="we_send_email">We have sent you a confirmation email</string>
+    <string name="forget_security_number">Click if you forget security number</string>
 
     <string name="check_email">Check your email the to recover password in it</string>
     <string name="exempt">exempt</string>
@@ -171,5 +175,6 @@ Or add all items</string>
     <string name="security">Security number</string>
     <string name="dont_have_number_security">You don\'t have Security number</string>
     <string name="dont_show">Don\'t show again</string>
+    <string name="show_box_security_number">Appear every time</string>
     <string name="wrong_security_number">Wrong security code</string>
 </resources>
