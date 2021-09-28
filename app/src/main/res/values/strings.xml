@@ -121,9 +121,10 @@
     <string name="text_some_things">search</string>
     <string name="camera">camera</string>
     <string name="phone_pictures">phone pictures</string>
-    <string name="cancel" translatable="false">@android:string/cancel</string>
-    <string name="ok" translatable="false">@android:string/ok</string>
+    <string name="cancel">@android:string/cancel</string>
+    <string name="ok">@android:string/ok</string>
     <string name="please_confirm">plase confirm</string>
+    <string name="edit_security_number">Edit security number</string>
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 
     <!--    help-->
@@ -143,7 +144,7 @@ Or add all items</string>
     <string name="debt">debt</string>
     <string name="bayment">bayment</string>
     <string name="store">store</string>
-<!--error-->
+    <!--error-->
     <string name="error_input_charcter">Enter numbers only</string>
     <string name="network_conecction">Check if network connect</string>
     <!--handle message-->
@@ -156,7 +157,6 @@ Or add all items</string>
     <string name="password_long">Password is to long</string>
     <string name="password_short">Password is to short</string>
     <string name="empty_password">Empty password</string>
-
 
 
     <string name="try_again">Try Again</string>

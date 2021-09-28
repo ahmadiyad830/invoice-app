@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="model"
+            type="soft.mahmod.yourreceipt.model.Store" />
+
+        <variable
+            name="visibleStore"
+            type="Boolean" />
+
+        <variable
+            name="visiblePassword"
+            type="Boolean" />
+        <variable
+            name="visibleSecurity"
+            type="Boolean" />
+
+        <variable
+            name="errorStore"
+            type="String" />
+
+        <variable
+            name="errorChangePassword"
+            type="String" />
+        <variable
+            name="errorSecurity"
+            type="String" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view_fragment.main.FragmentSetting">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txt_visible_store"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:drawableStart="@drawable/ic_baseline_shopping_cart_24"
+                    android:drawableTint="@color/hint_color"
+                    android:gravity="center"
+                    android:text="@string/edit_store"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout22"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:orientation="vertical"
+                    android:visibility='@{visibleStore?View.VISIBLE:View.GONE,default = gone}'
+                    app:layout_constraintBottom_toTopOf="@+id/linearLayout23"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/materialTextView">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_12sdp"
+                        android:layout_marginVertical="@dimen/_14sdp"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/card_toolbar">
+
+                        <EditText
+                            android:id="@+id/edt_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="?actionBarSize"
+                            android:layout_marginVertical="@dimen/_8sdp"
+                            android:background="@drawable/custom_stork"
+                            android:hint="@string/sotre_name"
+                            android:inputType="textPersonName"
+                            android:maxLines="1"
+                            android:padding="@dimen/_8sdp"
+                            android:paddingHorizontal="@dimen/_8sdp"
+                            android:text="@{model.name}"
+                            android:textColor="@color/text_color"
+                            android:textColorHint="@color/hint_color" />
+
+                        <EditText
+                            android:id="@+id/edt_phone_num"
+                            android:layout_width="match_parent"
+                            android:layout_height="?actionBarSize"
+                            android:background="@drawable/custom_stork"
+                            android:hint="@string/phone_number"
+                            android:inputType="numberDecimal"
+                            android:padding="@dimen/_8sdp"
+                            android:paddingHorizontal="@dimen/_8sdp"
+                            android:text="@{String.valueOf(model.phone)}"
+                            android:textColor="@color/text_color"
+                            android:textColorHint="@color/hint_color" />
+
+                        <EditText
+                            android:id="@+id/edt_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="?actionBarSize"
+                            android:layout_marginVertical="@dimen/_8sdp"
+                            android:background="@drawable/custom_stork"
+                            android:hint="@string/email"
+                            android:inputType="textEmailSubject"
+                            android:padding="@dimen/_8sdp"
+                            android:paddingHorizontal="@dimen/_8sdp"
+                            android:text="@{model.email}"
+                            android:textColor="@color/text_color"
+                            android:textColorHint="@color/hint_color" />
+
+                        <EditText
+                            android:id="@+id/edt_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="?actionBarSize"
+                            android:background="@drawable/custom_stork"
+                            android:hint="@string/address"
+                            android:inputType="text"
+                            android:padding="@dimen/_8sdp"
+                            android:paddingHorizontal="@dimen/_8sdp"
+                            android:text="@{model.address}"
+                            android:textColor="@color/text_color"
+                            android:textColorHint="@color/hint_color" />
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/textView45"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/_8sdp"
+                        android:gravity="center"
+                        android:text="@{errorStore}"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_edit_store"
+                        android:layout_width="match_parent"
+                        android:layout_height="?actionBarSize"
+                        android:layout_marginHorizontal="@dimen/_8sdp"
+                        android:backgroundTint="@color/top_and_bottom_color"
+                        android:text="@string/edit_store"
+                        android:textColor="@color/text_btn_color" />
+                </LinearLayout>
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txt_visible_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:drawableStart="@drawable/ic_baseline_lock_24"
+                    android:drawableTint="@color/hint_color"
+                    android:gravity="center"
+                    android:text="@string/change_password"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <LinearLayout
+                    android:id="@+id/linearLayout23"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:orientation="vertical"
+                    android:visibility='@{visiblePassword?View.VISIBLE:View.GONE,default = gone}'
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_12sdp"
+                        android:layout_marginVertical="@dimen/_14sdp"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/card_toolbar"
+                        app:layout_constraintVertical_bias="0.23000002">
+
+                        <EditText
+                            android:id="@+id/old_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="?actionBarSize"
+                            android:background="@drawable/custom_stork"
+                            android:hint="@string/old_password"
+                            android:paddingHorizontal="@dimen/_6sdp"
+                            android:textColor="@color/text_color"
+                            android:textColorHint="@color/hint_color" />
+
+                        <EditText
+                            android:id="@+id/new_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="?actionBarSize"
+                            android:layout_marginVertical="@dimen/_8sdp"
+                            android:background="@drawable/custom_stork"
+                            android:hint="@string/new_password"
+                            android:paddingHorizontal="@dimen/_6sdp"
+                            android:textColor="@color/text_color"
+                            android:textColorHint="@color/hint_color" />
+
+                        <EditText
+                            android:id="@+id/confirm_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="?actionBarSize"
+                            android:background="@drawable/custom_stork"
+                            android:hint="@string/config_password"
+                            android:paddingHorizontal="@dimen/_6sdp"
+                            android:textColor="@color/text_color"
+                            android:textColorHint="@color/hint_color" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_marginVertical="@dimen/_8sdp"
+                            android:text="@{errorChangePassword}"
+                            android:textColor="@color/design_default_color_error"
+                            android:textSize="@dimen/_13ssp"
+                            android:textStyle="italic" />
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_change_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="?actionBarSize"
+                            android:layout_marginTop="@dimen/_12sdp"
+                            android:text="@string/change_password"
+                            android:textColor="@color/text_btn_color"
+                            app:backgroundTint="@color/top_and_bottom_color"
+                            app:cornerRadius="@dimen/_6sdp"
+                            app:strokeColor="@android:color/white"
+                            app:strokeWidth="@dimen/_1sdp" />
+
+                        <TextView
+                            android:id="@+id/txt_forget_password"
+                            android:layout_width="match_parent"
+                            android:layout_marginTop="@dimen/_12sdp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/forget_your_password"
+                            android:textColor="@android:color/holo_red_light"
+                            android:textSize="@dimen/_11ssp"
+                            android:textStyle="italic" />
+                    </LinearLayout>
+
+                </LinearLayout>
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txt_visible_seurity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:drawableStart="@drawable/ic_baseline_lock_24"
+                    android:drawableTint="@color/hint_color"
+                    android:gravity="center"
+                    android:text="@string/security"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{visibleSecurity?View.VISIBLE:View.GONE,default = gone}"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="?actionBarSize"
+                        android:layout_marginVertical="@dimen/_8sdp"
+                        android:maxLength="4"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:passwordToggleEnabled="true"
+                        app:passwordToggleTint="@color/top_and_bottom_color">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_security"
+                            android:layout_width="match_parent"
+                            android:layout_marginHorizontal="@dimen/_8sdp"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/custom_stork"
+                            android:hint="@string/security"
+                            android:inputType="numberPassword"
+                            android:textColor="@color/text_color"
+                            android:maxEms="4"
+                            android:gravity="center"
+                            android:maxLength="4"
+                            android:maxLines="1"
+                            android:minEms="4"
+                            android:minLines="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:id="@+id/box_dont_show"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_color"
+                            android:text="@string/dont_show" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@{errorSecurity}"
+                            android:textColor="@color/design_default_color_error"
+                            android:textSize="@dimen/_13ssp"
+                            android:textStyle="italic" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_security"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="?actionBarSize"
+                            android:layout_margin="@dimen/_12sdp"
+                            android:backgroundTint="@color/top_and_bottom_color"
+                            android:text="@string/edit_security_number"
+                            android:textColor="@color/text_btn_color" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

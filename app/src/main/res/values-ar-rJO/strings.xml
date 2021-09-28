@@ -130,4 +130,7 @@
     <string name="dont_show">لا تظهر مرة أخرى</string>
     <string name="dont_have_number_security">ليس لديك رقم أمان</string>
     <string name="wrong_security_number">رمز الحماية خطأ</string>
+    <string name="edit_security_number">تعديل رقم الأمان</string>
+    <string name="cancel" translatable="false">إلغاء</string>
+    <string name="ok" translatable="false">حسنا</string>
 </resources>
