@@ -1,12 +1,11 @@
 package soft.mahmod.yourreceipt.view_fragment.details;
 
-import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,18 +13,21 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+
 import soft.mahmod.yourreceipt.R;
-import soft.mahmod.yourreceipt.adapter.ARPayment;
+import soft.mahmod.yourreceipt.adapter.firebase.ARFirebaseAdapterPayment;
 import soft.mahmod.yourreceipt.databinding.FragmentPaymentBinding;
-import soft.mahmod.yourreceipt.databinding.LayoutSecurityBinding;
 import soft.mahmod.yourreceipt.listeners.ListenerPayment;
-import soft.mahmod.yourreceipt.listeners.ListenerSecurityDialog;
-import soft.mahmod.yourreceipt.model.Receipt;
-import soft.mahmod.yourreceipt.model.Store;
 import soft.mahmod.yourreceipt.model.billing.Payment;
-import soft.mahmod.yourreceipt.statics.AlertDialogConfirm;
-import soft.mahmod.yourreceipt.view_model.database.VMPayment;
-import soft.mahmod.yourreceipt.view_model.database.VMStore;
+import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.view_model.send.data.VMSendReceipt;
 
 /**
@@ -33,26 +35,19 @@ import soft.mahmod.yourreceipt.view_model.send.data.VMSendReceipt;
  * Use the {@link FragmentPayment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentPayment extends Fragment implements ListenerPayment {
+public class FragmentPayment extends Fragment implements ListenerPayment, DatabaseUrl, OnFailureListener {
     private static final String TAG = "FragmentPayment";
     private FragmentPaymentBinding binding;
     private VMSendReceipt vmSendReceipt;
-    private ARPayment adapter;
-    private VMPayment vmPayment;
-    private Receipt receipt;
+    private ARFirebaseAdapterPayment arFirebaseAdapterPayment;
+    private FirebaseRecyclerOptions<Payment> options;
 
-    @Override
-    public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        vmPayment = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
-                .get(VMPayment.class);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_payment, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_payment, container, false);
 
         return binding.getRoot();
     }
@@ -62,12 +57,24 @@ public class FragmentPayment extends Fragment implements ListenerPayment {
         super.onViewCreated(view, savedInstanceState);
         vmSendReceipt = new ViewModelProvider(requireActivity()).get(VMSendReceipt.class);
         binding.recPayment.setHasFixedSize(true);
-        vmSendReceipt.getModel().observe(getViewLifecycleOwner(),receipt -> {
+
+
+        vmSendReceipt.getModel().observe(getViewLifecycleOwner(), receipt -> {
             if (receipt != null && receipt.getPayment() != null && receipt.getPayment().getListPayment() != null) {
-                this.receipt = receipt;
-                binding.setEmptyList(receipt.getPayment().getListPayment().isEmpty());
-                adapter = new ARPayment(receipt.getPayment().getListPayment(), this);
-                binding.recPayment.setAdapter(adapter);
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                String uid = FirebaseAuth.getInstance().getUid();
+                Query query = reference.child(RECEIPT)
+                        .child(uid)
+                        .child(receipt.getReceiptId())
+                        .child(PAYMENT)
+                        .child(LIST_PAYMENT);
+                options = new FirebaseRecyclerOptions.Builder<Payment>()
+                        .setQuery(query, Payment.class).build();
+                arFirebaseAdapterPayment = new ARFirebaseAdapterPayment(options, this);
+
+                binding.recPayment.setAdapter(arFirebaseAdapterPayment);
+                arFirebaseAdapterPayment.startListening();
+
             }
         });
 
@@ -85,47 +92,38 @@ public class FragmentPayment extends Fragment implements ListenerPayment {
 
     @Override
     public void onDelete(int position) {
-        VMStore vmStore = new ViewModelProvider(getViewModelStore(),new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
-                .get(VMStore.class);
-        vmStore.getStore().observe(getViewLifecycleOwner(),store -> {
-            if (store.getError()){
-                Log.d(TAG, "onDelete: "+);
-            }else {
-                createDialogSecurity(store);
-            }
-        });
+        arFirebaseAdapterPayment
+                .getRef(position)
+                .removeValue();
 
     }
 
-    private void createDialogSecurity(Store store) {
-        AlertDialogConfirm.securityDialog(getLayoutInflater(), requireContext(), new ListenerSecurityDialog() {
-            @Override
-            public void onOk(Dialog dialog, LayoutSecurityBinding binding) {
-
-            }
-
-            @Override
-            public void dontShowAgain(CompoundButton buttonView, boolean show) {
-                Log.d(TAG, "dontShowAgain: ");
-            }
-        });
-    }
 
     @Override
-    public void onPaid(boolean isChecked, int position) {
-        vmPayment.putPaid(receipt.getReceiptId(),position,isChecked)
-                .observe(getViewLifecycleOwner(),payment -> {
-                    Log.d(TAG, "paid: "+payment.toString());
-                });
-    }
-
-    @Override
-    public void onChangeDate(String date, int position) {
+    public void onPaid(CompoundButton buttonView, boolean isChecked, int position) {
+        arFirebaseAdapterPayment.getRef(position)
+                .child(PAYMENT)
+                .child(LIST_PAYMENT)
+                .child(String.valueOf(position))
+                .child(PAID)
+                .setValue(isChecked)
+                .addOnFailureListener(this);
 
     }
 
     @Override
-    public void onChangePrice(double price, int position) {
+    public void onChangeDate(int position) {
 
+    }
+
+    @Override
+    public void onChangePrice(int position) {
+
+    }
+
+
+    @Override
+    public void onFailure(@NonNull Exception e) {
+        Toast.makeText(requireContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
     }
 }

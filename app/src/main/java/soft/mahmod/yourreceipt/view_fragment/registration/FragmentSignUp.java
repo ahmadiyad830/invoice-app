@@ -1,10 +1,10 @@
 package soft.mahmod.yourreceipt.view_fragment.registration;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +21,7 @@ import soft.mahmod.yourreceipt.databinding.FragmentSignUpBinding;
 import soft.mahmod.yourreceipt.model.User;
 import soft.mahmod.yourreceipt.statics.ApiURLS;
 import soft.mahmod.yourreceipt.view_model.auth.VMSignUp;
+import soft.mahmod.yourreceipt.view_model.condition.VMSignConditions;
 import soft.mahmod.yourreceipt.view_model.database.VMUser;
 
 /**
@@ -34,7 +35,7 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
     private VMUser vmUser;
     private VMSignUp vmSignUp;
     private NavController controller;
-
+    private VMSignConditions conditions;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -44,6 +45,9 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
 
         vmSignUp = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
                 (requireActivity().getApplication())).get(VMSignUp.class);
+
+        conditions = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory
+                (requireActivity().getApplication())).get(VMSignConditions.class);
     }
 
     @Override
@@ -61,21 +65,22 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
         controller = Navigation.findNavController(view);
         ActivityIntent intent = ActivityIntent.getInstance(requireContext());
         binding.txtGoSignin.setOnClickListener(v -> {
-            controller.navigate(FragmentSignUpDirections.actionFragmentSignUpToFragmentSignIn());
+            requireActivity().onBackPressed();
         });
         binding.btnSignup.setOnClickListener(v -> {
             String email = binding.email.getText().toString().trim();
             String pass1 = binding.password.getText().toString().trim();
             String pass2 = binding.passwordConfig.getText().toString().trim();
-            ConditionsSignUp conditionsSignUp = new ConditionsSignUp(email, pass1, pass2);
-            if (conditionsSignUp.getError()) {
-                binding.setError(conditionsSignUp.getMessage());
-            } else if (vmSignUp.isConnection()) {
-                signUp(email, pass1);
-            }else {
-                binding.setError(getResources().getString(R.string.network_conecction));
-            }
+            conditions.signUpCondition(email, pass1, pass2).observe(getViewLifecycleOwner(), user -> {
+                if (user != null) {
+                    if (user.getError()) {
+                        binding.setError(user.getMessage());
+                    } else {
+                        signUp(email, pass1);
+                    }
+                }
 
+            });
         });
     }
 
@@ -103,9 +108,10 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
             if (cash.getError()) {
                 binding.setError(cash.getMessage());
             } else {
-                Toast.makeText(requireContext(), getResources().getString(R.string.we_send_email), Toast.LENGTH_SHORT).show();
-                requireActivity().onBackPressed();
-//                controller.navigate(FragmentSignUpDirections.actionFragmentSignUpToFragmentActive());
+                FragmentSignUpDirections.ActionFragmentSignUpToFragmentInfo passEmail =
+                        FragmentSignUpDirections.actionFragmentSignUpToFragmentInfo();
+                passEmail.setArgsEmail(email);
+                controller.navigate(passEmail);
             }
             binding.setProgress(false);
         });

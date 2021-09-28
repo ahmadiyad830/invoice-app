@@ -2,7 +2,6 @@ package soft.mahmod.yourreceipt.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -76,7 +75,7 @@ public class ARPayment extends RecyclerView.Adapter<ARPayment.ViewHolder> {
                 listener.onDelete(getBindingAdapterPosition());
             });
             binding.switchPaid.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                listener.onPaid(isChecked,position);
+                listener.onPaid(buttonView, isChecked,position);
             });
         }
     }

@@ -20,7 +20,7 @@ public class VMReceipt extends AndroidViewModel {
         repo = new RepoReceipt(application);
     }
 
-    public LiveData<Cash> postReceipt(Receipt model) {
+    public LiveData<Receipt> postReceipt(Receipt model) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             return repo.postReceipt(model);
         } else return repo.postClientTLow(model);
@@ -30,7 +30,7 @@ public class VMReceipt extends AndroidViewModel {
         return repo.getReceipt(pushKey);
     }
 
-    public LiveData<Cash> editValue(double editValue, String pushKey, String keyEdit) {
+    public LiveData<Receipt> editValue(double editValue, String pushKey, String keyEdit) {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ? repo.putEditValue(editValue, pushKey, keyEdit)
                 : repo.putEditValueTLow(editValue, pushKey, keyEdit);
     }

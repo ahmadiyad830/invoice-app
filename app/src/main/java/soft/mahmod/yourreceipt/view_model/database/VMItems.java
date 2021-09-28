@@ -22,21 +22,21 @@ public class VMItems extends AndroidViewModel {
     }
 
 
-    public LiveData<Cash> postItem(Items model) {
+    public LiveData<Items> postItem(Items model) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
             return repo.postItem(model);
         else return repo.postItemTLow(model);
     }
-    public LiveData<Cash> putItem(Items model) {
+    public LiveData<Items> putItem(Items model) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
             return repo.putItem(model);
         else return repo.putItemTLow(model);
     }
-    public LiveData<Cash> updatesQuantity(List<String> ids,List<Double> itemQuantity,List<Double> quantity){
+    public LiveData<Items> updatesQuantity(List<String> ids,List<Double> itemQuantity,List<Double> quantity){
         return repo.updatsQuantity(ids, itemQuantity,quantity);
     }
 
-    public LiveData<Cash> updatesQuantity(String id,double quantity){
+    public LiveData<Items> updatesQuantity(String id,double quantity){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             return repo.putQuantity(id, quantity);
         }else {

@@ -148,6 +148,17 @@ Or add all items</string>
     <string name="network_conecction">Check if network connect</string>
     <!--handle message-->
     <string name="success">Success</string>
+    <string name="email_long">Email is to long</string>
+    <string name="email_short">Email is to short</string>
+    <string name="email_epty">Empty email</string>
+    <string name="email_unacceptable">Unacceptable email</string>
+
+    <string name="password_long">Password is to long</string>
+    <string name="password_short">Password is to short</string>
+    <string name="empty_password">Empty password</string>
+
+
+
     <string name="try_again">Try Again</string>
     <string name="not_exists">Not exists</string>
     <string name="active_your_account">Please active your account</string>
@@ -160,4 +171,5 @@ Or add all items</string>
     <string name="security">Security number</string>
     <string name="dont_have_number_security">You don\'t have Security number</string>
     <string name="dont_show">Don\'t show again</string>
+    <string name="wrong_security_number">Wrong security code</string>
 </resources>

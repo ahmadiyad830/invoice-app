@@ -4,6 +4,9 @@
 
     <data>
 
+        <variable
+            name="error"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,6 +17,10 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_3sdp"
+            app:cardUseCompatPadding="true"
+            app:cardElevation="@dimen/_3sdp"
+            android:backgroundTint="@color/background_page"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -42,31 +49,69 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edt_security"
                         android:layout_width="match_parent"
+                        android:layout_marginHorizontal="@dimen/_8sdp"
                         android:layout_height="match_parent"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/security"
                         android:inputType="numberPassword"
+                        android:textColor="@color/text_color"
                         android:maxEms="4"
+                        android:gravity="center"
                         android:maxLength="4"
                         android:maxLines="1"
                         android:minEms="4"
-                        android:minLines="1"/>
+                        android:minLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.checkbox.MaterialCheckBox
-                    android:id="@+id/box_dont_show"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/dont_show" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_down"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="?actionBarSize"
-                    android:layout_margin="@dimen/_12sdp"
-                    android:backgroundTint="@color/top_and_bottom_color"
-                    android:text="@string/ok"
-                    android:textColor="@color/text_btn_color" />
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/box_dont_show"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_color"
+                        android:text="@string/dont_show" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@{error}"
+                        android:textColor="@color/design_default_color_error"
+                        android:textSize="@dimen/_13ssp"
+                        android:textStyle="italic" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_down"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="?actionBarSize"
+                        android:layout_margin="@dimen/_12sdp"
+                        android:backgroundTint="@color/top_and_bottom_color"
+                        android:text="@string/ok"
+                        android:textColor="@color/text_btn_color" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_cancle"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="?actionBarSize"
+                        android:layout_margin="@dimen/_12sdp"
+                        android:backgroundTint="@color/top_and_bottom_color"
+                        android:text="@string/cancel"
+                        android:textColor="@color/text_btn_color" />
+
+                </LinearLayout>
 
 
             </LinearLayout>

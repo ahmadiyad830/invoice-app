@@ -7,6 +7,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -15,54 +18,28 @@ import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.model.Cash;
 import soft.mahmod.yourreceipt.model.Store;
 
-public class RepoStore extends Repo<Store> {
+public class RepoStore extends Repo<Store> implements OnCompleteListener<Void>, OnFailureListener {
+    private Store store = new Store();
+
     public RepoStore(Application application) {
         super(application);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.P)
-    public LiveData<Cash> postStore(Store model) {
+    public LiveData<Store> postStore(Store model) {
         getReference().child(STORE).child(getfUser().getUid())
                 .setValue(model)
-                .addOnCompleteListener(getApplication().getMainExecutor(), task -> {
-                    if (task.isSuccessful()) {
-                        getCash().setError(false);
-                        getCash().setMessage("success");
-                        getCash().setCode(SUCCESS);
-                        getErrorDate().setValue(getCash());
-                    }
-
-                })
-                .addOnFailureListener(getApplication().getMainExecutor(), e -> {
-                    postError(e.getLocalizedMessage());
-                    getCash().setError(true);
-                    getCash().setMessage(e.getMessage());
-                    getCash().setCode(TRY_AGAIN);
-                    getErrorDate().setValue(getCash());
-                });
-        return getErrorDate();
+                .addOnCompleteListener(getApplication().getMainExecutor(), this)
+                .addOnFailureListener(getApplication().getMainExecutor(), this);
+        return getData();
     }
 
-    public LiveData<Cash> postStoreTLow(Store model) {
+    public LiveData<Store> postStoreTLow(Store model) {
         getReference().child(STORE).child(getfUser().getUid())
                 .setValue(model)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        getCash().setError(false);
-                        getCash().setMessage("success");
-                        getCash().setCode(SUCCESS);
-                        getErrorDate().setValue(getCash());
-                    }
-
-                })
-                .addOnFailureListener(e -> {
-                    postError(e.getLocalizedMessage());
-                    getCash().setError(true);
-                    getCash().setMessage(e.getMessage());
-                    getCash().setCode(TRY_AGAIN);
-                    getErrorDate().setValue(getCash());
-                });
-        return getErrorDate();
+                .addOnCompleteListener(this)
+                .addOnFailureListener(this);
+        return getData();
     }
 
     public LiveData<Cash> putStore(Store model) {
@@ -118,4 +95,22 @@ public class RepoStore extends Repo<Store> {
         return getData();
     }
 
+    @Override
+    public void onComplete(@NonNull Task<Void> task) {
+        if (task.isSuccessful()) {
+            store.setError(false);
+            store.setMessage("success");
+            store.setCode(SUCCESS);
+            getData().setValue(store);
+        }
+    }
+
+    @Override
+    public void onFailure(@NonNull Exception e) {
+        postError(e.getLocalizedMessage());
+        store.setError(true);
+        store.setMessage(e.getMessage());
+        store.setCode(TRY_AGAIN);
+        getData().setValue(store);
+    }
 }

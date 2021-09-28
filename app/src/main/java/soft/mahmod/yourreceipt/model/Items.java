@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import java.io.Serializable;
 import java.util.List;
 
-public class Items implements Serializable {
+public class Items extends Cash implements Serializable {
     private String name;
     private double price;
     private double discount;

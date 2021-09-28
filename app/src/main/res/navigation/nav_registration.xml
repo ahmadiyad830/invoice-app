@@ -9,35 +9,51 @@
         android:id="@+id/fragmentSignIn"
         tools:layout="@layout/fragment_sign_in"
         android:name="soft.mahmod.yourreceipt.view_fragment.registration.FragmentSignIn"
-        android:label="Sign In" >
+        android:label="Sign In">
         <action
             android:id="@+id/action_fragmentSignIn_to_fragmentSignUp"
             app:destination="@id/fragmentSignUp"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right"/>
-        <action
-            android:id="@+id/action_fragmentSignIn_to_fragmentActive"
-            app:destination="@id/fragmentActive" />
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <argument
+            android:name="args_email"
+            android:defaultValue=""
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/fragmentSignUp"
         android:name="soft.mahmod.yourreceipt.view_fragment.registration.FragmentSignUp"
         android:label="Sign Up"
-        tools:layout="@layout/fragment_sign_up" >
+        tools:layout="@layout/fragment_sign_up">
         <action
-            android:id="@+id/action_fragmentSignUp_to_fragmentSignIn"
-            app:destination="@id/fragmentSignIn"
-            app:enterAnim="@android:anim/slide_out_right"
-            app:exitAnim="@android:anim/slide_in_left"
-            app:popUpTo="@id/fragmentSignIn"
+            android:id="@+id/action_fragmentSignUp_to_fragmentInfo"
+            app:destination="@id/fragmentInfo"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/fragmentSignUp"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_fragmentSignUp_to_fragmentActive"
-            app:destination="@id/fragmentActive" />
     </fragment>
     <fragment
-        android:id="@+id/fragmentActive"
-        tools:layout="@layout/fragment_active"
-        android:name="soft.mahmod.yourreceipt.view_fragment.registration.FragmentActive"
-        android:label="Active Your Account" />
+        android:id="@+id/fragmentInfo"
+        android:name="soft.mahmod.yourreceipt.view_fragment.registration.FragmentInfo"
+        android:label="FragmentInfo"
+        tools:layout="@layout/fragment_info">
+        <action
+            android:id="@+id/action_fragmentInfo_to_fragmentSignIn"
+            app:destination="@id/fragmentSignIn"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+        <argument
+            android:name="args_email"
+            android:defaultValue=""
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>

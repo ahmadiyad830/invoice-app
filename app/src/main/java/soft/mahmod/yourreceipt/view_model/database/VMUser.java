@@ -20,7 +20,7 @@ public class VMUser extends AndroidViewModel {
     }
 
 
-    public LiveData<Cash> postUser(User model) {
+    public LiveData<User> postUser(User model) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             return repoDbUser.postUser(model);
         } else {

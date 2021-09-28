@@ -26,7 +26,6 @@ import soft.mahmod.yourreceipt.utils.DialogConfirm;
 import soft.mahmod.yourreceipt.utils.DialogListener;
 import soft.mahmod.yourreceipt.utils.IntentActivity;
 import soft.mahmod.yourreceipt.view_model.auth.SettingAuth;
-import soft.mahmod.yourreceipt.view_model.database.VMReceipt;
 import soft.mahmod.yourreceipt.view_model.database.VMUser;
 
 public class MainActivity extends AppCompatActivity implements DatabaseUrl {
@@ -35,9 +34,6 @@ public class MainActivity extends AppCompatActivity implements DatabaseUrl {
     private VMUser vmUser;
     private SettingAuth vmSettingAuth;
     private ActivityIntent intent;
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

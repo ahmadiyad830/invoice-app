@@ -90,41 +90,32 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <androidx.cardview.widget.CardView
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_margin="@dimen/_8sdp"
-                    app:cardCornerRadius="@dimen/_6sdp"
-                    app:cardElevation="@dimen/_3sdp"
-
-                    app:cardUseCompatPadding="true"
+                    android:layout_height="?actionBarSize"
+                    android:layout_marginVertical="@dimen/_8sdp"
+                    android:maxLength="4"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cardView">
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/top_and_bottom_color">
 
-                    <LinearLayout
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/password"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:padding="@dimen/_3sdp">
-
-                        <EditText
-                            android:id="@+id/password"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="@color/text_btn_color"
-                            android:background="@drawable/custom_stork"
-                            android:textColorHint="@color/hint_color"
-                            android:padding="@dimen/_12sdp"
-                            android:hint="@string/password"
-                            android:inputType="textPassword"
-                            android:singleLine="true"
-                            android:textColor="@color/text_color"
-                            android:textSize="@dimen/_14ssp" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                        android:layout_marginHorizontal="@dimen/_8sdp"
+                        android:background="@drawable/custom_stork"
+                        android:hint="@string/password"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        android:minLines="1"
+                        android:textColor="@color/text_color" />
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
             <com.google.android.material.progressindicator.CircularProgressIndicator

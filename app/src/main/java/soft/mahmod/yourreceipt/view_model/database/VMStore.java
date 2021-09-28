@@ -22,7 +22,7 @@ public class VMStore extends AndroidViewModel {
     }
 
 
-    public LiveData<Cash> postStore(Store model) {
+    public LiveData<Store> postStore(Store model) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             return repoStore.postStore(model);
         } else return repoStore.postStoreTLow(model);

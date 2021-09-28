@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -56,7 +57,7 @@ public class ARReceipt extends FirebaseRecyclerAdapter<Receipt,ARReceipt.ViewHol
         holder.bind(model);
         boolean isExpandedPayment = model.isExpandedPayment();
         boolean isExpandedDeptReceipt = model.isExpandedDeptReceipt();
-        holder.binding.containerPayment.setVisibility(isExpandedPayment? View.VISIBLE:View.GONE);
+//        holder.binding.containerPayment.setVisibility(isExpandedPayment? View.VISIBLE:View.GONE);
         holder.binding.containerDateDept.setVisibility(isExpandedDeptReceipt? View.VISIBLE:View.GONE);
     }
 
@@ -128,7 +129,7 @@ public class ARReceipt extends FirebaseRecyclerAdapter<Receipt,ARReceipt.ViewHol
         }
 
         @Override
-        public void onPaid(boolean isChecked, int position) {
+        public void onPaid(CompoundButton buttonView, boolean isChecked, int position) {
             getRef(getAbsoluteAdapterPosition())
                     .child(PAYMENT)
                     .child(LIST_PAYMENT)
@@ -138,12 +139,12 @@ public class ARReceipt extends FirebaseRecyclerAdapter<Receipt,ARReceipt.ViewHol
         }
 
         @Override
-        public void onChangeDate(String date, int position) {
+        public void onChangeDate(int position) {
 
         }
 
         @Override
-        public void onChangePrice(double price, int position) {
+        public void onChangePrice(int position) {
 
         }
     }

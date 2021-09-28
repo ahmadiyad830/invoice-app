@@ -92,6 +92,10 @@ public class FragmentSignIn extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         intent = ActivityIntent.getInstance(requireContext());
         controller = Navigation.findNavController(view);
+        FragmentSignInArgs argsEmail =FragmentSignInArgs.fromBundle(getArguments());
+        if (argsEmail!=null){
+            binding.email.setText(argsEmail.getArgsEmail());
+        }
         binding.txtGoSignup.setOnClickListener(v -> {
             controller.navigate(FragmentSignInDirections.actionFragmentSignInToFragmentSignUp());
         });

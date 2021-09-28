@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
+import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -263,17 +264,17 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
     }
 
     @Override
-    public void onPaid(boolean isChecked, int position) {
+    public void onPaid(CompoundButton buttonView, boolean isChecked, int position) {
         listPayment.get(position).setPaid(isChecked);
     }
 
     @Override
-    public void onChangeDate(String date, int position) {
+    public void onChangeDate(int position) {
 
     }
 
     @Override
-    public void onChangePrice(double price, int position) {
+    public void onChangePrice(int position) {
 
     }
 }

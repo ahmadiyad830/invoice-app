@@ -1,5 +1,7 @@
 package soft.mahmod.yourreceipt.listeners;
 
+import android.widget.CompoundButton;
+
 import soft.mahmod.yourreceipt.model.billing.Payment;
 
 public interface ListenerPayment extends MainListener<Payment> {
@@ -11,9 +13,9 @@ public interface ListenerPayment extends MainListener<Payment> {
 
     void onDelete(int position);
 
-    void onPaid(boolean isChecked , int position);
+    void onPaid(CompoundButton buttonView, boolean isChecked, int position);
 
-    void onChangeDate(String date,int position);
+    void onChangeDate(int position);
 
-    void onChangePrice(double price,int position);
+    void onChangePrice(int position);
 }

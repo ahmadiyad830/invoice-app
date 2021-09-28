@@ -7,6 +7,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -14,112 +17,55 @@ import com.google.firebase.database.ValueEventListener;
 import soft.mahmod.yourreceipt.model.Cash;
 import soft.mahmod.yourreceipt.model.Client;
 
-public class RepoClient extends Repo<Client> {
-
+public class RepoClient extends Repo<Client> implements OnCompleteListener<Void>, OnFailureListener {
+    private Client client = new Client();
 
     public RepoClient(Application application) {
         super(application);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.P)
-    public LiveData<Cash> postClient(Client model) {
+    public LiveData<Client> postClient(Client model) {
         model.setClientId(getReference().push().getKey());
         getReference().child(CLIENT).child(getfUser().getUid()).child(model.getClientId())
                 .setValue(model)
-                .addOnCompleteListener(getApplication().getMainExecutor(), task -> {
-                    if (task.isSuccessful()) {
-                        getCash().setError(false);
-                        getCash().setMessage("success");
-                        getCash().setCode(SUCCESS);
-                        getErrorDate().setValue(getCash());
-                    }
-
-                })
-                .addOnFailureListener(getApplication().getMainExecutor(), e -> {
-                    postError(e.getLocalizedMessage());
-                    getCash().setError(true);
-                    getCash().setMessage(e.getMessage());
-                    getCash().setCode(TRY_AGAIN);
-                    getErrorDate().setValue(getCash());
-                });
-        return getErrorDate();
+                .addOnCompleteListener(getApplication().getMainExecutor(), this)
+                .addOnFailureListener(getApplication().getMainExecutor(), this);
+        return getData();
     }
 
-    public LiveData<Cash> postClientTLow(Client model) {
+    public LiveData<Client> postClientTLow(Client model) {
         model.setClientId(getReference().push().getKey());
         getReference().child(CLIENT).child(getfUser().getUid()).child(model.getClientId())
                 .setValue(model)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        getCash().setError(false);
-                        getCash().setMessage("success");
-                        getCash().setCode(SUCCESS);
-                        getErrorDate().setValue(getCash());
-                    }
-
-                })
-                .addOnFailureListener(e -> {
-                    postError(e.getLocalizedMessage());
-                    getCash().setError(true);
-                    getCash().setMessage(e.getMessage());
-                    getCash().setCode(TRY_AGAIN);
-                    getErrorDate().setValue(getCash());
-                });
-        return getErrorDate();
+                .addOnCompleteListener(this)
+                .addOnFailureListener(this);
+        return getData();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.P)
-    public LiveData<Cash> putClient(Client model) {
+    public LiveData<Client> putClient(Client model) {
         getReference().child(CLIENT).child(getfUser().getUid()).child(model.getClientId())
                 .setValue(model)
-                .addOnCompleteListener(getApplication().getMainExecutor(), task -> {
-                    if (task.isSuccessful()) {
-                        getCash().setError(false);
-                        getCash().setMessage("success");
-                        getCash().setCode(SUCCESS);
-                        getErrorDate().setValue(getCash());
-                    }
-
-                })
-                .addOnFailureListener(getApplication().getMainExecutor(), e -> {
-                    postError(e.getLocalizedMessage());
-                    getCash().setError(true);
-                    getCash().setMessage(e.getMessage());
-                    getCash().setCode(TRY_AGAIN);
-                    getErrorDate().setValue(getCash());
-                });
-        return getErrorDate();
+                .addOnCompleteListener(getApplication().getMainExecutor(),this)
+                .addOnFailureListener(getApplication().getMainExecutor(),this);
+        return getData();
     }
 
-    public LiveData<Cash> putClientTLow(Client model) {
+    public LiveData<Client> putClientTLow(Client model) {
         getReference().child(CLIENT).child(getfUser().getUid()).child(model.getClientId())
                 .setValue(model)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        getCash().setError(false);
-                        getCash().setMessage("success");
-                        getCash().setCode(SUCCESS);
-                        getErrorDate().setValue(getCash());
-                    }
-
-                })
-                .addOnFailureListener(e -> {
-                    postError(e.getLocalizedMessage());
-                    getCash().setError(true);
-                    getCash().setMessage(e.getMessage());
-                    getCash().setCode(TRY_AGAIN);
-                    getErrorDate().setValue(getCash());
-                });
-        return getErrorDate();
+                .addOnCompleteListener(this)
+                .addOnFailureListener(this);
+        return getData();
     }
 
-    public LiveData<Cash> deleteClient(Client model) {
-
-        return getErrorDate();
+    public LiveData<Client> deleteClient(Client model) {
+        return getData();
     }
 
-    public LiveData<Cash> deleteClientTLow(Client model) {
-        return getErrorDate();
+    public LiveData<Client> deleteClientTLow(Client model) {
+        return getData();
     }
 
     public LiveData<Client> getClient(String pushKey) {
@@ -158,5 +104,24 @@ public class RepoClient extends Repo<Client> {
 
     public void clean() {
         getReference().removeEventListener(getClient);
+    }
+
+    @Override
+    public void onComplete(@NonNull Task<Void> task) {
+        if (task.isSuccessful()) {
+            client.setError(false);
+            client.setMessage("success");
+            client.setCode(SUCCESS);
+            getData().setValue(client);
+        }
+    }
+
+    @Override
+    public void onFailure(@NonNull Exception e) {
+        postError(e.getLocalizedMessage());
+        client.setError(true);
+        client.setMessage(e.getMessage());
+        client.setCode(TRY_AGAIN);
+        getData().setValue(client);
     }
 }

@@ -19,14 +19,14 @@ public class VMClient extends AndroidViewModel {
         repo = new RepoClient(application);
     }
 
-    public LiveData<Cash> postClient(Client model){
+    public LiveData<Client> postClient(Client model){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             return repo.postClient(model);
         }else {
             return repo.postClientTLow(model);
         }
     }
-    public LiveData<Cash> putClient(Client model){
+    public LiveData<Client> putClient(Client model){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             return repo.putClient(model);
         }else {

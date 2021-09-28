@@ -70,7 +70,7 @@
     <string name="new_password">كلمة السر الجديدة</string>
     <string name="client_chice">اختيار العميل</string>
     <string name="delete">حذف</string>
-    <string name="skip">اختصار</string>
+    <string name="skip">تخطي</string>
     <string name="create_item">انشاء عنصر جديد</string>
     <string name="create_client">انشاء عميل جديد</string>
     <string name="active_your_account">يرجى تأكيد حسابك</string>
@@ -129,4 +129,5 @@
     <string name="security">رقم الحماية</string>
     <string name="dont_show">لا تظهر مرة أخرى</string>
     <string name="dont_have_number_security">ليس لديك رقم أمان</string>
+    <string name="wrong_security_number">رمز الحماية خطأ</string>
 </resources>

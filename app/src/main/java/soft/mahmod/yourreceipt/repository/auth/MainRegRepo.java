@@ -26,6 +26,7 @@ public class MainRegRepo<T extends Cash> implements DatabaseUrl, StateCode, Stat
         data = new MutableLiveData<>();
         this.fAuth = FirebaseAuth.getInstance();
         this.fUser = fAuth.getCurrentUser();
+        fAuth.useAppLanguage();
         if (fUser != null)
             this.uid = fUser.getUid();
     }

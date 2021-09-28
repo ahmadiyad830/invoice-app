@@ -8,6 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -15,16 +18,15 @@ import com.google.firebase.database.ValueEventListener;
 import soft.mahmod.yourreceipt.model.Cash;
 import soft.mahmod.yourreceipt.model.billing.Payment;
 
-public class RepoPayment extends Repo<Payment>{
+public class RepoPayment extends Repo<Payment> implements OnCompleteListener<Void>, OnFailureListener {
     private static final String TAG = "RepoPayment";
-
+    private Payment payment = new Payment();
     public RepoPayment(Application application) {
         super(application);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.P)
     public LiveData<Cash> postPayment(Payment model) {
-
         return getErrorDate();
     }
 
@@ -34,7 +36,6 @@ public class RepoPayment extends Repo<Payment>{
 
     @RequiresApi(api = Build.VERSION_CODES.P)
     public LiveData<Payment> putPaid(String receiptId, int index, boolean isPaid) {
-        Payment payment = new Payment();
         getReference()
                 .child(RECEIPT)
                 .child(getfUser().getUid())
@@ -44,25 +45,12 @@ public class RepoPayment extends Repo<Payment>{
                 .child(String.valueOf(index))
                 .child(PAID)
                 .setValue(isPaid)
-                .addOnCompleteListener(getApplication().getMainExecutor(), task -> {
-                    if (task.isSuccessful()) {
-                        payment.setError(false);
-                        payment.setCode(SUCCESS);
-                        payment.setMessage("success");
-                        getData().setValue(payment);
-                    }
-                })
-                .addOnFailureListener(getApplication().getMainExecutor(), e -> {
-                    postError(e.getLocalizedMessage());
-                    payment.setError(true);
-                    payment.setCode(TRY_AGAIN);
-                    payment.setMessage(e.getLocalizedMessage());
-                });
+                .addOnCompleteListener(getApplication().getMainExecutor(), this)
+                .addOnFailureListener(getApplication().getMainExecutor(),this);
         return getData();
     }
 
     public LiveData<Payment> putPaidTLow(String receiptId, int index, boolean isPaid) {
-        Payment payment = new Payment();
         getReference()
                 .child(RECEIPT)
                 .child(getfUser().getUid())
@@ -72,28 +60,37 @@ public class RepoPayment extends Repo<Payment>{
                 .child(String.valueOf(index))
                 .child(PAID)
                 .setValue(isPaid)
-                .addOnCompleteListener( task -> {
-                    if (task.isSuccessful()) {
-                        payment.setError(false);
-                        payment.setCode(SUCCESS);
-                        payment.setMessage("success");
-                        getData().setValue(payment);
-                    }
-                })
-                .addOnFailureListener( e -> {
-                    postError(e.getLocalizedMessage());
-                    payment.setError(true);
-                    payment.setCode(TRY_AGAIN);
-                    payment.setMessage(e.getLocalizedMessage());
-                });
+                .addOnCompleteListener(this)
+                .addOnFailureListener(this);
         return getData();
     }
 
-    public LiveData<Cash> deletePayment(Payment model) {
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    public LiveData<Cash> deletePayment(String receiptId, int index) {
+        getReference()
+                .child(RECEIPT)
+                .child(getfUser().getUid())
+                .child(receiptId)
+                .child(PAYMENT)
+                .child(LIST_PAYMENT)
+                .child(String.valueOf(index))
+                .removeValue()
+                .addOnCompleteListener(getApplication().getMainExecutor(), this)
+                .addOnFailureListener(getApplication().getMainExecutor(), this);
         return getErrorDate();
     }
 
-    public LiveData<Cash> deletePaymentTLow(Payment model) {
+    public LiveData<Cash> deletePaymentTLow(String receiptId, int index) {
+        getReference()
+                .child(RECEIPT)
+                .child(getfUser().getUid())
+                .child(receiptId)
+                .child(PAYMENT)
+                .child(LIST_PAYMENT)
+                .child(String.valueOf(index))
+                .removeValue()
+                .addOnCompleteListener(this)
+                .addOnFailureListener(this);
         return getErrorDate();
     }
 
@@ -118,4 +115,23 @@ public class RepoPayment extends Repo<Payment>{
             postError(error.getMessage());
         }
     };
+
+    @Override
+    public void onComplete(@NonNull Task<Void> task) {
+        if (task.isSuccessful()) {
+            payment.setError(false);
+            payment.setCode(SUCCESS);
+            payment.setMessage("success");
+            getData().setValue(payment);
+        }
+    }
+
+    @Override
+    public void onFailure(@NonNull Exception e) {
+        postError(e.getLocalizedMessage());
+        payment.setError(true);
+        payment.setCode(TRY_AGAIN);
+        payment.setMessage(e.getLocalizedMessage());
+        getData().setValue(payment);
+    }
 }

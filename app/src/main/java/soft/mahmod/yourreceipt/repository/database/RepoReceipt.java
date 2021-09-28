@@ -7,6 +7,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -18,99 +21,50 @@ import soft.mahmod.yourreceipt.model.Cash;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.model.User;
 
-public class RepoReceipt extends Repo<Receipt>{
+public class RepoReceipt extends Repo<Receipt> implements OnCompleteListener<Void>, OnFailureListener {
+    private Receipt receipt = new Receipt();
     public RepoReceipt(Application application) {
         super(application);
     }
 
 
     @RequiresApi(api = Build.VERSION_CODES.P)
-    public synchronized LiveData<Cash> postReceipt(Receipt model) {
+    public synchronized LiveData<Receipt> postReceipt(Receipt model) {
         model.setReceiptId(getReference().push().getKey());
         getReference().child(RECEIPT).child(getfUser().getUid()).child(model.getReceiptId())
                 .setValue(model)
-                .addOnCompleteListener(getApplication().getMainExecutor(), task -> {
-                    if (task.isSuccessful()) {
-                        getCash().setError(false);
-                        getCash().setMessage("success");
-                        getCash().setCode(SUCCESS);
-                        getErrorDate().setValue(getCash());
-                    }
-
-                })
-                .addOnFailureListener(getApplication().getMainExecutor(), e -> {
-                    postError(e.getLocalizedMessage());
-                    getCash().setError(true);
-                    getCash().setMessage(e.getMessage());
-                    getCash().setCode(TRY_AGAIN);
-                    getErrorDate().setValue(getCash());
-                });
-        return getErrorDate();
+                .addOnCompleteListener(getApplication().getMainExecutor(), this)
+                .addOnFailureListener(getApplication().getMainExecutor(),this);
+        return getData();
     }
 
-    public synchronized LiveData<Cash> postClientTLow(Receipt model) {
+    public synchronized LiveData<Receipt> postClientTLow(Receipt model) {
         model.setClientId(getReference().push().getKey());
         getReference().child(RECEIPT).child(getfUser().getUid()).push()
                 .setValue(model)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        getCash().setError(false);
-                        getCash().setMessage("success");
-                        getCash().setCode(SUCCESS);
-                        getErrorDate().setValue(getCash());
-                    }
-
-                })
-                .addOnFailureListener(e -> {
-                    postError(e.getLocalizedMessage());
-                    getCash().setError(true);
-                    getCash().setMessage(e.getMessage());
-                    getCash().setCode(TRY_AGAIN);
-                    getErrorDate().setValue(getCash());
-                });
-        return getErrorDate();
+                .addOnCompleteListener(this)
+                .addOnFailureListener(this);
+        return getData();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.P)
-    public synchronized LiveData<Cash> putEditValue(double editValue, String pushKey, String editKey){
+    public synchronized LiveData<Receipt> putEditValue(double editValue, String pushKey, String editKey){
         Map<String, Object> result = new HashMap<>();
         result.put(editKey,editValue);
         getReference().child(RECEIPT).child(getfUser().getUid()).child(pushKey)
                 .updateChildren(result)
-                .addOnSuccessListener(getApplication().getMainExecutor(),unused -> {
-                    getCash().setMessage("success");
-                    getCash().setCode(200);
-                    getCash().setError(false);
-                    getErrorDate().setValue(getCash());
-                })
-                .addOnFailureListener(getApplication().getMainExecutor(),e -> {
-                    postError(e.getLocalizedMessage());
-                    getCash().setMessage(e.getMessage());
-                    getCash().setCode(404);
-                    getCash().setError(true);
-                    getErrorDate().setValue(getCash());
-                });
-        return getErrorDate();
+                .addOnCompleteListener(getApplication().getMainExecutor(),this)
+                .addOnFailureListener(getApplication().getMainExecutor(),this);
+        return getData();
     }
-    public synchronized LiveData<Cash> putEditValueTLow(double editValue, String pushKey, String editKey){
+    public synchronized LiveData<Receipt> putEditValueTLow(double editValue, String pushKey, String editKey){
         Map<String, Object> result = new HashMap<>();
         result.put(editKey,editValue);
         getReference().child(RECEIPT).child(getfUser().getUid()).child(pushKey)
                 .updateChildren(result)
-                .addOnSuccessListener(unused -> {
-                    getCash().setMessage("success");
-                    getCash().setCode(200);
-                    getCash().setError(false);
-                    getErrorDate().setValue(getCash());
-                })
-                .addOnFailureListener(e -> {
-                    postError(e.getLocalizedMessage());
-                    getCash().setMessage(e.getMessage());
-                    getCash().setCode(404);
-                    getCash().setError(true);
-                    getErrorDate().setValue(getCash());
-                });
-        return getErrorDate();
+                .addOnCompleteListener(this)
+                .addOnFailureListener(this);
+        return getData();
     }
 
 
@@ -156,5 +110,24 @@ public class RepoReceipt extends Repo<Receipt>{
 
     public void clean() {
         getReference().removeEventListener(getReceipt);
+    }
+
+    @Override
+    public void onComplete(@NonNull Task<Void> task) {
+        if (task.isSuccessful()) {
+            receipt.setError(false);
+            receipt.setMessage("success");
+            receipt.setCode(SUCCESS);
+            getData().setValue(receipt);
+        }
+    }
+
+    @Override
+    public void onFailure(@NonNull Exception e) {
+        postError(e.getLocalizedMessage());
+        receipt.setError(true);
+        receipt.setMessage(e.getMessage());
+        receipt.setCode(TRY_AGAIN);
+        getData().setValue(receipt);
     }
 }
