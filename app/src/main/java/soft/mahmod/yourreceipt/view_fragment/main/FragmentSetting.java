@@ -3,7 +3,6 @@ package soft.mahmod.yourreceipt.view_fragment.main;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.NoCopySpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,7 +82,7 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
 
         binding.boxDontShow.setChecked(manager.isShow());
         binding.boxDontShow.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            manager.dontShow(isChecked);
+            manager.setShow(isChecked);
         });
     }
 
@@ -118,6 +117,7 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
 
     private void dialogSecurity() {
         DialogSecurity dialogSecurity = new DialogSecurity(requireContext(),getLayoutInflater());
+        dialogSecurity.inSetting = true;
         if (!dialogSecurity.hasKey()){
             binding.setVisibleLocationSecurity(true);
             binding.setErrorLocationKeySecurity("not have key");
@@ -126,14 +126,13 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
         dialogSecurity.securityDialog(new ListenerSecurityDialog() {
             @Override
             public void onOk(Dialog dialog, boolean notWrong) {
-                binding.setHasKeySecurity(notWrong);
-                binding.setVisibleLocationSecurity(binding.getHasKeySecurity());
+//                manager.setShow(!notWrong);
+//                binding.boxDontShow
                 dialog.dismiss();
             }
 
             @Override
             public void onCancel(Dialog dialog) {
-                binding.setHasKeySecurity(false);
                 dialog.dismiss();
             }
         });

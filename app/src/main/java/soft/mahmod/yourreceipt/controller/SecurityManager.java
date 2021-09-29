@@ -50,7 +50,7 @@ public class SecurityManager {
         editor.apply();
     }
 
-    public void dontShow(boolean isShow) {
+    public void setShow(boolean isShow) {
         editor.putBoolean(DONT_SHOW_BOX, isShow);
         editor.apply();
     }
@@ -77,11 +77,7 @@ public class SecurityManager {
     }
 
     public void clean() {
-        editor.clear().apply();
+        editor.clear().commit();
     }
 
-    // TODO: 9/27/2021  edit
-    // TODO: 9/27/2021  remove
-    // TODO: 9/27/2021  add
-    // TODO: 9/27/2021  forget number
 }

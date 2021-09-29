@@ -418,7 +418,7 @@
                             android:layout_marginHorizontal="@dimen/_8sdp"
                             android:background="@drawable/custom_stork"
                             android:gravity="center"
-                            android:hint="@string/security"
+                            android:hint="@string/add_security"
                             android:inputType="numberPassword"
                             android:maxEms="4"
                             android:maxLength="4"

@@ -25,7 +25,7 @@ public class DialogSecurity implements TextWatcher {
     private String input = "";
     private SecurityManager manager;
     private LayoutSecurityBinding binding;
-
+    public boolean inSetting = false;
     public DialogSecurity(Context context, LayoutInflater inflater) {
         this.context = context;
         this.inflater = inflater;
@@ -39,7 +39,7 @@ public class DialogSecurity implements TextWatcher {
         } else return manager.keySecuirty().length() == 4;
     }
 
-    private boolean showKey() {
+    public boolean showDialog() {
         return manager.isShow();
     }
 
@@ -49,16 +49,6 @@ public class DialogSecurity implements TextWatcher {
 
 
     public void securityDialog(ListenerSecurityDialog listener) {
-        if (!hasKey()) {
-            Log.d(TAG, "securityDialog: not have " + hasKey());
-            // FIXME: 9/29/2021 if not have key
-            return;
-        } else if (!showKey()) {
-            Log.d(TAG, "securityDialog: not show " + showKey());
-            // FIXME: 9/29/2021 if not show
-            return;
-        }
-
         binding = DataBindingUtil.inflate(inflater, R.layout.layout_security
                 , null, false);
         dialog.setContentView(binding.getRoot());
@@ -74,21 +64,13 @@ public class DialogSecurity implements TextWatcher {
             listener.onCancel(dialog);
         });
         binding.edtSecurity.addTextChangedListener(this);
-        if (isInput()) {
-            Log.d(TAG, "securityDialog: " + isInput());
-            binding.boxDontShow.setEnabled(true);
-        } else {
-            Log.d(TAG, "securityDialog: " + isInput());
-            binding.boxDontShow.setEnabled(false);
-        }
-
-//        binding.boxDontShow.setChecked(manager.isShow());
+        binding.boxDontShow.setEnabled(isInput());
+        binding.boxDontShow.setChecked(!manager.isShow());
         binding.boxDontShow.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            Log.d(TAG, "securityDialog: " + isInput() + " " + isChecked);
             if (isInput()) {
-                manager.dontShow(isChecked);
+                manager.setShow(!isChecked);
             } else {
-                binding.setError(getString(R.string.dont_have_number_security));
+                binding.setError(getString(R.string.wrong_security_number));
             }
         });
         try {
@@ -120,7 +102,7 @@ public class DialogSecurity implements TextWatcher {
     public void afterTextChanged(Editable s) {
         input = s.toString();
         binding.boxDontShow.setEnabled(isInput());
-        if (!isInput())
-            binding.boxDontShow.setChecked(false);
+//        if (!isInput())
+//            binding.boxDontShow.setChecked(false);
     }
 }

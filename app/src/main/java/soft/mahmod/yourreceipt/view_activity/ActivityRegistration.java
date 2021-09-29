@@ -2,6 +2,7 @@ package soft.mahmod.yourreceipt.view_activity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -11,6 +12,7 @@ import androidx.navigation.Navigation;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.controller.ActivityIntent;
+import soft.mahmod.yourreceipt.controller.SecurityManager;
 import soft.mahmod.yourreceipt.databinding.ActivityRegistrationBinding;
 import soft.mahmod.yourreceipt.dialog.DialogConfirm;
 import soft.mahmod.yourreceipt.dialog.DialogListener;
@@ -37,6 +39,8 @@ public class ActivityRegistration extends AppCompatActivity {
         binding.btnHelp.setOnClickListener(v -> {
             dialogHelp();
         });
+
+        Log.d(TAG, "onCreateshiw: "+ SecurityManager.getInectance(this).isShow());
 
     }
 

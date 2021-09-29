@@ -33,9 +33,6 @@ public class DialogWarning {
         if (manager.hasKey() || manager.numLaunchApp()>1) {
             return;
         }
-        Log.d(TAG, "firstLaunch: "+!manager.firstLaunch());
-        Log.d(TAG, "numLaunchApp: "+manager.numLaunchApp());
-        Log.d(TAG, "hasKey: "+manager.hasKey());
 
         LayoutDialogWarningBinding binding = DataBindingUtil.inflate(inflater, R.layout.layout_dialog_warning
                 , null, false);

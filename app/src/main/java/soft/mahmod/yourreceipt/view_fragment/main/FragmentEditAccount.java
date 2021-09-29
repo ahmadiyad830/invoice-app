@@ -48,35 +48,8 @@ public class FragmentEditAccount extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        securityEdit();
 
 
-    }
-
-
-    private void securityEdit() {
-        VMStore vmStore = new ViewModelProvider
-                (getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
-                .get(VMStore.class);
-    }
-
-    private void dialogSecurity(String key) {
-        ActivityIntent intent = ActivityIntent.getInstance(requireContext());
-        DialogSecurity dialogSecurity = new DialogSecurity(requireContext(), getLayoutInflater());
-        dialogSecurity.securityDialog( new ListenerSecurityDialog() {
-            @Override
-            public void onOk(Dialog dialog, boolean isTrue) {
-               if (isTrue){
-
-               }
-            }
-
-            @Override
-            public void onCancel(Dialog dialog) {
-                intent.userMakeChange(requireActivity());
-                dialog.dismiss();
-            }
-        });
     }
 
     private void dialog() {

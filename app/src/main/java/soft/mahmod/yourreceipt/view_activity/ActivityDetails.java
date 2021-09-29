@@ -3,6 +3,7 @@ package soft.mahmod.yourreceipt.view_activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -12,11 +13,10 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ViewPager2Adapter;
-import soft.mahmod.yourreceipt.controller.SecurityManager;
 import soft.mahmod.yourreceipt.databinding.ActivityDetailsBinding;
+import soft.mahmod.yourreceipt.dialog.DialogSecurity;
 import soft.mahmod.yourreceipt.listeners.ListenerSecurityDialog;
 import soft.mahmod.yourreceipt.model.Receipt;
-import soft.mahmod.yourreceipt.dialog.DialogSecurity;
 import soft.mahmod.yourreceipt.view_fragment.details.FragmentDetailsReceipt;
 import soft.mahmod.yourreceipt.view_fragment.details.FragmentPayment;
 import soft.mahmod.yourreceipt.view_fragment.details.FragmentProducts;
@@ -34,7 +34,7 @@ public class ActivityDetails extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_details);
         dialogConfirm = new DialogSecurity(this, getLayoutInflater());
 
-        handllKeySeurity();
+        dialogSecurity();
 
 
         sendData();
@@ -49,26 +49,18 @@ public class ActivityDetails extends AppCompatActivity {
         });
     }
 
-    private void handllKeySeurity() {
-        SecurityManager manager = SecurityManager.getInectance(this);
-        keySec = manager.keySecuirty();
-        if (keySec != null) {
-            if (manager.isShow()){
-                dialogSecurity();
-            }
-        } else {
-            onBackPressed();
-        }
-    }
-
     private void dialogSecurity() {
-        dialogConfirm.securityDialog( new ListenerSecurityDialog() {
+        if (!dialogConfirm.hasKey()){
+            return;
+        }
+        if (!dialogConfirm.showDialog()) {
+            return;
+        }
+        dialogConfirm.securityDialog(new ListenerSecurityDialog() {
             @Override
             public void onOk(Dialog dialog, boolean isTrue) {
                 if (isTrue) {
                     dialog.dismiss();
-                } else {
-
                 }
             }
 

@@ -189,6 +189,9 @@ public class FragmentReceipt extends Fragment implements ListenerReceipt, Databa
         if (!dialogSecurity.hasKey()){
             deleteReceipt(position);
             return;
+        }else if (!dialogSecurity.showDialog()){
+            deleteReceipt(position);
+            return;
         }
         dialogSecurity.securityDialog(new ListenerSecurityDialog() {
             @Override
