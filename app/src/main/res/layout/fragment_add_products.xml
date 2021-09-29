@@ -10,6 +10,9 @@
         <variable
             name="isTaxNoReg"
             type="Boolean" />
+        <variable
+            name="errorInput"
+            type="String" />
         <import type="android.view.View"/>
     </data>
 
@@ -93,6 +96,16 @@
             android:padding="@dimen/_12sdp"
             android:text="@{String.valueOf(model.tax)}"
             android:textColor="@color/text_color" />
+
+        <TextView
+            android:id="@+id/txt_error"
+            android:layout_width="match_parent"
+            android:layout_marginVertical="@dimen/_8sdp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_12sdp"
+            android:gravity="center"
+            android:text="@{errorInput}"
+            android:textColor="@color/design_default_color_error" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_down"

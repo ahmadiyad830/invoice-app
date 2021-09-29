@@ -19,6 +19,7 @@
     <color name="hint_color">#999999</color>
     <color name="text_btn_color">#FFFFFF</color>
     <color name="icon_color">#0C0C0C</color>
+    <color name="warning_color">#ffcc00</color>
     <color name="selector_color">#000000</color>
     <color name="item_background">#E5E5E5</color>
     <color name="mony_color">#118C4F</color>

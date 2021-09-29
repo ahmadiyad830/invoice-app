@@ -2,7 +2,6 @@ package soft.mahmod.yourreceipt.view_fragment.main;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +20,7 @@ import soft.mahmod.yourreceipt.databinding.FragmentEditAccountBinding;
 import soft.mahmod.yourreceipt.databinding.LayoutSecurityBinding;
 import soft.mahmod.yourreceipt.listeners.ListenerSecurityDialog;
 import soft.mahmod.yourreceipt.model.Store;
-import soft.mahmod.yourreceipt.statics.DialogSecurity;
-import soft.mahmod.yourreceipt.statics.StateCode;
+import soft.mahmod.yourreceipt.dialog.DialogSecurity;
 import soft.mahmod.yourreceipt.view_model.database.VMStore;
 
 public class FragmentEditAccount extends Fragment {
@@ -65,20 +63,12 @@ public class FragmentEditAccount extends Fragment {
     private void dialogSecurity(String key) {
         ActivityIntent intent = ActivityIntent.getInstance(requireContext());
         DialogSecurity dialogSecurity = new DialogSecurity(requireContext(), getLayoutInflater());
-        dialogSecurity.securityDialog(key, new ListenerSecurityDialog() {
+        dialogSecurity.securityDialog( new ListenerSecurityDialog() {
             @Override
-            public void onOk(Dialog dialog, LayoutSecurityBinding binding) {
-                String keySecuirt = binding.edtSecurity.getText().toString().trim();
-                if (key != null) {
-                    if (key.equals(keySecuirt)) {
-                        dialog.dismiss();
-                    } else {
-                        binding.setError(getResources().getString(R.string.wrong_security_number));
-                    }
-                } else {
-                    intent.userMakeChange(requireActivity());
-                    dialog.dismiss();
-                }
+            public void onOk(Dialog dialog, boolean isTrue) {
+               if (isTrue){
+
+               }
             }
 
             @Override

@@ -1,7 +1,9 @@
 package soft.mahmod.yourreceipt.view_fragment.main;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.NoCopySpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +19,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import soft.mahmod.yourreceipt.R;
-import soft.mahmod.yourreceipt.controller.SessionManager;
+import soft.mahmod.yourreceipt.controller.SecurityManager;
 import soft.mahmod.yourreceipt.databinding.FragmentSettingBinding;
+import soft.mahmod.yourreceipt.dialog.DialogSecurity;
+import soft.mahmod.yourreceipt.listeners.ListenerSecurityDialog;
 import soft.mahmod.yourreceipt.model.Store;
 import soft.mahmod.yourreceipt.view_model.auth.VMSettingAuth;
 import soft.mahmod.yourreceipt.view_model.condition.VMSignConditions;
@@ -33,7 +37,7 @@ import soft.mahmod.yourreceipt.view_model.database.VMUser;
 public class FragmentSetting extends Fragment implements View.OnClickListener {
     private static final String TAG = "FragmentSetting";
     private FragmentSettingBinding binding;
-    private SessionManager manager;
+    private SecurityManager manager;
     private VMStore vmStore;
     private VMUser vmUser;
     private VMSettingAuth vmSettingAuth;
@@ -58,7 +62,7 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false);
-        manager = SessionManager.getInectance(requireContext());
+        manager = SecurityManager.getInectance(requireContext());
 
         loadStore();
         return binding.getRoot();
@@ -75,6 +79,7 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
         binding.btnChangePassword.setOnClickListener(this);
         binding.btnEditStore.setOnClickListener(this);
         binding.btnSecurity.setOnClickListener(this);
+        binding.txtLocationVisibleSeurity.setOnClickListener(this);
 
         binding.boxDontShow.setChecked(manager.isShow());
         binding.boxDontShow.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -106,7 +111,32 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
         } else if (id == binding.txtForgetPassword.getId()) {
             Log.d(TAG, "txtForgetPassword: ");
             dialogForgetPassword().show();
+        }else if (id == binding.txtLocationVisibleSeurity.getId()){
+            dialogSecurity();
         }
+    }
+
+    private void dialogSecurity() {
+        DialogSecurity dialogSecurity = new DialogSecurity(requireContext(),getLayoutInflater());
+        if (!dialogSecurity.hasKey()){
+            binding.setVisibleLocationSecurity(true);
+            binding.setErrorLocationKeySecurity("not have key");
+            return;
+        }
+        dialogSecurity.securityDialog(new ListenerSecurityDialog() {
+            @Override
+            public void onOk(Dialog dialog, boolean notWrong) {
+                binding.setHasKeySecurity(notWrong);
+                binding.setVisibleLocationSecurity(binding.getHasKeySecurity());
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onCancel(Dialog dialog) {
+                binding.setHasKeySecurity(false);
+                dialog.dismiss();
+            }
+        });
     }
 
     private void postSecurityNumber() {

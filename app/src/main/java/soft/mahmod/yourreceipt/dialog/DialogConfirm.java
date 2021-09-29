@@ -1,8 +1,7 @@
-package soft.mahmod.yourreceipt.utils;
+package soft.mahmod.yourreceipt.dialog;
 
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.View;
 import android.view.ViewGroup;
 

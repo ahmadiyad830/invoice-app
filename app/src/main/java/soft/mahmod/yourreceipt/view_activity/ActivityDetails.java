@@ -12,12 +12,11 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ViewPager2Adapter;
-import soft.mahmod.yourreceipt.controller.SessionManager;
+import soft.mahmod.yourreceipt.controller.SecurityManager;
 import soft.mahmod.yourreceipt.databinding.ActivityDetailsBinding;
-import soft.mahmod.yourreceipt.databinding.LayoutSecurityBinding;
 import soft.mahmod.yourreceipt.listeners.ListenerSecurityDialog;
 import soft.mahmod.yourreceipt.model.Receipt;
-import soft.mahmod.yourreceipt.statics.DialogSecurity;
+import soft.mahmod.yourreceipt.dialog.DialogSecurity;
 import soft.mahmod.yourreceipt.view_fragment.details.FragmentDetailsReceipt;
 import soft.mahmod.yourreceipt.view_fragment.details.FragmentPayment;
 import soft.mahmod.yourreceipt.view_fragment.details.FragmentProducts;
@@ -51,7 +50,7 @@ public class ActivityDetails extends AppCompatActivity {
     }
 
     private void handllKeySeurity() {
-        SessionManager manager = SessionManager.getInectance(this);
+        SecurityManager manager = SecurityManager.getInectance(this);
         keySec = manager.keySecuirty();
         if (keySec != null) {
             if (manager.isShow()){
@@ -63,14 +62,13 @@ public class ActivityDetails extends AppCompatActivity {
     }
 
     private void dialogSecurity() {
-        dialogConfirm.securityDialog(keySec, new ListenerSecurityDialog() {
+        dialogConfirm.securityDialog( new ListenerSecurityDialog() {
             @Override
-            public void onOk(Dialog dialog, LayoutSecurityBinding binding) {
-                String num = binding.edtSecurity.getText().toString().trim();
-                if (num.equals(keySec)) {
+            public void onOk(Dialog dialog, boolean isTrue) {
+                if (isTrue) {
                     dialog.dismiss();
                 } else {
-                    binding.setError(getResources().getString(R.string.wrong_security_number));
+
                 }
             }
 

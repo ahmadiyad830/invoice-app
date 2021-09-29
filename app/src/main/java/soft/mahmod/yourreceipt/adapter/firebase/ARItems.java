@@ -63,7 +63,7 @@ public class ARItems extends FirebaseRecyclerAdapter<Items, ARItems.ViewHolder> 
         public void bind(Items model) {
             binding.setModel(model);
             binding.getRoot().setOnClickListener(v -> {
-                listener.onClick(getProducts(model), model);
+                listener.onClick(getProducts(model), model,getBindingAdapterPosition());
             });
         }
 

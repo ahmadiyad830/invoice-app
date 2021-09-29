@@ -143,4 +143,8 @@
     <string name="email_long">البريد الإلكتروني طويل</string>
     <string name="wrong_password">كلمة مرور خاطئة</string>
     <string name="security_short">رقم الأمان قصير جدًا</string>
+    <string name="location_visible_security">أماكن ظهور مفتاح الأمان؟</string>
+    <string name="warning_add_key">قم بإضافة مفتاح لحماية بياناتك لإضافة المفتاح اذهب الى الإعدادات</string>
+    <string name="quantity_is_greater">الكمية أكبر مما هو متاح</string>
+    <string name="greater_than_total">المبلغ أكبر من المجموع الكلي</string>
 </resources>

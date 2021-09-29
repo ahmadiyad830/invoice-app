@@ -108,7 +108,7 @@ public class FragmentSignIn extends Fragment {
             } else if (vmSignIn.isConnection()) {
                 signIn(email, password);
             } else {
-                binding.setError(getResources().getString(R.string.items));
+                binding.setError(getResources().getString(R.string.network_conecction));
             }
 
         });

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="warning"
+            type="String" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/warning"
+            android:textColor="@color/warning_color"
+            android:textSize="@dimen/_18ssp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:drawableEndCompat="@drawable/ic_twotone_warning_24" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/_14ssp"
+            android:gravity="center"
+            android:text="@{warning}" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_down"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:layout_margin="@dimen/_12sdp"
+            android:backgroundTint="@color/top_and_bottom_color"
+            android:text="@string/ok"
+            android:textColor="@color/text_btn_color" />
+    </LinearLayout>
+</layout>

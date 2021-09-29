@@ -1,5 +1,6 @@
 package soft.mahmod.yourreceipt.view_fragment.main;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -15,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,11 +29,12 @@ import com.google.firebase.database.Query;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.firebase.ARReceipt;
 import soft.mahmod.yourreceipt.databinding.FragmentReceiptBinding;
+import soft.mahmod.yourreceipt.dialog.DialogSecurity;
 import soft.mahmod.yourreceipt.listeners.ListenerReceipt;
+import soft.mahmod.yourreceipt.listeners.ListenerSecurityDialog;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.view_activity.ActivityDetails;
-import soft.mahmod.yourreceipt.view_model.database.VMReceipt;
 
 
 public class FragmentReceipt extends Fragment implements ListenerReceipt, DatabaseUrl, AdapterView.OnItemSelectedListener, TextWatcher {
@@ -46,6 +47,8 @@ public class FragmentReceipt extends Fragment implements ListenerReceipt, Databa
     private FirebaseRecyclerOptions<Receipt> options;
     private DatabaseReference reference;
     private NavController controller;
+    private DialogSecurity dialogSecurity;
+
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +62,7 @@ public class FragmentReceipt extends Fragment implements ListenerReceipt, Databa
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment.
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_receipt, container, false);
-
+        dialogSecurity = new DialogSecurity(requireContext(), getLayoutInflater());
         return binding.getRoot();
     }
 
@@ -179,5 +182,32 @@ public class FragmentReceipt extends Fragment implements ListenerReceipt, Databa
     @Override
     public void onEdit(Receipt model, int position) {
 
+    }
+
+    @Override
+    public void onLongClick(int position) {
+        if (!dialogSecurity.hasKey()){
+            deleteReceipt(position);
+            return;
+        }
+        dialogSecurity.securityDialog(new ListenerSecurityDialog() {
+            @Override
+            public void onOk(Dialog dialog, boolean notWrong) {
+                if (notWrong){
+                    deleteReceipt(position);
+                    dialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onCancel(Dialog dialog) {
+                dialog.dismiss();
+            }
+        });
+
+    }
+
+    private void deleteReceipt(int position) {
+        adapter.getRef(position).removeValue();
     }
 }

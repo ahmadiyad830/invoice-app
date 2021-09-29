@@ -1,4 +1,4 @@
-package soft.mahmod.yourreceipt.utils;
+package soft.mahmod.yourreceipt.dialog;
 
 import android.content.DialogInterface;
 

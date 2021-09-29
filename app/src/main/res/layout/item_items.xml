@@ -44,7 +44,7 @@
                     android:id="@+id/textView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text='@{"Name: "+model.name}'
+                    android:text='@{@string/name+": "+model.name}'
                     android:textColor="@color/text_color"
                     android:textIsSelectable="true"
                     android:textSize="@dimen/_14ssp"
@@ -57,11 +57,27 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text='@{"Price: "+model.price}'
+                    android:text='@{@string/price+": "+model.price}'
                     android:textColor="@color/text_color"
                     android:textIsSelectable="true"
                     android:textSize="@dimen/_14ssp"
                     android:layout_marginVertical="@dimen/_3sdp"
+                    android:textStyle="normal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewC"
+                    app:layout_constraintVertical_bias="1.0" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="@dimen/_3sdp"
+                    android:text='@{@string/quantity+": "+model.quantity}'
+                    android:textColor='@{model.quantity==0?@color/dept_color:@color/text_color}'
+                    android:textIsSelectable="true"
+                    android:textSize="@dimen/_14ssp"
                     android:textStyle="normal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

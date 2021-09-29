@@ -167,7 +167,7 @@ public class FragmentItems extends Fragment implements ListenerItems, DatabaseUr
     }
 
     @Override
-    public void onClick(Products products, Items modelItem) {
+    public void onClick(Products products, Items modelItem,int position) {
         FragmentItemsDirections.ActionMenuItemToFragmentCreateItem2
                 detailsItem = FragmentItemsDirections.actionMenuItemToFragmentCreateItem2();
         detailsItem.setMainItemToCreateItem(modelItem);

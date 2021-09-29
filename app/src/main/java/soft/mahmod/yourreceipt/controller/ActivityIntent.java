@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import soft.mahmod.yourreceipt.model.User;
+import soft.mahmod.yourreceipt.view_activity.ActivityAddReceipt;
 import soft.mahmod.yourreceipt.view_activity.ActivityRegistration;
 import soft.mahmod.yourreceipt.view_activity.MainActivity;
 
@@ -46,6 +47,11 @@ public class ActivityIntent extends ConnectionInternet{
     }
     public void userSign(Activity activity) {
         Intent intent = new Intent(mCtx, MainActivity.class);
+        mCtx.startActivity(intent);
+        activity.finish();
+    }
+    public void addReceipt(Activity activity){
+        Intent intent = new Intent(mCtx, ActivityAddReceipt.class);
         mCtx.startActivity(intent);
         activity.finish();
     }

@@ -52,6 +52,7 @@
     <string name="search">Search</string>
     <string name="subject">Subject</string>
     <string name="warning">Warning</string>
+    <string name="warning_add_key">Add a key to protect your data To add the key go to settings</string>
     <string name="warning_not_add">Warning The following items have not been added</string>
     <string name="invoice">invoice picture</string>
 
@@ -104,6 +105,7 @@
     <string name="address">Address</string>
     <string name="hide">Hide</string>
     <string name="total_all">Total All: </string>
+    <string name="greater_than_total">The amount is greater than the grand total</string>
 
     <string name="delete">Delete</string>
     <string name="skip">skip</string>
@@ -122,8 +124,8 @@
     <string name="text_some_things">search</string>
     <string name="camera">camera</string>
     <string name="phone_pictures">phone pictures</string>
-    <string name="cancel">@android:string/cancel</string>
-    <string name="ok">@android:string/ok</string>
+    <string name="cancel" translatable="false">@android:string/cancel</string>
+    <string name="ok" translatable="false">@android:string/ok</string>
     <string name="please_confirm">plase confirm</string>
     <string name="edit_security_number">Edit security number</string>
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
@@ -172,7 +174,9 @@ Or add all items</string>
     <string name="exempt">exempt</string>
     <string name="unexempt">Unexempt</string>
     <string name="increase_quntity">Do you want to increase the quantity ?</string>
+    <string name="quantity_is_greater">Quantity is greater than what is available</string>
     <string name="security">Security number</string>
+    <string name="location_visible_security">Where  security key appear?</string>
     <string name="dont_have_number_security">You don\'t have Security number</string>
     <string name="dont_show">Don\'t show again</string>
     <string name="show_box_security_number">Appear every time</string>

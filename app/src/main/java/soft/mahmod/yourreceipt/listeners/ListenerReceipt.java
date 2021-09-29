@@ -8,4 +8,6 @@ public interface ListenerReceipt extends MainListener<Receipt>{
 
     @Override
     void onEdit(Receipt model, int position);
+
+    void onLongClick(int position);
 }

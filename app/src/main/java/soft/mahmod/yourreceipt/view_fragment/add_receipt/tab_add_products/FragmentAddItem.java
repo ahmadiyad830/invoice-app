@@ -162,7 +162,7 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
         key = (String) parent.getItemAtPosition(0);
     }
 
-    private void loadDialogCreateProduct(Products model, Items itemModel) {
+    private void dialogCreateProduct(Products model, Items itemModel, int position) {
         Dialog dialog = new Dialog(requireContext());
         FragmentAddProductsBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_add_products
                 , null, false);
@@ -172,27 +172,46 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
         dialog.setContentView(binding.getRoot());
         dialog.getWindow().setBackgroundDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.custom_back_icon));
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        checkQuantityInput(itemModel.getQuantity(), binding);
         dialog.setCancelable(true);
         binding.btnDown.setOnClickListener(v -> {
             Products products = getProduct(binding);
-            products.setItemQuantity(itemModel.getQuantity());
-            products.setItemId(itemModel.getItemId());
             products.setName(model.getName());
+            if (products.getQuantity() > itemModel.getQuantity()) {
+                Toast.makeText(requireContext(), getResources().getString(R.string.increase_quntity), Toast.LENGTH_SHORT).show();
+                return;
+            }
             Common.listProduct.add(products);
             totalAll();
+            adapter.getItem(position).setQuantity(itemModel.getQuantity() - products.getQuantity());
             dialog.dismiss();
         });
         dialog.show();
     }
 
-    private void totalAll() {
-        double total = 0.0;
-        for (int i = 0; i < Common.listProduct.size(); i++) {
-            total = total + Common.listProduct.get(i).getTotal();
-        }
-        Common.setTotalAll(total);
-    }
+    private void checkQuantityInput(double quantity, FragmentAddProductsBinding binding) {
+        binding.edtQuantity.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length()==0) {
+                    s.append("0");
+                }
+                else if (quantity < Double.parseDouble(s.toString()))
+                    binding.setErrorInput(getResources().getString(R.string.quantity_is_greater));
+                else binding.setErrorInput("");
+            }
+        });
+    }
 
     private Products getProduct(FragmentAddProductsBinding binding) {
         Products model = new Products();
@@ -202,19 +221,19 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
         } catch (NumberFormatException e) {
             price = 0;
         }
-        double quantity ;
+        double quantity;
         try {
             quantity = Double.parseDouble(binding.edtQuantity.getText().toString().trim());
         } catch (NumberFormatException e) {
             quantity = 0;
         }
-        double discount ;
+        double discount;
         try {
             discount = Double.parseDouble(binding.edtDiscount.getText().toString().trim());
         } catch (NumberFormatException e) {
             discount = 0;
         }
-        double tax ;
+        double tax;
         try {
             tax = Double.parseDouble(binding.edtTax.getText().toString().trim());
         } catch (NumberFormatException e) {
@@ -226,11 +245,20 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
         if (!client.isTaxExempt()) {
             model.setTax(tax);
             model.setTotal(withTax(model));
-        }else {
+        } else {
             model.setTotal(withoutTax(model));
         }
         return model;
     }
+
+    private void totalAll() {
+        double total = 0.0;
+        for (int i = 0; i < Common.listProduct.size(); i++) {
+            total = total + Common.listProduct.get(i).getTotal();
+        }
+        Common.setTotalAll(total);
+    }
+
 
     private double withTax(Products model) {
         double price = model.getPrice() - model.getDiscount();
@@ -247,9 +275,9 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
     }
 
     @Override
-    public void onClick(Products products, Items model) {
+    public void onClick(Products products, Items model, int position) {
         if (model.getQuantity() > 0) {
-            loadDialogCreateProduct(products, model);
+            dialogCreateProduct(products, model, position);
         } else {
             loadDialogZeroQuantity(model);
         }

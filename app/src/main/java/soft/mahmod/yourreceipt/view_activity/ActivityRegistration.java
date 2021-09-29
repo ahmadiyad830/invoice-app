@@ -12,8 +12,8 @@ import androidx.navigation.Navigation;
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.controller.ActivityIntent;
 import soft.mahmod.yourreceipt.databinding.ActivityRegistrationBinding;
-import soft.mahmod.yourreceipt.utils.DialogConfirm;
-import soft.mahmod.yourreceipt.utils.DialogListener;
+import soft.mahmod.yourreceipt.dialog.DialogConfirm;
+import soft.mahmod.yourreceipt.dialog.DialogListener;
 import soft.mahmod.yourreceipt.utils.IntentActivity;
 import soft.mahmod.yourreceipt.view_model.auth.VMSettingAuth;
 

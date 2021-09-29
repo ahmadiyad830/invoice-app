@@ -1,8 +1,6 @@
 package soft.mahmod.yourreceipt.view_activity;
 
-import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,18 +10,16 @@ import androidx.navigation.Navigation;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.common.Common;
-import soft.mahmod.yourreceipt.controller.SessionManager;
+import soft.mahmod.yourreceipt.controller.ActivityIntent;
+import soft.mahmod.yourreceipt.controller.SecurityManager;
 import soft.mahmod.yourreceipt.databinding.ActivityAddReceiptBinding;
-import soft.mahmod.yourreceipt.databinding.LayoutSecurityBinding;
-import soft.mahmod.yourreceipt.listeners.ListenerSecurityDialog;
-import soft.mahmod.yourreceipt.statics.DialogSecurity;
-import soft.mahmod.yourreceipt.view_fragment.add_receipt.tab_add_products.FragmentAddProducts;
+import soft.mahmod.yourreceipt.dialog.DialogSecurity;
 
 public class ActivityAddReceipt extends AppCompatActivity {
     private static final String TAG = "ActivityAddReceipt";
     private ActivityAddReceiptBinding binding;
     private DialogSecurity dialogConfirm;
-    private SessionManager manager;
+    private SecurityManager manager;
     private String keySec;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +27,7 @@ public class ActivityAddReceipt extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_receipt);
 
         dialogConfirm = new DialogSecurity(this, getLayoutInflater());
-        manager= SessionManager.getInectance(this);
-        handllKeySeurity();
+        manager= SecurityManager.getInectance(this);
 
         NavController controller = Navigation.findNavController(this, R.id.fragment_container_add_receipt);
         controller.addOnDestinationChangedListener((controller1, destination, arguments) -> {
@@ -55,45 +50,10 @@ public class ActivityAddReceipt extends AppCompatActivity {
         });
 
     }
-
-
-    private void handllKeySeurity() {
-        SessionManager manager = SessionManager.getInectance(this);
-        keySec = manager.keySecuirty();
-        if (keySec != null) {
-            if (manager.isShow()){
-                Log.d(TAG, "handllKeySeurity: "+!manager.isShow());
-                dialogSecurity();
-            }
-        } else {
-            onBackPressed();
-        }
-    }
-
-    private void dialogSecurity() {
-        dialogConfirm.securityDialog(keySec, new ListenerSecurityDialog() {
-            @Override
-            public void onOk(Dialog dialog, LayoutSecurityBinding binding) {
-                String num = binding.edtSecurity.getText().toString().trim();
-                if (num.equals(keySec)) {
-                    dialog.dismiss();
-                } else {
-                    binding.setError(getResources().getString(R.string.wrong_security_number));
-                }
-            }
-
-            @Override
-            public void onCancel(Dialog dialog) {
-                onBackPressed();
-            }
-        });
-    }
-
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
+        ActivityIntent.getInstance(this).userMakeChange(this);
     }
 
     @Override

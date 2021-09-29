@@ -16,8 +16,17 @@
         <variable
             name="visiblePassword"
             type="Boolean" />
+
         <variable
             name="visibleSecurity"
+            type="Boolean" />
+
+        <variable
+            name="visibleLocationSecurity"
+            type="Boolean" />
+
+        <variable
+            name="hasKeySecurity"
             type="Boolean" />
 
         <variable
@@ -27,8 +36,13 @@
         <variable
             name="errorChangePassword"
             type="String" />
+
         <variable
             name="errorSecurity"
+            type="String" />
+
+        <variable
+            name="errorLocationKeySecurity"
             type="String" />
 
         <import type="android.view.View" />
@@ -335,7 +349,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_8sdp"
                     android:layout_marginTop="@dimen/_12sdp"
-                    android:drawableStart="@drawable/ic_baseline_lock_24"
+                    android:drawableStart="@drawable/ic_baseline_security_24"
                     android:drawableTint="@color/hint_color"
                     android:gravity="center"
                     android:text="@string/security"
@@ -438,15 +452,57 @@
                             android:textColor="@color/text_btn_color" />
                     </LinearLayout>
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/box_dont_show"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/text_color"
-                        android:text="@string/show_box_security_number" />
 
                 </LinearLayout>
 
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txt_location_visible_seurity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:drawableStart="@drawable/ic_baseline_security_24"
+                    android:drawableTint="@color/hint_color"
+                    android:gravity="center"
+                    android:text="@string/location_visible_security"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="@{visibleLocationSecurity?View.VISIBLE:View.GONE,default = gone}">
+
+                    <LinearLayout
+                        android:id="@+id/linear_boxs_location_visible_key"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="@{hasKeySecurity?View.VISIBLE:View.GONE,default = gone}">
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:id="@+id/box_dont_show"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/show_box_security_number"
+                            android:textColor="@color/text_color" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@{errorLocationKeySecurity}"
+                        android:textColor="@color/design_default_color_error"
+                        android:textSize="@dimen/_13ssp"
+                        android:textStyle="italic" />
+                </LinearLayout>
             </LinearLayout>
 
         </ScrollView>

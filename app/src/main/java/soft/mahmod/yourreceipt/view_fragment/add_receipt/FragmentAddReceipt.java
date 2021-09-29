@@ -1,8 +1,12 @@
 package soft.mahmod.yourreceipt.view_fragment.add_receipt;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +17,7 @@ import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -22,21 +27,25 @@ import java.util.List;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ARPayment;
+import soft.mahmod.yourreceipt.controller.ActivityIntent;
+import soft.mahmod.yourreceipt.controller.SecurityManager;
 import soft.mahmod.yourreceipt.databinding.FragmentAddReceiptBinding;
+import soft.mahmod.yourreceipt.dialog.DialogConfirm;
+import soft.mahmod.yourreceipt.dialog.DialogListener;
+import soft.mahmod.yourreceipt.dialog.DialogSecurity;
 import soft.mahmod.yourreceipt.listeners.ListenerPayment;
+import soft.mahmod.yourreceipt.listeners.ListenerSecurityDialog;
 import soft.mahmod.yourreceipt.model.Products;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.model.billing.Payment;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
-import soft.mahmod.yourreceipt.utils.DialogConfirm;
-import soft.mahmod.yourreceipt.utils.DialogListener;
 import soft.mahmod.yourreceipt.utils.HandleTimeCount;
 import soft.mahmod.yourreceipt.view_model.database.VMItems;
 import soft.mahmod.yourreceipt.view_model.database.VMReceipt;
 
 public class FragmentAddReceipt extends Fragment implements DatabaseUrl, AdapterView.OnItemSelectedListener,
-        ListenerPayment, DialogListener {
-
+        ListenerPayment, DialogListener, TextWatcher {
+    private SecurityManager manager;
     private static final String TAG = "FragmentAddReceipt";
     private FragmentAddReceiptBinding binding;
     private final List<Payment> listPayment = new ArrayList<>();
@@ -62,17 +71,18 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_receipt, container, false);
-
+        manager = SecurityManager.getInectance(requireContext());
         typeReceipt = new String[]{getResources().getString(R.string.paid)
                 , getResources().getString(R.string.debt), getResources().getString(R.string.bayment)};
 
         adapter = new ARPayment(listPayment, this);
 
         init();
+        binding.editPrice.addTextChangedListener(this);
         binding.btnAdd.setOnClickListener(this::onClickAdd);
         binding.btnDelete.setOnClickListener(this::onClickDeleteAll);
         binding.btnNext.setOnClickListener(v -> {
-            setReceipt();
+            dialogSecurity();
         });
         return binding.getRoot();
     }
@@ -126,7 +136,6 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
     }
 
     private void setReceipt() {
-
         Receipt model = argsReceipt.getReceiptToAddReceipt();
         model.setSubject(getReceipt().getSubject());
         model.setNote(getReceipt().getNote());
@@ -136,11 +145,38 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
             if (!cash.getError()) {
                 if (model.getProducts() != null && model.getProducts().size() > 0)
                     vmItems.updatesQuantity(getIds(model.getProducts())
-                            , getItemQuantitys(model.getProducts()), getQuantitys(model.getProducts()));
-                requireActivity().finish();
+                            , getItemQuantitys(model.getProducts()), getQuantitys(model.getProducts()))
+                            .observe(getViewLifecycleOwner(), items -> {
+
+                            });
+                ActivityIntent.getInstance(requireContext()).userMakeChange(requireActivity());
             }
         });
     }
+
+    private void dialogSecurity() {
+        DialogSecurity dialogSecurity = new DialogSecurity(requireContext(), getLayoutInflater());
+        if (!dialogSecurity.hasKey()) {
+            setReceipt();
+        }
+        dialogSecurity.securityDialog(new ListenerSecurityDialog() {
+            @Override
+            public void onOk(Dialog dialog, boolean isTrue) {
+                if (isTrue) {
+                    setReceipt();
+                    dialog.dismiss();
+                    Log.d(TAG, "onOk: " + true);
+                }
+            }
+
+            @Override
+            public void onCancel(Dialog dialog) {
+                dialog.dismiss();
+            }
+        });
+
+    }
+
     private List<Double> getItemQuantitys(List<Products> products) {
         List<Double> quantits = new ArrayList<>();
         for (Products model : products) {
@@ -148,6 +184,7 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
         }
         return quantits;
     }
+
     private List<Double> getQuantitys(List<Products> products) {
         List<Double> quantits = new ArrayList<>();
         for (Products model : products) {
@@ -220,13 +257,16 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
         payment.setDate(date);
         payment.setPrice(price);
         listPayment.add(payment);
-        adapter.notifyItemInserted(listPayment.size() - 1);
-    }
 
+        binding.setTotalAll(binding.getTotalAll() - payment.getPrice());
+        adapter.notifyItemInserted(listPayment.size() - 1);
+        binding.editPrice.setText("0");
+    }
     private void onClickDeleteAll(View v) {
         if (listPayment.size() > 0) {
             adapter.notifyItemRangeRemoved(0, listPayment.size());
             listPayment.clear();
+            binding.setTotalAll(argsReceipt.getReceiptToAddReceipt().getTotalAll());
         }
     }
 
@@ -259,7 +299,7 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
 
     @Override
     public void onDelete(int position) {
-        listPayment.remove(position);
+        binding.setTotalAll(binding.getTotalAll() + listPayment.remove(position).getPrice());
         adapter.notifyItemRemoved(position);
     }
 
@@ -276,5 +316,29 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
     @Override
     public void onChangePrice(int position) {
 
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        double total = binding.getTotalAll();
+        if (s.length()>0){
+            double price = Double.parseDouble(s.toString());
+            if (price>total){
+                binding.editPrice.setError(
+                        getResources().getString(R.string.greater_than_total)
+                        , ContextCompat.getDrawable(requireContext(),R.drawable.ic_twotone_warning_24)
+                );
+            }
+        }
     }
 }

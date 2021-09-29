@@ -1,7 +1,7 @@
 package soft.mahmod.yourreceipt.view_activity;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -20,11 +20,15 @@ import androidx.navigation.ui.NavigationUI;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.controller.ActivityIntent;
-import soft.mahmod.yourreceipt.controller.SessionManager;
+import soft.mahmod.yourreceipt.controller.SecurityManager;
 import soft.mahmod.yourreceipt.databinding.ActivityMainBinding;
+import soft.mahmod.yourreceipt.dialog.DialogConfirm;
+import soft.mahmod.yourreceipt.dialog.DialogConnectionInternet;
+import soft.mahmod.yourreceipt.dialog.DialogListener;
+import soft.mahmod.yourreceipt.dialog.DialogSecurity;
+import soft.mahmod.yourreceipt.dialog.DialogWarning;
+import soft.mahmod.yourreceipt.listeners.ListenerSecurityDialog;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
-import soft.mahmod.yourreceipt.utils.DialogConfirm;
-import soft.mahmod.yourreceipt.utils.DialogListener;
 import soft.mahmod.yourreceipt.utils.IntentActivity;
 import soft.mahmod.yourreceipt.view_model.auth.VMSettingAuth;
 import soft.mahmod.yourreceipt.view_model.database.VMUser;
@@ -35,23 +39,27 @@ public class MainActivity extends AppCompatActivity implements DatabaseUrl {
     private VMUser vmUser;
     private VMSettingAuth vmSettingAuth;
     private ActivityIntent intent;
+    private SecurityManager manager;
+    private DialogConnectionInternet connectionInternet;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         intent = ActivityIntent.getInstance(this);
+        manager = SecurityManager.getInectance(this);
         vmUser = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(getApplication()))
                 .get(VMUser.class);
         vmSettingAuth = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication()))
                 .get(VMSettingAuth.class);
 
-
-        SessionManager manager = SessionManager.getInectance(this);
-        vmUser.getUser().observe(this,user -> {
+        DialogWarning dialogWarning = new DialogWarning(this, getLayoutInflater());
+        connectionInternet = new DialogConnectionInternet(this,getLayoutInflater());
+        connectionInternet.internetConnectionDialog();
+        vmUser.getUser().observe(this, user -> {
             manager.setKeySecuirty(user.getSecurity());
             manager.setPassword(user.getPassword());
+            dialogWarning.warningDialog();
         });
-
 
         if (intent.isUserActive().isActive()) {
             binding.setIsActive(intent.isUserActive().isActive());
@@ -93,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseUrl {
     protected void onStart() {
         super.onStart();
         setSupportActionBar(binding.linearLayout4);
+        SecurityManager manager = SecurityManager.getInectance(this);
         NavController controller = Navigation.findNavController(this, R.id.nav_host);
         AppBarConfiguration configuration = new AppBarConfiguration.Builder(controller.getGraph())
                 .setOpenableLayout(binding.drawer)
@@ -105,18 +114,19 @@ public class MainActivity extends AppCompatActivity implements DatabaseUrl {
         NavigationUI.setupWithNavController(binding.linearLayout4, controller, configuration);
 
         binding.fab.setOnClickListener(v -> {
-
-            Intent intent = new Intent(this, ActivityAddReceipt.class);
-            startActivity(intent);
+            ActivityIntent.getInstance(MainActivity.this).addReceipt(MainActivity.this);
         });
         binding.txtActive.setOnClickListener(v -> {
             IntentActivity.startWhatsApp(this);
         });
         binding.txtAnotherAccount.setOnClickListener(v -> {
             vmSettingAuth.signOut();
+            manager.clean();
             intent.userSignOut(MainActivity.this);
         });
     }
+
+
 
 
     @Override
@@ -137,6 +147,8 @@ public class MainActivity extends AppCompatActivity implements DatabaseUrl {
             @Override
             public void clickOk(DialogInterface dialog) {
                 vmSettingAuth.signOut();
+                manager.clean();
+                Log.d(TAG, "clickOk: " + manager.numLaunchApp());
                 intent.userSignOut(MainActivity.this);
                 dialog.dismiss();
             }
