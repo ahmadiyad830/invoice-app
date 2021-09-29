@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_edit_receipt"
+    app:startDestination="@id/fragmentEditPayment">
+
+    <fragment
+        android:id="@+id/fragmentEditPayment"
+        android:name="soft.mahmod.yourreceipt.view_fragment.edit_receipt.FragmentEditPayment"
+        android:label="fragment_edit_payment"
+        tools:layout="@layout/fragment_edit_payment" />
+    <fragment
+        android:id="@+id/fragmentEditProducts"
+        android:name="soft.mahmod.yourreceipt.view_fragment.edit_receipt.FragmentEditProducts"
+        android:label="fragment_edit_products"
+        tools:layout="@layout/fragment_edit_products" />
+    <fragment
+        android:id="@+id/fragmentEditReceipt"
+        android:name="soft.mahmod.yourreceipt.view_fragment.edit_receipt.FragmentEditReceipt"
+        android:label="fragment_edit_receipt"
+        tools:layout="@layout/fragment_edit_receipt" />
+</navigation>

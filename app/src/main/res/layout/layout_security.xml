@@ -44,6 +44,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:passwordToggleEnabled="true"
+                    android:hint="@string/security"
+                    android:textColorHint="@color/hint_color"
                     app:passwordToggleTint="@color/top_and_bottom_color">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -52,7 +54,7 @@
                         android:layout_marginHorizontal="@dimen/_8sdp"
                         android:layout_height="match_parent"
                         android:background="@drawable/custom_stork"
-                        android:hint="@string/security"
+
                         android:inputType="numberPassword"
                         android:textColor="@color/text_color"
                         android:maxEms="4"

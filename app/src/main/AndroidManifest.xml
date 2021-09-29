@@ -16,7 +16,7 @@
         android:theme="@style/Theme.YourReceipt"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".view_activity.ActivityEdit"
+            android:name=".view_activity.ActivityEditReceipt"
             android:exported="true" />
         <activity
             android:name=".view_activity.ActivityAddReceipt"

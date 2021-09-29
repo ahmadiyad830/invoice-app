@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view_activity.ActivityEdit">
+        tools:context=".view_activity.ActivityEditReceipt">
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragmentContainerView2"
             android:name="androidx.navigation.fragment.NavHostFragment"
@@ -22,7 +22,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:navGraph="@navigation/nav_add_receipt" />
+            app:navGraph="@navigation/nav_edit_receipt" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

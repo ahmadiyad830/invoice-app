@@ -81,7 +81,7 @@
                         android:background="@drawable/custom_stork"
                         android:textColorHint="@color/hint_color"
                         android:hint="@string/email"
-                        android:inputType="textEmailSubject"
+                        android:inputType="textEmailAddress"
                         android:padding="@dimen/_8sdp"
                         android:layout_marginVertical="@dimen/_8sdp"
                         android:paddingHorizontal="@dimen/_8sdp"
@@ -118,7 +118,7 @@
                     android:layout_height="?actionBarSize"
                     android:layout_marginHorizontal="@dimen/_8sdp"
                     android:backgroundTint="@color/top_and_bottom_color"
-                    android:text="@string/sign_up"
+                    android:text="@string/add"
                     android:textColor="@color/text_btn_color" />
             </LinearLayout>
         </ScrollView>

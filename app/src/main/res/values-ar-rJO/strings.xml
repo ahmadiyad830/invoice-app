@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Your Receipt</string>
-    <string name="email">ئيميل</string>
+    <string name="email">إيميل</string>
     <string name="password">كلمة السر</string>
     <string name="config_password">تأكيد كلمة السر</string>
     <string name="home">رئيسية</string>
@@ -147,5 +147,6 @@
     <string name="warning_add_key">قم بإضافة مفتاح لحماية بياناتك لإضافة المفتاح اذهب الى الإعدادات</string>
     <string name="quantity_is_greater">الكمية أكبر مما هو متاح</string>
     <string name="greater_than_total">المبلغ أكبر من المجموع الكلي</string>
-    <string name="add_security">أضف رقم الأمان الجديد</string>
+    <string name="add_security">أضف رقم الأمان</string>
+    <string name="sign_in">تسجيل الدخول</string>
 </resources>

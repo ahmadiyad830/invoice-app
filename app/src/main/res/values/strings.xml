@@ -3,6 +3,7 @@
     <string name="app_name">Your Receipt</string>
     <string name="you_dont_have_account">you dont have account ?</string>
     <string name="sign_up">sign up</string>
+    <string name="sign_in">sign in</string>
     <string name="account">Account</string>
     <string name="maype_password_or_email_wrong">Password or email not found</string>
     <!--    TODO account-->
@@ -176,7 +177,7 @@ Or add all items</string>
     <string name="increase_quntity">Do you want to increase the quantity ?</string>
     <string name="quantity_is_greater">Quantity is greater than what is available</string>
     <string name="security">Security number</string>
-    <string name="add_security">Add new security number</string>
+    <string name="add_security">Add security number</string>
     <string name="location_visible_security">Security key appears</string>
     <string name="dont_have_number_security">You don\'t have Security number</string>
     <string name="dont_show">Don\'t show again</string>

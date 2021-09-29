@@ -56,39 +56,31 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.26">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout22"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_8sdp"
-                    app:cardCornerRadius="@dimen/_6sdp"
-                    app:cardElevation="@dimen/_3sdp"
-                    app:cardUseCompatPadding="true"
+                    android:layout_height="?actionBarSize"
+                    android:layout_marginVertical="@dimen/_8sdp"
+                    android:maxLength="4"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textColorHint="@color/hint_color"
+                    android:hint="@string/email">
 
-                    <LinearLayout
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/email"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:padding="@dimen/_3sdp">
-
-                        <EditText
-                            android:id="@+id/email"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/email"
-                            android:backgroundTint="@color/text_btn_color"
-                            android:background="@drawable/custom_stork"
-                            android:textColorHint="@color/hint_color"
-                            android:padding="@dimen/_12sdp"
-                            android:inputType="textEmailAddress"
-                            android:singleLine="true"
-                            android:textColor="@color/text_color"
-                            android:textSize="@dimen/_14ssp" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                        android:layout_marginHorizontal="@dimen/_8sdp"
+                        android:background="@drawable/custom_stork"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:minLines="1"
+                        android:textColor="@color/text_color" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayout"
@@ -101,6 +93,7 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    android:textColorHint="@color/hint_color"
                     app:passwordToggleEnabled="true"
                     app:passwordToggleTint="@color/top_and_bottom_color">
 
@@ -149,7 +142,7 @@
                 android:layout_height="@dimen/_45sdp"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:backgroundTint="@color/main_color"
-                android:text="sign In"
+                android:text="@string/sign_in"
                 android:enabled="@{progress?false:true,default = true}"
                 android:textColor="@color/top_and_bottom_color"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -169,7 +162,7 @@
                 android:layout_marginEnd="8dp"
                 android:text="@string/forget_your_password"
                 android:textColor="@android:color/holo_red_light"
-                android:textSize="@dimen/_11ssp"
+                android:textSize="@dimen/_13ssp"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/btn_signup"

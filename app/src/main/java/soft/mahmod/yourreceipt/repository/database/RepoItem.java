@@ -63,23 +63,31 @@ public class RepoItem extends Repo<Items> implements OnCompleteListener<Void>, O
 
     @RequiresApi(api = Build.VERSION_CODES.P)
     public LiveData<Items> putQuantity(String id, double quantity) {
-        getReference()
-                .child(ITEMS)
-                .child(getfUser().getUid())
-                .child(id)
-                .child(QUANTITY)
-                .setValue(quantity)
-                .addOnCompleteListener(getApplication().getMainExecutor(), this)
-                .addOnFailureListener(getApplication().getMainExecutor(),this);
+        try {
+            getReference()
+                    .child(ITEMS)
+                    .child(getfUser().getUid())
+                    .child(id)
+                    .child(QUANTITY)
+                    .setValue(quantity)
+                    .addOnCompleteListener(getApplication().getMainExecutor(), this)
+                    .addOnFailureListener(getApplication().getMainExecutor(),this);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
         return getData();
     }
 
     public LiveData<Items> putQuantityTLow(String id, double quantity) {
-        getReference().child(ITEMS).child(getfUser().getUid()).child(id)
-                .child(QUANTITY)
-                .setValue(quantity)
-                .addOnCompleteListener(this)
-                .addOnFailureListener(this);
+        try {
+            getReference().child(ITEMS).child(getfUser().getUid()).child(id)
+                    .child(QUANTITY)
+                    .setValue(quantity)
+                    .addOnCompleteListener(this)
+                    .addOnFailureListener(this);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
         return getData();
     }
 

@@ -23,21 +23,17 @@ public class RepoSignUpConditions implements EmailPattern {
     }
 
     public LiveData<User> signUpConditions(String email, String pass1, String pass2) {
-
-
         ConnectionInternet connectionInternet = new ConnectionInternet(application);
         if (connectionInternet.isConnection()) {
             confirmPassword(pass1, pass2);
             if (password){
                 confirmEmail(email);
             }
-
         } else {
             user.setError(true);
             user.setMessage(getString(R.string.network_conecction));
             dataCondition.setValue(user);
         }
-
         return dataCondition;
     }
 

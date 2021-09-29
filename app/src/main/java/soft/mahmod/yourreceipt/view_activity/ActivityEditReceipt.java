@@ -6,12 +6,12 @@ import android.os.Bundle;
 
 import soft.mahmod.yourreceipt.R;
 
-public class ActivityEdit extends AppCompatActivity {
+public class ActivityEditReceipt extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit);
+        setContentView(R.layout.activity_edit_receipt);
 
     }
 }

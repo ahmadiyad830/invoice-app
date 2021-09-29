@@ -100,6 +100,7 @@
                     android:text='@{@string/total_all+" "+String.valueOf(totalAll)}'
                     android:textColor="@color/mony_color"
                     android:textSize="@dimen/_16ssp"
+                    android:maxLength="25"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="@+id/layout_client_side"
                     app:layout_constraintStart_toStartOf="@+id/layout_client_side"

@@ -1,7 +1,6 @@
 package soft.mahmod.yourreceipt.view_fragment.registration;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import soft.mahmod.yourreceipt.R;
-import soft.mahmod.yourreceipt.conditions.catch_registration.ConditionsSignUp;
 import soft.mahmod.yourreceipt.controller.ActivityIntent;
 import soft.mahmod.yourreceipt.databinding.FragmentSignUpBinding;
 import soft.mahmod.yourreceipt.model.User;
@@ -71,6 +69,11 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
             String email = binding.email.getText().toString().trim();
             String pass1 = binding.password.getText().toString().trim();
             String pass2 = binding.passwordConfig.getText().toString().trim();
+            String key = binding.edtSecurity.getText().toString().trim();
+            if (key.length() != 4) {
+                binding.setError(getResources().getString(R.string.add_security));
+                return;
+            }
             conditions.signUpCondition(email, pass1, pass2).observe(getViewLifecycleOwner(), user -> {
                 if (user != null) {
                     if (user.getError()) {
@@ -99,11 +102,12 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
     }
 
     private void uploadUser(String email, String pass1,String uid) {
-        ActivityIntent intent = ActivityIntent.getInstance(requireContext());
         User user = new User();
         user.setEmail(email);
         user.setPassword(pass1);
         user.setUid(uid);
+        String key = binding.edtSecurity.getText().toString();
+        user.setSecurity(key);
         vmUser.postUser(user).observe(getViewLifecycleOwner(), cash -> {
             if (cash.getError()) {
                 binding.setError(cash.getMessage());
@@ -111,7 +115,11 @@ public class FragmentSignUp extends Fragment implements ApiURLS {
                 FragmentSignUpDirections.ActionFragmentSignUpToFragmentInfo passEmail =
                         FragmentSignUpDirections.actionFragmentSignUpToFragmentInfo();
                 passEmail.setArgsEmail(email);
-                controller.navigate(passEmail);
+                try {
+                    controller.navigate(passEmail);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
             binding.setProgress(false);
         });
