@@ -56,6 +56,7 @@
                         android:background="@drawable/custom_stork"
                         android:hint="@string/name"
                         android:text='@{model.name}'
+                        android:textColorHint="@color/hint_color"
                         android:textColor="@color/text_color"
                         android:inputType="textPersonName"
                         android:padding="@dimen/_12sdp" />
@@ -82,6 +83,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/email"
+                        android:textColorHint="@color/hint_color"
                         android:text='@{model.email}'
                         android:inputType="textEmailAddress"
                         android:padding="@dimen/_12sdp" />
@@ -108,8 +110,8 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/phone_number"
-                        android:text='@{String.valueOf(model.phone)}'
-                        android:inputType="numberDecimal"
+                        android:textColorHint="@color/hint_color"
+                        android:inputType="number"
                         android:padding="@dimen/_12sdp" />
                 </LinearLayout>
 
@@ -136,6 +138,7 @@
                         android:background="@drawable/custom_stork"
                         android:hint="@string/add_info"
                         android:inputType="text"
+                        android:textColorHint="@color/hint_color"
                         android:text='@{model.addInfo}'
                         android:padding="@dimen/_12sdp" />
                 </LinearLayout>
@@ -196,6 +199,7 @@
                         android:text='@{model.address}'
                         android:textColor="@color/text_color"
                         android:inputType="text"
+                        android:textColorHint="@color/hint_color"
                         android:padding="@dimen/_12sdp" />
                 </LinearLayout>
 
@@ -222,6 +226,7 @@
                         android:hint="@string/store_address"
                         android:textColor="@color/text_color"
                         android:inputType="text"
+                        android:textColorHint="@color/hint_color"
                         android:text='@{model.storeAddress}'
                         android:padding="@dimen/_12sdp" />
                 </LinearLayout>
@@ -249,6 +254,7 @@
                         android:text='@{model.note}'
                         android:textColor="@color/text_color"
                         android:padding="@dimen/_12sdp"
+                        android:textColorHint="@color/hint_color"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
