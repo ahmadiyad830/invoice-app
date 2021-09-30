@@ -4,8 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
-import soft.mahmod.yourreceipt.controller.LanguageApp;
-import soft.mahmod.yourreceipt.controller.LocaleHelper;
+import soft.mahmod.yourreceipt.helper.LocaleHelper;
 
 public class ApplicationHelper extends Application {
     private static final String TAG = "ApplicationHelper";

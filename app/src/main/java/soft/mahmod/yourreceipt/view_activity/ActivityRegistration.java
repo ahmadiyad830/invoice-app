@@ -16,7 +16,8 @@ import androidx.navigation.Navigation;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.controller.ActivityIntent;
-import soft.mahmod.yourreceipt.controller.LocaleHelper;
+import soft.mahmod.yourreceipt.helper.IntentHelper;
+import soft.mahmod.yourreceipt.helper.LocaleHelper;
 import soft.mahmod.yourreceipt.databinding.ActivityRegistrationBinding;
 import soft.mahmod.yourreceipt.view_model.auth.VMSettingAuth;
 
@@ -66,11 +67,11 @@ public class ActivityRegistration extends AppCompatActivity  {
 
         if (id == R.id.menu_ar_language ) {
             LocaleHelper.setLocale(context,"ar");
-            intentI();
+            IntentHelper.startActivityWithFinish(context,ActivityRegistration.class,this);
             return true;
         }else if(id == R.id.menu_en_language){
             LocaleHelper.setLocale(context,"en");
-            intentI();
+            IntentHelper.startActivityWithFinish(context,ActivityRegistration.class,this);
             return true;
         }
         return true;
