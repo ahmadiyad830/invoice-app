@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_help"
+        android:title="@string/help"
+        android:visible="false" />
+    <group android:menuCategory="container">
+        <item
+            android:icon="@drawable/ic_baseline_language_24"
+            android:title="@string/language">
+            <menu>
+                <item
+                    android:id="@+id/menu_ar_language"
+                    android:title="@string/arabic_lang" />
+                <item
+                    android:id="@+id/menu_en_language"
+                    android:title="@string/englush_lang" />
+            </menu>
+        </item>
+
+    </group>
+</menu>

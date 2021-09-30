@@ -149,4 +149,6 @@
     <string name="greater_than_total">المبلغ أكبر من المجموع الكلي</string>
     <string name="add_security">أضف رقم الأمان</string>
     <string name="sign_in">تسجيل الدخول</string>
+    <string name="help">مساعدة</string>
+    <string name="englush_lang">englush</string>
 </resources>

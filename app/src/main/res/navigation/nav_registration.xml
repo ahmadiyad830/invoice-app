@@ -9,7 +9,7 @@
         android:id="@+id/fragmentSignIn"
         tools:layout="@layout/fragment_sign_in"
         android:name="soft.mahmod.yourreceipt.view_fragment.registration.FragmentSignIn"
-        android:label="Sign In">
+        android:label="@string/sign_in">
         <action
             android:id="@+id/action_fragmentSignIn_to_fragmentSignUp"
             app:destination="@id/fragmentSignUp"
@@ -26,7 +26,7 @@
     <fragment
         android:id="@+id/fragmentSignUp"
         android:name="soft.mahmod.yourreceipt.view_fragment.registration.FragmentSignUp"
-        android:label="Sign Up"
+        android:label="@string/sign_up"
         tools:layout="@layout/fragment_sign_up">
         <action
             android:id="@+id/action_fragmentSignUp_to_fragmentInfo"
@@ -41,7 +41,7 @@
     <fragment
         android:id="@+id/fragmentInfo"
         android:name="soft.mahmod.yourreceipt.view_fragment.registration.FragmentInfo"
-        android:label="FragmentInfo"
+        android:label="@string/add_info"
         tools:layout="@layout/fragment_info">
         <action
             android:id="@+id/action_fragmentInfo_to_fragmentSignIn"

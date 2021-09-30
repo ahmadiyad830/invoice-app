@@ -183,4 +183,7 @@ Or add all items</string>
     <string name="dont_show">Don\'t show again</string>
     <string name="show_box_security_number">Appear every time</string>
     <string name="wrong_security_number">Wrong security code</string>
+    <string name="help">help</string>
+    <string name="arabic_lang" translatable="false">العربية</string>
+    <string name="englush_lang">englush</string>
 </resources>
