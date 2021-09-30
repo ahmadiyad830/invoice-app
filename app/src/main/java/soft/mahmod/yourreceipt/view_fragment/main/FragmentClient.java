@@ -25,7 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import soft.mahmod.yourreceipt.R;
-import soft.mahmod.yourreceipt.adapter.firebase.ARClients;
+import soft.mahmod.yourreceipt.adapter.firebase.ARFirebaseClients;
 import soft.mahmod.yourreceipt.databinding.FragmentMainClientBinding;
 import soft.mahmod.yourreceipt.listeners.ListenerClient;
 import soft.mahmod.yourreceipt.model.Client;
@@ -34,7 +34,7 @@ import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 public class FragmentClient extends Fragment implements DatabaseUrl, ListenerClient, TextWatcher, AdapterView.OnItemSelectedListener {
     private static final String TAG = "FragmentClient";
     private FragmentMainClientBinding binding;
-    private ARClients adapter;
+    private ARFirebaseClients adapter;
     private String[] sortClients = {"name", "email", "phone"};
     private String key = sortClients[0];
     private Query query;
@@ -98,31 +98,31 @@ public class FragmentClient extends Fragment implements DatabaseUrl, ListenerCli
         binding.spinnerSortList.setAdapter(adapter);
     }
 
-    private ARClients searchNumber(double search) {
+    private ARFirebaseClients searchNumber(double search) {
         query = reference;
         options = new FirebaseRecyclerOptions.Builder<Client>()
                 .setQuery(query.orderByChild(key).startAt(search).endAt(search + "\uf8ff"), Client.class)
                 .build();
-        adapter = new ARClients(options, this);
+        adapter = new ARFirebaseClients(options, this);
         adapter.startListening();
         return adapter;
     }
 
-    private ARClients search(String search) {
+    private ARFirebaseClients search(String search) {
         query = reference;
         options = new FirebaseRecyclerOptions.Builder<Client>()
                 .setQuery(query.orderByChild(key).startAt(search).endAt(search + "\uf8ff"), Client.class)
                 .build();
-        adapter = new ARClients(options, this);
+        adapter = new ARFirebaseClients(options, this);
         adapter.startListening();
         return adapter;
     }
 
-    private ARClients withoutSearch() {
+    private ARFirebaseClients withoutSearch() {
         options = new FirebaseRecyclerOptions.Builder<Client>()
                 .setQuery(reference, Client.class)
                 .build();
-        adapter = new ARClients(options, this);
+        adapter = new ARFirebaseClients(options, this);
         adapter.startListening();
         return adapter;
     }

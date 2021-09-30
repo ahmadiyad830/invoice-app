@@ -14,10 +14,4 @@ public class ApplicationHelper extends Application {
         Log.d(TAG, "attachBaseContext: ");
         super.attachBaseContext(LocaleHelper.onAttach(base,"en"));
     }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        LocaleHelper.setLocale(this,"en");
-    }
 }

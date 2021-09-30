@@ -99,6 +99,7 @@
     <string name="add_logo">Add Logo</string>
     <string name="print">Print</string>
     <string name="products">Products</string>
+    <string name="product">Product</string>
     <string name="create_product">Add new product</string>
     <string name="discount_total_all">Discount Total All</string>
     <string name="tax">Tax</string>

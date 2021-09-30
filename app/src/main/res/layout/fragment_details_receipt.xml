@@ -58,7 +58,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:gravity="center"
-                android:text='@{@string/total_all+" "+model.totalAll}'
+                android:maxLength="18"
+                android:text='@{@string/total+" "+model.totalAll}'
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/_14ssp"
                 app:layout_constraintEnd_toEndOf="parent"

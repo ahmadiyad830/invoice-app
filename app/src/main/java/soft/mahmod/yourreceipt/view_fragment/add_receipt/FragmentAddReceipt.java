@@ -143,11 +143,6 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
         model.setDateReceipt(handleTimeCount.getDate());
         vmReceipt.postReceipt(model).observe(getViewLifecycleOwner(), cash -> {
             if (!cash.getError()) {
-                if (model.getProducts() != null && model.getProducts().size() > 0)
-                    vmItems.updatesQuantity(getIds(model.getProducts()), getItemQuantitys(model.getProducts()), getQuantitys(model.getProducts()))
-                            .observe(getViewLifecycleOwner(), items -> {
-
-                            });
                 ActivityIntent.getInstance(requireContext()).userMakeChange(requireActivity());
             }
         });

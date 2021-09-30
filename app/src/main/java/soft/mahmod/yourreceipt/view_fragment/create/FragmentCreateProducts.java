@@ -62,13 +62,13 @@ public class FragmentCreateProducts extends Fragment implements TextWatcher {
         double discount = Double.parseDouble(binding.edtDiscount.getText().toString().trim());
         double tax = Double.parseDouble(binding.edtTax.getText().toString().trim());
         String name = binding.edtName.getText().toString().trim();
-        String note = binding.edtNote.getText().toString().trim();
+        String total = binding.edtTotal.getText().toString().trim();
         model.setPrice(price);
         model.setQuantity(quantity);
         model.setDiscount(discount);
         model.setTax(tax);
         model.setName(name);
-        model.setNotes(note);
+        model.setNotes(total);
         model.setTotal(total(price, discount, quantity, tax, model.isTaxClientNoReg()));
         Log.d(TAG, "onCreateView: " + model.getTotal());
         return model;

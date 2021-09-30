@@ -14,15 +14,16 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.ItemsBaymentBinding;
+import soft.mahmod.yourreceipt.listeners.ListenerFirebasePayment;
 import soft.mahmod.yourreceipt.listeners.ListenerPayment;
 import soft.mahmod.yourreceipt.model.billing.Payment;
 
 
-public class ARFirebaseAdapterPayment extends FirebaseRecyclerAdapter<Payment, ARFirebaseAdapterPayment.ViewHolde> {
-    private ListenerPayment listener;
+public class ARFirebasePayment extends FirebaseRecyclerAdapter<Payment, ARFirebasePayment.ViewHolde> {
+    private ListenerFirebasePayment listener;
     private LayoutInflater inflater;
-
-    public ARFirebaseAdapterPayment(@NonNull FirebaseRecyclerOptions<Payment> options, ListenerPayment listener) {
+    public boolean inDetails = true;
+    public ARFirebasePayment(@NonNull FirebaseRecyclerOptions<Payment> options, ListenerFirebasePayment listener) {
         super(options);
         this.listener = listener;
     }
@@ -34,6 +35,7 @@ public class ARFirebaseAdapterPayment extends FirebaseRecyclerAdapter<Payment, A
             inflater = LayoutInflater.from(parent.getContext());
         }
         ItemsBaymentBinding binding = DataBindingUtil.inflate(inflater, R.layout.items_bayment, parent, false);
+        binding.setInDetails(inDetails);
         return new ViewHolde(binding);
     }
 
@@ -54,28 +56,8 @@ public class ARFirebaseAdapterPayment extends FirebaseRecyclerAdapter<Payment, A
         public void bind(Payment model){
             binding.setModel(model);
             binding.btnDelete.setOnClickListener(v -> {
-                onDelete();
+                listener.onEdit(model,getBindingAdapterPosition());
             });
-            binding.editDate.setOnClickListener(v -> {
-                onChangeDate();
-            });
-            binding.editPrice.setOnClickListener(v -> {
-                onChangePrice();
-            });
-            binding.switchPaid.setOnCheckedChangeListener(this::onSwithcPaid);
-
-        }
-        public void onDelete(){
-            listener.onDelete(getBindingAdapterPosition());
-        }
-        public void onChangeDate(){
-            listener.onChangeDate(getBindingAdapterPosition());
-        }
-        public void onChangePrice(){
-            listener.onChangeDate(getBindingAdapterPosition());
-        }
-        public void onSwithcPaid(CompoundButton buttonView, boolean isChecked){
-            listener.onPaid(buttonView,isChecked,getBindingAdapterPosition());
         }
 
     }

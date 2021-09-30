@@ -53,7 +53,7 @@ public class ActivityAddReceipt extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        ActivityIntent.getInstance(this).userMakeChange(this);
+//        ActivityIntent.getInstance(this).userMakeChange(this);
     }
 
     @Override

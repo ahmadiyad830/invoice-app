@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="toolbar"
-            type="String" />
+            name="total"
+            type="Double" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,17 +34,29 @@
                 android:layout_height="?actionBarSize"
                 android:gravity="left">
 
+                <TextView
+                    android:id="@+id/txt_de_toolbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLength="10"
+                    android:text="@{String.valueOf(total)}"
+                    android:textColor="@color/text_btn_color"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_print"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/btnBack"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <ImageView
                     android:id="@+id/btn_print"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
                     android:layout_marginHorizontal="@dimen/_12sdp"
-                    android:src="@drawable/ic_baseline_print_24"
-                    android:visibility="gone"
+                    android:src="@drawable/ic_baseline_edit_24"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:tint="@color/text_btn_color" />
 

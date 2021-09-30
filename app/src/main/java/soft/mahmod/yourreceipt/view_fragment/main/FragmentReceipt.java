@@ -28,7 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import soft.mahmod.yourreceipt.R;
-import soft.mahmod.yourreceipt.adapter.firebase.ARReceipt;
+import soft.mahmod.yourreceipt.adapter.firebase.ARFirebaseReceipt;
 import soft.mahmod.yourreceipt.databinding.FragmentReceiptBinding;
 import soft.mahmod.yourreceipt.dialog.DialogSecurity;
 import soft.mahmod.yourreceipt.helper.SimpleDialog;
@@ -44,10 +44,11 @@ public class FragmentReceipt extends Fragment implements ListenerReceipt, Databa
         , TextWatcher, SimpleDialogListener {
     private static final String TAG = "FragmentHome";
     private FragmentReceiptBinding binding;
-    private ARReceipt adapter;
+    private ARFirebaseReceipt adapter;
     private String[] sortReceipt = {"clientName", "subject", "clientPhone", "totalAll"};
     private String key = sortReceipt[0];
     private Query query;
+//    related
     private FirebaseRecyclerOptions<Receipt> options;
     private DatabaseReference reference;
     private NavController controller;
@@ -104,31 +105,31 @@ public class FragmentReceipt extends Fragment implements ListenerReceipt, Databa
     public void onNothingSelected(AdapterView<?> parent) {
         key = sortReceipt[0];
     }
-    private ARReceipt searchNumber(double search) {
+    private ARFirebaseReceipt searchNumber(double search) {
         query = reference;
         options = new FirebaseRecyclerOptions.Builder<Receipt>()
                 .setQuery(query.orderByChild(key).startAt(search).endAt(search + "\uf8ff"), Receipt.class)
                 .build();
-        adapter = new ARReceipt(options, this);
+        adapter = new ARFirebaseReceipt(options, this);
         adapter.startListening();
         return adapter;
     }
 
-    private ARReceipt search(String search) {
+    private ARFirebaseReceipt search(String search) {
         query = reference;
         options = new FirebaseRecyclerOptions.Builder<Receipt>()
                 .setQuery(query.orderByChild(key).startAt(search).endAt(search + "\uf8ff"), Receipt.class)
                 .build();
-        adapter = new ARReceipt(options, this);
+        adapter = new ARFirebaseReceipt(options, this);
         adapter.startListening();
         return adapter;
     }
 
-    private ARReceipt withoutSearch() {
+    private ARFirebaseReceipt withoutSearch() {
         options = new FirebaseRecyclerOptions.Builder<Receipt>()
                 .setQuery(reference, Receipt.class)
                 .build();
-        adapter = new ARReceipt(options, this);
+        adapter = new ARFirebaseReceipt(options, this);
         adapter.startListening();
         return adapter;
     }

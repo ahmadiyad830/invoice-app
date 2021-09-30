@@ -89,6 +89,7 @@ public class RepoClient extends Repo<Client> implements OnCompleteListener<Void>
                 client.setMessage("path not exists");
                 client.setCode(PATH_NOT_EXISTS);
             }
+            getData().setValue(client);
 
         }
 

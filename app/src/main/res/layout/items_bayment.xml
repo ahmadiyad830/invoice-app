@@ -7,10 +7,14 @@
         <variable
             name="index"
             type="Integer" />
+        <variable
+            name="inDetails"
+            type="Boolean" />
 
         <variable
             name="model"
             type="soft.mahmod.yourreceipt.model.billing.Payment" />
+        <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,18 +44,18 @@
             android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/_8sdp"
             android:layout_weight="1"
-            android:src="@drawable/ic_baseline_delete_outline_24"
+            android:src="@drawable/ic_baseline_edit_24"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout18"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.954"
             app:layout_constraintStart_toEndOf="@+id/textView2"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@android:color/holo_red_dark" />
+            app:tint="@color/icon_color" />
 
         <LinearLayout
             android:id="@+id/linearLayout18"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?actionBarSize"
 
             android:padding="@dimen/_8sdp"
             android:layout_margin="@dimen/_4sdp"
@@ -84,8 +88,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editText" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:text='@{model.paid?@string/paid:@string/not_paid}'
+                android:layout_weight="2"
+                android:gravity="center"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/_13ssp"
+                android:visibility='@{inDetails?View.VISIBLE:View.GONE,default = gone}'
+                android:layout_height="match_parent"/>
+
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/switch_paid"
+                android:visibility='@{inDetails?View.GONE:View.VISIBLE,default = gone}'
                 android:layout_width="wrap_content"
                 android:checked='@{model.paid}'
                 android:layout_height="match_parent"

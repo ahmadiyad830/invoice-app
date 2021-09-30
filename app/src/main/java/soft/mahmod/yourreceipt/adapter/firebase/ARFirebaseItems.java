@@ -18,13 +18,13 @@ import soft.mahmod.yourreceipt.listeners.ListenerItems;
 import soft.mahmod.yourreceipt.model.Items;
 import soft.mahmod.yourreceipt.model.Products;
 
-public class ARItems extends FirebaseRecyclerAdapter<Items, ARItems.ViewHolder> {
+public class ARFirebaseItems extends FirebaseRecyclerAdapter<Items, ARFirebaseItems.ViewHolder> {
     private static final String TAG = "ARItems";
 
     private LayoutInflater inflater;
     private ListenerItems listener;
 
-    public ARItems(@NonNull FirebaseRecyclerOptions<Items> options, ListenerItems listener) {
+    public ARFirebaseItems(@NonNull FirebaseRecyclerOptions<Items> options, ListenerItems listener) {
         super(options);
         this.listener = listener;
     }

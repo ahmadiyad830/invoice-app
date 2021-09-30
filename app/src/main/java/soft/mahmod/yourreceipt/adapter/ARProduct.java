@@ -16,7 +16,7 @@ import soft.mahmod.yourreceipt.databinding.ItemProductBinding;
 import soft.mahmod.yourreceipt.listeners.ListenerProduct;
 import soft.mahmod.yourreceipt.model.Products;
 
-public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
+public class ARProduct extends RecyclerView.Adapter<ARProduct.ViewHolder> {
 
     private LayoutInflater inflater;
     private final List<Products> listModel;
@@ -24,7 +24,7 @@ public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
     public double totalAll = 0.0;
     public boolean isCreate = false;
 
-    public ARProducts(List<Products> listModel, ListenerProduct onClickItem) {
+    public ARProduct(List<Products> listModel, ListenerProduct onClickItem) {
         this.listModel = listModel;
         this.onClickItem = onClickItem;
     }
@@ -49,7 +49,7 @@ public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ARProducts.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ARProduct.ViewHolder holder, int position) {
         holder.bind(listModel.get(position));
         double total = DoubleStream.of(listModel.get(position).getPrice()).sum() *
                 DoubleStream.of(listModel.get(position).getQuantity()).sum();
@@ -71,7 +71,7 @@ public class ARProducts extends RecyclerView.Adapter<ARProducts.ViewHolder> {
 
         public synchronized void bind(Products model) {
             binding.setModel(model);
-            binding.btnDelete.setOnClickListener(v -> {
+            binding.btnEdit.setOnClickListener(v -> {
                 total = total - model.getPrice();
                 onClickItem.onDelete(model, getBindingAdapterPosition());
             });

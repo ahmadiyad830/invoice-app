@@ -25,7 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import soft.mahmod.yourreceipt.R;
-import soft.mahmod.yourreceipt.adapter.firebase.ARItems;
+import soft.mahmod.yourreceipt.adapter.firebase.ARFirebaseItems;
 import soft.mahmod.yourreceipt.databinding.FragmentMainItemsBinding;
 import soft.mahmod.yourreceipt.listeners.ListenerItems;
 import soft.mahmod.yourreceipt.model.Items;
@@ -36,7 +36,7 @@ public class FragmentItems extends Fragment implements ListenerItems, DatabaseUr
     private static final String TAG = "FragmentItem";
     private FragmentMainItemsBinding binding;
     private Query query;
-    private ARItems adapter;
+    private ARFirebaseItems adapter;
     private String[] sortItems = {"name", "price", "quantity"};
     private String key = sortItems[0];
     private FirebaseRecyclerOptions<Items> options;
@@ -119,31 +119,31 @@ public class FragmentItems extends Fragment implements ListenerItems, DatabaseUr
         }
     }
 
-    private ARItems searchNumber(double search) {
+    private ARFirebaseItems searchNumber(double search) {
         query = reference;
         options = new FirebaseRecyclerOptions.Builder<Items>()
                 .setQuery(query.orderByChild(key).startAt(search).endAt(search + "\uf8ff"), Items.class)
                 .build();
-        adapter = new ARItems(options, this);
+        adapter = new ARFirebaseItems(options, this);
         adapter.startListening();
         return adapter;
     }
 
-    private ARItems search(String search) {
+    private ARFirebaseItems search(String search) {
         query = reference;
         options = new FirebaseRecyclerOptions.Builder<Items>()
                 .setQuery(query.orderByChild(key).startAt(search).endAt(search + "\uf8ff"), Items.class)
                 .build();
-        adapter = new ARItems(options, this);
+        adapter = new ARFirebaseItems(options, this);
         adapter.startListening();
         return adapter;
     }
 
-    private ARItems withoutSearch() {
+    private ARFirebaseItems withoutSearch() {
         options = new FirebaseRecyclerOptions.Builder<Items>()
                 .setQuery(reference, Items.class)
                 .build();
-        adapter = new ARItems(options, this);
+        adapter = new ARFirebaseItems(options, this);
         adapter.startListening();
         return adapter;
     }

@@ -1,5 +1,6 @@
 package soft.mahmod.yourreceipt.view_activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,7 +29,7 @@ public class ActivityRegistration extends AppCompatActivity  {
     private ActivityIntent intent;
     private VMSettingAuth vmSettingAuth;
     private NavController controller;
-    private Context context = this;
+    private Activity context = this;
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(LocaleHelper.onAttach(newBase, "en"));
@@ -67,11 +68,11 @@ public class ActivityRegistration extends AppCompatActivity  {
 
         if (id == R.id.menu_ar_language ) {
             LocaleHelper.setLocale(context,"ar");
-            IntentHelper.startActivityWithFinish(context,ActivityRegistration.class,this);
+            IntentHelper.startActivityWithFinish(context, ActivityRegistration.class);
             return true;
         }else if(id == R.id.menu_en_language){
             LocaleHelper.setLocale(context,"en");
-            IntentHelper.startActivityWithFinish(context,ActivityRegistration.class,this);
+            IntentHelper.startActivityWithFinish(context, ActivityRegistration.class);
             return true;
         }
         return true;

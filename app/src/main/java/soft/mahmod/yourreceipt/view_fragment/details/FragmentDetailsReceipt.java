@@ -16,13 +16,13 @@ import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.FragmentDetailsReceiptBinding;
 import soft.mahmod.yourreceipt.view_model.database.VMClient;
 import soft.mahmod.yourreceipt.view_model.database.VMReceipt;
-import soft.mahmod.yourreceipt.view_model.send.data.VMSendReceipt;
+import soft.mahmod.yourreceipt.view_model.send.data.VMSendData;
 
 
 public class FragmentDetailsReceipt extends Fragment {
     private static final String TAG = "FragmentReceipt";
     private FragmentDetailsReceiptBinding binding;
-    private VMSendReceipt vmSendReceipt;
+    private VMSendData vmSendData;
     private VMReceipt vmReceipt;
     private VMClient vmClientl;
     @Override
@@ -47,8 +47,8 @@ public class FragmentDetailsReceipt extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        vmSendReceipt = new ViewModelProvider(requireActivity()).get(VMSendReceipt.class);
-        vmSendReceipt.getModel().observe(getViewLifecycleOwner(), receipt -> {
+        vmSendData = new ViewModelProvider(requireActivity()).get(VMSendData.class);
+        vmSendData.getReceipt().observe(getViewLifecycleOwner(), receipt -> {
             binding.setModel(receipt);
         });
     }

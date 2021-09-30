@@ -42,13 +42,7 @@ public class Products extends Cash {
 
     }
 
-    public Products(double price, double quantity, double total, double discount, double tax) {
-        this.price = price;
-        this.quantity = quantity;
-        this.total = total;
-        this.discount = discount;
-        this.tax = tax;
-    }
+
     @Exclude
     public double getItemQuantity() {
         return itemQuantity;

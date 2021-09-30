@@ -2,7 +2,6 @@ package soft.mahmod.yourreceipt.common;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import soft.mahmod.yourreceipt.model.Products;
 

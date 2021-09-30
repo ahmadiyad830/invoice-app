@@ -1,9 +1,9 @@
 package soft.mahmod.yourreceipt.view_activity;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -15,25 +15,26 @@ import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.ViewPager2Adapter;
 import soft.mahmod.yourreceipt.databinding.ActivityDetailsBinding;
 import soft.mahmod.yourreceipt.dialog.DialogSecurity;
+import soft.mahmod.yourreceipt.helper.IntentHelper;
 import soft.mahmod.yourreceipt.listeners.ListenerSecurityDialog;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.view_fragment.details.FragmentDetailsReceipt;
 import soft.mahmod.yourreceipt.view_fragment.details.FragmentPayment;
 import soft.mahmod.yourreceipt.view_fragment.details.FragmentProducts;
-import soft.mahmod.yourreceipt.view_model.send.data.VMSendReceipt;
+import soft.mahmod.yourreceipt.view_model.database.VMClient;
+import soft.mahmod.yourreceipt.view_model.send.data.VMSendData;
 
 public class ActivityDetails extends AppCompatActivity {
     private static final String TAG = "ActivityDetails";
     private ActivityDetailsBinding binding;
     private DialogSecurity dialogConfirm;
-    private String keySec;
     private Receipt model;
+    private Activity context = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_details);
         dialogConfirm = new DialogSecurity(this, getLayoutInflater());
-
         dialogSecurity();
 
 
@@ -45,7 +46,7 @@ public class ActivityDetails extends AppCompatActivity {
             finish();
         });
         binding.btnPrint.setOnClickListener(v -> {
-
+            IntentHelper.startActivityWithFinish(context, ActivityEditReceipt.class);
         });
     }
 
@@ -71,11 +72,25 @@ public class ActivityDetails extends AppCompatActivity {
         });
     }
 
+    private VMSendData vmSendData;
 
     private void sendData() {
-        VMSendReceipt vmSendReceipt = new ViewModelProvider(this).get(VMSendReceipt.class);
+        vmSendData = new ViewModelProvider(this).get(VMSendData.class);
         model = (Receipt) getIntent().getSerializableExtra("model");
-        vmSendReceipt.setModel(model);
+        vmSendData.passReceipt(model);
+        passClient(model.getClientId());
+        binding.setTotal(model.getTotalAll());
+    }
+
+    private void passClient(String clientId) {
+        VMClient vmClient = new ViewModelProvider
+                (getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(getApplication()))
+                .get(VMClient.class);
+        vmClient.getClient(clientId).observe(this, client -> {
+            if (client != null && !client.getError()) {
+                vmSendData.passClient(client);
+            }
+        });
     }
 
     private void loadTabLayout() {

@@ -15,7 +15,7 @@ import soft.mahmod.yourreceipt.databinding.ItemClientBinding;
 import soft.mahmod.yourreceipt.listeners.ListenerClient;
 import soft.mahmod.yourreceipt.model.Client;
 
-public class ARClients extends FirebaseRecyclerAdapter<Client, ARClients.ViewHolder> {
+public class ARFirebaseClients extends FirebaseRecyclerAdapter<Client, ARFirebaseClients.ViewHolder> {
 
     private ListenerClient listener;
 
@@ -31,7 +31,7 @@ public class ARClients extends FirebaseRecyclerAdapter<Client, ARClients.ViewHol
         this.inMain = inMain;
     }
 
-    public ARClients(@NonNull FirebaseRecyclerOptions<Client> options, ListenerClient listener) {
+    public ARFirebaseClients(@NonNull FirebaseRecyclerOptions<Client> options, ListenerClient listener) {
         super(options);
         this.listener = listener;
     }
@@ -48,7 +48,7 @@ public class ARClients extends FirebaseRecyclerAdapter<Client, ARClients.ViewHol
             inflater = LayoutInflater.from(parent.getContext());
         }
         ItemClientBinding binding = DataBindingUtil.inflate(inflater,R.layout.item_client,parent,false);
-        binding.setInMain(isInMain());
+//        binding.setInMain(isInMain());
         return new ViewHolder(binding);
     }
 

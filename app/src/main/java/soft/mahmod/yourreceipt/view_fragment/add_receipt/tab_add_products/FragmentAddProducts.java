@@ -1,7 +1,6 @@
 package soft.mahmod.yourreceipt.view_fragment.add_receipt.tab_add_products;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import soft.mahmod.yourreceipt.R;
-import soft.mahmod.yourreceipt.adapter.ARProducts;
+import soft.mahmod.yourreceipt.adapter.ARProduct;
 import soft.mahmod.yourreceipt.common.Common;
 import soft.mahmod.yourreceipt.databinding.FragmentAddItemBinding;
 import soft.mahmod.yourreceipt.listeners.ListenerProduct;
@@ -25,7 +24,7 @@ public class FragmentAddProducts extends Fragment implements ListenerProduct {
     public static final String TAG = "FragmentAddProducts";
     private FragmentAddItemBinding binding;
 
-    private ARProducts adapter;
+    private ARProduct adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,7 +38,7 @@ public class FragmentAddProducts extends Fragment implements ListenerProduct {
     @Override
     public void onStart() {
         super.onStart();
-        adapter = new ARProducts(Common.listProduct, this);
+        adapter = new ARProduct(Common.listProduct, this);
         adapter.setCreate(true);
         binding.recItem.setHasFixedSize(true);
         binding.recItem.setAdapter(adapter);

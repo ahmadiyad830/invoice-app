@@ -9,30 +9,39 @@
             type="soft.mahmod.yourreceipt.model.Products" />
 
         <variable
-            name="total"
-            type="Double" />
+            name="error"
+            type="String" />
         <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/products_container"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_page"
         app:behavior_hideable="true"
         app:behavior_peekHeight="@dimen/_32sdp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-        android:layout_height="match_parent"
-        android:background="@color/background_page"
         tools:context=".view_fragment.create.FragmentCreateProducts">
 
+        <ImageView
+            android:id="@+id/btn_close"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_margin="@dimen/_8sdp"
+            android:src="@drawable/ic_baseline_close_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/icon_color" />
 
         <ScrollView
             android:id="@+id/scrollView3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/btn_close">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -180,25 +189,39 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@string/note"
+                        android:maxLength="17"
+                        android:text='@{@string/total+": "+model.total}'
                         android:textColor="@color/text_color"
                         android:textSize="@dimen/_12ssp" />
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edt_note"
+                        android:id="@+id/edt_total"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_stork"
-                        android:hint="@string/note"
-                        android:inputType="text"
+                        android:hint="@string/total"
+                        android:inputType="numberDecimal"
+                        android:maxLength="10"
                         android:padding="@dimen/_12sdp"
-                        android:text='@{model.notes,default = ""}'
+                        android:text='@{String.valueOf(model.total)}'
                         android:textColor="@color/text_color" />
                 </LinearLayout>
-
             </LinearLayout>
-
         </ScrollView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@{error}"
+            android:textColor="@color/design_default_color_error"
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toTopOf="@+id/btn_down"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_down"
@@ -210,9 +233,8 @@
             android:textColor="@color/text_btn_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
