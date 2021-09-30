@@ -53,7 +53,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="?actionBarSize"
                         android:background="@drawable/custom_stork"
-                        android:layout_marginVertical="@dimen/_8sdp"
+                        android:layout_marginVertical="@dimen/_4sdp"
                         android:hint="@string/sotre_name"
                         android:textColorHint="@color/hint_color"
                         android:inputType="textPersonName"
@@ -68,31 +68,19 @@
                         android:layout_height="?actionBarSize"
                         android:textColorHint="@color/hint_color"
                         android:background="@drawable/custom_stork"
+                        android:layout_marginVertical="@dimen/_4sdp"
                         android:hint="@string/phone_number"
                         android:inputType="numberDecimal"
                         android:padding="@dimen/_8sdp"
                         android:paddingHorizontal="@dimen/_8sdp"
                         android:textColor="@color/text_color" />
-
-                    <EditText
-                        android:id="@+id/edt_email"
-                        android:layout_width="match_parent"
-                        android:layout_height="?actionBarSize"
-                        android:background="@drawable/custom_stork"
-                        android:textColorHint="@color/hint_color"
-                        android:hint="@string/email"
-                        android:inputType="textEmailAddress"
-                        android:padding="@dimen/_8sdp"
-                        android:layout_marginVertical="@dimen/_8sdp"
-                        android:paddingHorizontal="@dimen/_8sdp"
-                        android:textColor="@color/text_color" />
-
                     <EditText
                         android:id="@+id/store_address"
                         android:layout_width="match_parent"
                         android:layout_height="?actionBarSize"
                         android:background="@drawable/custom_stork"
                         android:hint="@string/address"
+                        android:layout_marginVertical="@dimen/_4sdp"
                         android:inputType="text"
                         android:padding="@dimen/_8sdp"
                         android:paddingHorizontal="@dimen/_8sdp"
@@ -116,12 +104,27 @@
                     android:id="@+id/btn_down"
                     android:layout_width="match_parent"
                     android:layout_height="?actionBarSize"
+                    android:enabled="@{progress?false:true,default = true}"
                     android:layout_marginHorizontal="@dimen/_8sdp"
                     android:backgroundTint="@color/top_and_bottom_color"
                     android:text="@string/add"
                     android:textColor="@color/text_btn_color" />
             </LinearLayout>
         </ScrollView>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progress_circular"
+            android:layout_width="@dimen/_52sdp"
+            android:layout_height="@dimen/_52sdp"
+            android:defaultFocusHighlightEnabled="true"
+            android:indeterminate="true"
+            android:visibility='@{progress?View.VISIBLE:View.GONE,default = gone}'
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.36" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

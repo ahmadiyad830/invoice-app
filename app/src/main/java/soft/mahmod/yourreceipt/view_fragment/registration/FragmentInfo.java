@@ -18,11 +18,6 @@ import soft.mahmod.yourreceipt.databinding.FragmentInfoBinding;
 import soft.mahmod.yourreceipt.model.Store;
 import soft.mahmod.yourreceipt.view_model.database.VMStore;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentInfo#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FragmentInfo extends Fragment {
     private VMStore vmStore;
     private static final String TAG = "FragmentInfo456";
@@ -54,10 +49,10 @@ public class FragmentInfo extends Fragment {
         FragmentInfoDirections.ActionFragmentInfoToFragmentSignIn passEmail =
                 FragmentInfoDirections.actionFragmentInfoToFragmentSignIn();
         binding.btnDown.setOnClickListener(v -> {
-            binding.setProgress(true);
-
             vmStore.postStore(getStore()).observe(getViewLifecycleOwner(), store1 -> {
+                binding.setProgress(true);
                 if (!store1.getError()) {
+                    binding.setProgress(false);
                     passEmail.setArgsEmail(argsEmail.getArgsEmail());
                     controller.navigate(passEmail);
                 }
@@ -80,8 +75,6 @@ public class FragmentInfo extends Fragment {
             store.setPhone(0);
             e.printStackTrace();
         }
-        String email = binding.edtEmail.getText().toString().trim();
-        store.setEmail(email);
         String address1 = binding.storeAddress.getText().toString().trim();
         store.setAddress(address1);
         return store;
