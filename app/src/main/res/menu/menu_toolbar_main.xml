@@ -3,4 +3,19 @@
     <item
         android:id="@+id/btn_signout"
         android:title="@string/sign_out" />
+    <group android:menuCategory="container">
+        <item
+            android:icon="@drawable/ic_baseline_language_24"
+            android:title="@string/language">
+            <menu>
+                <item
+                    android:id="@+id/menu_ar_language"
+                    android:title="@string/arabic_lang" />
+                <item
+                    android:id="@+id/menu_en_language"
+                    android:title="@string/englush_lang" />
+            </menu>
+        </item>
+
+    </group>
 </menu>

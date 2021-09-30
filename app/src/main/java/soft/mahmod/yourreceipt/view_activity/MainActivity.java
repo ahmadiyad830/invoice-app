@@ -1,5 +1,7 @@
 package soft.mahmod.yourreceipt.view_activity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +29,8 @@ import soft.mahmod.yourreceipt.dialog.DialogConfirm;
 import soft.mahmod.yourreceipt.dialog.DialogConnectionInternet;
 import soft.mahmod.yourreceipt.dialog.DialogListener;
 import soft.mahmod.yourreceipt.dialog.DialogWarning;
+import soft.mahmod.yourreceipt.helper.IntentHelper;
+import soft.mahmod.yourreceipt.helper.LocaleHelper;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.utils.IntentActivity;
 import soft.mahmod.yourreceipt.view_model.auth.VMSettingAuth;
@@ -40,6 +44,13 @@ public class MainActivity extends AppCompatActivity implements DatabaseUrl {
     private ActivityIntent intent;
     private SecurityManager manager;
     private DialogConnectionInternet connectionInternet;
+    private final Activity activity = this;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase, "en"));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +102,15 @@ public class MainActivity extends AppCompatActivity implements DatabaseUrl {
         int id = item.getItemId();
         if (id == R.id.btn_signout) {
             signOut();
+            return true;
+        }else if (id==R.id.menu_ar_language){
+            LocaleHelper.setLocale(activity,"ar");
+            IntentHelper.startActivityWithFinish(activity,activity.getClass());
+            return true;
+
+        }else if (id==R.id.menu_en_language){
+            LocaleHelper.setLocale(activity,"en");
+            IntentHelper.startActivityWithFinish(activity,activity.getClass());
             return true;
         }
         return true;

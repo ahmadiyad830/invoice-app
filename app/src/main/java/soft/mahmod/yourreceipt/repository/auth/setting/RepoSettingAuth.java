@@ -3,9 +3,13 @@ package soft.mahmod.yourreceipt.repository.auth.setting;
 import android.app.Application;
 import android.os.Build;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.database.DatabaseReference;
@@ -16,7 +20,7 @@ import soft.mahmod.yourreceipt.model.Cash;
 import soft.mahmod.yourreceipt.statics.StateCode;
 
 
-public class RepoSettingAuth extends RepoEditAccount {
+public class RepoSettingAuth extends RepoEditAccount implements OnFailureListener {
     private final Cash cash = new Cash();
 
     public RepoSettingAuth(Application application) {
@@ -69,7 +73,6 @@ public class RepoSettingAuth extends RepoEditAccount {
         getfAuth().getCurrentUser().updatePassword(pass2)
                 .addOnCompleteListener(getApplication().getMainExecutor(), task1 -> {
                     if (task1.isSuccessful()) {
-
                         cash.setMessage(getResources(R.string.success));
                         cash.setError(false);
                         cash.setCode(StateCode.SUCCESS);
@@ -77,22 +80,8 @@ public class RepoSettingAuth extends RepoEditAccount {
                         updatePassword(pass2);
                     }
                 })
-                .addOnFailureListener(getApplication().getMainExecutor(), e -> {
-                    e.printStackTrace();
-                    cash.setMessage(e.getLocalizedMessage());
-                    cash.setError(true);
-                    cash.setCode(StateCode.TRY_AGAIN);
-                    data.postValue(cash);
-                });
+                .addOnFailureListener(getApplication().getMainExecutor(), this);
     }
-
-    private void updatePassword(String pass2) {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        reference.child(USER).child(getUid()).child(PASSWORD)
-                .setValue(pass2);
-
-    }
-
     @Override
     public void changePasswordTLow(String pass1, String pass2) {
         getfAuth().getCurrentUser().updatePassword(pass2)
@@ -102,15 +91,17 @@ public class RepoSettingAuth extends RepoEditAccount {
                         cash.setError(false);
                         cash.setCode(StateCode.SUCCESS);
                         data.postValue(cash);
+                        updatePassword(pass2);
                     }
                 })
-                .addOnFailureListener(e -> {
-                    e.printStackTrace();
-                    cash.setMessage(e.getLocalizedMessage());
-                    cash.setError(true);
-                    cash.setCode(StateCode.TRY_AGAIN);
-                    data.postValue(cash);
-                });
+                .addOnFailureListener(this);
+    }
+
+    private void updatePassword(String pass2) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.child(USER).child(getUid()).child(PASSWORD)
+                .setValue(pass2);
+
     }
 
     @Override
@@ -141,12 +132,7 @@ public class RepoSettingAuth extends RepoEditAccount {
                         }
                     }
                 })
-                .addOnFailureListener(getApplication().getMainExecutor(), e -> {
-                    cash.setError(true);
-                    cash.setMessage(e.getMessage());
-                    cash.setCode(0);
-                    data.postValue(cash);
-                });
+                .addOnFailureListener(getApplication().getMainExecutor(),this);
         return data;
     }
 
@@ -168,14 +154,15 @@ public class RepoSettingAuth extends RepoEditAccount {
                         }
                     }
                 })
-                .addOnFailureListener(e -> {
-                    cash.setError(true);
-                    cash.setMessage(e.getMessage());
-                    cash.setCode(0);
-                    data.postValue(cash);
-                });
+                .addOnFailureListener(this);
         return data;
     }
 
-
+    @Override
+    public void onFailure(@NonNull Exception e) {
+        cash.setError(true);
+        cash.setMessage(e.getMessage());
+        cash.setCode(StateCode.TRY_AGAIN);
+        data.postValue(cash);
+    }
 }

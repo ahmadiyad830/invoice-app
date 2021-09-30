@@ -179,6 +179,7 @@ Or add all items</string>
     <string name="increase_quntity">Do you want to increase the quantity ?</string>
     <string name="quantity_is_greater">Quantity is greater than what is available</string>
     <string name="security">Security number</string>
+    <string name="security_success_change">The security key has been changed</string>
     <string name="add_security">Add security number</string>
     <string name="location_visible_security">Security key appears</string>
     <string name="dont_have_number_security">You don\'t have Security number</string>

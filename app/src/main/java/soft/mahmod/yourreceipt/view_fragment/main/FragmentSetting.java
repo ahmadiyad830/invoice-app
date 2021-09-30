@@ -139,19 +139,27 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
     }
 
     private void postSecurityNumber() {
+        binding.btnSecurity.setEnabled(false);
         String password = binding.passwordEditSecurity.getText().toString();
         String keySecurity = binding.edtSecurity.getText().toString();
         if (manager.password().equals(password)) {
             if (keySecurity.length() == 4) {
                 vmUser.putSecurityKey(keySecurity).observe(getViewLifecycleOwner(), user -> {
-                    manager.setKeySecuirty(keySecurity);
-                    binding.setErrorSecurity(user.getMessage());
+                    if (!user.getError()) {
+                        manager.setKeySecuirty(keySecurity);
+                        if (user.getCode() == 200){
+                            binding.setErrorSecurity(getString(R.string.security_success_change));
+                        }
+                        binding.btnSecurity.setEnabled(true);
+                    }
                 });
             } else {
                 binding.setErrorSecurity(getResources().getString(R.string.security_short));
+                binding.btnSecurity.setEnabled(true);
             }
         } else {
             binding.setErrorSecurity(getResources().getString(R.string.wrong_password));
+            binding.btnSecurity.setEnabled(true);
         }
 
     }
@@ -160,17 +168,29 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
         String pass1 = binding.oldPassword.getText().toString().trim();
         String pass2 = binding.newPassword.getText().toString().trim();
         String pass3 = binding.confirmPassword.getText().toString().trim();
+        final String oldPassword = manager.password();
+        if (!oldPassword.equals(pass1)){
+            binding.setErrorChangePassword(getString(R.string.wrong_password));
+            return;
+        }
+        binding.btnChangePassword.setEnabled(false);
         vmSignConditions.changePasswordConditions(pass1, pass2, pass3).observe(getViewLifecycleOwner(), user -> {
             if (!user.getError()) {
                 vmSettingAuth.changePassword(pass1, pass2).observe(getViewLifecycleOwner(), cash -> {
                     if (!cash.getError()) {
                         manager.setPassword(pass2);
                         binding.setErrorChangePassword(cash.getMessage());
+                        binding.oldPassword.setText("");
+                        binding.newPassword.setText("");
+                        binding.confirmPassword.setText("");
                     } else {
+                        binding.setVisiblePassword(false);
 //                        requireActivity().onBackPressed();
                     }
+                    binding.btnChangePassword.setEnabled(true);
                 });
             } else {
+                binding.btnChangePassword.setEnabled(true);
                 binding.setErrorChangePassword(user.getMessage());
             }
         });
