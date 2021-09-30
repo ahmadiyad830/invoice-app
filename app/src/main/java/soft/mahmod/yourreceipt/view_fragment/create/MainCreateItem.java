@@ -1,5 +1,6 @@
 package soft.mahmod.yourreceipt.view_fragment.create;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -27,8 +29,6 @@ public class MainCreateItem extends Fragment {
     private static final String TAG = "FragmentCreateItem";
     private FragmentCreateItemBinding binding;
     private VMItems vmItems;
-    private NavController controller;
-    private final List<String> listWarning = new ArrayList<>();
     private boolean isEdit = false;
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -55,7 +55,6 @@ public class MainCreateItem extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        controller = Navigation.findNavController(view);
         MainCreateItemArgs itemArgs = MainCreateItemArgs.fromBundle(getArguments());
         if (itemArgs.getMainItemToCreateItem() != null) {
             isEdit = true;
@@ -69,6 +68,13 @@ public class MainCreateItem extends Fragment {
                 postItem();
             }
             requireActivity().onBackPressed();
+        });
+        binding.btnDelete.setVisibility(isEdit?View.VISIBLE:View.GONE);
+        binding.btnDelete.setOnClickListener(v -> {
+            vmItems.deleteItem(itemArgs.getMainItemToCreateItem().getItemId())
+                    .observe(getViewLifecycleOwner(),items -> {
+                        requireActivity().onBackPressed();
+                    });
         });
     }
 

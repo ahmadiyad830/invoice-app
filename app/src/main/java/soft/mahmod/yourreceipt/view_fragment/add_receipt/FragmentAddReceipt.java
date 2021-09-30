@@ -259,7 +259,6 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
 
         binding.setTotalAll(binding.getTotalAll() - payment.getPrice());
         adapter.notifyItemInserted(listPayment.size() - 1);
-        binding.editPrice.setText("0");
     }
     private void onClickDeleteAll(View v) {
         if (listPayment.size() > 0) {
@@ -330,6 +329,8 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
     @Override
     public void afterTextChanged(Editable s) {
         double total = binding.getTotalAll();
+        if (s.length()==0)
+            binding.editPrice.setText("1");
         if (s.length()>0){
             double price = Double.parseDouble(s.toString());
             if (price>total){
@@ -337,6 +338,7 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
                         getResources().getString(R.string.greater_than_total)
                         , ContextCompat.getDrawable(requireContext(),R.drawable.ic_twotone_warning_24)
                 );
+
             }
         }
     }

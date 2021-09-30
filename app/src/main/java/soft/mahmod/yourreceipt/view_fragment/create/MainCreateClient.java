@@ -1,6 +1,7 @@
 package soft.mahmod.yourreceipt.view_fragment.create;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.databinding.FragmentCreateClientBinding;
@@ -25,18 +22,13 @@ public class MainCreateClient extends Fragment {
     private static final String TAG = "FragmentCreateClient";
     private FragmentCreateClientBinding binding;
     private VMClient vmClient;
-    private NavController controller;
-    private final List<String> listWarning = new ArrayList<>();
     private boolean isEdit = false;
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        vmClient = new ViewModelProvider(
-                getViewModelStore(),
-                new ViewModelProvider.AndroidViewModelFactory(
-                        requireActivity().getApplication()
-                )
-        ).get(VMClient.class);
+        vmClient = new ViewModelProvider
+                (getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
+                .get(VMClient.class);
 
     }
 
@@ -56,7 +48,9 @@ public class MainCreateClient extends Fragment {
         if (addClientArgs.getMainClientToCreateClient() != null){
             isEdit = true;
             binding.setModel(addClientArgs.getMainClientToCreateClient());
+
         }
+        binding.btnDelete.setVisibility(isEdit?View.VISIBLE:View.GONE);
         binding.btnDown.setOnClickListener(v -> {
             if (isEdit) {
                 putClient(addClientArgs.getMainClientToCreateClient().getClientId());
@@ -64,6 +58,13 @@ public class MainCreateClient extends Fragment {
                 postClient();
             }
             requireActivity().onBackPressed();
+        });
+        binding.btnDelete.setOnClickListener(v -> {
+            vmClient.deleteClient(addClientArgs.getMainClientToCreateClient().getClientId())
+                    .observe(getViewLifecycleOwner(),client -> {
+                        Log.d(TAG, "onViewCreated: "+client.getMessage());
+                        requireActivity().onBackPressed();
+                    });
         });
     }
 

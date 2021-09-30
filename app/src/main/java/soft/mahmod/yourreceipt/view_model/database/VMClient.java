@@ -33,6 +33,13 @@ public class VMClient extends AndroidViewModel {
             return repo.putClientTLow(model);
         }
     }
+    public LiveData<Client> deleteClient(String clientId){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            return repo.deleteClient(clientId);
+        }else {
+            return repo.deleteClientTLow(clientId);
+        }
+    }
     public LiveData<Client> getClient(String pushKey){
         return repo.getClient(pushKey);
     }

@@ -25,7 +25,9 @@ public class VMItems extends AndroidViewModel {
     public LiveData<Items> postItem(Items model) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
             return repo.postItem(model);
-        else return repo.postItemTLow(model);
+        else {
+            return repo.postItemTLow(model);
+        }
     }
     public LiveData<Items> putItem(Items model) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
@@ -41,6 +43,13 @@ public class VMItems extends AndroidViewModel {
             return repo.putQuantity(id, quantity);
         }else {
             return repo.putQuantityTLow(id, quantity);
+        }
+    }
+    public LiveData<Items> deleteItem(String itemId) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
+            return repo.deleteItem(itemId);
+        else {
+            return repo.deleteItemTLow(itemId);
         }
     }
 }

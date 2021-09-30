@@ -107,11 +107,24 @@ public class RepoItem extends Repo<Items> implements OnCompleteListener<Void>, O
     }
 
 
-    public LiveData<Items> deleteItem(Items model) {
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    public LiveData<Items> deleteItem(String itemId) {
+        getReference().child(ITEMS)
+                .child(getfUser().getUid())
+                .child(itemId)
+                .removeValue()
+                .addOnCompleteListener(getApplication().getMainExecutor(),this)
+                .addOnFailureListener(getApplication().getMainExecutor(),this);
         return getData();
     }
 
-    public LiveData<Items> deleteItemTLow(Items model) {
+    public LiveData<Items> deleteItemTLow(String itemId) {
+        getReference().child(ITEMS)
+                .child(getfUser().getUid())
+                .child(itemId)
+                .removeValue()
+                .addOnCompleteListener(this)
+                .addOnFailureListener(this);
         return getData();
     }
 

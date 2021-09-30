@@ -98,7 +98,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_12sdp"
                     android:text='@{@string/total_all+" "+String.valueOf(totalAll)}'
-                    android:textColor="@color/mony_color"
+                    android:textColor='@{totalAll&lt;=0?@color/dept_color:@color/mony_color}'
                     android:textSize="@dimen/_16ssp"
                     android:maxLength="25"
                     android:textStyle="bold"

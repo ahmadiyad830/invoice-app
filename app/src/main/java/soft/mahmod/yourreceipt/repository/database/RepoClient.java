@@ -60,11 +60,22 @@ public class RepoClient extends Repo<Client> implements OnCompleteListener<Void>
         return getData();
     }
 
-    public LiveData<Client> deleteClient(Client model) {
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    public LiveData<Client> deleteClient(String clientId) {
+        getReference().child(CLIENT).child(getfUser().getUid())
+                .child(clientId)
+                .removeValue()
+                .addOnCompleteListener(getApplication().getMainExecutor(),this)
+                .addOnFailureListener(getApplication().getMainExecutor(),this);
         return getData();
     }
 
-    public LiveData<Client> deleteClientTLow(Client model) {
+    public LiveData<Client> deleteClientTLow(String clientId) {
+        getReference().child(CLIENT).child(getfUser().getUid())
+                .child(clientId)
+                .removeValue()
+                .addOnCompleteListener(this)
+                .addOnFailureListener(this);
         return getData();
     }
 
