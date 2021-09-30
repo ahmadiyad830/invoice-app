@@ -63,6 +63,14 @@ public class MainRegRepo<T extends Cash> implements DatabaseUrl, StateCode, Stat
         return fAuth.getCurrentUser() != null;
     }
 
+    public String email() {
+        if (fUser.getEmail() != null && !fUser.getEmail().isEmpty()) {
+            return fUser.getEmail();
+        } else {
+            return "";
+        }
+    }
+
     public String getResources(@StringRes int res) {
         return application.getResources().getString(res);
     }

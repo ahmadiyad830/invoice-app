@@ -41,6 +41,9 @@ public class VMSettingAuth extends AndroidViewModel {
     public boolean hasCredential() {
         return repo.hasCredential();
     }
+    public String email() {
+        return repo.email();
+    }
 
     public boolean isVerified() {
         return repo.isVerified();

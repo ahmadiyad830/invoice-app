@@ -1,12 +1,13 @@
 package soft.mahmod.yourreceipt.view_activity;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,9 +26,7 @@ import soft.mahmod.yourreceipt.databinding.ActivityMainBinding;
 import soft.mahmod.yourreceipt.dialog.DialogConfirm;
 import soft.mahmod.yourreceipt.dialog.DialogConnectionInternet;
 import soft.mahmod.yourreceipt.dialog.DialogListener;
-import soft.mahmod.yourreceipt.dialog.DialogSecurity;
 import soft.mahmod.yourreceipt.dialog.DialogWarning;
-import soft.mahmod.yourreceipt.listeners.ListenerSecurityDialog;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.utils.IntentActivity;
 import soft.mahmod.yourreceipt.view_model.auth.VMSettingAuth;
@@ -107,6 +106,8 @@ public class MainActivity extends AppCompatActivity implements DatabaseUrl {
                 .setOpenableLayout(binding.drawer)
                 .build();
 
+        emailHeader();
+
         controller.addOnDestinationChangedListener((controller1, destination, arguments) -> {
             binding.setName(destination.getLabel().toString());
         });
@@ -126,7 +127,11 @@ public class MainActivity extends AppCompatActivity implements DatabaseUrl {
         });
     }
 
-
+    private void emailHeader() {
+        View view = binding.navigationView.getHeaderView(0);
+        TextView emailHeader  = view.findViewById(R.id.text_header_email);
+        emailHeader.setText(vmSettingAuth.email());
+    }
 
 
     @Override

@@ -54,6 +54,7 @@
     <string name="subject">Subject</string>
     <string name="warning">Warning</string>
     <string name="warning_add_key">Add a key to protect your data To add the key go to settings</string>
+    <string name="warning_are_sure">are you sure</string>
     <string name="warning_not_add">Warning The following items have not been added</string>
     <string name="invoice">invoice picture</string>
 
@@ -73,7 +74,7 @@
     <!--    TODO client-->
     <string name="client_name">Client Name</string>
     <string name="client_chice">client choice</string>
-    <string name="add_client">Add new Client</string>
+    <string name="add_client">Add Client</string>
     <string name="client_phone">Client Phone</string>
     <string name="add_new_client">Add Client</string>
     <string name="speed_add">Quick add</string>

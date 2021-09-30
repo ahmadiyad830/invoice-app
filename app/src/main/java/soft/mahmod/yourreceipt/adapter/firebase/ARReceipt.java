@@ -84,8 +84,9 @@ public class ARReceipt extends FirebaseRecyclerAdapter<Receipt,ARReceipt.ViewHol
                 itemClick.onClick(model);
             });
             binding.constraintLayout.setOnClickListener(v -> {
-                typePayment(model);
-                notifyItemChanged(getAbsoluteAdapterPosition());
+                itemClick.onClick(model);
+//                typePayment(model);
+//                notifyItemChanged(getAbsoluteAdapterPosition());
             });
             binding.constraintLayout.setOnLongClickListener(v -> {
                 itemClick.onLongClick(getBindingAdapterPosition());

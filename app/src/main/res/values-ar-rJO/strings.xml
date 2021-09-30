@@ -47,7 +47,7 @@
     <string name="total">المجموع</string>
     <string name="time">الوقت</string>
     <string name="date">تاريخ</string>
-    <string name="add_client">اضافة عميل جديد</string>
+    <string name="add_client">اضافة عميل</string>
     <string name="add_item">اضافة عنصر</string>
     <string name="client_phone">رقم العميل</string>
     <string name="discount">خصم</string>
@@ -151,4 +151,5 @@
     <string name="sign_in">تسجيل الدخول</string>
     <string name="help">مساعدة</string>
     <string name="englush_lang">englush</string>
+    <string name="warning_are_sure">هل انت متأكد</string>
 </resources>

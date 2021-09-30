@@ -1,6 +1,7 @@
 package soft.mahmod.yourreceipt.view_fragment.main;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -30,14 +31,17 @@ import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.firebase.ARReceipt;
 import soft.mahmod.yourreceipt.databinding.FragmentReceiptBinding;
 import soft.mahmod.yourreceipt.dialog.DialogSecurity;
+import soft.mahmod.yourreceipt.helper.SimpleDialog;
 import soft.mahmod.yourreceipt.listeners.ListenerReceipt;
 import soft.mahmod.yourreceipt.listeners.ListenerSecurityDialog;
+import soft.mahmod.yourreceipt.listeners.SimpleDialogListener;
 import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.view_activity.ActivityDetails;
 
 
-public class FragmentReceipt extends Fragment implements ListenerReceipt, DatabaseUrl, AdapterView.OnItemSelectedListener, TextWatcher {
+public class FragmentReceipt extends Fragment implements ListenerReceipt, DatabaseUrl, AdapterView.OnItemSelectedListener
+        , TextWatcher, SimpleDialogListener {
     private static final String TAG = "FragmentHome";
     private FragmentReceiptBinding binding;
     private ARReceipt adapter;
@@ -183,14 +187,28 @@ public class FragmentReceipt extends Fragment implements ListenerReceipt, Databa
     public void onEdit(Receipt model, int position) {
 
     }
-
+    private int position;
     @Override
     public void onLongClick(int position) {
-        if (!dialogSecurity.hasKey()){
-            deleteReceipt(position);
+        this.position = position;
+        if (!dialogSecurity.hasKey()) {
+            SimpleDialog.simpleDialog(
+                    requireContext()
+                    , R.string.warning
+                    , R.string.warning_add_key
+                    , R.drawable.ic_twotone_warning_24
+                    , this
+            );
             return;
         }else if (!dialogSecurity.showDialog()){
-            deleteReceipt(position);
+            SimpleDialog.simpleDialog(
+                    requireContext()
+                    , R.string.warning
+                    , R.string.warning_add_key
+                    , R.drawable.ic_twotone_warning_24
+                    , this
+            );
+
             return;
         }
         dialogSecurity.securityDialog(new ListenerSecurityDialog() {
@@ -212,5 +230,10 @@ public class FragmentReceipt extends Fragment implements ListenerReceipt, Databa
 
     private void deleteReceipt(int position) {
         adapter.getRef(position).removeValue();
+    }
+
+    @Override
+    public void clickOk(DialogInterface dialog) {
+        deleteReceipt(position);
     }
 }
