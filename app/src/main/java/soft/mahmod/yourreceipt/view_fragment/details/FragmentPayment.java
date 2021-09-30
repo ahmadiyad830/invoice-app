@@ -1,14 +1,20 @@
 package soft.mahmod.yourreceipt.view_fragment.details;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -25,7 +31,9 @@ import soft.mahmod.yourreceipt.adapter.firebase.ARFirebasePayment;
 import soft.mahmod.yourreceipt.databinding.FragmentEditPaymentBinding;
 import soft.mahmod.yourreceipt.databinding.FragmentPaymentBinding;
 import soft.mahmod.yourreceipt.helper.DialogWithView;
+import soft.mahmod.yourreceipt.helper.SimpleDialog;
 import soft.mahmod.yourreceipt.listeners.ListenerFirebasePayment;
+import soft.mahmod.yourreceipt.listeners.SimpleDialogListener;
 import soft.mahmod.yourreceipt.model.billing.Payment;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.view_model.send.data.VMSendData;
@@ -105,10 +113,25 @@ public class FragmentPayment extends Fragment implements DatabaseUrl, OnFailureL
                     .removeValue();
             dialog.dismiss();
         });
-
+        binding.editDate.setOnClickListener(v -> {
+            AlertDialog dialogCalendur = SimpleDialog.simpleDialogWihtView(
+                    dialog.getContext()
+                    , createCalendar(dialog.getContext(), binding.editDate)
+                    , DialogInterface::dismiss
+            );
+            dialogCalendur.show();
+        });
         dialog.show();
-
-
+    }
+    private CalendarView createCalendar(Context context, TextView editText) {
+        CalendarView calendarView = new CalendarView(context);
+        calendarView.setMinDate(System.currentTimeMillis());
+        calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
+            month = month + 1;
+            String date = dayOfMonth + "/" + month + "/" + year;
+            editText.setText(date);
+        });
+        return calendarView;
     }
     private Payment getPayment(Payment model, FragmentEditPaymentBinding binding) {
         Payment payment = new Payment();

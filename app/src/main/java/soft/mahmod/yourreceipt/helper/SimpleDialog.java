@@ -2,6 +2,7 @@ package soft.mahmod.yourreceipt.helper;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.view.View;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;
@@ -24,5 +25,15 @@ public class SimpleDialog {
                     dialog.dismiss();
                 });
         builder.show();
+    }
+
+    public static AlertDialog simpleDialogWihtView(Context context, View view, SimpleDialogListener listener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        Resources resources = context.getResources();
+        builder.setView(view)
+                .setPositiveButton(resources.getString(R.string.ok), (dialog, which) -> {
+                    listener.clickOk(dialog);
+                });
+       return builder.show();
     }
 }
