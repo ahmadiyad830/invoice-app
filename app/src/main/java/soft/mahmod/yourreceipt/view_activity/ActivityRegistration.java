@@ -32,7 +32,7 @@ public class ActivityRegistration extends AppCompatActivity  {
     private Activity context = this;
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(LocaleHelper.onAttach(newBase, "en"));
+        super.attachBaseContext(LocaleHelper.onAttach(newBase, LocaleHelper.ENGLISH));
     }
 
     @Override
@@ -67,11 +67,11 @@ public class ActivityRegistration extends AppCompatActivity  {
         int id = item.getItemId();
 
         if (id == R.id.menu_ar_language ) {
-            LocaleHelper.setLocale(context,"ar");
+            LocaleHelper.setLocale(context,LocaleHelper.ARABIC);
             IntentHelper.startActivityWithFinish(context, ActivityRegistration.class);
             return true;
         }else if(id == R.id.menu_en_language){
-            LocaleHelper.setLocale(context,"en");
+            LocaleHelper.setLocale(context,LocaleHelper.ENGLISH);
             IntentHelper.startActivityWithFinish(context, ActivityRegistration.class);
             return true;
         }

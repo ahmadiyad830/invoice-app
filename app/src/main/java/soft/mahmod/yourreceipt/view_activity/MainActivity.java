@@ -32,7 +32,6 @@ import soft.mahmod.yourreceipt.dialog.DialogWarning;
 import soft.mahmod.yourreceipt.helper.IntentHelper;
 import soft.mahmod.yourreceipt.helper.LocaleHelper;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
-import soft.mahmod.yourreceipt.utils.IntentActivity;
 import soft.mahmod.yourreceipt.view_model.auth.VMSettingAuth;
 import soft.mahmod.yourreceipt.view_model.database.VMUser;
 
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseUrl {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(LocaleHelper.onAttach(newBase, "en"));
+        super.attachBaseContext(LocaleHelper.onAttach(newBase, LocaleHelper.ENGLISH));
     }
 
     @Override
@@ -93,6 +92,11 @@ public class MainActivity extends AppCompatActivity implements DatabaseUrl {
         super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_toolbar_main, menu);
+        String saveLang = LocaleHelper.getLanguage(activity);
+        MenuItem ar = menu.findItem(R.id.menu_ar_language);
+        ar.setEnabled(!saveLang.equals(LocaleHelper.ARABIC));
+        MenuItem en = menu.findItem(R.id.menu_en_language);
+        en.setEnabled(!saveLang.equals(LocaleHelper.ENGLISH));
         return true;
     }
 
@@ -104,12 +108,11 @@ public class MainActivity extends AppCompatActivity implements DatabaseUrl {
             signOut();
             return true;
         }else if (id==R.id.menu_ar_language){
-            LocaleHelper.setLocale(activity,"ar");
+            LocaleHelper.setLocale(activity,LocaleHelper.ARABIC);
             IntentHelper.startActivityWithFinish(activity,activity.getClass());
             return true;
-
         }else if (id==R.id.menu_en_language){
-            LocaleHelper.setLocale(activity,"en");
+            LocaleHelper.setLocale(activity,LocaleHelper.ENGLISH);
             IntentHelper.startActivityWithFinish(activity,activity.getClass());
             return true;
         }
@@ -138,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseUrl {
             ActivityIntent.getInstance(MainActivity.this).addReceipt(MainActivity.this);
         });
         binding.txtActive.setOnClickListener(v -> {
-            IntentActivity.startWhatsApp(this);
+            IntentHelper.startWhatsApp(activity);
         });
         binding.txtAnotherAccount.setOnClickListener(v -> {
             vmSettingAuth.signOut();

@@ -12,6 +12,6 @@ public class ApplicationHelper extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         Log.d(TAG, "attachBaseContext: ");
-        super.attachBaseContext(LocaleHelper.onAttach(base,"en"));
+        super.attachBaseContext(LocaleHelper.onAttach(base,LocaleHelper.ENGLISH));
     }
 }

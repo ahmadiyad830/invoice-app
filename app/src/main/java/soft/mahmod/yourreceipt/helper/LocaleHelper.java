@@ -12,6 +12,8 @@ import java.util.Locale;
 
 public class LocaleHelper {
     private static final String SELECTED_LANGUAGE = "Locale.Helper.Selected.Language";
+    public static final String ARABIC = "ar";
+    public static final String ENGLISH = "en";
 
     public static Context onAttach(Context context) {
         String lang = getPersistedData(context, Locale.getDefault().getLanguage());
