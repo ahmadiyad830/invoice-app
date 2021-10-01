@@ -1,10 +1,8 @@
 package soft.mahmod.yourreceipt.view_fragment.add_receipt.tab_add_products;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,11 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -28,12 +26,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+import java.util.List;
+
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.firebase.ARFirebaseItems;
 import soft.mahmod.yourreceipt.common.Common;
 import soft.mahmod.yourreceipt.databinding.FragmentAddProductsBinding;
 import soft.mahmod.yourreceipt.databinding.FragmentMainItemsBinding;
 import soft.mahmod.yourreceipt.databinding.LayoutDialogCreateItemBinding;
+import soft.mahmod.yourreceipt.databinding.LayoutFinishQuantityBinding;
+import soft.mahmod.yourreceipt.dialog.SimpleDialog;
+import soft.mahmod.yourreceipt.helper.ResourceHelper;
 import soft.mahmod.yourreceipt.listeners.ListenerItems;
 import soft.mahmod.yourreceipt.model.Client;
 import soft.mahmod.yourreceipt.model.Items;
@@ -162,32 +165,7 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
         key = (String) parent.getItemAtPosition(0);
     }
 
-    private void dialogCreateProduct(Products model, Items itemModel, int position) {
-        Dialog dialog = new Dialog(requireContext());
-        FragmentAddProductsBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_add_products
-                , null, false);
-        Log.d(TAG, "loadDialogCreateProduct: " + client.isTaxExempt());
-        binding.setIsTaxNoReg(client.isTaxExempt());
-        binding.setModel(model);
-        dialog.setContentView(binding.getRoot());
-        dialog.getWindow().setBackgroundDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.custom_back_icon));
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        checkQuantityInput(itemModel.getQuantity(), binding);
-        dialog.setCancelable(true);
-        binding.btnDown.setOnClickListener(v -> {
-            Products products = getProduct(binding);
-            products.setName(model.getName());
-            if (products.getQuantity() > itemModel.getQuantity()) {
-                Toast.makeText(requireContext(), getResources().getString(R.string.increase_quntity), Toast.LENGTH_SHORT).show();
-                return;
-            }
-            Common.listProduct.add(products);
-            totalAll();
-            adapter.getItem(position).setQuantity(itemModel.getQuantity() - products.getQuantity());
-            dialog.dismiss();
-        });
-        dialog.show();
-    }
+
 
     private void checkQuantityInput(double quantity, FragmentAddProductsBinding binding) {
         binding.edtQuantity.addTextChangedListener(new TextWatcher() {
@@ -275,30 +253,83 @@ public class FragmentAddItem extends Fragment implements DatabaseUrl, TextWatche
     }
 
     @Override
-    public void onClick(Products products, Items model, int position) {
-        if (model.getQuantity() > 0) {
-            dialogCreateProduct(products, model, position);
+    public void onClick(@NonNull Products products, Items itemModel, int position) {
+        List<Products> list = Common.listProduct;
+        final boolean[] isExist = {false};
+        if (itemModel.getQuantity() > 0) {
+            list.forEach((productsCheck) -> {
+                isExist[0] = productsCheck.getItemId().equals(products.getItemId());
+            });
+            if (!isExist[0] || list.size() == 0) {
+                dialogCreateProduct(products, itemModel, position,!isExist[0]);
+            } else {
+                dialogCreateProduct(products, itemModel, position,isExist[0]);
+                Log.d(TAG, "item exist: ");
+            }
         } else {
-            loadDialogZeroQuantity(model);
+            loadDialogZeroQuantity(itemModel, position);
         }
-
     }
 
-    private void loadDialogZeroQuantity(Items model) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        EditText editText = new EditText(builder.getContext());
-        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-        builder.setView(editText);
-        builder.setPositiveButton(getResources().getString(R.string.ok), (dialog, which) -> {
-            double quantity = Double.parseDouble(editText.getText().toString().trim());
-            vmItems.updatesQuantity(model.getItemId(), quantity).observe(getViewLifecycleOwner(), cash -> {
-                Log.d(TAG, "loadDialogZeroQuantity: " + cash.toString());
-            });
-        }).setNegativeButton(getResources().getString(R.string.cancel), (dialog, which) -> {
+    private void dialogCreateProduct(Products model, Items itemModel, int position, boolean isUpdate) {
+        Dialog dialog = new Dialog(requireContext());
+        FragmentAddProductsBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_add_products
+                , null, false);
+        binding.setIsTaxNoReg(client.isTaxExempt());
+        binding.setModel(model);
+        dialog.setContentView(binding.getRoot());
+        dialog.getWindow().setBackgroundDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.custom_back_icon));
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        checkQuantityInput(itemModel.getQuantity(), binding);
+        dialog.setCancelable(true);
+        binding.btnDown.setOnClickListener(v -> {
+            Products products = getProduct(binding);
+            products.setItemId(itemModel.getItemId());
+            products.setName(model.getName());
+            if (products.getQuantity() > itemModel.getQuantity()) {
+                Toast.makeText(requireContext(), getResources().getString(R.string.increase_quntity), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (!isUpdate)
+                Common.listProduct.set(position, products);
+            else
+                Common.listProduct.add(products);
+            totalAll();
+            adapter.getItem(position).setQuantity(itemModel.getQuantity() - products.getQuantity());
+            adapter.notifyItemChanged(position);
             dialog.dismiss();
         });
-        builder.setMessage(getResources().getString(R.string.increase_quntity));
-        builder.show();
+        dialog.show();
+    }
+
+
+
+    private void loadDialogZeroQuantity(Items model, int position) {
+        LayoutFinishQuantityBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.layout_finish_quantity, null, false);
+        binding.setModel(model);
+        AlertDialog dialogFinishQuantity = SimpleDialog.simpleDialogWihtView(requireContext(), binding.getRoot());
+        binding.btnAdd.setOnClickListener(v -> {
+            double quantity;
+            try {
+                quantity = Double.parseDouble(binding.editQuantity.getText().toString().trim());
+            } catch (NumberFormatException e) {
+                binding.editQuantity.setError(ResourceHelper.getString(requireActivity(), R.string.error));
+                return;
+            }
+            adapter.getItem(position).setQuantity(quantity);
+            adapter.notifyItemChanged(position);
+            dialogFinishQuantity.dismiss();
+//            vmItems.updatesQuantity(model.getItemId(), quantity).observe(getViewLifecycleOwner(), cash -> {
+//                if (cash.getError()){
+//                    binding.setError(cash.getMessage());
+//                }
+//
+//            });
+        });
+        binding.btnClose.setOnClickListener(v -> {
+            dialogFinishQuantity.dismiss();
+        });
+        dialogFinishQuantity.show();
     }
 
     @Override

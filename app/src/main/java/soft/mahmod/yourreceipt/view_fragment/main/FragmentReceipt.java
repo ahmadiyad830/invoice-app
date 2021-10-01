@@ -31,7 +31,7 @@ import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.firebase.ARFirebaseReceipt;
 import soft.mahmod.yourreceipt.databinding.FragmentReceiptBinding;
 import soft.mahmod.yourreceipt.dialog.DialogSecurity;
-import soft.mahmod.yourreceipt.helper.SimpleDialog;
+import soft.mahmod.yourreceipt.dialog.SimpleDialog;
 import soft.mahmod.yourreceipt.listeners.ListenerReceipt;
 import soft.mahmod.yourreceipt.listeners.ListenerSecurityDialog;
 import soft.mahmod.yourreceipt.listeners.SimpleDialogListener;

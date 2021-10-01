@@ -69,6 +69,7 @@ public class ARFirebaseItems extends FirebaseRecyclerAdapter<Items, ARFirebaseIt
 
         private Products getProducts(Items model) {
             Products products = new Products();
+            products.setItemId(model.getItemId());
             products.setName(model.getName());
             products.setPrice(model.getPrice());
             products.setQuantity(model.getQuantity());

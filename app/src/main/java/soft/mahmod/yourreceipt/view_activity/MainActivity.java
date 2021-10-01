@@ -15,11 +15,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.controller.ActivityIntent;
@@ -31,7 +34,9 @@ import soft.mahmod.yourreceipt.dialog.DialogListener;
 import soft.mahmod.yourreceipt.dialog.DialogWarning;
 import soft.mahmod.yourreceipt.helper.IntentHelper;
 import soft.mahmod.yourreceipt.helper.LocaleHelper;
+import soft.mahmod.yourreceipt.helper.ResourceHelper;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
+import soft.mahmod.yourreceipt.utils.HandleNetworkConnection;
 import soft.mahmod.yourreceipt.view_model.auth.VMSettingAuth;
 import soft.mahmod.yourreceipt.view_model.database.VMUser;
 
@@ -138,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseUrl {
         NavigationUI.setupWithNavController(binding.linearLayout4, controller, configuration);
 
         binding.fab.setOnClickListener(v -> {
-            ActivityIntent.getInstance(MainActivity.this).addReceipt(MainActivity.this);
+            IntentHelper.startActivityWithoutFinish(activity,ActivityAddReceipt.class);
         });
         binding.txtActive.setOnClickListener(v -> {
             IntentHelper.startWhatsApp(activity);

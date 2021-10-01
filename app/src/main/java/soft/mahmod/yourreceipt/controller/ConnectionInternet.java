@@ -1,5 +1,6 @@
 package soft.mahmod.yourreceipt.controller;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -17,6 +18,16 @@ public class ConnectionInternet {
     }
 
     public boolean isConnection() {
+        ConnectivityManager cm = (ConnectivityManager) mCtx.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork != null) {
+            // connected to the internet
+            return activeNetwork.getType() == ConnectivityManager.TYPE_WIFI
+                    || activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE;
+        }
+        return false;
+    }
+    public static boolean isConnection(Activity activity) {
         ConnectivityManager cm = (ConnectivityManager) mCtx.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         if (activeNetwork != null) {

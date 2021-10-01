@@ -149,4 +149,11 @@ public class Products extends Cash {
                 ", taxClientNoReg=" + taxClientNoReg +
                 '}';
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Products model = (Products) o;
+        return getProductId().equals(model.getItemId());
+    }
 }

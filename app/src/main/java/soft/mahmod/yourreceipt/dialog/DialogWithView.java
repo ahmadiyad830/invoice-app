@@ -1,4 +1,4 @@
-package soft.mahmod.yourreceipt.helper;
+package soft.mahmod.yourreceipt.dialog;
 
 import android.app.Dialog;
 import android.content.Context;

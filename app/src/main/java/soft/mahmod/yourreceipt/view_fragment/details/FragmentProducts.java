@@ -1,7 +1,6 @@
 package soft.mahmod.yourreceipt.view_fragment.details;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,20 +20,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.firebase.ARFirebaseProduct;
 import soft.mahmod.yourreceipt.databinding.FragmentCreateProductsBinding;
 import soft.mahmod.yourreceipt.databinding.FragmentProductsBinding;
 import soft.mahmod.yourreceipt.helper.CalculatorTax;
-import soft.mahmod.yourreceipt.helper.DialogWithView;
-import soft.mahmod.yourreceipt.listeners.ListenerDialogWithView;
+import soft.mahmod.yourreceipt.dialog.DialogWithView;
 import soft.mahmod.yourreceipt.listeners.ListenerFirebaseProduct;
 import soft.mahmod.yourreceipt.model.Client;
 import soft.mahmod.yourreceipt.model.Products;
-import soft.mahmod.yourreceipt.model.Receipt;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.view_model.send.data.VMSendData;
 

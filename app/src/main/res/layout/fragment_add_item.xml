@@ -86,7 +86,19 @@
                 android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:maxLength="10"
+                android:singleLine="true"
+                android:text="@string/price"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -101,19 +113,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:maxLength="10"
-                android:singleLine="true"
-                android:text="@string/price"
-                android:textColor="@color/text_color"
-                android:textSize="@dimen/_14ssp"
-                android:textStyle="italic"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+
 
             <TextView
                 android:layout_width="0dp"

@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,10 +29,9 @@ import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.adapter.firebase.ARFirebasePayment;
 import soft.mahmod.yourreceipt.databinding.FragmentEditPaymentBinding;
 import soft.mahmod.yourreceipt.databinding.FragmentPaymentBinding;
-import soft.mahmod.yourreceipt.helper.DialogWithView;
-import soft.mahmod.yourreceipt.helper.SimpleDialog;
+import soft.mahmod.yourreceipt.dialog.DialogWithView;
+import soft.mahmod.yourreceipt.dialog.SimpleDialog;
 import soft.mahmod.yourreceipt.listeners.ListenerFirebasePayment;
-import soft.mahmod.yourreceipt.listeners.SimpleDialogListener;
 import soft.mahmod.yourreceipt.model.billing.Payment;
 import soft.mahmod.yourreceipt.statics.DatabaseUrl;
 import soft.mahmod.yourreceipt.view_model.send.data.VMSendData;
@@ -114,11 +112,8 @@ public class FragmentPayment extends Fragment implements DatabaseUrl, OnFailureL
             dialog.dismiss();
         });
         binding.editDate.setOnClickListener(v -> {
-            AlertDialog dialogCalendur = SimpleDialog.simpleDialogWihtView(
-                    dialog.getContext()
-                    , createCalendar(dialog.getContext(), binding.editDate)
-                    , DialogInterface::dismiss
-            );
+            AlertDialog dialogCalendur = SimpleDialog.simpleDialogWihtView(dialog.getContext()
+                    , createCalendar(dialog.getContext(), binding.editDate));
             dialogCalendur.show();
         });
         dialog.show();

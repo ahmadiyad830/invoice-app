@@ -32,6 +32,7 @@ public class CustomDialogWithBinding<B extends DataBindingUtil> extends Dialog {
         setCancelable(false);
     }
 
+
     public B getB() {
         return b;
     }

@@ -71,6 +71,10 @@ public class FragmentAddReceipt extends Fragment implements DatabaseUrl, Adapter
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_receipt, container, false);
+
+        binding.editPrice.setText("1");
+        binding.setDateDept(handleTimeCount.getDate());
+
         manager = SecurityManager.getInectance(requireContext());
         typeReceipt = new String[]{getResources().getString(R.string.paid)
                 , getResources().getString(R.string.debt), getResources().getString(R.string.bayment)};

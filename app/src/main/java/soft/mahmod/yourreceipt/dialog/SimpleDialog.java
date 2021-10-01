@@ -1,4 +1,4 @@
-package soft.mahmod.yourreceipt.helper;
+package soft.mahmod.yourreceipt.dialog;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -12,7 +12,8 @@ import soft.mahmod.yourreceipt.R;
 import soft.mahmod.yourreceipt.listeners.SimpleDialogListener;
 
 public class SimpleDialog {
-    public static void simpleDialog(Context context, @StringRes int recTitle, @StringRes int recMessage, @DrawableRes int iconId, SimpleDialogListener listener) {
+    public static void simpleDialog(Context context, @StringRes int recTitle, @StringRes int recMessage
+            , @DrawableRes int iconId, SimpleDialogListener listener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         Resources resources = context.getResources();
         builder.setTitle(resources.getString(recTitle))
@@ -27,13 +28,9 @@ public class SimpleDialog {
         builder.show();
     }
 
-    public static AlertDialog simpleDialogWihtView(Context context, View view, SimpleDialogListener listener) {
+    public static AlertDialog simpleDialogWihtView(Context context, View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        Resources resources = context.getResources();
-        builder.setView(view)
-                .setPositiveButton(resources.getString(R.string.ok), (dialog, which) -> {
-                    listener.clickOk(dialog);
-                });
-       return builder.show();
+        builder.setView(view);
+        return builder.show();
     }
 }
